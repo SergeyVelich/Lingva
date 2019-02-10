@@ -7,6 +7,6 @@ namespace Lingva.Model
 {
     interface ITranslater
     {
-        string Translate(string text, int originalLanguage, int translationLanguage);
+        string Translate(string text, Language originalLanguage, Language translationLanguage);
     }
 }

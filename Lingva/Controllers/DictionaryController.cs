@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Lingva.Model;
@@ -11,32 +10,32 @@ namespace Lingva.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VocabularyController : ControllerBase
+    public class DictionaryController : ControllerBase
     {
         private readonly DBContext _context;
 
-        public VocabularyController(DBContext context)
+        public DictionaryController(DBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Vocabulary
+        // GET: api/Dictionary
         [HttpGet]
-        public IEnumerable<VocabularyRecord> GetVocabulary()
+        public IEnumerable<DictionaryRecord> GetDictionary()
         {
-            return _context.Vocabulary;
+            return _context.Dictionary;
         }
 
-        // GET: api/Vocabulary/5
+        // GET: api/Dictionary/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetVocabularyRecord([FromRoute] int id)
+        public async Task<IActionResult> GetDictionaryRecord([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var translation = await _context.Vocabulary.FindAsync(id);
+            var translation = await _context.Dictionary.FindAsync(id);
 
             if (translation == null)
             {
@@ -46,21 +45,21 @@ namespace Lingva.Controllers
             return Ok(translation);
         }
 
-        // PUT: api/Vocabulary/5
+        // PUT: api/Dictionary/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutVocabularyRecord([FromRoute] int id, [FromBody] VocabularyRecord vocabularyRecord)
+        public async Task<IActionResult> PutDictionaryRecord([FromRoute] int id, [FromBody] DictionaryRecord dictionaryRecord)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != vocabularyRecord.Id)
+            if (id != dictionaryRecord.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(vocabularyRecord).State = EntityState.Modified;
+            _context.Entry(dictionaryRecord).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +67,7 @@ namespace Lingva.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!VocabularyRecordExists(id))
+                if (!DictionaryRecordExists(id))
                 {
                     return NotFound();
                 }
@@ -81,45 +80,45 @@ namespace Lingva.Controllers
             return NoContent();
         }
 
-        // POST: api/Vocabulary
+        // POST: api/Dictionary
         [HttpPost]
-        public async Task<IActionResult> PostVocabularyRecord([FromBody] VocabularyRecord vocabularyRecord)
+        public async Task<IActionResult> PostDictionaryRecord([FromBody] DictionaryRecord dictionaryRecord)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Vocabulary.Add(vocabularyRecord);
+            _context.Dictionary.Add(dictionaryRecord);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTranslation", new { id = vocabularyRecord.Id }, vocabularyRecord);
+            return CreatedAtAction("GetTranslation", new { id = dictionaryRecord.Id }, dictionaryRecord);
         }
 
-        // DELETE: api/Vocabulary/5
+        // DELETE: api/Dictionary/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteVocabularyRecord([FromRoute] int id)
+        public async Task<IActionResult> DeleteDictionaryRecord([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var vocabularyRecord = await _context.Vocabulary.FindAsync(id);
-            if (vocabularyRecord == null)
+            var dictionaryRecord = await _context.Dictionary.FindAsync(id);
+            if (dictionaryRecord == null)
             {
                 return NotFound();
             }
 
-            _context.Vocabulary.Remove(vocabularyRecord);
+            _context.Dictionary.Remove(dictionaryRecord);
             await _context.SaveChangesAsync();
 
-            return Ok(vocabularyRecord);
+            return Ok(dictionaryRecord);
         }
 
-        private bool VocabularyRecordExists(int id)
+        private bool DictionaryRecordExists(int id)
         {
-            return _context.Vocabulary.Any(e => e.Id == id);
+            return _context.Dictionary.Any(e => e.Id == id);
         }
     }
 }

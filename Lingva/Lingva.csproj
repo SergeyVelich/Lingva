@@ -14,4 +14,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System.Speech">
+      <HintPath>..\..\..\Загрузки Опера\System.Speech.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

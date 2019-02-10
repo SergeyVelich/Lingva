@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace Lingva.Model
 {
-    public class Language
+    public class UserSet
     {
         [Key]
-        [StringLength(3)]
-        public string Name { get; set; }
+        public int Id { get; set; }
 
-        public virtual IEnumerable<Phrase> Phrases { get; set; }
-        public virtual IEnumerable<DictionaryRecord> TranslationDictionary { get; set; }
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public User Owner { get; set; }
+
+        public virtual IEnumerable<UserSetItem> UserSetItems { get; set; }
     }
 }

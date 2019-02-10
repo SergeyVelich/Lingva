@@ -6,18 +6,24 @@ using System.Threading.Tasks;
 
 namespace Lingva.Model
 {
-    public class VocabularyRecord
+    public class DictionaryRecord
     {
+        [Key]
         public int Id { get; set; }
+
         [Required]
         public User Owner { get; set; }
         [Required]
-        public string OriginalText { get; set; }
+        public Phrase OriginalPhrase { get; set; }
         [Required]
+        [StringLength(200)]
         public string TranslationText { get; set; }
         [Required]
-        public Languages OriginalLanguage { get; set; }
-        [Required]
-        public Languages TranslationLanguage { get; set; }
+        public Language TranslationLanguage { get; set; }
+        [StringLength(200)]
+        public string Context { get; set; }
+        public string Picture { get; set; }
+
+        public virtual IEnumerable<UserSetItem> UserSetItems { get; set; }
     }
 }
