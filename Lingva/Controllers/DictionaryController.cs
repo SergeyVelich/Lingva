@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Lingva.Model;
+using Microsoft.Extensions.Options;
 
 namespace Lingva.Controllers
 {
@@ -13,10 +14,12 @@ namespace Lingva.Controllers
     public class DictionaryController : ControllerBase
     {
         private readonly DBContext _context;
+        private readonly IOptions<StorageOptions> _storageOptions;
 
-        public DictionaryController(DBContext context)
+        public DictionaryController(DBContext context, IOptions<StorageOptions> storageOptions)
         {
             _context = context;
+            _storageOptions = storageOptions;
         }
 
         // GET: api/Dictionary
@@ -47,12 +50,14 @@ namespace Lingva.Controllers
 
         // PUT: api/Dictionary/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDictionaryRecord([FromRoute] int id, [FromBody] DictionaryRecord dictionaryRecord)
+        public async Task<IActionResult> PutDictionaryRecord([FromRoute] int id, [FromBody] Record record)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            DictionaryRecord dictionaryRecord = GetDictionaryRecord(id, record);
 
             if (id != dictionaryRecord.Id)
             {
@@ -82,12 +87,14 @@ namespace Lingva.Controllers
 
         // POST: api/Dictionary
         [HttpPost]
-        public async Task<IActionResult> PostDictionaryRecord([FromBody] DictionaryRecord dictionaryRecord)
-        {
+        public async Task<IActionResult> PostDictionaryRecord([FromBody] Record record)
+        {            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            DictionaryRecord dictionaryRecord = CreateDictionaryRecord(record);
 
             _context.Dictionary.Add(dictionaryRecord);
             await _context.SaveChangesAsync();
@@ -119,6 +126,60 @@ namespace Lingva.Controllers
         private bool DictionaryRecordExists(int id)
         {
             return _context.Dictionary.Any(e => e.Id == id);
+        }
+
+        public struct Record
+        {
+            public int Owner { get; set; }
+            public string OriginalPhrase { get; set; }
+            public string TranslationText { get; set; }
+            public string TranslationLanguage { get; set; }
+            public string Context { get; set; }
+            public string Picture { get; set; }
+        }
+
+        private DictionaryRecord CreateDictionaryRecord(Record record)
+        {
+            DictionaryRecord dictionaryRecord = new DictionaryRecord();
+
+            FillDictionaryRecord(dictionaryRecord, record);
+
+            return dictionaryRecord;
+        }
+
+        private DictionaryRecord GetDictionaryRecord(int id, Record record)
+        {
+            DictionaryRecord dictionaryRecord = _context.Dictionary.Find(id);
+            if (dictionaryRecord == null)
+            {
+                return null;
+            }
+
+            FillDictionaryRecord(dictionaryRecord, record);
+
+            return dictionaryRecord;
+        }
+
+        private void FillDictionaryRecord(DictionaryRecord dictionaryRecord, Record record)
+        {
+            User owner = _context.Users
+                          .Where(c => c.Id == record.Owner)
+                          .FirstOrDefault();
+
+            Phrase phrase = _context.Phrases
+                            .Where(c => c.Name == record.OriginalPhrase)
+                            .FirstOrDefault();
+
+            Language language = _context.Languages
+                                .Where(c => c.Name == record.TranslationLanguage)
+                                .FirstOrDefault();
+
+            dictionaryRecord.Owner = owner;
+            dictionaryRecord.OriginalPhrase = phrase;
+            dictionaryRecord.TranslationText = record.TranslationText;
+            dictionaryRecord.TranslationLanguage = language;
+            dictionaryRecord.Context = record.Context;
+            dictionaryRecord.Picture = record.Picture;
         }
     }
 }

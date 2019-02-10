@@ -10,6 +10,13 @@ namespace Lingva.Model
 {
     public class TranslaterYandex : ITranslater
     {
+        private readonly string _serviceKey;
+
+        public TranslaterYandex(string serviceKey)
+        {
+            _serviceKey = serviceKey;
+        }
+        
         public string Translate(string text, Language originalLanguage, Language translationLanguage)
         {
             if (text.Length == 0)
@@ -18,7 +25,7 @@ namespace Lingva.Model
             }
 
             WebRequest request = WebRequest.Create("https://translate.yandex.net/api/v1.5/tr.json/translate?"
-                + "key=trnsl.1.1.20170125T084253Z.cc366274cc3474e9.68d49c802348b39b5d677c856e0805c433b7618c"
+                + "key=" + _serviceKey
                 + "&text=" + text
                 + "&lang=" + translationLanguage.Name);
 

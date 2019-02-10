@@ -10,6 +10,13 @@ namespace Lingva.Model
 {
     public class TranslaterGoogle : ITranslater
     {
+        private readonly string _serviceKey;
+
+        public TranslaterGoogle(string serviceKey)
+        {
+            _serviceKey = serviceKey;
+        }
+
         public string Translate(string text, Language originalLanguage, Language translationLanguage)
         {
             if (text.Length == 0)
@@ -18,7 +25,7 @@ namespace Lingva.Model
             }
 
             WebRequest request = WebRequest.Create("https://translation.googleapis.com/language/translate/v2/?"
-                + "key=AIzaSyAeW7Gac7Nu7CoIwi7oTi6GEfsibWLgrkw"//?? to find later
+                + "key=" + _serviceKey//?? to find later
                 + "&q=" + text
                 + "&source=" + originalLanguage.Name
                 + "&target=" + translationLanguage.Name);

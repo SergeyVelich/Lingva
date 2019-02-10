@@ -9,7 +9,9 @@ namespace Lingva.Model
     public class DBContext : DbContext
     {
         public DbSet<DictionaryRecord> Dictionary { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Language> Languages { get; set; }
+        public DbSet<Phrase> Phrases { get; set; }
 
         public DBContext(DbContextOptions<DBContext> options)
             : base(options)
