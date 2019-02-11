@@ -35,7 +35,7 @@ namespace Lingva.Controllers
                 return BadRequest(ModelState);
             }
 
-            IVoiceSynthesizer voiceSynthesizer = new VoiceSynthesizerGoogle(_storageOptions.Value.ServicesYandexKey);
+            IVoiceSynthesizer voiceSynthesizer = new VoiceSynthesizerGoogle(_storageOptions.Value.ServicesGoogleKey);
 
             try
             {

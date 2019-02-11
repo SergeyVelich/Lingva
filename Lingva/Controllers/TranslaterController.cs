@@ -46,7 +46,7 @@ namespace Lingva.Controllers
 
             try
             {
-                strTranslation = translater.Translate(text, originalLanguage, translationLanguage);
+                strTranslation = await Task.Run(() => translater.Translate(text, originalLanguage, translationLanguage));
                 return Ok(strTranslation);
             }
             catch
