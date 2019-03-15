@@ -1,4 +1,4 @@
-﻿namespace Lingva.BC.Models.Enums
+﻿namespace Lingva.BC.Common.Enums
 {
     public enum TranslaterServices
     {

@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Lingva.DAL.Entities;
 using System.Collections.Generic;
-using System.Text;
-using Lingva.DAL.Entities;
 
 namespace Lingva.BC.Contracts
 {

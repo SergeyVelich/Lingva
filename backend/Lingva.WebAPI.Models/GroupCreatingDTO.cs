@@ -1,4 +1,4 @@
-﻿namespace Lingva.WebAPI.Dto
+﻿namespace Lingva.WebAPI.Models
 {
     public class GroupCreatingDTO
     {

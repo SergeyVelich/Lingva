@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using Lingva.DAL.Entities;
-using Lingva.MVC.Dto;
-
-namespace Lingva.MVC
+﻿namespace Lingva.MVC
 {
     public class MappingProfile : Profile
     {

@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Lingva.BC\Lingva.BC.csproj" />
     <ProjectReference Include="..\Lingva.DAL\Lingva.DAL.csproj" />
+    <ProjectReference Include="..\Lingva.DataAccessLayer\Lingva.DAL.csproj" />
   </ItemGroup>
 
 </Project>

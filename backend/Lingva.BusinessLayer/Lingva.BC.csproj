@@ -19,11 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lingva.DAL\Lingva.DAL.csproj" />
+    <Folder Include="DTO\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\" />
+    <ProjectReference Include="..\Lingva.DataAccessLayer\Lingva.DAL.csproj" />
   </ItemGroup>
 
 </Project>
