@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Lingva.BusinessLayer;
+using Lingva.BusinessLayer.Contracts;
+using Lingva.BusinessLayer.Models.Enums;
 using Lingva.BusinessLayer.Services;
+using Lingva.WebAPI.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Lingva.BusinessLayer.Contracts;
-using Lingva.WebAPI.Extensions;
-using Lingva.DataAccessLayer.Repositories;
-using Lingva.DataAccessLayer.Entities;
-using Lingva.BusinessLayer.Models.Enums;
+using System;
 
 namespace Lingva.WebAPI
 {
@@ -32,14 +28,16 @@ namespace Lingva.WebAPI
             services.ConfigureCors();
             services.ConfigureSqlContext(Configuration);
             services.ConfigureOptions(Configuration);
+            //services.ConfigureJwt(services.);
             services.ConfigureAutoMapper();
             services.ConfigureLoggerService();
-            services.ConfigureUnitOfWork();
+            services.ConfigureUnitsOfWork();
             services.ConfigureRepositories();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddTransient<IDictionaryService, DictionaryService>();
+            services.AddTransient<IGroupManagementService, GroupManagementService>();
             services.AddTransient<ILivesearchService, LivesearchService>();
             
             services.AddTransient<TranslaterGoogleService>();
@@ -55,9 +53,7 @@ namespace Lingva.WebAPI
                     default:
                         return null;
                 }
-            });
-
-            services.AddTransient<IGroupsCollectionService, GroupsCollectionService>();
+            }); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

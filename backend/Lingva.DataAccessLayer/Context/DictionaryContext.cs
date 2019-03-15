@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Lingva.DataAccessLayer.Entities;
+﻿using Lingva.DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lingva.DataAccessLayer.Context

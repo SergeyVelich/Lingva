@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Lingva.BusinessLayer.Contracts;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+﻿using Lingva.BusinessLayer.Contracts;
 using Lingva.BusinessLayer.Models.Enums;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {

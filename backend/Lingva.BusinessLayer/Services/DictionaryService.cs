@@ -1,11 +1,7 @@
 ﻿using Lingva.BusinessLayer.Contracts;
 using Lingva.DataAccessLayer.Entities;
-using Lingva.DataAccessLayer.Repositories;
-using Microsoft.EntityFrameworkCore;
-using System;
+using Lingva.DataAccessLayer.UnitsOfWork.Contracts;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Lingva.BusinessLayer.Services
 {

@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Group info";
+}
+<h2>Group info</h2>
+
+<form method="post" class="form-horizontal" role="form">
+    <input type="hidden" readonly value="@Model.Id" name="Id" />
+    <div class="form-group">
+        <label for="Title" class="col-md-2 control-label">Title:</label>
+        <div class="col-md-4">
+            <input type="text" name="Title" class="form-control" readonly value="@Model.Title" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Description" class="col-md-2 control-label">Description:</label>
+        <div class="col-md-4">
+            <input type="text" name="Description" class="form-control" readonly value="@Model.Description" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Picture:</label>
+        <div class="col-md-4">
+            <input type="text" name="Picture" class="form-control" readonly value="@Model.Picture" />
+        </div>
+    </div>
+</form>

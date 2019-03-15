@@ -1,10 +1,6 @@
 ﻿using Lingva.BusinessLayer.Contracts;
-using Lingva.DataAccessLayer.Repositories;
-using System;
+using Lingva.DataAccessLayer.UnitsOfWork.Contracts;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
 
 namespace Lingva.BusinessLayer.Services
 {

@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using Lingva.DataAccessLayer.Entities;
 using Lingva.WebAPI.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Lingva.WebAPI
 {
