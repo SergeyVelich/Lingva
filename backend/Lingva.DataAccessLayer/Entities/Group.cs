@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Lingva.DataAccessLayer.Entities
+namespace Lingva.DAL.Entities
 {
     public class Group
     {

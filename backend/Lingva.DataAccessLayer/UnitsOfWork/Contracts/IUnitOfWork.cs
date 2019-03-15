@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lingva.DataAccessLayer.UnitsOfWork.Contracts
+namespace Lingva.DAL.UnitsOfWork.Contracts
 {
     public interface IUnitOfWork : IDisposable
     {

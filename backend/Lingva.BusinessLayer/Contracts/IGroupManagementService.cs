@@ -1,7 +1,7 @@
-﻿using Lingva.DataAccessLayer.Entities;
+﻿using Lingva.DAL.Entities;
 using System.Collections.Generic;
 
-namespace Lingva.BusinessLayer.Contracts
+namespace Lingva.BC.Contracts
 {
     public interface IGroupManagementService
     {

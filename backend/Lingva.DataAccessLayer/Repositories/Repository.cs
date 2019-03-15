@@ -1,11 +1,11 @@
-﻿using Lingva.DataAccessLayer.Context;
-using Lingva.DataAccessLayer.Repositories.Contracts;
+﻿using Lingva.DAL.Context;
+using Lingva.DAL.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Lingva.DataAccessLayer.Repositories
+namespace Lingva.DAL.Repositories
 {
     public abstract class Repository<T> : IRepository<T> 
         where T : class

@@ -1,5 +1,5 @@
-﻿using Lingva.BusinessLayer.Contracts;
-using Lingva.BusinessLayer.Models.Enums;
+﻿using Lingva.BC.Contracts;
+using Lingva.BC.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;

@@ -1,7 +1,7 @@
-﻿using Lingva.BusinessLayer;
-using Lingva.BusinessLayer.Contracts;
-using Lingva.BusinessLayer.Models.Enums;
-using Lingva.BusinessLayer.Services;
+﻿using Lingva.BC;
+using Lingva.BC.Contracts;
+using Lingva.BC.Models.Enums;
+using Lingva.BC.Services;
 using Lingva.WebAPI.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

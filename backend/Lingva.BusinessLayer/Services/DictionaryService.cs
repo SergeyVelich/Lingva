@@ -1,9 +1,9 @@
-﻿using Lingva.BusinessLayer.Contracts;
-using Lingva.DataAccessLayer.Entities;
-using Lingva.DataAccessLayer.UnitsOfWork.Contracts;
+﻿using Lingva.BC.Contracts;
+using Lingva.DAL.Entities;
+using Lingva.DAL.UnitsOfWork.Contracts;
 using System.Collections.Generic;
 
-namespace Lingva.BusinessLayer.Services
+namespace Lingva.BC.Services
 {
     public class DictionaryService : IDictionaryService
     {

@@ -1,5 +1,5 @@
-﻿using Lingva.BusinessLayer.Contracts;
-using Lingva.BusinessLayer.Services;
+﻿using Lingva.BC.Contracts;
+using Lingva.BC.Services;
 using Lingva.MVC.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

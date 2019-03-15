@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace Lingva.BusinessLayer.Contracts
+namespace Lingva.BC.Contracts
 {
     public interface ILivesearchService
     {

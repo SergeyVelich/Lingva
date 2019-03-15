@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Lingva.BusinessLayer.Contracts;
-using Lingva.DataAccessLayer.Entities;
+using Lingva.BC.Contracts;
+using Lingva.DAL.Entities;
 using Lingva.MVC.Dto;
 using Microsoft.AspNetCore.Mvc;
 using System;

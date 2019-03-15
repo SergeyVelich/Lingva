@@ -1,4 +1,4 @@
-﻿namespace Lingva.BusinessLayer
+﻿namespace Lingva.BC
 {
     public class StorageOptions
     {

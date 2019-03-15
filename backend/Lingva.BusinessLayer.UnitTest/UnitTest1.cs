@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Lingva.BusinessLayer.UnitTest
+namespace Lingva.BC.UnitTest
 {
     public class UnitTest1
     {

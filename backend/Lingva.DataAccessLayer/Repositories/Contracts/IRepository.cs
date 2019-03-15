@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Lingva.DataAccessLayer.Repositories.Contracts
+namespace Lingva.DAL.Repositories.Contracts
 {
     public interface IRepository<T>
         where T : class

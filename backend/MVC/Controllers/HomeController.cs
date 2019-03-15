@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Lingva.BusinessLayer.Contracts;
+using Lingva.BC.Contracts;
 using Lingva.MVC.Dto;
 using Lingva.MVC.Models;
 using Microsoft.AspNetCore.Mvc;

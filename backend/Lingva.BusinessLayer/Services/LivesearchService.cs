@@ -1,8 +1,8 @@
-﻿using Lingva.BusinessLayer.Contracts;
-using Lingva.DataAccessLayer.UnitsOfWork.Contracts;
+﻿using Lingva.BC.Contracts;
+using Lingva.DAL.UnitsOfWork.Contracts;
 using System.Collections;
 
-namespace Lingva.BusinessLayer.Services
+namespace Lingva.BC.Services
 {
     public class LivesearchService : ILivesearchService
     {

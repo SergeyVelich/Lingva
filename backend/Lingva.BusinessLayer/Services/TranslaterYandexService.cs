@@ -1,10 +1,10 @@
-﻿using Lingva.BusinessLayer.Contracts;
+﻿using Lingva.BC.Contracts;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.IO;
 using System.Net;
 
-namespace Lingva.BusinessLayer.Services
+namespace Lingva.BC.Services
 {
     public class TranslaterYandexService : ITranslaterService
     {

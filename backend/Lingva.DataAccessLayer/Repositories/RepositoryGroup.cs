@@ -1,8 +1,8 @@
-﻿using Lingva.DataAccessLayer.Context;
-using Lingva.DataAccessLayer.Entities;
-using Lingva.DataAccessLayer.Repositories.Contracts;
+﻿using Lingva.DAL.Context;
+using Lingva.DAL.Entities;
+using Lingva.DAL.Repositories.Contracts;
 
-namespace Lingva.DataAccessLayer.Repositories
+namespace Lingva.DAL.Repositories
 {
     public class RepositoryGroup : Repository<Group>, IRepositoryGroup
     {

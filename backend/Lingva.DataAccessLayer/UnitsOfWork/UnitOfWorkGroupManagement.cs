@@ -1,9 +1,9 @@
-﻿using Lingva.DataAccessLayer.Context;
-using Lingva.DataAccessLayer.Repositories.Contracts;
-using Lingva.DataAccessLayer.UnitsOfWork.Contracts;
+﻿using Lingva.DAL.Context;
+using Lingva.DAL.Repositories.Contracts;
+using Lingva.DAL.UnitsOfWork.Contracts;
 using System;
 
-namespace Lingva.DataAccessLayer.UnitsOfWork
+namespace Lingva.DAL.UnitsOfWork
 {
     public class UnitOfWorkGroupManagement : IUnitOfWorkGroupManagement
     {

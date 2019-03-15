@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Lingva.DataAccessLayer.Entities;
+using Lingva.DAL.Entities;
 
-namespace Lingva.BusinessLayer.Contracts
+namespace Lingva.BC.Contracts
 {
     public interface IUserService
     {

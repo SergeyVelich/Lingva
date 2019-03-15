@@ -1,6 +1,6 @@
-﻿using Lingva.DataAccessLayer.Repositories.Contracts;
+﻿using Lingva.DAL.Repositories.Contracts;
 
-namespace Lingva.DataAccessLayer.UnitsOfWork.Contracts
+namespace Lingva.DAL.UnitsOfWork.Contracts
 {
     public interface IUnitOfWorkGroupManagement : IUnitOfWork
     {

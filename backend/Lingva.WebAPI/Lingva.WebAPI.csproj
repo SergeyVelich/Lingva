@@ -1,10 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <UserSecretsId>aa7142be-c864-42fa-8714-90824b0d1eb0</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Helpers\**" />
+    <Content Remove="Helpers\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <None Remove="Helpers\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
@@ -15,12 +22,11 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Security\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lingva.BusinessLayer\Lingva.BusinessLayer.csproj" />
-    <ProjectReference Include="..\Lingva.DataAccessLayer\Lingva.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\Lingva.BC\Lingva.BC.csproj" />
+    <ProjectReference Include="..\Lingva.DAL\Lingva.DAL.csproj" />
   </ItemGroup>
 
 </Project>

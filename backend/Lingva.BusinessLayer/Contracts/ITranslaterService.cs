@@ -1,4 +1,4 @@
-﻿namespace Lingva.BusinessLayer.Contracts
+﻿namespace Lingva.BC.Contracts
 {
     public interface ITranslaterService
     {
