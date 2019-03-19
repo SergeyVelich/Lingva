@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Lingva.BC;
+using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
 using Lingva.DAL.Context;
 using Lingva.DAL.Repositories;
@@ -9,6 +11,7 @@ using Lingva.MVC.Mapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.MVC.Extensions
@@ -30,13 +33,17 @@ namespace Lingva.MVC.Extensions
 
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
         {
-            string connection = config.GetConnectionString("DefaultConnection");
-            services.AddDbContext<DictionaryContext>(options => options.UseSqlServer(connection));
-        }
+            string configStringValue = config.GetConnectionString("LingvaConnection");
+            string configVariableName = configStringValue.GetVariableName();
+            string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
+
+            services.AddDbContext<DictionaryContext>(options =>
+                options.UseSqlServer(connectionStringValue));
+    }
 
         public static void ConfigureOptions(this IServiceCollection services, IConfiguration config)
         {
-            //services.Configure<StorageOptions>(config.GetSection("StorageConfig"));
+            services.Configure<StorageOptions>(config.GetSection("StorageConfig"));
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection services)

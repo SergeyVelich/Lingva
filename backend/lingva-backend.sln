@@ -41,7 +41,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Models.Mapper", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Mapper", "MVC\Lingva.MVC.Mapper\Lingva.MVC.Mapper.csproj", "{5645584E-909A-4D0B-8DB4-43CB1288B938}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lingva.MVC.Models", "MVC\Lingva.MVC.Models\Lingva.MVC.Models.csproj", "{06F6E2C7-9F3E-46D6-911D-E30EF0AB8A26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Models", "MVC\Lingva.MVC.Models\Lingva.MVC.Models.csproj", "{06F6E2C7-9F3E-46D6-911D-E30EF0AB8A26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceExtensions", "ServiceExtensions\ServiceExtensions.csproj", "{FA3AAC7C-8E54-4510-B7D1-72B46E32285D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,6 +115,10 @@ Global
 		{06F6E2C7-9F3E-46D6-911D-E30EF0AB8A26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06F6E2C7-9F3E-46D6-911D-E30EF0AB8A26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06F6E2C7-9F3E-46D6-911D-E30EF0AB8A26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA3AAC7C-8E54-4510-B7D1-72B46E32285D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA3AAC7C-8E54-4510-B7D1-72B46E32285D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA3AAC7C-8E54-4510-B7D1-72B46E32285D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA3AAC7C-8E54-4510-B7D1-72B46E32285D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
