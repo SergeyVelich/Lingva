@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Lingva.MVC.ViewModel.GroupViewModel>
+@{
+    ViewData["Title"] = "Group's List";
+}
+<!DOCTYPE html>
+
+<h3>Groups</h3>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Picture)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Picture)
+            </td>
+            <td>
+                @Html.ActionLink("Update", "Update", new { id = item.Id })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
