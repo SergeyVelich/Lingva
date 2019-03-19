@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Lingva.BC.DTO;
-using Lingva.MVC.ViewModel;
+using Lingva.MVC.ViewModel.Request;
+using Lingva.MVC.ViewModel.Response;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.MVC.Mapper.Adapters
@@ -13,6 +14,9 @@ namespace Lingva.MVC.Mapper.Adapters
         {
             CreateMap<GroupDTO, GroupViewModel>();
             CreateMap<GroupViewModel, GroupDTO>();
+
+            CreateMap<GroupDTO, GroupCreateViewModel>();
+            CreateMap<GroupCreateViewModel, GroupDTO>();           
         }
     }
 }

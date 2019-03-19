@@ -4,6 +4,7 @@ using Lingva.Common.Mapping;
 using Lingva.DAL.Entities;
 using Lingva.DAL.UnitsOfWork.Contracts;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Lingva.BC.Services
 {
@@ -18,41 +19,41 @@ namespace Lingva.BC.Services
             _dataAdapter = dataAdapter;
         }
 
-        public IEnumerable<GroupDTO> GetGroupsList()
+        public async Task<IEnumerable<GroupDTO>> GetGroupsListAsync()
         {
-            IEnumerable<Group> groups = _unitOfWork.Groups.GetList();
+            IEnumerable<Group> groups = await _unitOfWork.Groups.GetListAsync();
             return _dataAdapter.Map<IEnumerable<GroupDTO>>(groups);
         }
 
-        public GroupDTO GetGroup(int id)
+        public async Task<GroupDTO> GetGroupAsync(int id)
         {
-            Group group = _unitOfWork.Groups.Get(id);
+            Group group = await _unitOfWork.Groups.GetByIdAsync(id);
             return _dataAdapter.Map<GroupDTO>(group);
         }
 
-        public GroupDTO AddGroup(GroupDTO groupDTO)
+        public async Task<GroupDTO> AddGroupAsync(GroupDTO groupDTO)
         {
             var group = _dataAdapter.Map<Group>(groupDTO);
             var result = _unitOfWork.Groups.Create(group);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
 
             return _dataAdapter.Map<GroupDTO>(result);
         }
 
-        public GroupDTO UpdateGroup(int id, GroupDTO updateGroupDTO)
+        public async Task<GroupDTO> UpdateGroupAsync(int id, GroupDTO updateGroupDTO)
         {
-            Group currentGroup = _unitOfWork.Groups.Get(id);
+            Group currentGroup = await _unitOfWork.Groups.GetByIdAsync(id);
             Group updateGroup = _dataAdapter.Map<Group>(updateGroupDTO);
             _dataAdapter.Update<Group>(updateGroup, currentGroup);
             _unitOfWork.Groups.Update(currentGroup);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
 
             return _dataAdapter.Map<GroupDTO>(currentGroup);
         }
 
-        public void DeleteGroup(int id)
+        public async Task DeleteGroupAsync(int id)
         {
-            Group group = _unitOfWork.Groups.Get(id);
+            Group group = await _unitOfWork.Groups.GetByIdAsync(id);
 
             if (group == null)
             {
@@ -60,7 +61,7 @@ namespace Lingva.BC.Services
             }
 
             _unitOfWork.Groups.Delete(group);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using Lingva.BC.Contracts;
 using Lingva.BC.DTO;
 using Lingva.Common.Mapping;
-using Lingva.MVC.ViewModel;
+using Lingva.MVC.ViewModel.Request;
+using Lingva.MVC.ViewModel.Response;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace Lingva.MVC.Controllers
 {
-    //[Route("groups")]
     public class GroupController : Controller
     {
         private readonly IGroupService _groupService;
@@ -22,18 +22,18 @@ namespace Lingva.MVC.Controllers
         }
 
         // GET: group
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var groups = _groupService.GetGroupsList();
+            var groups = await _groupService.GetGroupsListAsync();
 
             return View(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groups));
         }
 
         // GET: group/get?id=2
         [HttpGet]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            GroupDTO group = _groupService.GetGroup(id);
+            GroupDTO group = await _groupService.GetGroupAsync(id);
 
             if (group == null)
             {
@@ -52,7 +52,7 @@ namespace Lingva.MVC.Controllers
 
         // POST: group/Create
         [HttpPost]
-        public async Task<IActionResult> Create(GroupViewModel groupViewModel)
+        public async Task<IActionResult> Create(GroupCreateViewModel groupCreateViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -61,34 +61,34 @@ namespace Lingva.MVC.Controllers
 
             try
             {
-                GroupDTO group = _dataAdapter.Map<GroupDTO>(groupViewModel);
-                await Task.Run(() => _groupService.AddGroup(group));
+                GroupDTO group = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
+                await _groupService.AddGroupAsync(group);
             }
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
 
-            return Redirect("Index");
+            return Redirect("/Group/Index");
         }
 
         // GET: group/Update?id=2
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            GroupDTO group = _groupService.GetGroup(id);
+            GroupDTO group = await _groupService.GetGroupAsync(id);
 
             if (group == null)
             {
                 return NotFound();
             }
 
-            return View(_dataAdapter.Map<GroupViewModel>(group));
+            return View(_dataAdapter.Map<GroupCreateViewModel>(group));
         }
 
         // POST: group/Update
         [HttpPost]
-        public async Task<IActionResult> Update(GroupViewModel groupViewModel)
+        public async Task<IActionResult> Update(GroupCreateViewModel groupCreateViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -97,18 +97,18 @@ namespace Lingva.MVC.Controllers
 
             try
             {
-                GroupDTO groupDTO = _dataAdapter.Map<GroupDTO>(groupViewModel);
-                await Task.Run(() => _groupService.UpdateGroup(groupDTO.Id, groupDTO));
+                GroupDTO groupDTO = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
+                await _groupService.UpdateGroupAsync(groupDTO.Id, groupDTO);
             }
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
 
-            return Redirect("Index");
+            return Redirect("/Group/Index");
         }
 
-        // POST: groups/Delete/1
+        // POST: groups/Delete?id=2
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -119,14 +119,14 @@ namespace Lingva.MVC.Controllers
 
             try
             {
-                await Task.Run(() => _groupService.DeleteGroup(id));
+                await _groupService.DeleteGroupAsync(id);
             }
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
 
-            return Redirect("Index");
+            return Redirect("/Group/Index");
         }
     }
 }

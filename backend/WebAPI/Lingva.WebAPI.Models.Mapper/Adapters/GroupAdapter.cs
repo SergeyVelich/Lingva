@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Lingva.BC.DTO;
-using Lingva.WebAPI.ViewModel;
+using Lingva.WebAPI.ViewModel.Request;
+using Lingva.WebAPI.ViewModel.Response;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.WebAPI.Mapper.Adapters
@@ -13,6 +14,9 @@ namespace Lingva.WebAPI.Mapper.Adapters
         {
             CreateMap<GroupDTO, GroupViewModel>();
             CreateMap<GroupViewModel, GroupDTO>();
+
+            CreateMap<GroupDTO, GroupCreateViewModel>();
+            CreateMap<GroupCreateViewModel, GroupDTO>();
         }
     }
 }

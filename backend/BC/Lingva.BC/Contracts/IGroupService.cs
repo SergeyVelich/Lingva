@@ -1,18 +1,19 @@
 ﻿using Lingva.BC.DTO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Lingva.BC.Contracts
 {
     public interface IGroupService
     {
-        IEnumerable<GroupDTO> GetGroupsList();
+        Task<IEnumerable<GroupDTO>> GetGroupsListAsync();
 
-        GroupDTO GetGroup(int id);
+        Task<GroupDTO> GetGroupAsync(int id);
 
-        GroupDTO AddGroup(GroupDTO group);
+        Task<GroupDTO> AddGroupAsync(GroupDTO group);
 
-        GroupDTO UpdateGroup(int id, GroupDTO group);
+        Task<GroupDTO> UpdateGroupAsync(int id, GroupDTO group);
 
-        void DeleteGroup(int id);
+        Task DeleteGroupAsync(int id);
     }
 }

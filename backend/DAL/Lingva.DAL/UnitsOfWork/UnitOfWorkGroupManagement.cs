@@ -2,6 +2,7 @@
 using Lingva.DAL.Repositories.Contracts;
 using Lingva.DAL.UnitsOfWork.Contracts;
 using System;
+using System.Threading.Tasks;
 
 namespace Lingva.DAL.UnitsOfWork
 {
@@ -24,6 +25,11 @@ namespace Lingva.DAL.UnitsOfWork
         public void Save()
         {
             _context.SaveChanges();
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
         }
 
         protected virtual void Dispose(bool disposing)

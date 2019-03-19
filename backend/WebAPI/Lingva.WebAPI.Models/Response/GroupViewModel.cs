@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.MVC.ViewModel
+namespace Lingva.WebAPI.ViewModel.Response
 {
     [ExcludeFromCodeCoverage]
     public class GroupViewModel

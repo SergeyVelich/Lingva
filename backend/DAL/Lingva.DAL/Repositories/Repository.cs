@@ -2,8 +2,10 @@
 using Lingva.DAL.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Lingva.DAL.Repositories
 {
@@ -19,24 +21,46 @@ namespace Lingva.DAL.Repositories
             _entities = context.Set<T>();
         }
 
-        public virtual IQueryable<T> GetList()
+        public virtual IEnumerable<T> GetList(Expression<Func<T, bool>> predicator = null)
         {
-            return _entities.AsNoTracking();
+            IQueryable<T> result = _entities.AsNoTracking();
+
+            if (predicator != null)
+            {
+                result.Where(predicator);
+            }
+            return result.ToList();
         }
 
-        public virtual IQueryable<T> GetList(Expression<Func<T, bool>> predicator)
+        public virtual async Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> predicator = null)
         {
-            return _entities.Where(predicator).AsNoTracking();
+            IQueryable<T> result = _entities.AsNoTracking();
+
+            if (predicator != null)
+            {
+                result.Where(predicator);
+            }
+            return await result.ToListAsync();
         }
 
-        public virtual T Get(object id)
+        public virtual T GetById(int id)
         {
             return _entities.Find((int)id);
+        }
+
+        public virtual async Task<T> GetByIdAsync(int id)
+        {
+            return await _entities.FindAsync((int)id);
         }
 
         public virtual T Get(Expression<Func<T, bool>> predicator)
         {
             return _entities.Where(predicator).FirstOrDefault();
+        }
+
+        public virtual async Task<T> GetAsync(Expression<Func<T, bool>> predicator)
+        {
+            return await _entities.Where(predicator).FirstOrDefaultAsync();
         }
 
         public virtual T Create(T entity)
@@ -54,7 +78,7 @@ namespace Lingva.DAL.Repositories
         public virtual T Update(T entity)
         {
             _entities.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
+            _entities.Update(entity);
 
             return entity;
         }

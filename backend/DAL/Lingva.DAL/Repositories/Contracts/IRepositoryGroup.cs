@@ -4,5 +4,6 @@ namespace Lingva.DAL.Repositories.Contracts
 {
     public interface IRepositoryGroup : IRepository<Group>
     {
+        
     }
 }
