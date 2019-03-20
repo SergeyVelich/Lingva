@@ -6,14 +6,14 @@ namespace Lingva.BC.Contracts
 {
     public interface IGroupService
     {
-        Task<IEnumerable<GroupDTO>> GetGroupsListAsync();
+        Task<IEnumerable<GroupDTO>> GetListAsync();
 
-        Task<GroupDTO> GetGroupAsync(int id);
+        Task<GroupDTO> GetByIdAsync(int id);
 
-        Task<GroupDTO> AddGroupAsync(GroupDTO group);
+        Task<GroupDTO> AddAsync(GroupDTO groupDTO);
 
-        Task<GroupDTO> UpdateGroupAsync(int id, GroupDTO group);
+        Task<GroupDTO> UpdateAsync(int id, GroupDTO groupDTO);
 
-        Task DeleteGroupAsync(int id);
+        Task DeleteAsync(int id);
     }
 }

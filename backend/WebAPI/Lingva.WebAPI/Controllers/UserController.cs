@@ -11,30 +11,30 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {
-    //[Authorize]
-    [Route("api/group")]
+    [Authorize]
+    [Route("api/user")]
     [ApiController]
-    public class GroupController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IGroupService _groupService;
+        private readonly IUserService _userService;
         private readonly IDataAdapter _dataAdapter;
 
-        public GroupController(IGroupService groupService, IDataAdapter dataAdapter)
+        public UserController(IUserService userService, IDataAdapter dataAdapter)
         {
-            _groupService = groupService;
+            _userService = userService;
             _dataAdapter = dataAdapter;
         }
 
-        // GET: api/group
+        // GET: api/user
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var groups = await _groupService.GetListAsync();
+            var users = await _userService.GetListAsync();
 
-            return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groups));
+            return Ok(_dataAdapter.Map<IEnumerable<UserViewModel>>(users));
         }
 
-        // GET: api/group?id=2
+        // GET: api/user?id=2
         [HttpGet("get")]
         public async Task<IActionResult> Get([FromQuery] int id)
         {
@@ -43,19 +43,19 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            GroupDTO group = await _groupService.GetByIdAsync(id);
+            UserDTO user = await _userService.GetByIdAsync(id);
 
-            if (group == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return Ok(_dataAdapter.Map<GroupViewModel>(group));
+            return Ok(_dataAdapter.Map<UserViewModel>(user));
         }
 
-        // POST: api/group/create
+        // POST: api/user/create
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] GroupCreateViewModel groupCreateViewModel)
+        public async Task<IActionResult> Create([FromBody] UserCreateViewModel userCreateViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -64,8 +64,8 @@ namespace Lingva.WebAPI.Controllers
 
             try
             {
-                GroupDTO group = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
-                await _groupService.AddAsync(group);
+                UserDTO user = _dataAdapter.Map<UserDTO>(userCreateViewModel);
+                await _userService.AddAsync(user);
             }
             catch (ArgumentException ex)
             {
@@ -75,9 +75,9 @@ namespace Lingva.WebAPI.Controllers
             return Ok();
         }
 
-        // PUT: api/group/update
+        // PUT: api/user/update
         [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody] GroupCreateViewModel groupCreateViewModel)
+        public async Task<IActionResult> Update([FromBody] UserCreateViewModel userCreateViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -86,8 +86,8 @@ namespace Lingva.WebAPI.Controllers
 
             try
             {
-                GroupDTO group = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
-                await _groupService.UpdateAsync(group.Id, group);
+                UserDTO user = _dataAdapter.Map<UserDTO>(userCreateViewModel);
+                await _userService.UpdateAsync(user.Id, user);
             }
             catch (ArgumentException ex)
             {
@@ -97,7 +97,7 @@ namespace Lingva.WebAPI.Controllers
             return Ok();
         }
 
-        // DELETE: api/group?id=2
+        // DELETE: api/user?id=2
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete([FromQuery] int id)
         {
@@ -108,7 +108,7 @@ namespace Lingva.WebAPI.Controllers
 
             try
             {
-                await _groupService.DeleteAsync(id);
+                await _userService.DeleteAsync(id);
             }
             catch (ArgumentException ex)
             {

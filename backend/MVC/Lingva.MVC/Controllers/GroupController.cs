@@ -3,6 +3,7 @@ using Lingva.BC.DTO;
 using Lingva.Common.Mapping;
 using Lingva.MVC.ViewModel.Request;
 using Lingva.MVC.ViewModel.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.MVC.Controllers
 {
+    [Authorize]
     public class GroupController : Controller
     {
         private readonly IGroupService _groupService;
@@ -24,7 +26,7 @@ namespace Lingva.MVC.Controllers
         // GET: group
         public async Task<IActionResult> Index()
         {
-            var groups = await _groupService.GetGroupsListAsync();
+            var groups = await _groupService.GetListAsync();
 
             return View(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groups));
         }
@@ -33,14 +35,14 @@ namespace Lingva.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int id)
         {
-            GroupDTO group = await _groupService.GetGroupAsync(id);
+            GroupDTO groupDTO = await _groupService.GetByIdAsync(id);
 
-            if (group == null)
+            if (groupDTO == null)
             {
                 return NotFound();
             }
 
-            return View(_dataAdapter.Map<GroupViewModel>(group));
+            return View(_dataAdapter.Map<GroupViewModel>(groupDTO));
         }
 
         // GET: group/Create
@@ -61,8 +63,8 @@ namespace Lingva.MVC.Controllers
 
             try
             {
-                GroupDTO group = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
-                await _groupService.AddGroupAsync(group);
+                GroupDTO groupDTO = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
+                await _groupService.AddAsync(groupDTO);
             }
             catch (ArgumentException ex)
             {
@@ -76,14 +78,14 @@ namespace Lingva.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
-            GroupDTO group = await _groupService.GetGroupAsync(id);
+            GroupDTO groupDTO = await _groupService.GetByIdAsync(id);
 
-            if (group == null)
+            if (groupDTO == null)
             {
                 return NotFound();
             }
 
-            return View(_dataAdapter.Map<GroupCreateViewModel>(group));
+            return View(_dataAdapter.Map<GroupCreateViewModel>(groupDTO));
         }
 
         // POST: group/Update
@@ -98,7 +100,7 @@ namespace Lingva.MVC.Controllers
             try
             {
                 GroupDTO groupDTO = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
-                await _groupService.UpdateGroupAsync(groupDTO.Id, groupDTO);
+                await _groupService.UpdateAsync(groupDTO.Id, groupDTO);
             }
             catch (ArgumentException ex)
             {
@@ -119,7 +121,7 @@ namespace Lingva.MVC.Controllers
 
             try
             {
-                await _groupService.DeleteGroupAsync(id);
+                await _groupService.DeleteAsync(id);
             }
             catch (ArgumentException ex)
             {

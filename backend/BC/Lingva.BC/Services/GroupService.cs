@@ -10,28 +10,28 @@ namespace Lingva.BC.Services
 {
     public class GroupService : IGroupService
     {
-        private readonly IUnitOfWorkGroupManagement _unitOfWork;
+        private readonly IUnitOfWorkGroup _unitOfWork;
         private readonly IDataAdapter _dataAdapter;
            
-        public GroupService(IUnitOfWorkGroupManagement unitOfWork, IDataAdapter dataAdapter)
+        public GroupService(IUnitOfWorkGroup unitOfWork, IDataAdapter dataAdapter)
         {
             _unitOfWork = unitOfWork;
             _dataAdapter = dataAdapter;
         }
 
-        public async Task<IEnumerable<GroupDTO>> GetGroupsListAsync()
+        public async Task<IEnumerable<GroupDTO>> GetListAsync()
         {
             IEnumerable<Group> groups = await _unitOfWork.Groups.GetListAsync();
             return _dataAdapter.Map<IEnumerable<GroupDTO>>(groups);
         }
 
-        public async Task<GroupDTO> GetGroupAsync(int id)
+        public async Task<GroupDTO> GetByIdAsync(int id)
         {
             Group group = await _unitOfWork.Groups.GetByIdAsync(id);
             return _dataAdapter.Map<GroupDTO>(group);
         }
 
-        public async Task<GroupDTO> AddGroupAsync(GroupDTO groupDTO)
+        public async Task<GroupDTO> AddAsync(GroupDTO groupDTO)
         {
             var group = _dataAdapter.Map<Group>(groupDTO);
             var result = _unitOfWork.Groups.Create(group);
@@ -40,7 +40,7 @@ namespace Lingva.BC.Services
             return _dataAdapter.Map<GroupDTO>(result);
         }
 
-        public async Task<GroupDTO> UpdateGroupAsync(int id, GroupDTO updateGroupDTO)
+        public async Task<GroupDTO> UpdateAsync(int id, GroupDTO updateGroupDTO)
         {
             Group currentGroup = await _unitOfWork.Groups.GetByIdAsync(id);
             Group updateGroup = _dataAdapter.Map<Group>(updateGroupDTO);
@@ -51,7 +51,7 @@ namespace Lingva.BC.Services
             return _dataAdapter.Map<GroupDTO>(currentGroup);
         }
 
-        public async Task DeleteGroupAsync(int id)
+        public async Task DeleteAsync(int id)
         {
             Group group = await _unitOfWork.Groups.GetByIdAsync(id);
 

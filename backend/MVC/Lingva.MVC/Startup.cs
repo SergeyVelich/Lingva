@@ -1,4 +1,5 @@
-﻿using Lingva.BC.Contracts;
+﻿using Lingva.BC.Auth;
+using Lingva.BC.Contracts;
 using Lingva.BC.Services;
 using Lingva.MVC.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -27,12 +28,19 @@ namespace Lingva.MVC
             services.ConfigureCors();
             services.ConfigureSqlContext(Configuration);
             services.ConfigureOptions(Configuration);
+            services.ConfigureAuthEncodingKey(Configuration);
+
+
+            services.ConfigureAuthDecodingKey(Configuration);
+            services.ConfigureAuthOptions(Configuration);
+            services.ConfigureAuthJwt(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureLoggerService();
             services.ConfigureUnitsOfWork();
             services.ConfigureRepositories();
 
             services.AddTransient<IGroupService, GroupService>();
+            services.AddTransient<IAuthService, AuthService>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -58,10 +66,11 @@ namespace Lingva.MVC
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseCookiePolicy();
             app.UseHttpsRedirection();
-
             app.UseMvcWithDefaultRoute();
         }
     }

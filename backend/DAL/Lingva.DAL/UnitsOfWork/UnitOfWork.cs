@@ -6,28 +6,23 @@ using System.Threading.Tasks;
 
 namespace Lingva.DAL.UnitsOfWork
 {
-    public class UnitOfWorkGroupManagement : IUnitOfWorkGroupManagement
+    public abstract class UnitOfWork : IUnitOfWork
     {
-        private static DictionaryContext _context;
+        protected static DictionaryContext _context;
 
-        private bool disposed = false;
+        protected bool disposed = false;
 
-        private readonly IRepositoryGroup _groups;
-
-        public UnitOfWorkGroupManagement(DictionaryContext context, IRepositoryGroup groups)
+        public UnitOfWork(DictionaryContext context)
         {
             _context = context;
-            _groups = groups;
         }
 
-        public IRepositoryGroup Groups { get => _groups; }
-
-        public void Save()
+        public virtual void Save()
         {
             _context.SaveChanges();
         }
 
-        public async Task SaveAsync()
+        public virtual async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
         }

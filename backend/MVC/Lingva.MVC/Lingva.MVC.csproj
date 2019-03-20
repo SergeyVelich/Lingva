@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>ae1ceff2-174b-46d0-8b57-9b8758094378</UserSecretsId>
   </PropertyGroup>
 
 
@@ -15,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\BC\Lingva.Common\Lingva.Common.csproj" />
     <ProjectReference Include="..\..\DAL\Lingva.DAL\Lingva.DAL.csproj" />
+    <ProjectReference Include="..\..\WebAPI\Lingva.WebAPI.Models\Lingva.WebAPI.Models.csproj" />
     <ProjectReference Include="..\Lingva.MVC.Mapper\Lingva.MVC.Mapper.csproj" />
   </ItemGroup>
 

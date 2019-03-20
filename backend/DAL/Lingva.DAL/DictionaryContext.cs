@@ -5,6 +5,7 @@ namespace Lingva.DAL.Context
 {
     public class DictionaryContext : DbContext
     {
+        public DbSet<User> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
 
         public DictionaryContext(DbContextOptions<DictionaryContext> options)

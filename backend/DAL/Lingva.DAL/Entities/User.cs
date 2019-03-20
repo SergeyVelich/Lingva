@@ -1,21 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Lingva.DAL.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.DataAccessLayer.Entities
+namespace Lingva.DAL.Entities
 {
     [ExcludeFromCodeCoverage]
     public class User
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        [StringLength(50)]
+        public string Login { get; set; }
+        public byte[] PasswordHash { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Username { get; set; }
-        [MaxLength(16)]
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
     }
 }

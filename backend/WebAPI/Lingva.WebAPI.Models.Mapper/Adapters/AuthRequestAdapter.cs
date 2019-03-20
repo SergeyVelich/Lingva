@@ -1,20 +1,17 @@
 ﻿using AutoMapper;
-using Lingva.BC.DTO;
+using Lingva.BC.Auth;
 using Lingva.WebAPI.ViewModel.Request;
-using Lingva.WebAPI.ViewModel.Response;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.WebAPI.Mapper.Adapters
 {
     [ExcludeFromCodeCoverage]
-    public class GroupAdapter : Profile
+    public class AuthRequestAdapter : Profile
     {
         [ExcludeFromCodeCoverage]
-        public GroupAdapter()
+        public AuthRequestAdapter()
         {
-            CreateMap<GroupDTO, GroupViewModel>();
-
-            CreateMap<GroupCreateViewModel, GroupDTO>();
+            CreateMap<AuthRequestViewModel, AuthRequest>();
         }
     }
 }
