@@ -97,6 +97,13 @@ namespace Lingva.WebAPI.Extensions
                         ClockSkew = TimeSpan.FromSeconds(5)
                     };
                 });
+
+            //services.AddAuthorization(auth =>
+            //{
+            //    auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+            //        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
+            //        .RequireAuthenticatedUser().Build());
+            //});
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection services)
@@ -114,6 +121,7 @@ namespace Lingva.WebAPI.Extensions
         {
             services.AddScoped<IUnitOfWorkGroup, UnitOfWorkGroup>();
             services.AddScoped<IUnitOfWorkAuth, UnitOfWorkAuth>();
+            services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)

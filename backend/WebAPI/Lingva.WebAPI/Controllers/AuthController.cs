@@ -31,7 +31,7 @@ namespace Lingva.WebAPI.Controllers
             }
 
             AuthRequest authRequest = _dataAdapter.Map<AuthRequest>(authRequestViewModel);
-            JwtToken token = _authService.Authenticate(authRequest);
+            string token = _authService.Authenticate(authRequest);
 
             if (token == null)
             {

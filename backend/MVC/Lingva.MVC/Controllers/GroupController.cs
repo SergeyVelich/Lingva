@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.MVC.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class GroupController : Controller
     {
         private readonly IGroupService _groupService;

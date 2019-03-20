@@ -1,5 +1,6 @@
 ﻿using Lingva.BC.Auth;
 using Lingva.BC.Contracts;
+using Lingva.BC.Crypto;
 using Lingva.BC.Services;
 using Lingva.MVC.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -41,6 +42,7 @@ namespace Lingva.MVC
 
             services.AddTransient<IGroupService, GroupService>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IDefaultCryptoProvider, DefaultCryptoProvider>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

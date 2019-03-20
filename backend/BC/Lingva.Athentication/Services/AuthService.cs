@@ -1,11 +1,11 @@
 ﻿using Lingva.BC.Auth;
+using Lingva.BC.Crypto;
 using Lingva.DAL.UnitsOfWork.Contracts;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 
 namespace Lingva.BC.Services
 {
@@ -13,16 +13,18 @@ namespace Lingva.BC.Services
     {
         private readonly IUnitOfWorkAuth _unitOfWork;
         private readonly IJwtSigningEncodingKey _signingEncodingKey;
+        private readonly IDefaultCryptoProvider _defaultCryptoProvider;
         private readonly IOptions<AuthOptions> _authOptions;
 
-        public AuthService(IUnitOfWorkAuth unitOfWork, IJwtSigningEncodingKey signingEncodingKey, IOptions<AuthOptions> authOptions)
+        public AuthService(IUnitOfWorkAuth unitOfWork, IJwtSigningEncodingKey signingEncodingKey, IDefaultCryptoProvider defaultCryptoProvider, IOptions<AuthOptions> authOptions)
         {
             _unitOfWork = unitOfWork;
             _signingEncodingKey = signingEncodingKey;
+            _defaultCryptoProvider = defaultCryptoProvider;
             _authOptions = authOptions;
         }
 
-        public JwtToken Authenticate(AuthRequest authRequest)
+        public string Authenticate(AuthRequest authRequest)
         {           
             if (string.IsNullOrEmpty(authRequest.Login) || string.IsNullOrEmpty(authRequest.Password))
             {
@@ -36,7 +38,7 @@ namespace Lingva.BC.Services
                 return null;
             }
 
-            if (!VerifyPasswordHash(authRequest.Password, user.PasswordHash))
+            if (!VerifyPasswordHash(authRequest.Password, user.Salt, user.PasswordHash))
             {
                 return null;
             }
@@ -44,51 +46,42 @@ namespace Lingva.BC.Services
             ClaimsData claimsData = new ClaimsData
             { NameIdentifier = user.Id.ToString() };
 
-            string tokenString = GetUserToken(claimsData);
-
-            JwtToken token = new JwtToken()
-            {
-                Id = user.Id,
-                Login = user.Login,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Token = tokenString
-            };
+            string token = GetUserToken(claimsData);
 
             return token;
         }
 
-        private static bool VerifyPasswordHash(string password, byte[] storedPasswordHash)
+        private bool VerifyPasswordHash(string password, byte[] salt, byte[] storedPasswordHash)
         {
             if (string.IsNullOrWhiteSpace(password))
             {
                 throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
             }
 
-            //using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
-            //{
-            //    var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            //    for (int i = 0; i < computedHash.Length; i++)
-            //    {
-            //        if (computedHash[i] != storedPasswordHash[i]) return false;
-            //    }
-            //}
+            byte[] computedHash = _defaultCryptoProvider.GetHashHMACSHA512(password, salt);
+            for (int i = 0; i < computedHash.Length; i++)
+            {
+                if (computedHash[i] != storedPasswordHash[i])
+                {
+                    return false;
+                }
+            }
 
             return true;
         }
 
-        public string GetUserToken(ClaimsData claimsData)
+        private string GetUserToken(ClaimsData claimsData)
         {
-            var claims = new Claim[]
+            Claim[] claims = new Claim[]
             {
                 new Claim(ClaimTypes.NameIdentifier, claimsData.NameIdentifier)
             };
 
-            var token = new JwtSecurityToken(
-                issuer: "DemoApp",
-                audience: "DemoAppClient",
+            JwtSecurityToken token = new JwtSecurityToken(
+                issuer: _authOptions.Value.Issuer,
+                audience: _authOptions.Value.Audience,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(5),
+                expires: DateTime.Now.AddMinutes(_authOptions.Value.Lifetime),
                 signingCredentials: new SigningCredentials(_signingEncodingKey.GetKey(), _signingEncodingKey.SigningAlgorithm)
             );
 

@@ -11,6 +11,7 @@ namespace Lingva.DAL.Context
         public DictionaryContext(DbContextOptions<DictionaryContext> options)
             : base(options)
         {
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 

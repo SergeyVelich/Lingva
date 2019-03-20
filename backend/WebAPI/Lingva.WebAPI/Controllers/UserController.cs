@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase

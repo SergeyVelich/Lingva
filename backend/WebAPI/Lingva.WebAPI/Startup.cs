@@ -1,5 +1,6 @@
 ﻿using Lingva.BC.Auth;
 using Lingva.BC.Contracts;
+using Lingva.BC.Crypto;
 using Lingva.BC.Services;
 using Lingva.WebAPI.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -41,6 +42,8 @@ namespace Lingva.WebAPI
 
             services.AddTransient<IGroupService, GroupService>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IDefaultCryptoProvider, DefaultCryptoProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +62,19 @@ namespace Lingva.WebAPI
             app.UseCookiePolicy();
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            //app.UseJwtBearerAuthentication(new JwtBearerOptions
+            //{
+            //    TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        IssuerSigningKey = TokenAuthOption.Key,
+            //        ValidAudience = TokenAuthOption.Audience,
+            //        ValidIssuer = TokenAuthOption.Issuer,
+            //        ValidateIssuerSigningKey = true,
+            //        ValidateLifetime = true,
+            //        ClockSkew = TimeSpan.FromMinutes(0)
+            //    }
+            //});
         }
     }
 }

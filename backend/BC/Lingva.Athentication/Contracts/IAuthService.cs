@@ -2,6 +2,6 @@
 {
     public interface IAuthService
     {
-        JwtToken Authenticate(AuthRequest authRequest);
+        string Authenticate(AuthRequest authRequest);
     }
 }
