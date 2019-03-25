@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.1" />
     <PackageReference Include="Serilog" Version="2.8.0" />
   </ItemGroup>
 
@@ -26,6 +27,12 @@
     <ProjectReference Include="..\..\BC\Lingva.BC\Lingva.BC.csproj" />
     <ProjectReference Include="..\..\BC\Lingva.Common\Lingva.Common.csproj" />
     <ProjectReference Include="..\Lingva.WebAPI.Mapper\Lingva.WebAPI.Mapper.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,7 @@ using Lingva.MVC.ViewModel.Request;
 using Lingva.MVC.ViewModel.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,19 +17,21 @@ namespace Lingva.MVC.Controllers
     {
         private readonly IGroupService _groupService;
         private readonly IDataAdapter _dataAdapter;
+        private readonly ILogger<GroupController> _logger;
 
-        public GroupController(IGroupService groupService, IDataAdapter dataAdapter)
+        public GroupController(IGroupService groupService, IDataAdapter dataAdapter, ILogger<GroupController> logger)
         {
             _groupService = groupService;
-            _dataAdapter = dataAdapter;
+            _logger = logger;
         }
 
         // GET: group
         public async Task<IActionResult> Index()
         {
-            var groups = await _groupService.GetListAsync();
+            throw new Exception("Something is wrong");
+            //IEnumerable<GroupDTO> groups = await _groupService.GetListAsync();
 
-            return View(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groups));
+            //return View(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groups));
         }
 
         // GET: group/get?id=2

@@ -1,5 +1,4 @@
-﻿using Lingva.BC.Auth;
-using Lingva.BC.Contracts;
+﻿using Lingva.BC.Contracts;
 using Lingva.BC.Crypto;
 using Lingva.BC.Services;
 using Lingva.MVC.Extensions;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.MVC
@@ -29,11 +29,6 @@ namespace Lingva.MVC
             services.ConfigureCors();
             services.ConfigureSqlContext(Configuration);
             services.ConfigureOptions(Configuration);
-            services.ConfigureAuthEncodingKey(Configuration);
-
-
-            services.ConfigureAuthDecodingKey(Configuration);
-            services.ConfigureAuthOptions(Configuration);
             services.ConfigureAuthJwt(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureLoggerService();
@@ -41,7 +36,8 @@ namespace Lingva.MVC
             services.ConfigureRepositories();
 
             services.AddTransient<IGroupService, GroupService>();
-            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUserService, UserService>();
+
             services.AddTransient<IDefaultCryptoProvider, DefaultCryptoProvider>();
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -51,12 +47,11 @@ namespace Lingva.MVC
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {

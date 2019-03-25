@@ -5,31 +5,34 @@ using Lingva.WebAPI.ViewModel.Request;
 using Lingva.WebAPI.ViewModel.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/group")]
     [ApiController]
     public class GroupController : ControllerBase
     {
         private readonly IGroupService _groupService;
         private readonly IDataAdapter _dataAdapter;
+        private readonly ILogger<GroupController> _logger;
 
-        public GroupController(IGroupService groupService, IDataAdapter dataAdapter)
+        public GroupController(IGroupService groupService, IDataAdapter dataAdapter, ILogger<GroupController> logger)
         {
             _groupService = groupService;
             _dataAdapter = dataAdapter;
+            _logger = logger;
         }
 
         // GET: api/group
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var groups = await _groupService.GetListAsync();
+            IEnumerable<GroupDTO> groups = await _groupService.GetListAsync();
 
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groups));
         }

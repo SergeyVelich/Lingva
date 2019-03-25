@@ -33,11 +33,11 @@ namespace Lingva.BC.Services
 
         public async Task<GroupDTO> AddAsync(GroupDTO groupDTO)
         {
-            var group = _dataAdapter.Map<Group>(groupDTO);
-            var result = _unitOfWork.Groups.Create(group);
+            Group group = _dataAdapter.Map<Group>(groupDTO);
+            _unitOfWork.Groups.Create(group);
             await _unitOfWork.SaveAsync();
 
-            return _dataAdapter.Map<GroupDTO>(result);
+            return _dataAdapter.Map<GroupDTO>(group);
         }
 
         public async Task<GroupDTO> UpdateAsync(int id, GroupDTO updateGroupDTO)

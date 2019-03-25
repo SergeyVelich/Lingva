@@ -4,21 +4,24 @@ using Lingva.WebAPI.ViewModel.Request;
 using Lingva.WebAPI.ViewModel.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Lingva.WebAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/auth")]
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
         private readonly IDataAdapter _dataAdapter;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IAuthService authService, IDataAdapter dataAdapter)
+        public AuthController(IAuthService authService, IDataAdapter dataAdapter, ILogger<AuthController> logger)
         {
             _authService = authService;
             _dataAdapter = dataAdapter;
+            _logger = logger;
         }
 
         [AllowAnonymous]

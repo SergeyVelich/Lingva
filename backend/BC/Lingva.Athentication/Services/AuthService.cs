@@ -1,5 +1,6 @@
 ﻿using Lingva.BC.Auth;
 using Lingva.BC.Crypto;
+using Lingva.DAL.Entities;
 using Lingva.DAL.UnitsOfWork.Contracts;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -31,7 +32,7 @@ namespace Lingva.BC.Services
                 return null;
             }
 
-            var user = _unitOfWork.Users.Get(x => x.Login == authRequest.Login);
+            User user = _unitOfWork.Users.Get(x => x.Login == authRequest.Login);
 
             if (user == null)
             {
@@ -85,7 +86,7 @@ namespace Lingva.BC.Services
                 signingCredentials: new SigningCredentials(_signingEncodingKey.GetKey(), _signingEncodingKey.SigningAlgorithm)
             );
 
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            string tokenString = new JwtSecurityTokenHandler().WriteToken(token);
             return tokenString;
         }
     }

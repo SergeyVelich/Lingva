@@ -3,6 +3,7 @@ using Lingva.Common.Mapping;
 using Lingva.MVC.ViewModel.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Lingva.MVC.Controllers
 {
@@ -11,11 +12,13 @@ namespace Lingva.MVC.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IDataAdapter _dataAdapter;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IAuthService authService, IDataAdapter dataAdapter)
+        public AuthController(IAuthService authService, IDataAdapter dataAdapter, ILogger<AuthController> logger)
         {
             _authService = authService;
             _dataAdapter = dataAdapter;
+            _logger = logger;
         }
 
         [AllowAnonymous]

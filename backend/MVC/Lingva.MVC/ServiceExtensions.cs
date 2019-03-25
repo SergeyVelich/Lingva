@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Lingva.BC;
 using Lingva.BC.Auth;
+using Lingva.BC.Services;
 using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
 using Lingva.DAL.Context;
@@ -49,48 +50,47 @@ namespace Lingva.MVC.Extensions
             services.Configure<StorageOptions>(config.GetSection("StorageConfig"));
         }
 
-        public static void ConfigureAuthEncodingKey(this IServiceCollection services, IConfiguration config)
-        {
-            string signingSecurityKey = config.GetSection("EncodingKey").Value;
-            var signingKey = new SigningSymmetricKey(signingSecurityKey);
-            services.AddSingleton<IJwtSigningEncodingKey>(signingKey);
-        }
-
-        public static void ConfigureAuthDecodingKey(this IServiceCollection services, IConfiguration config)
-        {
-            string signingSecurityKey = config.GetSection("DecodingKey").Value;
-            var signingKey = new SigningSymmetricKey(signingSecurityKey);
-            services.AddSingleton<IJwtSigningDecodingKey>(signingKey);
-        }
-
-        public static void ConfigureAuthOptions(this IServiceCollection services, IConfiguration config)
-        {
-            services.Configure<AuthOptions>(config.GetSection("AuthOptions"));
-        }
-
         public static void ConfigureAuthJwt(this IServiceCollection services, IConfiguration config)
         {
-            string signingSecurityKey = config.GetSection("DecodingKey").Value;
-            var signingKey = new SigningSymmetricKey(signingSecurityKey);
+            services.AddTransient<IAuthService, AuthService>();            
+
+            string signingEncodingSecurityKey = config.GetSection("EncodingKey").Value;
+            SigningSymmetricKey signingEncodingKey = new SigningSymmetricKey(signingEncodingSecurityKey);
+            services.AddSingleton<IJwtSigningEncodingKey>(signingEncodingKey);
+
+            string signingDecodingSecurityKey = config.GetSection("DecodingKey").Value;
+            SigningSymmetricKey signingDecodingKey = new SigningSymmetricKey(signingDecodingSecurityKey);
+            services.AddSingleton<IJwtSigningDecodingKey>(signingDecodingKey);
+
+            AuthOptions authOptions = new AuthOptions()
+            {
+
+                Issuer = config.GetSection("AuthOptions:Issuer").Value,
+                Audience = config.GetSection("AuthOptions:Audience").Value,
+                Lifetime = Int32.Parse(config.GetSection("AuthOptions:Lifetime").Value)
+            };
+
+            services.Configure<AuthOptions>(config.GetSection("AuthOptions"));
 
             const string jwtSchemeName = JwtBearerDefaults.AuthenticationScheme;
-            var signingDecodingKey = (IJwtSigningDecodingKey)signingKey;
             services
-                .AddAuthentication(options => {
+                .AddAuthentication(options =>
+                {
                     options.DefaultAuthenticateScheme = jwtSchemeName;
                     options.DefaultChallengeScheme = jwtSchemeName;
                 })
-                .AddJwtBearer(jwtSchemeName, jwtBearerOptions => {
+                .AddJwtBearer(jwtSchemeName, jwtBearerOptions =>
+                {
                     jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = signingDecodingKey.GetKey(),
 
                         ValidateIssuer = true,
-                        ValidIssuer = "DemoApp",
+                        ValidIssuer = authOptions.Issuer,
 
                         ValidateAudience = true,
-                        ValidAudience = "DemoAppClient",
+                        ValidAudience = authOptions.Audience,
 
                         ValidateLifetime = true,
 
@@ -114,6 +114,7 @@ namespace Lingva.MVC.Extensions
         {
             services.AddScoped<IUnitOfWorkGroup, UnitOfWorkGroup>();
             services.AddScoped<IUnitOfWorkAuth, UnitOfWorkAuth>();
+            services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)

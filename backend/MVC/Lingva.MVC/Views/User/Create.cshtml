@@ -1,0 +1,45 @@
+﻿@model Lingva.MVC.ViewModel.Request.UserCreateViewModel
+
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<h2>Create new user</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Login)
+                </dt>
+                <dd>
+                    <input type="text" name="Login" class="form-control" />
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Password)
+                </dt>
+                <dd>
+                    <input type="text" name="Password" class="form-control" />
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
+                <dd>
+                    <input type="text" name="FirstName" class="form-control" />
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
+                <dd>
+                    <input type="text" name="LastName" class="form-control" />
+                </dd>
+            </dl>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>

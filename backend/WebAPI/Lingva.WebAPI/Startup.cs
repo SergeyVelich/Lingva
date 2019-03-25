@@ -29,9 +29,6 @@ namespace Lingva.WebAPI
             services.ConfigureCors();
             services.ConfigureSqlContext(Configuration);
             services.ConfigureOptions(Configuration);
-            services.ConfigureAuthEncodingKey(Configuration);
-            services.ConfigureAuthDecodingKey(Configuration);
-            services.ConfigureAuthOptions(Configuration);
             services.ConfigureAuthJwt(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureLoggerService();
@@ -40,14 +37,14 @@ namespace Lingva.WebAPI
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddTransient<IGroupService, GroupService>();
-            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IGroupService, GroupService>();            
             services.AddTransient<IUserService, UserService>();
+
             services.AddTransient<IDefaultCryptoProvider, DefaultCryptoProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             // loggerFactory.AddProvider(); // TODO: use Serilog
 
@@ -62,19 +59,6 @@ namespace Lingva.WebAPI
             app.UseCookiePolicy();
             app.UseHttpsRedirection();
             app.UseMvc();
-
-            //app.UseJwtBearerAuthentication(new JwtBearerOptions
-            //{
-            //    TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        IssuerSigningKey = TokenAuthOption.Key,
-            //        ValidAudience = TokenAuthOption.Audience,
-            //        ValidIssuer = TokenAuthOption.Issuer,
-            //        ValidateIssuerSigningKey = true,
-            //        ValidateLifetime = true,
-            //        ClockSkew = TimeSpan.FromMinutes(0)
-            //    }
-            //});
         }
     }
 }

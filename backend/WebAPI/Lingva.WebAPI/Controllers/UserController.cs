@@ -5,6 +5,7 @@ using Lingva.WebAPI.ViewModel.Request;
 using Lingva.WebAPI.ViewModel.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,18 +19,20 @@ namespace Lingva.WebAPI.Controllers
     {
         private readonly IUserService _userService;
         private readonly IDataAdapter _dataAdapter;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(IUserService userService, IDataAdapter dataAdapter)
+        public UserController(IUserService userService, IDataAdapter dataAdapter, ILogger<UserController> logger)
         {
             _userService = userService;
             _dataAdapter = dataAdapter;
+            _logger = logger;
         }
 
         // GET: api/user
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var users = await _userService.GetListAsync();
+            IEnumerable<UserDTO> users = await _userService.GetListAsync();
 
             return Ok(_dataAdapter.Map<IEnumerable<UserViewModel>>(users));
         }
@@ -79,43 +82,47 @@ namespace Lingva.WebAPI.Controllers
         [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UserCreateViewModel userCreateViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            throw new NotImplementedException("");
 
-            try
-            {
-                UserDTO user = _dataAdapter.Map<UserDTO>(userCreateViewModel);
-                await _userService.UpdateAsync(user.Id, user);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
-            return Ok();
+            //try
+            //{
+            //    UserDTO user = _dataAdapter.Map<UserDTO>(userCreateViewModel);
+            //    await _userService.UpdateAsync(user.Id, user);
+            //}
+            //catch (ArgumentException ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
+
+            //return Ok();
         }
 
         // DELETE: api/user?id=2
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete([FromQuery] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            throw new NotImplementedException("");
 
-            try
-            {
-                await _userService.DeleteAsync(id);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
-            return Ok();
+            //try
+            //{
+            //    await _userService.DeleteAsync(id);
+            //}
+            //catch (ArgumentException ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
+
+            //return Ok();
         }
     }
 }
