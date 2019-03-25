@@ -8,11 +8,11 @@ namespace Lingva.DAL.UnitsOfWork
 {
     public abstract class UnitOfWork : IUnitOfWork
     {
-        protected static DictionaryContext _context;
+        protected static ApplicationDbContext _context;
 
         protected bool disposed = false;
 
-        public UnitOfWork(DictionaryContext context)
+        public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
         }

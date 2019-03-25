@@ -6,13 +6,13 @@ namespace Lingva.DAL.UnitsOfWork
 {
     public class UnitOfWorkAuth : UnitOfWork, IUnitOfWorkAuth
     {
-        private readonly IRepositoryUser _users;
+        private readonly IRepositoryAccount _accounts;
 
-        public UnitOfWorkAuth(DictionaryContext context, IRepositoryUser users) : base(context)
+        public UnitOfWorkAuth(ApplicationDbContext context, IRepositoryAccount accounts) : base(context)
         {
-            _users = users;
+            _accounts = accounts;
         }
 
-        public IRepositoryUser Users { get => _users; }
+        public IRepositoryAccount Accounts { get => _accounts; }
     }
 }

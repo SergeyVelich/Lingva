@@ -6,7 +6,7 @@ namespace Lingva.DAL.Repositories
 {
     public class RepositoryGroup : Repository<Group>, IRepositoryGroup
     {
-        public RepositoryGroup(DictionaryContext context) : base(context)
+        public RepositoryGroup(ApplicationDbContext context) : base(context)
         {
 
         }

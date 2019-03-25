@@ -2,7 +2,7 @@
 
 namespace Lingva.DAL.Repositories.Contracts
 {
-    public interface IRepositoryUser : IRepository<User>
+    public interface IRepositoryAccount : IRepository<Account>
     {
         
     }

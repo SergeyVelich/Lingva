@@ -1,6 +1,4 @@
-﻿using Lingva.BC.Auth;
-using Lingva.BC.Contracts;
-using Lingva.BC.Crypto;
+﻿using Lingva.BC.Contracts;
 using Lingva.BC.Services;
 using Lingva.WebAPI.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -8,7 +6,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.WebAPI
@@ -29,7 +26,7 @@ namespace Lingva.WebAPI
             services.ConfigureCors();
             services.ConfigureSqlContext(Configuration);
             services.ConfigureOptions(Configuration);
-            services.ConfigureAuthJwt(Configuration);
+            services.ConfigureIdentity(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureLoggerService();
             services.ConfigureUnitsOfWork();
@@ -38,9 +35,7 @@ namespace Lingva.WebAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddTransient<IGroupService, GroupService>();            
-            services.AddTransient<IUserService, UserService>();
-
-            services.AddTransient<IDefaultCryptoProvider, DefaultCryptoProvider>();
+            services.AddTransient<IAccountService, AccountService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +51,8 @@ namespace Lingva.WebAPI
             app.UseCors("CorsPolicy");
             app.UseStaticFiles();
             app.UseAuthentication();
+            //app.UseIdentity();
+            //app.UseIdentityServer();
             app.UseCookiePolicy();
             app.UseHttpsRedirection();
             app.UseMvc();

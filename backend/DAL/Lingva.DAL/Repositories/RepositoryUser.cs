@@ -4,9 +4,9 @@ using Lingva.DAL.Repositories.Contracts;
 
 namespace Lingva.DAL.Repositories
 {
-    public class RepositoryUser : Repository<User>, IRepositoryUser
+    public class RepositoryAccount : Repository<Account>, IRepositoryAccount
     {
-        public RepositoryUser(DictionaryContext context) : base(context)
+        public RepositoryAccount(ApplicationDbContext context) : base(context)
 
         {
 

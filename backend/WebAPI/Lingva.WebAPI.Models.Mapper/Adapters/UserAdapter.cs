@@ -7,14 +7,16 @@ using System.Diagnostics.CodeAnalysis;
 namespace Lingva.WebAPI.Mapper.Adapters
 {
     [ExcludeFromCodeCoverage]
-    public class UserAdapter : Profile
+    public class AccountAdapter : Profile
     {
         [ExcludeFromCodeCoverage]
-        public UserAdapter()
+        public AccountAdapter()
         {
-            CreateMap<UserDTO, UserViewModel>();
+            CreateMap<AccountDTO, AccountViewModel>();
 
-            CreateMap<UserCreateViewModel, UserDTO>();
+            CreateMap<LoginViewModel, AccountDTO>();
+
+            CreateMap<RegisterViewModel, AccountDTO>();
         }
     }
 }

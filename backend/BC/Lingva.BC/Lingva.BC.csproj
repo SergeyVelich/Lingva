@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\DAL\Lingva.DAL\Lingva.DAL.csproj" />
-    <ProjectReference Include="..\Lingva.Athentication\Lingva.BC.Auth.csproj" />
     <ProjectReference Include="..\Lingva.Common\Lingva.Common.csproj" />
   </ItemGroup>
 

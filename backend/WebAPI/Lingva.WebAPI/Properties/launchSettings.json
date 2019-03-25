@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/Lingva.WebAPI",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:62085",
       "sslPort": 0
@@ -12,7 +16,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/group",
+      "launchUrl": "api/account/register",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +24,7 @@
     "Lingva": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/group",
+      "launchUrl": "api/account/register",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

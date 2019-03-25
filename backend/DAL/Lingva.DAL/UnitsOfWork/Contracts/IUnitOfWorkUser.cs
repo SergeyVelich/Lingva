@@ -2,8 +2,8 @@
 
 namespace Lingva.DAL.UnitsOfWork.Contracts
 {
-    public interface IUnitOfWorkUser : IUnitOfWork
+    public interface IUnitOfWorkAccount : IUnitOfWork
     {
-        IRepositoryUser Users { get; }
+        IRepositoryAccount Accounts { get; }
     }
 }

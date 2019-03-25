@@ -10,7 +10,7 @@ namespace Lingva.DAL.UnitsOfWork
     {
         private readonly IRepositoryGroup _groups;
 
-        public UnitOfWorkGroup(DictionaryContext context, IRepositoryGroup groups) : base(context)
+        public UnitOfWorkGroup(ApplicationDbContext context, IRepositoryGroup groups) : base(context)
         {
             _groups = groups;
         }

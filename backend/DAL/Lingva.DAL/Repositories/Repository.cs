@@ -12,10 +12,10 @@ namespace Lingva.DAL.Repositories
     public abstract class Repository<T> : IRepository<T> 
         where T : class
     {
-        protected readonly DictionaryContext _context;
+        protected readonly ApplicationDbContext _context;
         protected readonly DbSet<T> _entities;
 
-        public Repository(DictionaryContext context)
+        public Repository(ApplicationDbContext context)
         {
             _context = context;
             _entities = context.Set<T>();

@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Lingva.DAL.UnitsOfWork
 {
-    public class UnitOfWorkUser : UnitOfWork, IUnitOfWorkUser
+    public class UnitOfWorkAccount : UnitOfWork, IUnitOfWorkAccount
     {
-        private readonly IRepositoryUser _users;
+        private readonly IRepositoryAccount _accounts;
 
-        public UnitOfWorkUser(DictionaryContext context, IRepositoryUser users) : base(context)
+        public UnitOfWorkAccount(ApplicationDbContext context, IRepositoryAccount accounts) : base(context)
         {
-            _users = users;
+            _accounts = accounts;
         }
 
-        public IRepositoryUser Users { get => _users; }
+        public IRepositoryAccount Accounts { get => _accounts; }
     }
 }
