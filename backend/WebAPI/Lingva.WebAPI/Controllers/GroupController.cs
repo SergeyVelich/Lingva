@@ -3,36 +3,41 @@ using Lingva.BC.DTO;
 using Lingva.Common.Mapping;
 using Lingva.WebAPI.ViewModel.Request;
 using Lingva.WebAPI.ViewModel.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/group")]
     [ApiController]
     public class GroupController : ControllerBase
     {
         private readonly IGroupService _groupService;
         private readonly IDataAdapter _dataAdapter;
+        private readonly ILogger<GroupController> _logger;
 
-        public GroupController(IGroupService groupService, IDataAdapter dataAdapter)
+        public GroupController(IGroupService groupService, IDataAdapter dataAdapter, ILogger<GroupController> logger)
         {
             _groupService = groupService;
             _dataAdapter = dataAdapter;
+            _logger = logger;
         }
 
         // GET: api/group
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var groups = await _groupService.GetGroupsListAsync();
+            IEnumerable<GroupDTO> groups = await _groupService.GetListAsync();
 
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groups));
         }
 
-        // GET: api/group?id=2
+        // GET: api/group/get?id=2
         [HttpGet("get")]
         public async Task<IActionResult> Get([FromQuery] int id)
         {
@@ -41,7 +46,7 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            GroupDTO group = await _groupService.GetGroupAsync(id);
+            GroupDTO group = await _groupService.GetByIdAsync(id);
 
             if (group == null)
             {
@@ -63,7 +68,7 @@ namespace Lingva.WebAPI.Controllers
             try
             {
                 GroupDTO group = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
-                await _groupService.AddGroupAsync(group);
+                await _groupService.AddAsync(group);
             }
             catch (ArgumentException ex)
             {
@@ -85,7 +90,7 @@ namespace Lingva.WebAPI.Controllers
             try
             {
                 GroupDTO group = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
-                await _groupService.UpdateGroupAsync(group.Id, group);
+                await _groupService.UpdateAsync(group.Id, group);
             }
             catch (ArgumentException ex)
             {
@@ -95,7 +100,7 @@ namespace Lingva.WebAPI.Controllers
             return Ok();
         }
 
-        // DELETE: api/group?id=2
+        // DELETE: api/group/delete?id=2
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete([FromQuery] int id)
         {
@@ -106,7 +111,7 @@ namespace Lingva.WebAPI.Controllers
 
             try
             {
-                await _groupService.DeleteGroupAsync(id);
+                await _groupService.DeleteAsync(id);
             }
             catch (ArgumentException ex)
             {

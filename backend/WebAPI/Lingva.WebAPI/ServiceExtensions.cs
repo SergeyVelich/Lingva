@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using IdentityServer4.AccessTokenValidation;
+using Lingva.BC;
 using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
 using Lingva.DAL.Context;
@@ -7,6 +9,7 @@ using Lingva.DAL.Repositories.Contracts;
 using Lingva.DAL.UnitsOfWork;
 using Lingva.DAL.UnitsOfWork.Contracts;
 using Lingva.WebAPI.Mapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,11 +41,16 @@ namespace Lingva.WebAPI.Extensions
 
             services.AddDbContext<DictionaryContext>(options =>
                 options.UseSqlServer(connectionStringValue));
-    }
+        }
 
         public static void ConfigureOptions(this IServiceCollection services, IConfiguration config)
         {
-            //services.Configure<StorageOptions>(config.GetSection("StorageConfig"));
+            services.Configure<StorageOptions>(config.GetSection("StorageConfig"));
+        }
+
+        public static void ConfigureIdentity(this IServiceCollection services, IConfiguration config)
+        {
+
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection services)
@@ -58,12 +66,15 @@ namespace Lingva.WebAPI.Extensions
 
         public static void ConfigureUnitsOfWork(this IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWorkGroupManagement, UnitOfWorkGroupManagement>();
+            services.AddScoped<IUnitOfWorkGroup, UnitOfWorkGroup>();
+            services.AddScoped<IUnitOfWorkAuth, UnitOfWorkAuth>();
+            services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryGroup, RepositoryGroup>();
+            services.AddScoped<IRepositoryUser, RepositoryUser>();
         }
     }
 }

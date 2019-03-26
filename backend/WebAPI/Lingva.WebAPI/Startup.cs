@@ -1,12 +1,12 @@
-﻿using Lingva.BC.Contracts;
+﻿using IdentityServer4.AccessTokenValidation;
+using Lingva.BC.Contracts;
+using Lingva.BC.Crypto;
 using Lingva.BC.Services;
 using Lingva.WebAPI.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.WebAPI
@@ -21,37 +21,43 @@ namespace Lingva.WebAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
             services.ConfigureSqlContext(Configuration);
             services.ConfigureOptions(Configuration);
+            services.ConfigureIdentity(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureLoggerService();
             services.ConfigureUnitsOfWork();
             services.ConfigureRepositories();
+           
+            services.AddTransient<IGroupService, GroupService>();            
+            services.AddTransient<IUserService, UserService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddTransient<IDefaultCryptoProvider, DefaultCryptoProvider>();
 
-            services.AddTransient<IGroupService, GroupService>();
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                    .AddIdentityServerAuthentication(options =>
+                    {
+                        options.Authority = "http://localhost:6050"; // Auth Server
+                        options.RequireHttpsMetadata = false;
+                        options.ApiName = "fiver_auth_api"; // API Resource Id
+                    });
+
+            services.AddMvc();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            // loggerFactory.AddProvider(); // TODO: use Serilog
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseCors("CorsPolicy");
-            app.UseStaticFiles();
-            app.UseCookiePolicy();
-            app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseAuthentication();
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

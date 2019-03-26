@@ -2,7 +2,7 @@
 
 namespace Lingva.DAL.UnitsOfWork.Contracts
 {
-    public interface IUnitOfWorkGroupManagement : IUnitOfWork
+    public interface IUnitOfWorkGroup : IUnitOfWork
     {
         IRepositoryGroup Groups { get; }
     }

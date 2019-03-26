@@ -8,11 +8,14 @@ using Lingva.DAL.Repositories.Contracts;
 using Lingva.DAL.UnitsOfWork;
 using Lingva.DAL.UnitsOfWork.Contracts;
 using Lingva.MVC.Mapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Lingva.MVC.Extensions
 {
@@ -39,11 +42,16 @@ namespace Lingva.MVC.Extensions
 
             services.AddDbContext<DictionaryContext>(options =>
                 options.UseSqlServer(connectionStringValue));
-    }
+        }
 
         public static void ConfigureOptions(this IServiceCollection services, IConfiguration config)
         {
             services.Configure<StorageOptions>(config.GetSection("StorageConfig"));
+        }
+
+        public static void ConfigureIdentity(this IServiceCollection services, IConfiguration config)
+        {
+
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection services)
@@ -59,12 +67,12 @@ namespace Lingva.MVC.Extensions
 
         public static void ConfigureUnitsOfWork(this IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWorkGroupManagement, UnitOfWorkGroupManagement>();
+
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IRepositoryGroup, RepositoryGroup>();
+
         }
     }
 }

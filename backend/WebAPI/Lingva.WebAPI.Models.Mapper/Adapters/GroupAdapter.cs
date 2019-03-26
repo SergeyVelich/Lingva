@@ -13,9 +13,7 @@ namespace Lingva.WebAPI.Mapper.Adapters
         public GroupAdapter()
         {
             CreateMap<GroupDTO, GroupViewModel>();
-            CreateMap<GroupViewModel, GroupDTO>();
 
-            CreateMap<GroupDTO, GroupCreateViewModel>();
             CreateMap<GroupCreateViewModel, GroupDTO>();
         }
     }

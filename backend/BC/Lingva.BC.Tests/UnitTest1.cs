@@ -15,7 +15,7 @@ namespace Lingva.BC.UnitTest
         [InlineData("one arg 2", "second arg 2")]
         public void Test2(string arg1, string arg2)
         {
-
+            bool a = arg1 == arg2;
         }
     }
 }
