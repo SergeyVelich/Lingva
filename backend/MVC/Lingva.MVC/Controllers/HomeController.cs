@@ -1,4 +1,5 @@
 ﻿using Lingva.MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
@@ -6,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.MVC.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -15,6 +17,7 @@ namespace Lingva.MVC.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();

@@ -1,8 +1,8 @@
 ﻿using Lingva.BC.Contracts;
-using Lingva.BC.DTO;
 using Lingva.Common.Mapping;
 using Lingva.MVC.ViewModel.Request;
 using Lingva.MVC.ViewModel.Response;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,21 +10,21 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Lingva.MVC.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class GroupController : Controller
     {
         private readonly IDataAdapter _dataAdapter;
         private readonly ILogger<GroupController> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public GroupController(IGroupService groupService, IDataAdapter dataAdapter, ILogger<GroupController> logger, IHttpClientFactory httpClientFactory)
+        public GroupController(IDataAdapter dataAdapter, ILogger<GroupController> logger, IHttpClientFactory httpClientFactory)
         {
-            _groupService = groupService;
             _logger = logger;
             _dataAdapter = dataAdapter;
             _httpClientFactory = httpClientFactory;
@@ -35,13 +35,12 @@ namespace Lingva.MVC.Controllers
         {
             IEnumerable<GroupViewModel> groupsViewModel;
 
-            var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:5001/api/group");
-            //request.Headers.Add("Accept", "application/vnd.github.v3+json");
-
             var client = _httpClientFactory.CreateClient();
-
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:6001/api/group");
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var response = await client.SendAsync(request);
-          
+
             if (response.IsSuccessStatusCode)
             {
                 groupsViewModel = await response.Content.ReadAsAsync<IEnumerable<GroupViewModel>>();
@@ -58,9 +57,10 @@ namespace Lingva.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int id)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:5001/api/group/get?"
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:6001/api/group/get?"
                 +"id=" + id);
-            //request.Headers.Add("Accept", "application/vnd.github.v3+json");
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             var client = _httpClientFactory.CreateClient();
 
@@ -92,8 +92,9 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/api/group/create");
-            //request.Headers.Add("Accept", "application/vnd.github.v3+json");
+            var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:6001/api/group/create");
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             var parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
             request.Content = new StringContent(parametersString, Encoding.UTF8, "application/json");
@@ -114,9 +115,10 @@ namespace Lingva.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:5001/api/group/get?"
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:6001/api/group/get?"
                 + "id=" + id);
-            //request.Headers.Add("Accept", "application/vnd.github.v3+json");
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             var client = _httpClientFactory.CreateClient();
 
@@ -141,8 +143,9 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            var request = new HttpRequestMessage(HttpMethod.Put, "http://localhost:5001/api/group/update");
-            //request.Headers.Add("Accept", "application/vnd.github.v3+json");
+            var request = new HttpRequestMessage(HttpMethod.Put, "http://localhost:6001/api/group/update");
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             var parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
             request.Content = new StringContent(parametersString, Encoding.UTF8, "application/json");
@@ -168,11 +171,10 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            GroupViewModel groupViewModel;
-
-            var request = new HttpRequestMessage(HttpMethod.Delete, "http://localhost:5001/api/group/delete?"
+            var request = new HttpRequestMessage(HttpMethod.Delete, "http://localhost:6001/api/group/delete?"
                 + "id=" + id);
-            //request.Headers.Add("Accept", "application/vnd.github.v3+json");
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             var client = _httpClientFactory.CreateClient();
 

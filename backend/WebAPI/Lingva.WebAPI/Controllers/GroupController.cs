@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/group")]
     [ApiController]
     public class GroupController : ControllerBase
