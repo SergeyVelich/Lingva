@@ -41,7 +41,7 @@ namespace Lingva.WebAPI.Extensions
 
             services.AddDbContext<DictionaryContext>(options =>
                 options.UseSqlServer(connectionStringValue));
-    }
+        }
 
         public static void ConfigureOptions(this IServiceCollection services, IConfiguration config)
         {

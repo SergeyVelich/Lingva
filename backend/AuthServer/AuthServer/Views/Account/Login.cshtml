@@ -5,7 +5,7 @@
         <h1>Login</h1>
     </div>
 
-    @Html.Partial("_ValidationSummary")
+    <partial name="_ValidationSummary" />
 
     <div class="row">
 
@@ -39,6 +39,11 @@
                                         </label>
                                     </div>
                                 }
+
+                                <div>
+                                    <p>The default users are alice/bob, password: Pass123$</p>
+                                </div>
+
                                 <div class="form-group">
                                     <button class="btn btn-primary" name="button" value="login">Login</button>
                                     <button class="btn btn-default" name="button" value="cancel">Cancel</button>
@@ -63,7 +68,8 @@
                             {
                                 <li>
                                     <a class="btn btn-default"
-                                       asp-action="ExternalLogin"
+                                       asp-controller="External"
+                                       asp-action="Challenge"
                                        asp-route-provider="@provider.AuthenticationScheme"
                                        asp-route-returnUrl="@Model.ReturnUrl">
                                         @provider.DisplayName

@@ -35,7 +35,6 @@ namespace Lingva.MVC
 
             services.AddHttpClient();
 
-
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAuthentication(options =>
