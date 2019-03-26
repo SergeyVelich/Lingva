@@ -6,8 +6,11 @@ using Lingva.MVC.ViewModel.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Lingva.MVC.Controllers
@@ -15,47 +18,72 @@ namespace Lingva.MVC.Controllers
     //[Authorize]
     public class GroupController : Controller
     {
-        private readonly IGroupService _groupService;
         private readonly IDataAdapter _dataAdapter;
         private readonly ILogger<GroupController> _logger;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public GroupController(IGroupService groupService, IDataAdapter dataAdapter, ILogger<GroupController> logger)
+        public GroupController(IGroupService groupService, IDataAdapter dataAdapter, ILogger<GroupController> logger, IHttpClientFactory httpClientFactory)
         {
             _groupService = groupService;
             _logger = logger;
+            _dataAdapter = dataAdapter;
+            _httpClientFactory = httpClientFactory;
         }
 
         // GET: group
         public async Task<IActionResult> Index()
         {
-            throw new Exception("Something is wrong");
-            //IEnumerable<GroupDTO> groups = await _groupService.GetListAsync();
+            IEnumerable<GroupViewModel> groupsViewModel;
 
-            //return View(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groups));
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:5001/api/group");
+            //request.Headers.Add("Accept", "application/vnd.github.v3+json");
+
+            var client = _httpClientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+          
+            if (response.IsSuccessStatusCode)
+            {
+                groupsViewModel = await response.Content.ReadAsAsync<IEnumerable<GroupViewModel>>();
+            }
+            else
+            {
+                groupsViewModel = Array.Empty<GroupViewModel>();
+            }
+
+            return View(groupsViewModel);
         }
 
         // GET: group/get?id=2
         [HttpGet]
         public async Task<IActionResult> Get(int id)
         {
-            GroupDTO groupDTO = await _groupService.GetByIdAsync(id);
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:5001/api/group/get?"
+                +"id=" + id);
+            //request.Headers.Add("Accept", "application/vnd.github.v3+json");
 
-            if (groupDTO == null)
+            var client = _httpClientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
             {
                 return NotFound();
             }
 
-            return View(_dataAdapter.Map<GroupViewModel>(groupDTO));
+            GroupViewModel groupViewModel = await response.Content.ReadAsAsync<GroupViewModel>();
+
+            return View(groupViewModel);
         }
 
-        // GET: group/Create
+        // GET: group/create
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: group/Create
+        // POST: group/create
         [HttpPost]
         public async Task<IActionResult> Create(GroupCreateViewModel groupCreateViewModel)
         {
@@ -64,34 +92,47 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
+            var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:5001/api/group/create");
+            //request.Headers.Add("Accept", "application/vnd.github.v3+json");
+
+            var parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
+            request.Content = new StringContent(parametersString, Encoding.UTF8, "application/json");
+
+            var client = _httpClientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
             {
-                GroupDTO groupDTO = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
-                await _groupService.AddAsync(groupDTO);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
+                return NotFound();
             }
 
             return Redirect("/Group/Index");
         }
 
-        // GET: group/Update?id=2
+        // GET: group/update?id=2
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
-            GroupDTO groupDTO = await _groupService.GetByIdAsync(id);
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:5001/api/group/get?"
+                + "id=" + id);
+            //request.Headers.Add("Accept", "application/vnd.github.v3+json");
 
-            if (groupDTO == null)
+            var client = _httpClientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
             {
                 return NotFound();
             }
 
-            return View(_dataAdapter.Map<GroupCreateViewModel>(groupDTO));
+            GroupCreateViewModel groupCreateViewModel = await response.Content.ReadAsAsync<GroupCreateViewModel>();
+
+            return View(groupCreateViewModel);
         }
 
-        // POST: group/Update
+        // POST: group/update
         [HttpPost]
         public async Task<IActionResult> Update(GroupCreateViewModel groupCreateViewModel)
         {
@@ -100,20 +141,25 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
+            var request = new HttpRequestMessage(HttpMethod.Put, "http://localhost:5001/api/group/update");
+            //request.Headers.Add("Accept", "application/vnd.github.v3+json");
+
+            var parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
+            request.Content = new StringContent(parametersString, Encoding.UTF8, "application/json");
+
+            var client = _httpClientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
             {
-                GroupDTO groupDTO = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
-                await _groupService.UpdateAsync(groupDTO.Id, groupDTO);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
+                return NotFound();
             }
 
             return Redirect("/Group/Index");
         }
 
-        // POST: groups/Delete?id=2
+        // POST: groups/delete?id=2
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -122,13 +168,19 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
+            GroupViewModel groupViewModel;
+
+            var request = new HttpRequestMessage(HttpMethod.Delete, "http://localhost:5001/api/group/delete?"
+                + "id=" + id);
+            //request.Headers.Add("Accept", "application/vnd.github.v3+json");
+
+            var client = _httpClientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
             {
-                await _groupService.DeleteAsync(id);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
+                return NotFound();
             }
 
             return Redirect("/Group/Index");

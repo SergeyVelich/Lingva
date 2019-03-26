@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Lingva.WebAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/auth")]
     public class AuthController : Controller

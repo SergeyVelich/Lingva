@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/group")]
     [ApiController]
     public class GroupController : ControllerBase
@@ -37,7 +37,7 @@ namespace Lingva.WebAPI.Controllers
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groups));
         }
 
-        // GET: api/group?id=2
+        // GET: api/group/get?id=2
         [HttpGet("get")]
         public async Task<IActionResult> Get([FromQuery] int id)
         {
@@ -100,7 +100,7 @@ namespace Lingva.WebAPI.Controllers
             return Ok();
         }
 
-        // DELETE: api/group?id=2
+        // DELETE: api/group/delete?id=2
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete([FromQuery] int id)
         {

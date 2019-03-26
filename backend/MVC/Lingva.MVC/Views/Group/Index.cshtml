@@ -40,7 +40,13 @@
                 @Html.DisplayFor(modelItem => item.Picture)
             </td>
             <td>
+                @Html.ActionLink("Get", "Get", new { id = item.Id })
+            </td>
+            <td>
                 @Html.ActionLink("Update", "Update", new { id = item.Id })
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>
         }
