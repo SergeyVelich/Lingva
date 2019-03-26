@@ -1,5 +1,4 @@
-﻿using Lingva.BC.Contracts;
-using Lingva.Common.Mapping;
+﻿using Lingva.Common.Mapping;
 using Lingva.MVC.ViewModel.Request;
 using Lingva.MVC.ViewModel.Response;
 using Microsoft.AspNetCore.Authentication;

@@ -9,7 +9,6 @@ namespace Lingva.MVC.Mapper.Adapters
     [ExcludeFromCodeCoverage]
     public class UserAdapter : Profile
     {
-        [ExcludeFromCodeCoverage]
         public UserAdapter()
         {
             CreateMap<UserDTO, UserViewModel>();

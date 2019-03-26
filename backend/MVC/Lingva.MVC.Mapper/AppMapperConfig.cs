@@ -8,12 +8,10 @@ namespace Lingva.MVC.Mapper
     [ExcludeFromCodeCoverage]
     public class AppMapperConfig
     {
-        [ExcludeFromCodeCoverage]
         public AppMapperConfig()
         {
         }
 
-        [ExcludeFromCodeCoverage]
         public static IMapper GetMapper()
         {
 

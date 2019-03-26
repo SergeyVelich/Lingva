@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 using NLog.Web;
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.Extensions.Logging;
 
 namespace Lingva.MVC
 {
@@ -37,6 +37,6 @@ namespace Lingva.MVC
                     logging.ClearProviders();
                     logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
                 })
-                .UseNLog();  // NLog: Setup NLog for Dependency injection
+                .UseNLog();
     }
 }

@@ -1,27 +1,18 @@
-﻿using Lingva.BC.Contracts;
-using Lingva.BC.DTO;
-using Lingva.Common.Mapping;
-using Lingva.WebAPI.ViewModel.Request;
-using Lingva.WebAPI.ViewModel.Response;
+﻿using Lingva.Common.Mapping;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Lingva.MVC.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class UserController : Controller
     {
-        //private readonly IUserService _userService;
-        //private readonly IDataAdapter _dataAdapter;
-        //private readonly ILogger<UserController> _logger;
+        private readonly IDataAdapter _dataAdapter;
+        private readonly ILogger<UserController> _logger;
 
-        //public UserController(IUserService userService, IDataAdapter dataAdapter, ILogger<UserController> logger)
+        //public UserController(IDataAdapter dataAdapter, ILogger<UserController> logger)
         //{
-        //    _userService = userService;
         //    _dataAdapter = dataAdapter;
         //    _logger = logger;
         //}

@@ -10,7 +10,6 @@ namespace Lingva.BC.Mapper
     [ExcludeFromCodeCoverage]
     public static class MapperConfig
     {
-        [ExcludeFromCodeCoverage]
         public static List<Type> GetProfiles()
         {
             var result = new List<Type>();

@@ -8,7 +8,6 @@ namespace Lingva.BC.Mapper.Adapters
     [ExcludeFromCodeCoverage]
     public class GroupAdapter : Profile
     {
-        [ExcludeFromCodeCoverage]
         public GroupAdapter()
         {
             CreateMap<Group, GroupDTO>();

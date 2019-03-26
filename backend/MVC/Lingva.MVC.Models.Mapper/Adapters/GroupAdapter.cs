@@ -9,7 +9,6 @@ namespace Lingva.MVC.Mapper.Adapters
     [ExcludeFromCodeCoverage]
     public class GroupAdapter : Profile
     {
-        [ExcludeFromCodeCoverage]
         public GroupAdapter()
         {
             CreateMap<GroupDTO, GroupViewModel>();

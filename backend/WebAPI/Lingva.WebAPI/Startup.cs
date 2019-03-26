@@ -1,6 +1,4 @@
-﻿using IdentityServer4.AccessTokenValidation;
-using Lingva.BC.Contracts;
-using Lingva.BC.Crypto;
+﻿using Lingva.BC.Contracts;
 using Lingva.BC.Services;
 using Lingva.WebAPI.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -26,24 +24,13 @@ namespace Lingva.WebAPI
             services.ConfigureCors();
             services.ConfigureSqlContext(Configuration);
             services.ConfigureOptions(Configuration);
-            services.ConfigureIdentity(Configuration);
+            services.ConfigureAuthentication();
             services.ConfigureAutoMapper();
-            services.ConfigureLoggerService();
             services.ConfigureUnitsOfWork();
             services.ConfigureRepositories();
            
             services.AddTransient<IGroupService, GroupService>();            
             services.AddTransient<IUserService, UserService>();
-
-            services.AddTransient<IDefaultCryptoProvider, DefaultCryptoProvider>();
-
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                    .AddIdentityServerAuthentication(options =>
-                    {
-                        options.Authority = "http://localhost:6050"; // Auth Server
-                        options.RequireHttpsMetadata = false;
-                        options.ApiName = "fiver_auth_api"; // API Resource Id
-                    });
 
             services.AddMvc();
         }

@@ -9,7 +9,6 @@ namespace Lingva.WebAPI.Mapper.Adapters
     [ExcludeFromCodeCoverage]
     public class GroupAdapter : Profile
     {
-        [ExcludeFromCodeCoverage]
         public GroupAdapter()
         {
             CreateMap<GroupDTO, GroupViewModel>();
