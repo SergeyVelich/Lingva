@@ -1,4 +1,7 @@
-﻿using Lingva.BC;
+﻿using AutoMapper;
+using Lingva.BC;
+using Lingva.Common.Mapping;
+using Lingva.MVC.Mapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.Configuration;
@@ -51,6 +54,12 @@ namespace Lingva.MVC.Extensions
                 options.GetClaimsFromUserInfoEndpoint = true;
                 options.SaveTokens = true;
             });
+        }
+
+        public static void ConfigureAutoMapper(this IServiceCollection services)
+        {
+            services.AddScoped<IDataAdapter, DataAdapter>();
+            services.AddSingleton<IMapper>(AppMapperConfig.GetMapper());
         }
     }
 }

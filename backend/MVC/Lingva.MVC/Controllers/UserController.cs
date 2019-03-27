@@ -8,8 +8,8 @@ namespace Lingva.MVC.Controllers
     [Authorize]
     public class UserController : Controller
     {
-        private readonly IDataAdapter _dataAdapter;
-        private readonly ILogger<UserController> _logger;
+        //private readonly IDataAdapter _dataAdapter;
+        //private readonly ILogger<UserController> _logger;
 
         //public UserController(IDataAdapter dataAdapter, ILogger<UserController> logger)
         //{
