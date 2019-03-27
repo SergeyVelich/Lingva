@@ -1,4 +1,5 @@
-﻿using Lingva.MVC.Extensions;
+﻿using Lingva.BC.API.Services;
+using Lingva.MVC.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,7 @@ namespace Lingva.MVC
             services.ConfigureAuthentication();
 
             services.AddHttpClient();
+            //services.AddHttpClient<LingvaAPIService>();
             services.AddMvc();
         }
 
