@@ -9,9 +9,18 @@ namespace IdentityServer4.Quickstart.UI
     public class RegisterInputModel
     {
         [Required]
+        [EmailAddress(ErrorMessage = "The email is incorrect")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
         public string Username { get; set; }
         [Required]
+        [Display(Name = "Password")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
+        [Display(Name = "Password again")]
+        [DataType(DataType.Password)]
+        public string PasswordConfirm { get; set; }
         public string ReturnUrl { get; set; }
     }
 }

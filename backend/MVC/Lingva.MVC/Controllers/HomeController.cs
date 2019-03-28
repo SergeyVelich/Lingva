@@ -51,13 +51,13 @@ namespace Lingva.MVC.Controllers
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
         }
 
-        public async Task Login()
+        public IActionResult Login()
         {
-
+            return View("Index");
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Register()
+        public IActionResult Register()
         {
             return Redirect("http://localhost:6050/account/register?returnUrl=" + "http://localhost:6002");
         }
