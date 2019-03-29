@@ -1,54 +1,97 @@
-﻿@model IEnumerable<Lingva.MVC.ViewModel.Response.GroupViewModel>
+﻿@*@model IEnumerable<Lingva.MVC.ViewModel.Response.GroupViewModel>
+    @{
+        ViewData["Title"] = "Group's List";
+    }
+
+    <!DOCTYPE html>
+
+    <h3>Groups</h3>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSort">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </a>
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewBag.DescriptionSort">
+                        @Html.DisplayNameFor(model => model.Description)
+                    </a>
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewBag.PictureSort">
+                        @Html.DisplayNameFor(model => model.Picture)
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Picture)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Get", "Get", new { id = item.Id })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Update", "Update", new { id = item.Id })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
+
+
+@using Lingva.MVC.ViewModel.Response
+@model Lingva.MVC.Models.Response.IndexViewModel
+<!--импортируем tag-хелперы проекта-->
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Lingva.MVC
+
 @{
-    ViewData["Title"] = "Group's List";
+    ViewData["Title"] = "Список пользователей";
 }
-
-<!DOCTYPE html>
-
-<h3>Groups</h3>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
+<h1>Список пользователей</h1>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Picture)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Picture)
-            </td>
-            <td>
-                @Html.ActionLink("Get", "Get", new { id = item.Id })
-            </td>
-            <td>
-                @Html.ActionLink("Update", "Update", new { id = item.Id })
-            </td>
-            <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-        }
-    </tbody>
+    <tr>
+        <th>
+            <sort-header action="Index" up="@Model.SortViewModel.Up"
+                         current="@Model.SortViewModel.Current" property="@Model.SortViewModel.NameSort">
+                Name
+            </sort-header>
+        </th>
+        <th>
+            <sort-header action="Index" up="@Model.SortViewModel.Up"
+                         current="@Model.SortViewModel.Current" property="@Model.SortViewModel.DescriptionSort">
+                Возраст
+            </sort-header>
+        </th>
+        <th>
+            <sort-header action="Index" up="@Model.SortViewModel.Up"
+                         current="@Model.SortViewModel.Current" property="@Model.SortViewModel.PictureSort">
+                Компания
+            </sort-header>
+        </th>
+    </tr>
+    @foreach (GroupViewModel groupViewModel in Model.Groups)
+    {
+        <tr><td>@groupViewModel.Name</td><td>@groupViewModel.Description</td><td>@groupViewModel.Picture</td></tr>
+    }
 </table>

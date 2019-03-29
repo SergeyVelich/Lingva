@@ -1,5 +1,7 @@
-﻿using Lingva.Common.Extensions;
+﻿using Lingva.BC.Common.Enums;
+using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
+using Lingva.MVC.Models.Response;
 using Lingva.MVC.ViewModel.Request;
 using Lingva.MVC.ViewModel.Response;
 using Microsoft.AspNetCore.Authentication;
@@ -24,7 +26,7 @@ namespace Lingva.MVC.Controllers
         private readonly ILogger<GroupController> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
 
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         public GroupController(IDataAdapter dataAdapter, ILogger<GroupController> logger, IHttpClientFactory httpClientFactory)
         {
@@ -37,11 +39,13 @@ namespace Lingva.MVC.Controllers
         }
 
         // GET: group    
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(SortState sortOrder = SortState.NameAsc)
         {
             IEnumerable<GroupViewModel> groupsViewModel;
-            
+
             HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get);
+            Dictionary<string, string> parameters = new Dictionary<string, string>() { { "sortOrder", sortOrder.ToString() } };
+            request.AddParameters(parameters);
             HttpResponseMessage response = await _client.SendAsync(request);
 
             if (response.IsSuccessStatusCode)
@@ -53,7 +57,13 @@ namespace Lingva.MVC.Controllers
                 groupsViewModel = Array.Empty<GroupViewModel>();
             }
 
-            return View(groupsViewModel);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                Groups = groupsViewModel,
+                SortViewModel = new SortViewModel(sortOrder)
+            };
+
+            return View(viewModel);
         }
 
         // GET: group/get?id=2

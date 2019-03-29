@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
@@ -31,9 +32,32 @@ namespace Lingva.WebAPI.Controllers
 
         // GET: api/group
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(SortState sortOrder = SortState.NameAsc)
         {
             IEnumerable<GroupDTO> groups = await _groupService.GetListAsync();
+
+            switch (sortOrder)
+            {
+                case SortState.NameDesc:
+                    groups = groups.OrderByDescending(s => s.Name);
+                    break;
+                case SortState.DescriptionAsc:
+                    groups = groups.OrderBy(s => s.Description);
+                    break;
+                case SortState.DescriptionDesc:
+                    groups = groups.OrderByDescending(s => s.Description);
+                    break;
+                case SortState.PictureAsc:
+                    groups = groups.OrderBy(s => s.Picture);
+                    break;
+                case SortState.PictureDesc:
+                    groups = groups.OrderByDescending(s => s.Picture);
+                    break;
+                default:
+                    groups = groups.OrderBy(s => s.Name);
+                    break;
+            }
+
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groups));
         }
 

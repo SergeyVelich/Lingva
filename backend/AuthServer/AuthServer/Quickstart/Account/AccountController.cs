@@ -241,9 +241,11 @@ namespace IdentityServer4.Quickstart.UI
 
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser();
-                user.Email = model.Username;
-                user.UserName = model.Username;
+                ApplicationUser user = new ApplicationUser
+                {
+                    Email = model.Username,
+                    UserName = model.Username
+                };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

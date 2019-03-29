@@ -7,4 +7,14 @@ namespace Lingva.BC.Common.Enums
         Yandex,
         Google,       
     }
+
+    public enum SortState
+    {
+        NameAsc,
+        NameDesc,
+        DescriptionAsc,
+        DescriptionDesc,
+        PictureAsc,
+        PictureDesc,
+    }
 }
