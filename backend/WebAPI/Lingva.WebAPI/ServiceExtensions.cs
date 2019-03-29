@@ -48,9 +48,15 @@ namespace Lingva.WebAPI.Extensions
             services.Configure<StorageOptions>(config.GetSection("StorageConfig"));
         }
 
-        public static void ConfigureIdentity(this IServiceCollection services, IConfiguration config)
+        public static void ConfigureAuthentication(this IServiceCollection services)
         {
-
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                    .AddIdentityServerAuthentication(options =>
+                    {
+                        options.Authority = "http://localhost:6050"; // Auth Server
+                        options.RequireHttpsMetadata = false;
+                        options.ApiName = "fiver_auth_api"; // API Resource Id
+                    });
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection services)
@@ -59,15 +65,9 @@ namespace Lingva.WebAPI.Extensions
             services.AddSingleton<IMapper>(AppMapperConfig.GetMapper());
         }
 
-        public static void ConfigureLoggerService(this IServiceCollection services)
-        {
-            //services.AddSingleton<ILoggerFactory, LoggerManager>();
-        }
-
         public static void ConfigureUnitsOfWork(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWorkGroup, UnitOfWorkGroup>();
-            services.AddScoped<IUnitOfWorkAuth, UnitOfWorkAuth>();
             services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
         }
 

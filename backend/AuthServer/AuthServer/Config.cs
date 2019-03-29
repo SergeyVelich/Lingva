@@ -51,34 +51,5 @@ namespace AuthServer
                 },
             };
         }
-
-        //public static List<TestUser> GetUsers()
-        //{
-        //    return new List<TestUser>
-        //    {
-        //        new TestUser
-        //        {
-        //            SubjectId = "1",
-        //            Username = "james",
-        //            Password = "password",
-        //            Claims = new List<Claim>
-        //            {
-        //                new Claim("name", "James Bond"),
-        //                new Claim("website", "https://james.com")
-        //            }
-        //        },
-        //        new TestUser
-        //        {
-        //            SubjectId = "2",
-        //            Username = "spectre",
-        //            Password = "password",
-        //            Claims = new List<Claim>
-        //            {
-        //                new Claim("name", "Spectre"),
-        //                new Claim("website", "https://spectre.com")
-        //            }
-        //        }
-        //    };
-        //}
     }
 }

@@ -8,12 +8,10 @@ namespace Lingva.WebAPI.Mapper
     [ExcludeFromCodeCoverage]
     public class AppMapperConfig
     {
-        [ExcludeFromCodeCoverage]
         public AppMapperConfig()
         {
         }
 
-        [ExcludeFromCodeCoverage]
         public static IMapper GetMapper()
         {
             List<Type> profiles = new List<Type>();

@@ -8,7 +8,6 @@ namespace Lingva.BC.Mapper.Adapters
     [ExcludeFromCodeCoverage]
     public class UserAdapter : Profile
     {
-        [ExcludeFromCodeCoverage]
         public UserAdapter()
         {
             CreateMap<User, UserDTO>();

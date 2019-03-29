@@ -1,9 +1,10 @@
-﻿using Lingva.BC.Contracts;
+﻿using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
 using Lingva.MVC.ViewModel.Request;
 using Lingva.MVC.ViewModel.Response;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -23,23 +24,25 @@ namespace Lingva.MVC.Controllers
         private readonly ILogger<GroupController> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
 
+        private HttpClient _client;
+
         public GroupController(IDataAdapter dataAdapter, ILogger<GroupController> logger, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
             _dataAdapter = dataAdapter;
             _httpClientFactory = httpClientFactory;
+
+            _client = _httpClientFactory.CreateClient();
+            _client.BaseAddress = new Uri("http://localhost:6001/api/group");
         }
 
-        // GET: group
+        // GET: group    
         public async Task<IActionResult> Index()
         {
             IEnumerable<GroupViewModel> groupsViewModel;
-
-            var client = _httpClientFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:6001/api/group");
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var response = await client.SendAsync(request);
+            
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get);
+            HttpResponseMessage response = await _client.SendAsync(request);
 
             if (response.IsSuccessStatusCode)
             {
@@ -56,15 +59,11 @@ namespace Lingva.MVC.Controllers
         // GET: group/get?id=2
         [HttpGet]
         public async Task<IActionResult> Get(int id)
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:6001/api/group/get?"
-                +"id=" + id);
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-            var client = _httpClientFactory.CreateClient();
-
-            var response = await client.SendAsync(request);
+        {            
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "get");
+            Dictionary<string, string> parameters = new Dictionary<string, string>() { { "id", id.ToString() } };
+            request.AddParameters(parameters);
+            HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -92,16 +91,11 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:6001/api/group/create");
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-            var parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
-            request.Content = new StringContent(parametersString, Encoding.UTF8, "application/json");
-
-            var client = _httpClientFactory.CreateClient();
-
-            var response = await client.SendAsync(request);
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Post, "create");
+            string parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
+            StringContent content = new StringContent(parametersString, Encoding.UTF8, "application/json");
+            request.AddBody(content);
+            HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -114,15 +108,11 @@ namespace Lingva.MVC.Controllers
         // GET: group/update?id=2
         [HttpGet]
         public async Task<IActionResult> Update(int id)
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:6001/api/group/get?"
-                + "id=" + id);
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-            var client = _httpClientFactory.CreateClient();
-
-            var response = await client.SendAsync(request);
+        {            
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "get");
+            Dictionary<string, string> parameters = new Dictionary<string, string>() { { "id", id.ToString() } };
+            request.AddParameters(parameters);          
+            HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -143,16 +133,11 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            var request = new HttpRequestMessage(HttpMethod.Put, "http://localhost:6001/api/group/update");
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-            var parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
-            request.Content = new StringContent(parametersString, Encoding.UTF8, "application/json");
-
-            var client = _httpClientFactory.CreateClient();
-
-            var response = await client.SendAsync(request);
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Put, "update");
+            string parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
+            StringContent content = new StringContent(parametersString, Encoding.UTF8, "application/json");
+            request.AddBody(content);
+            HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -162,7 +147,7 @@ namespace Lingva.MVC.Controllers
             return Redirect("/Group/Index");
         }
 
-        // POST: groups/delete?id=2
+        // POST: group/delete?id=2
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -170,15 +155,11 @@ namespace Lingva.MVC.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var request = new HttpRequestMessage(HttpMethod.Delete, "http://localhost:6001/api/group/delete?"
-                + "id=" + id);
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-            var client = _httpClientFactory.CreateClient();
-
-            var response = await client.SendAsync(request);
+            
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Delete, "delete");
+            Dictionary<string, string> parameters = new Dictionary<string, string>() { { "id", id.ToString() } };
+            request.AddParameters(parameters);
+            HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -186,6 +167,18 @@ namespace Lingva.MVC.Controllers
             }
 
             return Redirect("/Group/Index");
+        }
+
+        private async Task<HttpRequestMessage> GetRequestAsync(HttpMethod method, string requestUri = "")
+        {
+            string accessToken = await HttpContext.GetTokenAsync("access_token");
+            string hostPatch = _client.BaseAddress.ToString();
+            string requestPatch = (string.IsNullOrWhiteSpace(requestUri) ? "" : "/") + requestUri;
+
+            HttpRequestMessage request = new HttpRequestMessage(method, hostPatch + requestPatch);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            return request;
         }
     }
 }

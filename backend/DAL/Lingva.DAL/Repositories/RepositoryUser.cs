@@ -7,7 +7,6 @@ namespace Lingva.DAL.Repositories
     public class RepositoryUser : Repository<User>, IRepositoryUser
     {
         public RepositoryUser(DictionaryContext context) : base(context)
-
         {
 
         }

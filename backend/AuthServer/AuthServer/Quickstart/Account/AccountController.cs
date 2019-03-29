@@ -78,28 +78,33 @@ namespace IdentityServer4.Quickstart.UI
             // the user clicked the "cancel" button
             if (button != "login")
             {
-                if (context != null)
+                if(button != "registration")
                 {
-                    // if the user cancels, send a result back into IdentityServer as if they 
-                    // denied the consent (even if this client does not require consent).
-                    // this will send back an access denied OIDC error response to the client.
-                    await _interaction.GrantConsentAsync(context, ConsentResponse.Denied);
-
-                    // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                    if (await _clientStore.IsPkceClientAsync(context.ClientId))
+                    if (context != null)
                     {
-                        // if the client is PKCE then we assume it's native, so this change in how to
-                        // return the response is for better UX for the end user.
-                        return View("Redirect", new RedirectViewModel { RedirectUrl = model.ReturnUrl });
-                    }
+                        // if the user cancels, send a result back into IdentityServer as if they 
+                        // denied the consent (even if this client does not require consent).
+                        // this will send back an access denied OIDC error response to the client.
+                        await _interaction.GrantConsentAsync(context, ConsentResponse.Denied);
 
-                    return Redirect(model.ReturnUrl);
+                        // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
+                        if (await _clientStore.IsPkceClientAsync(context.ClientId))
+                        {
+                            // if the client is PKCE then we assume it's native, so this change in how to
+                            // return the response is for better UX for the end user.
+                            return View("Redirect", new RedirectViewModel { RedirectUrl = model.ReturnUrl });
+                        }
+
+                        return Redirect(model.ReturnUrl);
+                    }
+                    else
+                    {
+                        // since we don't have a valid context, then we just go back to the home page
+                        return Redirect("~/");
+                    }
                 }
-                else
-                {
-                    // since we don't have a valid context, then we just go back to the home page
-                    return Redirect("~/");
-                }
+
+                return Redirect("~/account/register?returnUrl=" + model.ReturnUrl);
             }
 
             if (ModelState.IsValid)
@@ -200,8 +205,64 @@ namespace IdentityServer4.Quickstart.UI
             }
 
             return View("LoggedOut", vm);
+
+            //return Redirect(vm.PostLogoutRedirectUri);
         }
 
+
+        /// <summary>
+        /// Entry point into the registration workflow
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> Register(string returnUrl)
+        {
+            // build a model so we know what to show on the login page
+            RegisterViewModel vm = await BuildRegisterViewModelAsync(returnUrl);
+
+            return View(vm);
+        }
+
+        /// <summary>
+        /// Handle postback from registration
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterInputModel model, string button)
+        {
+            // the user clicked the "cancel" button
+            if (button != "register")
+            {
+                if (button != "login")
+                {
+                    return Redirect(model.ReturnUrl);
+                }
+                return Redirect("~/account/login?returnUrl=" + model.ReturnUrl);
+            }
+
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = new ApplicationUser();
+                user.Email = model.Username;
+                user.UserName = model.Username;
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, "user");
+                    return Redirect(model.ReturnUrl);
+                }
+                else
+                {
+                    foreach(IdentityError err in result.Errors)
+                    {
+                        ModelState.AddModelError("Password", err.Description);
+                    }                    
+                }                
+            }
+
+            // something went wrong, show form with error
+            var vm = await BuildRegisterViewModelAsync(model);
+            return View(vm);         
+        }
 
 
         /*****************************************/
@@ -328,5 +389,20 @@ namespace IdentityServer4.Quickstart.UI
 
             return vm;
         }
+
+        private async Task<RegisterViewModel> BuildRegisterViewModelAsync(string returnUrl)
+        {           
+            return new RegisterViewModel
+            {
+                ReturnUrl = returnUrl,
+            };
+        }
+
+        private async Task<RegisterViewModel> BuildRegisterViewModelAsync(RegisterInputModel model)
+        {
+            var vm = await BuildRegisterViewModelAsync(model.ReturnUrl);
+            return vm;
+        }
+
     }
 }

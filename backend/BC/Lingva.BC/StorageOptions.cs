@@ -1,5 +1,8 @@
-﻿namespace Lingva.BC
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Lingva.BC
 {
+    [ExcludeFromCodeCoverage]
     public class StorageOptions
     {
         public string ServicesGoogleTranslaterKey { get; set; }

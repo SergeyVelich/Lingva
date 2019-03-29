@@ -1,8 +1,10 @@
 ﻿using Lingva.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.DAL.Context
 {
+    [ExcludeFromCodeCoverage]
     public class DictionaryContext : DbContext
     {
         public DbSet<User> Users { get; set; }

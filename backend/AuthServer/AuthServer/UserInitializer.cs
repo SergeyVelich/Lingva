@@ -1,9 +1,11 @@
 ﻿using AuthServer.Identity;
 using Microsoft.AspNetCore.Identity;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace AuthServer
 {
+    [ExcludeFromCodeCoverage]
     public class UserInitializer
     {
         public static async Task InitializeAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)

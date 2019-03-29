@@ -8,7 +8,7 @@ namespace Lingva.WebAPI.ViewModel.Response
     {
         public int Id { get; set; }
         [Display(Name = "Group's title")]
-        public string Title { get; set; }
+        public string Name { get; set; }
         [Display(Name = "Description")]
         public string Description { get; set; }
         [Display(Name = "Picture")]
