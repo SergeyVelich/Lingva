@@ -41,16 +41,16 @@ namespace Lingva.WebAPI.Controllers
                 case SortState.NameDesc:
                     groups = groups.OrderByDescending(s => s.Name);
                     break;
-                case SortState.DescriptionAsc:
+                case SortState.DateAsc:
                     groups = groups.OrderBy(s => s.Description);
                     break;
-                case SortState.DescriptionDesc:
+                case SortState.DateDesc:
                     groups = groups.OrderByDescending(s => s.Description);
                     break;
-                case SortState.PictureAsc:
+                case SortState.LanguageAsc:
                     groups = groups.OrderBy(s => s.Picture);
                     break;
-                case SortState.PictureDesc:
+                case SortState.LanguageDesc:
                     groups = groups.OrderByDescending(s => s.Picture);
                     break;
                 default:

@@ -66,9 +66,17 @@
 @addTagHelper *, Lingva.MVC
 
 @{
-    ViewData["Title"] = "Список пользователей";
+    ViewData["Title"] = "Group's List";
 }
-<h1>Список пользователей</h1>
+
+<!DOCTYPE html>
+
+<h3>Groups</h3>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
 <table class="table">
     <tr>
         <th>
@@ -79,19 +87,28 @@
         </th>
         <th>
             <sort-header action="Index" up="@Model.SortViewModel.Up"
-                         current="@Model.SortViewModel.Current" property="@Model.SortViewModel.DescriptionSort">
+                         current="@Model.SortViewModel.Current" property="@Model.SortViewModel.DateSort">
                 Возраст
             </sort-header>
         </th>
         <th>
             <sort-header action="Index" up="@Model.SortViewModel.Up"
-                         current="@Model.SortViewModel.Current" property="@Model.SortViewModel.PictureSort">
+                         current="@Model.SortViewModel.Current" property="@Model.SortViewModel.LanguageSort">
                 Компания
             </sort-header>
         </th>
     </tr>
     @foreach (GroupViewModel groupViewModel in Model.Groups)
     {
-        <tr><td>@groupViewModel.Name</td><td>@groupViewModel.Description</td><td>@groupViewModel.Picture</td></tr>
+        <tr>
+            <td>@groupViewModel.Name</td>
+            <td>@groupViewModel.Date</td>
+            <td>@groupViewModel.LanguageName</td>
+            <td>@groupViewModel.Description</td>
+            <td>@groupViewModel.Picture</td>
+            <td>@Html.ActionLink("Get", "Get", new { id = groupViewModel.Id })</td>
+            <td>@Html.ActionLink("Update", "Update", new { id = groupViewModel.Id })</td>
+            <td>@Html.ActionLink("Delete", "Delete", new { id = groupViewModel.Id })</td>
+        </tr>
     }
 </table>

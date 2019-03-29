@@ -20,9 +20,16 @@ namespace Lingva.Common.Extensions
 
         public static HttpRequestMessage AddParameters(this HttpRequestMessage request, Dictionary<string, string> parameters)
         {
+            bool isFirst = true;
             string parametersPatch = parameters.Count > 0 ? "?" : "";
             foreach (var param in parameters)
             {
+                if (!isFirst)
+                {
+                    parametersPatch += "&";
+                }
+
+                isFirst = false;
                 parametersPatch += param.Key + "=" + param.Value;
             }
 

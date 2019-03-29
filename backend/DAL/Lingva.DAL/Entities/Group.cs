@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.DAL.Entities
@@ -10,7 +11,12 @@ namespace Lingva.DAL.Entities
         public int Id { get; set; }
 
         public string Name { get; set; }
+        public DateTime Date { get; set; }
         public string Description { get; set; }
         public string Picture { get; set; }
+
+        public string LanguageName { get; set; }
+
+        public virtual Language Language { get; set; }
     }
 }

@@ -12,9 +12,9 @@ namespace Lingva.BC.Common.Enums
     {
         NameAsc,
         NameDesc,
-        DescriptionAsc,
-        DescriptionDesc,
-        PictureAsc,
-        PictureDesc,
+        DateAsc,
+        DateDesc,
+        LanguageAsc,
+        LanguageDesc,
     }
 }

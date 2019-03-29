@@ -7,8 +7,13 @@ namespace Lingva.WebAPI.ViewModel.Request
     public class GroupCreateViewModel
     {
         public int Id { get; set; }
-        [Display(Name = "Group's title")]
+        [Display(Name = "Title")]
         public string Name { get; set; }
+        [Display(Name = "Date")]
+        [DataType(DataType.DateTime)]
+        public string Date { get; set; }
+        [Display(Name = "Language")]
+        public string LanguageName { get; set; }
         [Display(Name = "Description")]
         public string Description { get; set; }
         [Display(Name = "Picture")]

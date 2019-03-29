@@ -4,22 +4,22 @@ namespace Lingva.MVC.Models.Response
 {
     public class SortViewModel
     {
-        public SortState NameSort { get; set; } // значение для сортировки по имени
-        public SortState DescriptionSort { get; set; }    // значение для сортировки по возрасту
-        public SortState PictureSort { get; set; }   // значение для сортировки по компании
-        public SortState Current { get; set; }     // значение свойства, выбранного для сортировки
-        public bool Up { get; set; }  // Сортировка по возрастанию или убыванию
+        public SortState NameSort { get; set; }
+        public SortState DateSort { get; set; }
+        public SortState LanguageSort { get; set; }
+        public SortState Current { get; set; }
+        public bool Up { get; set; }
 
         public SortViewModel(SortState sortOrder)
         {
             // значения по умолчанию
             NameSort = SortState.NameAsc;
-            DescriptionSort = SortState.DescriptionAsc;
-            PictureSort = SortState.PictureAsc;
+            DateSort = SortState.DateAsc;
+            LanguageSort = SortState.LanguageAsc;
             Up = true;
 
-            if (sortOrder == SortState.DescriptionDesc || sortOrder == SortState.NameDesc
-                || sortOrder == SortState.PictureDesc)
+            if (sortOrder == SortState.DateDesc || sortOrder == SortState.NameDesc
+                || sortOrder == SortState.LanguageDesc)
             {
                 Up = false;
             }
@@ -29,17 +29,17 @@ namespace Lingva.MVC.Models.Response
                 case SortState.NameDesc:
                     Current = NameSort = SortState.NameAsc;
                     break;
-                case SortState.DescriptionAsc:
-                    Current = DescriptionSort = SortState.DescriptionDesc;
+                case SortState.DateAsc:
+                    Current = DateSort = SortState.DateDesc;
                     break;
-                case SortState.DescriptionDesc:
-                    Current = DescriptionSort = SortState.DescriptionAsc;
+                case SortState.DateDesc:
+                    Current = DateSort = SortState.DateAsc;
                     break;
-                case SortState.PictureAsc:
-                    Current = PictureSort = SortState.PictureDesc;
+                case SortState.LanguageAsc:
+                    Current = LanguageSort = SortState.LanguageDesc;
                     break;
-                case SortState.PictureDesc:
-                    Current = PictureSort = SortState.PictureAsc;
+                case SortState.LanguageDesc:
+                    Current = LanguageSort = SortState.LanguageAsc;
                     break;
                 default:
                     Current = NameSort = SortState.NameDesc;
