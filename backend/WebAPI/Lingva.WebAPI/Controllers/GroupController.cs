@@ -1,4 +1,5 @@
-﻿using Lingva.BC.Contracts;
+﻿using Lingva.BC.Common.Enums;
+using Lingva.BC.Contracts;
 using Lingva.BC.DTO;
 using Lingva.Common.Mapping;
 using Lingva.WebAPI.ViewModel.Request;
@@ -33,7 +34,6 @@ namespace Lingva.WebAPI.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<GroupDTO> groups = await _groupService.GetListAsync();
-
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groups));
         }
 

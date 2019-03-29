@@ -29,6 +29,7 @@ namespace Lingva.DAL.Repositories
             {
                 result.Where(predicator);
             }
+
             return result.ToList();
         }
 

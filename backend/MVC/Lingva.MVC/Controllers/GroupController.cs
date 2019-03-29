@@ -1,4 +1,5 @@
-﻿using Lingva.Common.Mapping;
+﻿using Lingva.Common.Extensions;
+using Lingva.Common.Mapping;
 using Lingva.MVC.ViewModel.Request;
 using Lingva.MVC.ViewModel.Response;
 using Microsoft.AspNetCore.Authentication;
@@ -35,12 +36,12 @@ namespace Lingva.MVC.Controllers
             _client.BaseAddress = new Uri("http://localhost:6001/api/group");
         }
 
-        // GET: group
+        // GET: group    
         public async Task<IActionResult> Index()
         {
             IEnumerable<GroupViewModel> groupsViewModel;
             
-            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "");
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get);
             HttpResponseMessage response = await _client.SendAsync(request);
 
             if (response.IsSuccessStatusCode)
@@ -58,8 +59,10 @@ namespace Lingva.MVC.Controllers
         // GET: group/get?id=2
         [HttpGet]
         public async Task<IActionResult> Get(int id)
-        {
-            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "get?id=" + id);
+        {            
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "get");
+            Dictionary<string, string> parameters = new Dictionary<string, string>() { { "id", id.ToString() } };
+            request.AddParameters(parameters);
             HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -87,10 +90,11 @@ namespace Lingva.MVC.Controllers
             {
                 return BadRequest(ModelState);
             }
-           
+
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Post, "create");
             string parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
             StringContent content = new StringContent(parametersString, Encoding.UTF8, "application/json");
-            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Post, "create", content);
+            request.AddBody(content);
             HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -104,8 +108,10 @@ namespace Lingva.MVC.Controllers
         // GET: group/update?id=2
         [HttpGet]
         public async Task<IActionResult> Update(int id)
-        {
-            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "get?id=" + id);
+        {            
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "get");
+            Dictionary<string, string> parameters = new Dictionary<string, string>() { { "id", id.ToString() } };
+            request.AddParameters(parameters);          
             HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -127,9 +133,10 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Put, "update");
             string parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
             StringContent content = new StringContent(parametersString, Encoding.UTF8, "application/json");
-            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Put, "update", content);
+            request.AddBody(content);
             HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -148,8 +155,10 @@ namespace Lingva.MVC.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Delete, "delete?id=" + id);
+            
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Delete, "delete");
+            Dictionary<string, string> parameters = new Dictionary<string, string>() { { "id", id.ToString() } };
+            request.AddParameters(parameters);
             HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -160,16 +169,14 @@ namespace Lingva.MVC.Controllers
             return Redirect("/Group/Index");
         }
 
-        private async Task<HttpRequestMessage> GetRequestAsync(HttpMethod method, string requestUri, StringContent content = null)
+        private async Task<HttpRequestMessage> GetRequestAsync(HttpMethod method, string requestUri = "")
         {
             string accessToken = await HttpContext.GetTokenAsync("access_token");
-            HttpRequestMessage request = new HttpRequestMessage(method, _client.BaseAddress.ToString() + "/" + requestUri);
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            string hostPatch = _client.BaseAddress.ToString();
+            string requestPatch = (string.IsNullOrWhiteSpace(requestUri) ? "" : "/") + requestUri;
 
-            if (content != null)
-            {
-                request.Content = content;
-            }                
+            HttpRequestMessage request = new HttpRequestMessage(method, hostPatch + requestPatch);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             return request;
         }
