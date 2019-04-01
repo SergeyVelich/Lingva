@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.MVC.ViewModel.Response
+namespace Lingva.MVC.Models.Response
 {
     [ExcludeFromCodeCoverage]
     public class UserViewModel

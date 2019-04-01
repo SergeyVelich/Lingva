@@ -1,8 +1,9 @@
-﻿using Lingva.MVC.ViewModel.Response;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.MVC.Models.Response
 {
+    [ExcludeFromCodeCoverage]
     public class IndexViewModel
     {
         public IEnumerable<GroupViewModel> Groups { get; set; }

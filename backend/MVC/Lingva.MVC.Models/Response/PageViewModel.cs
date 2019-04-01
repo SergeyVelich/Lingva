@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.MVC.Models.Response
 {
+    [ExcludeFromCodeCoverage]
     public class PageViewModel
     {
         public int PageNumber { get; private set; }

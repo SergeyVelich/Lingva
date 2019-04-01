@@ -1,8 +1,8 @@
 ﻿using Lingva.BC.Contracts;
 using Lingva.BC.DTO;
 using Lingva.Common.Mapping;
-using Lingva.WebAPI.ViewModel.Request;
-using Lingva.WebAPI.ViewModel.Response;
+using Lingva.WebAPI.Models.Request;
+using Lingva.WebAPI.Models.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

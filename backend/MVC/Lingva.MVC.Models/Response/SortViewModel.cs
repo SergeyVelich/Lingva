@@ -1,7 +1,9 @@
 ﻿using Lingva.BC.Common.Enums;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.MVC.Models.Response
 {
+    [ExcludeFromCodeCoverage]
     public class SortViewModel
     {
         public SortState NameSort { get; set; }

@@ -1,4 +1,4 @@
-﻿@using Lingva.MVC.ViewModel.Response
+﻿@using Lingva.MVC.Models.Response
 @model Lingva.MVC.Models.Response.IndexViewModel
 <!--импортируем tag-хелперы проекта-->
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
@@ -14,10 +14,10 @@
 <form method="get">
     <div class="form-inline">
         <label class="control-label">Name: </label>
-        @Html.TextBox("name", Model.FilterViewModel.SelectedName, htmlAttributes: new { @class = "form-control" })
+        @Html.TextBox("filters.Name", Model.FilterViewModel.SelectedName, htmlAttributes: new { @class = "form-control" })
 
         <label class="control-label">Language: </label>
-        @Html.DropDownList("language", Model.FilterViewModel.Languages as SelectList,
+        @Html.DropDownList("filters.Language", Model.FilterViewModel.Languages as SelectList,
                 htmlAttributes: new { @class = "form-control" })
 
         <input type="submit" value="Filter" class="btn btn-default" />

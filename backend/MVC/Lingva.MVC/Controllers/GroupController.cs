@@ -1,9 +1,8 @@
 ﻿using Lingva.BC.Common.Enums;
 using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
+using Lingva.MVC.Models.Request;
 using Lingva.MVC.Models.Response;
-using Lingva.MVC.ViewModel.Request;
-using Lingva.MVC.ViewModel.Response;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -39,7 +38,7 @@ namespace Lingva.MVC.Controllers
         }
 
         // GET: group    
-        public async Task<IActionResult> Index(int? language, string name, int page = 1, SortState sortOrder = SortState.NameAsc)
+        public async Task<IActionResult> Index([FromQuery] FiltersViewModel filters, int page = 1, SortState sortOrder = SortState.NameAsc)
         {
             int pageSize = 3;
 
@@ -47,11 +46,10 @@ namespace Lingva.MVC.Controllers
             List<LanguageViewModel> languages;
 
             HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group");
-            Dictionary<string, string> parameters = new Dictionary<string, string>()
-                { { "language", language.ToString() },
-                    { "name", name },
-                    { "page", page.ToString() },
-                    { "sortOrder", sortOrder.ToString() } };
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
+                { { "filters", filters.GetPropertyAsDictionary() },
+                  { "page", page },
+                  { "sortOrder", sortOrder } };
             request.AddParameters(parameters);
             HttpResponseMessage response = await _client.SendAsync(request);
 
@@ -81,7 +79,7 @@ namespace Lingva.MVC.Controllers
                 //PageViewModel = new PageViewModel(count, page, pageSize),//??
                 PageViewModel = new PageViewModel(4, page, pageSize),
                 SortViewModel = new SortViewModel(sortOrder),
-                FilterViewModel = new FilterViewModel(languages, language, name),
+                FilterViewModel = new FilterViewModel(languages, filters),
                 Groups = groupsViewModel,
             };
 
@@ -93,7 +91,7 @@ namespace Lingva.MVC.Controllers
         public async Task<IActionResult> Get(int id)
         {            
             HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group/get");
-            Dictionary<string, string> parameters = new Dictionary<string, string>() { { "id", id.ToString() } };
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "id", id } };
             request.AddParameters(parameters);
             HttpResponseMessage response = await _client.SendAsync(request);
 
@@ -142,7 +140,7 @@ namespace Lingva.MVC.Controllers
         public async Task<IActionResult> Update(int id)
         {            
             HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group/get");
-            Dictionary<string, string> parameters = new Dictionary<string, string>() { { "id", id.ToString() } };
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "id", id } };
             request.AddParameters(parameters);          
             HttpResponseMessage response = await _client.SendAsync(request);
 
@@ -189,7 +187,7 @@ namespace Lingva.MVC.Controllers
             }
             
             HttpRequestMessage request = await GetRequestAsync(HttpMethod.Delete, "group/delete");
-            Dictionary<string, string> parameters = new Dictionary<string, string>() { { "id", id.ToString() } };
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "id", id } };
             request.AddParameters(parameters);
             HttpResponseMessage response = await _client.SendAsync(request);
 

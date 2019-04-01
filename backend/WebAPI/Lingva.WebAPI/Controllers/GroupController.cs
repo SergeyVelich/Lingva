@@ -2,20 +2,19 @@
 using Lingva.BC.Contracts;
 using Lingva.BC.DTO;
 using Lingva.Common.Mapping;
-using Lingva.WebAPI.ViewModel.Request;
-using Lingva.WebAPI.ViewModel.Response;
+using Lingva.WebAPI.Models.Request;
+using Lingva.WebAPI.Models.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/group")]
     [ApiController]
     public class GroupController : ControllerBase
@@ -33,20 +32,21 @@ namespace Lingva.WebAPI.Controllers
 
         // GET: api/group
         [HttpGet]
-        public async Task<IActionResult> Index(int? language, string name, int page = 1, SortState sortOrder = SortState.NameAsc)
+        public async Task<IActionResult> Index([FromQuery] FiltersViewModel filters, int page = 1, SortState sortOrder = SortState.NameAsc)
         {
             int pageSize = 3;
 
             IEnumerable<GroupDTO> groups = await _groupService.GetListAsync();
 
-            if (language != null && language != 0)
+            if (filters.Language != 0)
             {
-                groups = groups.Where(g => g.LanguageId == language).ToList();
+                groups = groups.Where(g => g.LanguageId == filters.Language).ToList();
             }
-            if (!String.IsNullOrEmpty(name))
+
+            if (!String.IsNullOrEmpty(filters.Name))
             {
-                groups = groups.Where(g => g.Name.Contains(name, StringComparison.CurrentCultureIgnoreCase)).ToList();
-            }            
+                groups = groups.Where(g => g.Name.Contains(filters.Name, StringComparison.CurrentCultureIgnoreCase)).ToList();
+            }
 
             switch (sortOrder)
             {
