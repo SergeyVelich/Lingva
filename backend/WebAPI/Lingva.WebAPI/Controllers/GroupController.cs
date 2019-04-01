@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
@@ -32,9 +33,20 @@ namespace Lingva.WebAPI.Controllers
 
         // GET: api/group
         [HttpGet]
-        public async Task<IActionResult> Index(SortState sortOrder = SortState.NameAsc)
+        public async Task<IActionResult> Index(int? language, string name, int page = 1, SortState sortOrder = SortState.NameAsc)
         {
+            int pageSize = 3;
+
             IEnumerable<GroupDTO> groups = await _groupService.GetListAsync();
+
+            if (language != null && language != 0)
+            {
+                groups = groups.Where(g => g.LanguageId == language).ToList();
+            }
+            if (!String.IsNullOrEmpty(name))
+            {
+                groups = groups.Where(g => g.Name.Contains(name, StringComparison.CurrentCultureIgnoreCase)).ToList();
+            }            
 
             switch (sortOrder)
             {
@@ -57,6 +69,9 @@ namespace Lingva.WebAPI.Controllers
                     groups = groups.OrderBy(s => s.Name);
                     break;
             }
+
+            var count = groups.Count();
+            groups = groups.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groups));
         }

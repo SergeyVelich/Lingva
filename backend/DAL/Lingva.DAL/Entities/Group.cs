@@ -15,7 +15,7 @@ namespace Lingva.DAL.Entities
         public string Description { get; set; }
         public string Picture { get; set; }
 
-        public string LanguageName { get; set; }
+        public string LanguageId { get; set; }
 
         public virtual Language Language { get; set; }
     }

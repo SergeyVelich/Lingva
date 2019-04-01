@@ -68,12 +68,14 @@ namespace Lingva.WebAPI.Extensions
         public static void ConfigureUnitsOfWork(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWorkGroup, UnitOfWorkGroup>();
+            services.AddScoped<IUnitOfWorkInfo, UnitOfWorkInfo>();
             services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
         }
 
         public static void ConfigureRepositories(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryGroup, RepositoryGroup>();
+            services.AddScoped<IRepositoryLanguage, RepositoryLanguage>();
             services.AddScoped<IRepositoryUser, RepositoryUser>();
         }
     }

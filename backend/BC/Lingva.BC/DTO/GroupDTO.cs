@@ -8,7 +8,7 @@ namespace Lingva.BC.DTO
         public int Id { get; set; }
         public string Name { get; set; }
         public string Date { get; set; }
-        public string LanguageName { get; set; }
+        public int LanguageId { get; set; }
         public string Description { get; set; }
         public string Picture { get; set; }
     }

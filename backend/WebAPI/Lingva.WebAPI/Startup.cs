@@ -29,7 +29,8 @@ namespace Lingva.WebAPI
             services.ConfigureUnitsOfWork();
             services.ConfigureRepositories();
            
-            services.AddTransient<IGroupService, GroupService>();            
+            services.AddTransient<IGroupService, GroupService>();
+            services.AddTransient<IInfoService, InfoService>();
             services.AddTransient<IUserService, UserService>();
 
             services.AddMvc();

@@ -13,7 +13,7 @@ namespace Lingva.MVC.ViewModel.Response
         [DataType(DataType.DateTime)]
         public string Date { get; set; }
         [Display(Name = "Language")]
-        public string LanguageName { get; set; }
+        public int LanguageId { get; set; }
         [Display(Name = "Description")]
         public string Description { get; set; }
         [Display(Name = "Picture")]

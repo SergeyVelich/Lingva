@@ -35,16 +35,23 @@ namespace Lingva.MVC.Controllers
             _httpClientFactory = httpClientFactory;
 
             _client = _httpClientFactory.CreateClient();
-            _client.BaseAddress = new Uri("http://localhost:6001/api/group");
+            _client.BaseAddress = new Uri("http://localhost:6001/api");
         }
 
         // GET: group    
-        public async Task<IActionResult> Index(SortState sortOrder = SortState.NameAsc)
+        public async Task<IActionResult> Index(int? language, string name, int page = 1, SortState sortOrder = SortState.NameAsc)
         {
-            IEnumerable<GroupViewModel> groupsViewModel;
+            int pageSize = 3;
 
-            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get);
-            Dictionary<string, string> parameters = new Dictionary<string, string>() { { "sortOrder", sortOrder.ToString() } };
+            IEnumerable<GroupViewModel> groupsViewModel;
+            List<LanguageViewModel> languages;
+
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group");
+            Dictionary<string, string> parameters = new Dictionary<string, string>()
+                { { "language", language.ToString() },
+                    { "name", name },
+                    { "page", page.ToString() },
+                    { "sortOrder", sortOrder.ToString() } };
             request.AddParameters(parameters);
             HttpResponseMessage response = await _client.SendAsync(request);
 
@@ -57,10 +64,25 @@ namespace Lingva.MVC.Controllers
                 groupsViewModel = Array.Empty<GroupViewModel>();
             }
 
+            request = await GetRequestAsync(HttpMethod.Get, "info/languages");
+            response = await _client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                languages = await response.Content.ReadAsAsync<List<LanguageViewModel>>();
+            }
+            else
+            {
+                languages = new List<LanguageViewModel>();
+            }
+            
             IndexViewModel viewModel = new IndexViewModel
             {
+                //PageViewModel = new PageViewModel(count, page, pageSize),//??
+                PageViewModel = new PageViewModel(4, page, pageSize),
+                SortViewModel = new SortViewModel(sortOrder),
+                FilterViewModel = new FilterViewModel(languages, language, name),
                 Groups = groupsViewModel,
-                SortViewModel = new SortViewModel(sortOrder)
             };
 
             return View(viewModel);
@@ -70,7 +92,7 @@ namespace Lingva.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int id)
         {            
-            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "get");
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group/get");
             Dictionary<string, string> parameters = new Dictionary<string, string>() { { "id", id.ToString() } };
             request.AddParameters(parameters);
             HttpResponseMessage response = await _client.SendAsync(request);
@@ -101,7 +123,7 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Post, "create");
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Post, "group/create");
             string parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
             StringContent content = new StringContent(parametersString, Encoding.UTF8, "application/json");
             request.AddBody(content);
@@ -119,7 +141,7 @@ namespace Lingva.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {            
-            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "get");
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group/get");
             Dictionary<string, string> parameters = new Dictionary<string, string>() { { "id", id.ToString() } };
             request.AddParameters(parameters);          
             HttpResponseMessage response = await _client.SendAsync(request);
@@ -143,7 +165,7 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Put, "update");
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Put, "group/update");
             string parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
             StringContent content = new StringContent(parametersString, Encoding.UTF8, "application/json");
             request.AddBody(content);
@@ -166,7 +188,7 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
             
-            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Delete, "delete");
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Delete, "group/delete");
             Dictionary<string, string> parameters = new Dictionary<string, string>() { { "id", id.ToString() } };
             request.AddParameters(parameters);
             HttpResponseMessage response = await _client.SendAsync(request);
