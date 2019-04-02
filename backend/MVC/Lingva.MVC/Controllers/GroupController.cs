@@ -1,6 +1,5 @@
-﻿using Lingva.BC.Common.Enums;
-using Lingva.Common.Extensions;
-using Lingva.Common.Mapping;
+﻿using Lingva.Common.Mapping;
+using Lingva.MVC.Extensions;
 using Lingva.MVC.Models.Request;
 using Lingva.MVC.Models.Response;
 using Microsoft.AspNetCore.Authentication;
@@ -38,7 +37,7 @@ namespace Lingva.MVC.Controllers
         }
 
         // GET: group    
-        public async Task<IActionResult> Index([FromQuery] FiltersViewModel filters, int page = 1, SortState sortOrder = SortState.NameAsc)
+        public async Task<IActionResult> Index([FromQuery] FilterViewModel filters, [FromQuery] SorterViewModel sorters, int page = 1)
         {
             int pageSize = 3;
 
@@ -47,9 +46,9 @@ namespace Lingva.MVC.Controllers
 
             HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group");
             Dictionary<string, object> parameters = new Dictionary<string, object>()
-                { { "filters", filters.GetPropertyAsDictionary() },
-                  { "page", page },
-                  { "sortOrder", sortOrder } };
+                { { "filters", filters },
+                { "sorters", sorters },
+                { "page", page } };
             request.AddParameters(parameters);
             HttpResponseMessage response = await _client.SendAsync(request);
 
@@ -77,7 +76,7 @@ namespace Lingva.MVC.Controllers
             IndexViewModel viewModel = new IndexViewModel
             {
                 PageViewModel = new IndexPageViewModel(4, page, pageSize),//??
-                SortViewModel = new IndexSortViewModel(sortOrder),
+                SortViewModel = new IndexSortViewModel(sorters),
                 FilterViewModel = new IndexFilterViewModel(languages, filters),
                 Groups = groupsViewModel,
             };

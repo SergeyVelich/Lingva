@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Lingva.MVC.Models.Request;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -7,7 +8,7 @@ namespace Lingva.MVC.Models.Response
     [ExcludeFromCodeCoverage]
     public class IndexFilterViewModel
     {
-        public IndexFilterViewModel(List<LanguageViewModel> languages, FiltersViewModel filters)
+        public IndexFilterViewModel(List<LanguageViewModel> languages, FilterViewModel filters)
         {
             // устанавливаем начальный элемент, который позволит выбрать всех
             languages.Insert(0, new LanguageViewModel { Name = "Все", Id = 0 });

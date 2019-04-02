@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/group")]
     [ApiController]
     public class GroupController : ControllerBase
@@ -32,7 +32,7 @@ namespace Lingva.WebAPI.Controllers
 
         // GET: api/group
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] FiltersViewModel filters, int page = 1, SortState sortOrder = SortState.NameAsc)
+        public async Task<IActionResult> Index([FromQuery] FilterViewModel filters, [FromQuery] SorterViewModel sorters, int page = 1)
         {
             int pageSize = 3;
 
@@ -48,27 +48,27 @@ namespace Lingva.WebAPI.Controllers
                 groupsDto = groupsDto.Where(g => g.Name.Contains(filters.Name, StringComparison.CurrentCultureIgnoreCase)).ToList();
             }
 
-            switch (sortOrder)
-            {
-                case SortState.NameDesc:
-                    groupsDto = groupsDto.OrderByDescending(s => s.Name);
-                    break;
-                case SortState.DateAsc:
-                    groupsDto = groupsDto.OrderBy(s => s.Description);
-                    break;
-                case SortState.DateDesc:
-                    groupsDto = groupsDto.OrderByDescending(s => s.Description);
-                    break;
-                case SortState.LanguageAsc:
-                    groupsDto = groupsDto.OrderBy(s => s.Picture);
-                    break;
-                case SortState.LanguageDesc:
-                    groupsDto = groupsDto.OrderByDescending(s => s.Picture);
-                    break;
-                default:
-                    groupsDto = groupsDto.OrderBy(s => s.Name);
-                    break;
-            }
+            //switch (sortOrder)
+            //{
+            //    case SortState.NameDesc:
+            //        groupsDto = groupsDto.OrderByDescending(s => s.Name);
+            //        break;
+            //    case SortState.DateAsc:
+            //        groupsDto = groupsDto.OrderBy(s => s.Description);
+            //        break;
+            //    case SortState.DateDesc:
+            //        groupsDto = groupsDto.OrderByDescending(s => s.Description);
+            //        break;
+            //    case SortState.LanguageAsc:
+            //        groupsDto = groupsDto.OrderBy(s => s.Picture);
+            //        break;
+            //    case SortState.LanguageDesc:
+            //        groupsDto = groupsDto.OrderByDescending(s => s.Picture);
+            //        break;
+            //    default:
+            //        groupsDto = groupsDto.OrderBy(s => s.Name);
+            //        break;
+            //}
 
             var count = groupsDto.Count();
             groupsDto = groupsDto.Skip((page - 1) * pageSize).Take(pageSize).ToList();

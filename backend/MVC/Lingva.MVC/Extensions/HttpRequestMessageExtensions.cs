@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Lingva.MVC.Models.Contracts;
+using Lingva.MVC.Models.Response;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Text;
 
-namespace Lingva.Common.Extensions
+namespace Lingva.MVC.Extensions
 {
     [ExcludeFromCodeCoverage]
     public static class HttpRequestMessageExtensions
@@ -54,16 +56,36 @@ namespace Lingva.Common.Extensions
             foreach (var param in dictSourse)
             {
                 var paramValue = param.Value;
-                if (paramValue is Dictionary<string, object>)
+                if (paramValue != null)
                 {
-                    FillParameters((Dictionary<string, object>)paramValue, dictTarget, param.Key + ".");
-                }
-                else
-                {
-                    if(param.Value != null)
+                    if(paramValue is IEnumerable<object>)
                     {
-                        dictTarget[parent + param.Key] = param.Value;
-                    }                   
+                        int i = 0;
+                        foreach(var paramValueEnum in (IEnumerable<object>)paramValue)
+                        {
+                            if (paramValueEnum is IHttpParametersSource)
+                            {
+                                FillParameters((paramValueEnum as IHttpParametersSource).GetParametersDictionary(), dictTarget, parent + param.Key + "[" + i + "]" + ".");
+                            }
+                            else
+                            {
+                                dictTarget[parent + param.Key] = paramValue;
+                            }
+
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        if (paramValue is IHttpParametersSource)
+                        {
+                            FillParameters((paramValue as IHttpParametersSource).GetParametersDictionary(), dictTarget, parent + param.Key + ".");
+                        }
+                        else
+                        {
+                            dictTarget[parent + param.Key] = paramValue;
+                        }
+                    }
                 }
             }
         }

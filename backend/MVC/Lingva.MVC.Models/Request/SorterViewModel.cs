@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using Lingva.MVC.Models.Contracts;
+using System.Collections.Generic;
 
-namespace Lingva.MVC.Models.Response
+namespace Lingva.MVC.Models.Request
 {
-    [ExcludeFromCodeCoverage]
-    public class FiltersViewModel
+    public class SorterViewModel : IHttpParametersSource
     {
-        public int? Language { get; set; }
-        public string Name { get; set; }
+        public List<SorterItemViewModel> SorterItems { get; set; }
 
-        public Dictionary<string, object> GetPropertyAsDictionary()
+        public Dictionary<string, object> GetParametersDictionary()
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
             var publicProperties = this.GetType().GetProperties();
