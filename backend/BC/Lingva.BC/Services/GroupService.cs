@@ -3,9 +3,7 @@ using Lingva.BC.DTO;
 using Lingva.Common.Mapping;
 using Lingva.DAL.Entities;
 using Lingva.DAL.UnitsOfWork.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Lingva.BC.Services
@@ -53,15 +51,9 @@ namespace Lingva.BC.Services
             return _dataAdapter.Map<GroupDTO>(currentGroup);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(GroupDTO groupDTO)
         {
-            Group group = await _unitOfWork.Groups.GetByIdAsync(id);
-
-            if (group == null)
-            {
-                return;
-            }
-
+            Group group = _dataAdapter.Map<Group>(groupDTO);
             _unitOfWork.Groups.Delete(group);
             await _unitOfWork.SaveAsync();
         }

@@ -14,6 +14,6 @@ namespace Lingva.BC.Contracts
 
         Task<GroupDTO> UpdateAsync(int id, GroupDTO groupDTO);
 
-        Task DeleteAsync(int id);
+        Task DeleteAsync(GroupDTO groupDTO);
     }
 }

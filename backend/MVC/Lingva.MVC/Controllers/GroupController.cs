@@ -88,8 +88,13 @@ namespace Lingva.MVC.Controllers
 
         // GET: group/get?id=2
         [HttpGet]
-        public async Task<IActionResult> Get(int id)
-        {            
+        public async Task<IActionResult> Get(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group/get");
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "id", id } };
             request.AddParameters(parameters);
@@ -132,13 +137,18 @@ namespace Lingva.MVC.Controllers
                 return NotFound();
             }
 
-            return Redirect("/Group/Index");
+            return RedirectToAction("Index");
         }
 
         // GET: group/update?id=2
         [HttpGet]
-        public async Task<IActionResult> Update(int id)
-        {            
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group/get");
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "id", id } };
             request.AddParameters(parameters);          
@@ -174,19 +184,19 @@ namespace Lingva.MVC.Controllers
                 return NotFound();
             }
 
-            return Redirect("/Group/Index");
+            return RedirectToAction("Index");
         }
 
-        // POST: group/delete?id=2
+        // GET: group/delete?id=2
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return BadRequest(ModelState);
+                return NotFound();
             }
-            
-            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Delete, "group/delete");
+
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group/get");
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "id", id } };
             request.AddParameters(parameters);
             HttpResponseMessage response = await _client.SendAsync(request);
@@ -196,7 +206,32 @@ namespace Lingva.MVC.Controllers
                 return NotFound();
             }
 
-            return Redirect("/Group/Index");
+            GroupCreateViewModel groupCreateViewModel = await response.Content.ReadAsAsync<GroupCreateViewModel>();
+
+            return View(groupCreateViewModel);
+        }
+
+        // POST: group/delete
+        [HttpPost]
+        public async Task<IActionResult> Delete(GroupCreateViewModel groupCreateViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Delete, "group/delete");
+            string parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
+            StringContent content = new StringContent(parametersString, Encoding.UTF8, "application/json");
+            request.AddBody(content);
+            HttpResponseMessage response = await _client.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("Index");
         }
 
         private async Task<HttpRequestMessage> GetRequestAsync(HttpMethod method, string requestUri = "")

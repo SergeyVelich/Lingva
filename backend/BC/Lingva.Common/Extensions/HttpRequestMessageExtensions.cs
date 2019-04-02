@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
+using System.Text;
 
 namespace Lingva.Common.Extensions
 {
@@ -18,62 +19,33 @@ namespace Lingva.Common.Extensions
             return request;
         }
 
-        //public static HttpRequestMessage AddParameters(this HttpRequestMessage request, Dictionary<string, object> parameters)
-        //{
-        //    bool isFirst = true;
-        //    string parametersPatch = parameters.Count > 0 ? "?" : "";
-        //    foreach (var param in parameters)
-        //    {
-        //        var paramValue = param.Value;
-        //        if (paramValue is Dictionary<string, object>)
-        //        {
-        //            foreach (var paramInner in (Dictionary<string, object>)paramValue)
-        //            {
-        //                if()
-        //                if (!isFirst)
-        //                {
-        //                    parametersPatch += "&";
-        //                }
-        //                isFirst = false;
-        //                parametersPatch += param.Key + "." + paramInner.Key + "=" + paramInner.Value;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (!isFirst)
-        //            {
-        //                parametersPatch += "&";
-        //            }
-        //            isFirst = false;
-        //            parametersPatch += param.Key + "=" + paramValue;
-        //        }
-        //    }
-
-        //    request.RequestUri = new Uri(request.RequestUri.ToString() + parametersPatch);
-        //    return request;
-        //}
-
         public static HttpRequestMessage AddParameters(this HttpRequestMessage request, Dictionary<string, object> parameters)
         {
-            string parametersPatch = parameters.Count > 0 ? "?" : "";
-
             Dictionary<string, object> allParameters = new Dictionary<string, object>();
             FillParameters(parameters, allParameters);
 
-
-            bool isFirst = true;
-            
-            foreach (var param in allParameters)
+            StringBuilder parametersPatch = new StringBuilder();
+            if(allParameters.Count > 0)
             {
-                if (!isFirst)
+                parametersPatch.Append("?");
+
+                bool isFirst = true;
+
+                foreach (var param in allParameters)
                 {
-                    parametersPatch += "&";
+                    if (!isFirst)
+                    {
+                        parametersPatch.Append("&");
+                    }
+                    isFirst = false;
+                    parametersPatch.Append(param.Key);
+                    parametersPatch.Append("=");
+                    parametersPatch.Append(param.Value);
                 }
-                isFirst = false;
-                parametersPatch += param.Key + "=" + param.Value;
             }
 
-            request.RequestUri = new Uri(request.RequestUri.ToString() + parametersPatch);
+            parametersPatch.Insert(0, request.RequestUri);
+            request.RequestUri = new Uri(parametersPatch.ToString());
             return request;
         }
 

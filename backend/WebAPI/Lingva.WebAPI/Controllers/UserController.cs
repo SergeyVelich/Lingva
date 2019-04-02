@@ -46,14 +46,14 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            UserDTO user = await _userService.GetByIdAsync(id);
+            UserDTO userDto = await _userService.GetByIdAsync(id);
 
-            if (user == null)
+            if (userDto == null)
             {
                 return NotFound();
             }
 
-            return Ok(_dataAdapter.Map<UserViewModel>(user));
+            return Ok(_dataAdapter.Map<UserViewModel>(userDto));
         }
 
         // POST: api/user/create
@@ -65,64 +65,25 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                UserDTO user = _dataAdapter.Map<UserDTO>(userCreateViewModel);
-                await _userService.AddAsync(user);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            UserDTO userDto = _dataAdapter.Map<UserDTO>(userCreateViewModel);
+            await _userService.AddAsync(userDto);
 
-            return Ok();
+            return Ok(userDto);
         }
 
         // PUT: api/user/update
         [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UserCreateViewModel userCreateViewModel)
         {
-            throw new NotImplementedException("");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
+            UserDTO userDto = _dataAdapter.Map<UserDTO>(userCreateViewModel);
+            await _userService.UpdateAsync(userDto.Id, userDto);
 
-            //try
-            //{
-            //    UserDTO user = _dataAdapter.Map<UserDTO>(userCreateViewModel);
-            //    await _userService.UpdateAsync(user.Id, user);
-            //}
-            //catch (ArgumentException ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
-
-            //return Ok();
-        }
-
-        // DELETE: api/user?id=2
-        [HttpDelete("delete")]
-        public async Task<IActionResult> Delete([FromQuery] int id)
-        {
-            throw new NotImplementedException("");
-
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-
-            //try
-            //{
-            //    await _userService.DeleteAsync(id);
-            //}
-            //catch (ArgumentException ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
-
-            //return Ok();
+            return Ok(userDto);
         }
     }
 }

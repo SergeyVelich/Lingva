@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/group")]
     [ApiController]
     public class GroupController : ControllerBase
@@ -36,44 +36,44 @@ namespace Lingva.WebAPI.Controllers
         {
             int pageSize = 3;
 
-            IEnumerable<GroupDTO> groups = await _groupService.GetListAsync();
+            IEnumerable<GroupDTO> groupsDto = await _groupService.GetListAsync();
 
             if (filters.Language != 0)
             {
-                groups = groups.Where(g => g.LanguageId == filters.Language).ToList();
+                groupsDto = groupsDto.Where(g => g.LanguageId == filters.Language).ToList();
             }
 
             if (!String.IsNullOrEmpty(filters.Name))
             {
-                groups = groups.Where(g => g.Name.Contains(filters.Name, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                groupsDto = groupsDto.Where(g => g.Name.Contains(filters.Name, StringComparison.CurrentCultureIgnoreCase)).ToList();
             }
 
             switch (sortOrder)
             {
                 case SortState.NameDesc:
-                    groups = groups.OrderByDescending(s => s.Name);
+                    groupsDto = groupsDto.OrderByDescending(s => s.Name);
                     break;
                 case SortState.DateAsc:
-                    groups = groups.OrderBy(s => s.Description);
+                    groupsDto = groupsDto.OrderBy(s => s.Description);
                     break;
                 case SortState.DateDesc:
-                    groups = groups.OrderByDescending(s => s.Description);
+                    groupsDto = groupsDto.OrderByDescending(s => s.Description);
                     break;
                 case SortState.LanguageAsc:
-                    groups = groups.OrderBy(s => s.Picture);
+                    groupsDto = groupsDto.OrderBy(s => s.Picture);
                     break;
                 case SortState.LanguageDesc:
-                    groups = groups.OrderByDescending(s => s.Picture);
+                    groupsDto = groupsDto.OrderByDescending(s => s.Picture);
                     break;
                 default:
-                    groups = groups.OrderBy(s => s.Name);
+                    groupsDto = groupsDto.OrderBy(s => s.Name);
                     break;
             }
 
-            var count = groups.Count();
-            groups = groups.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var count = groupsDto.Count();
+            groupsDto = groupsDto.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
-            return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groups));
+            return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groupsDto));
         }
 
         // GET: api/group/get?id=2
@@ -85,14 +85,14 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            GroupDTO group = await _groupService.GetByIdAsync(id);
+            GroupDTO groupDto = await _groupService.GetByIdAsync(id);
 
-            if (group == null)
+            if (groupDto == null)
             {
                 return NotFound();
             }
 
-            return Ok(_dataAdapter.Map<GroupViewModel>(group));
+            return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));
         }
 
         // POST: api/group/create
@@ -104,17 +104,10 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                GroupDTO group = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
-                await _groupService.AddAsync(group);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            GroupDTO groupDto = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
+            await _groupService.AddAsync(groupDto);
 
-            return Ok();
+            return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));
         }
 
         // PUT: api/group/update
@@ -126,38 +119,25 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                GroupDTO group = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
-                await _groupService.UpdateAsync(group.Id, group);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            GroupDTO groupDto = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
+            await _groupService.UpdateAsync(groupDto.Id, groupDto);
 
-            return Ok();
+            return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));
         }
 
-        // DELETE: api/group/delete?id=2
+        // DELETE: api/group/delete
         [HttpDelete("delete")]
-        public async Task<IActionResult> Delete([FromQuery] int id)
+        public async Task<IActionResult> Delete([FromBody] GroupCreateViewModel groupCreateViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                await _groupService.DeleteAsync(id);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            GroupDTO groupDto = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
+            await _groupService.DeleteAsync(groupDto);
 
-            return Ok();
+            return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));
         }
     }
 }
