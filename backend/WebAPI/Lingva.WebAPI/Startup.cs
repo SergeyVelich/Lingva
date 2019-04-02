@@ -1,6 +1,7 @@
 ﻿using Lingva.BC.Contracts;
 using Lingva.BC.Services;
 using Lingva.WebAPI.Extensions;
+using Lingva.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -41,6 +42,8 @@ namespace Lingva.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseCors("CorsPolicy");
             app.UseAuthentication();
