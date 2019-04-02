@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Lingva.BC.Common.Enums;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -6,24 +8,79 @@ namespace Lingva.DAL.Extensions
 {
     public static class IQueryableExtensions
     {
-        public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> query, string propertyName, IComparer<object> comparer = null)
+        public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> query, string propertyName, 
+            SortOrder sortOrder = SortOrder.Asc, bool isFirst = true, IComparer<object> comparer = null)
         {
-            return CallOrderedQueryable(query, "OrderBy", propertyName, comparer);
-        }
-        
-        public static IOrderedQueryable<T> OrderByDescending<T>(this IQueryable<T> query, string propertyName, IComparer<object> comparer = null)
-        {
-            return CallOrderedQueryable(query, "OrderByDescending", propertyName, comparer);
+            string methodName = GetMethodName(sortOrder, isFirst);
+
+            return CallOrderedQueryable(query, methodName, propertyName, comparer);
         }
 
-        public static IOrderedQueryable<T> ThenBy<T>(this IOrderedQueryable<T> query, string propertyName, IComparer<object> comparer = null)
+        private static string GetMethodName(SortOrder sortOrder = SortOrder.Asc, bool isFirst = true)
         {
-            return CallOrderedQueryable(query, "ThenBy", propertyName, comparer);
+            string methodName;
+
+            switch (sortOrder)
+            {
+                case SortOrder.Asc:
+                    if (isFirst)
+                    {
+                        methodName = "OrderBy";
+                    }
+                    else
+                    {
+                        methodName = "OrderByDescending";
+                    }
+                    break;
+                case SortOrder.Desc:
+                    if (isFirst)
+                    {
+                        methodName = "ThenBy";
+                    }
+                    else
+                    {
+                        methodName = "ThenByDescending";
+                    }
+                    break;
+                default:
+                    methodName = string.Empty;
+                    break;
+            }
+
+            return methodName;
         }
 
-        public static IOrderedQueryable<T> ThenByDescending<T>(this IOrderedQueryable<T> query, string propertyName, IComparer<object> comparer = null)
+        private static IOrderedQueryable<T> CallOrderedQueryable<T>(this IQueryable<T> query, string methodName,
+            string propertyName, IComparer<object> comparer = null)
         {
-            return CallOrderedQueryable(query, "ThenByDescending", propertyName, comparer);
+            if (!string.IsNullOrEmpty(methodName))
+            {
+                throw new ArgumentException("Empty method name");
+            }
+
+            var param = Expression.Parameter(typeof(T), "x");
+            var body = propertyName.Split('.').Aggregate<string, Expression>(param, Expression.PropertyOrField);
+
+            return comparer != null
+                ? (IOrderedQueryable<T>)query.Provider.CreateQuery(
+                    Expression.Call(
+                        typeof(Queryable),
+                        methodName,
+                        new[] { typeof(T), body.Type },
+                        query.Expression,
+                        Expression.Lambda(body, param),
+                        Expression.Constant(comparer)
+                    )
+                )
+                : (IOrderedQueryable<T>)query.Provider.CreateQuery(
+                    Expression.Call(
+                        typeof(Queryable),
+                        methodName,
+                        new[] { typeof(T), body.Type },
+                        query.Expression,
+                        Expression.Lambda(body, param)
+                    )
+                );
         }
 
         //public static IEnumerable<T> Filter<T>(this IEnumerable<T> collection, IEnumerable<IFilterModel> filterModel)
@@ -77,34 +134,5 @@ namespace Lingva.DAL.Extensions
         //    return collection.Where(exp);
 
         //}
-
-        public static IOrderedQueryable<T> CallOrderedQueryable<T>(this IQueryable<T> query, string methodName, string propertyName,
-            IComparer<object> comparer = null)
-        {
-            var param = Expression.Parameter(typeof(T), "x");
-
-            var body = propertyName.Split('.').Aggregate<string, Expression>(param, Expression.PropertyOrField);
-
-            return comparer != null
-                ? (IOrderedQueryable<T>)query.Provider.CreateQuery(
-                    Expression.Call(
-                        typeof(Queryable),
-                        methodName,
-                        new[] { typeof(T), body.Type },
-                        query.Expression,
-                        Expression.Lambda(body, param),
-                        Expression.Constant(comparer)
-                    )
-                )
-                : (IOrderedQueryable<T>)query.Provider.CreateQuery(
-                    Expression.Call(
-                        typeof(Queryable),
-                        methodName,
-                        new[] { typeof(T), body.Type },
-                        query.Expression,
-                        Expression.Lambda(body, param)
-                    )
-                );
-        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Lingva.DAL.Context;
+using Lingva.DAL.Extensions;
 using Lingva.DAL.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -41,6 +42,7 @@ namespace Lingva.DAL.Repositories
             {
                 result.Where(predicator);
             }
+
             return await result.ToListAsync();
         }
 
