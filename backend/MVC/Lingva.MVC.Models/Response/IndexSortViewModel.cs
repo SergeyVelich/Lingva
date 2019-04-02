@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Lingva.MVC.Models.Response
 {
     [ExcludeFromCodeCoverage]
-    public class SortViewModel
+    public class IndexSortViewModel
     {
         public SortState NameSort { get; set; }
         public SortState DateSort { get; set; }
@@ -12,7 +12,7 @@ namespace Lingva.MVC.Models.Response
         public SortState Current { get; set; }
         public bool Up { get; set; }
 
-        public SortViewModel(SortState sortOrder)
+        public IndexSortViewModel(SortState sortOrder)
         {
             // значения по умолчанию
             NameSort = SortState.NameAsc;

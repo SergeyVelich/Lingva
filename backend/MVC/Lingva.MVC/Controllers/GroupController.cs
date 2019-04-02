@@ -76,10 +76,9 @@ namespace Lingva.MVC.Controllers
             
             IndexViewModel viewModel = new IndexViewModel
             {
-                //PageViewModel = new PageViewModel(count, page, pageSize),//??
-                PageViewModel = new PageViewModel(4, page, pageSize),
-                SortViewModel = new SortViewModel(sortOrder),
-                FilterViewModel = new FilterViewModel(languages, filters),
+                PageViewModel = new IndexPageViewModel(4, page, pageSize),//??
+                SortViewModel = new IndexSortViewModel(sortOrder),
+                FilterViewModel = new IndexFilterViewModel(languages, filters),
                 Groups = groupsViewModel,
             };
 

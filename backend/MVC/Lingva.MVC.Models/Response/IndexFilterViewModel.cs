@@ -5,9 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 namespace Lingva.MVC.Models.Response
 {
     [ExcludeFromCodeCoverage]
-    public class FilterViewModel
+    public class IndexFilterViewModel
     {
-        public FilterViewModel(List<LanguageViewModel> languages, FiltersViewModel filters)
+        public IndexFilterViewModel(List<LanguageViewModel> languages, FiltersViewModel filters)
         {
             // устанавливаем начальный элемент, который позволит выбрать всех
             languages.Insert(0, new LanguageViewModel { Name = "Все", Id = 0 });

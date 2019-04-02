@@ -18,7 +18,7 @@ namespace Lingva.MVC.TagHelpers
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext ViewContext { get; set; }
-        public PageViewModel PageModel { get; set; }
+        public IndexPageViewModel PageModel { get; set; }
         public string PageAction { get; set; }
 
         [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]

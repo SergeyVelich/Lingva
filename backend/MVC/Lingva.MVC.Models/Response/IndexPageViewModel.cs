@@ -4,12 +4,12 @@ using System.Diagnostics.CodeAnalysis;
 namespace Lingva.MVC.Models.Response
 {
     [ExcludeFromCodeCoverage]
-    public class PageViewModel
+    public class IndexPageViewModel
     {
         public int PageNumber { get; private set; }
         public int TotalPages { get; private set; }
 
-        public PageViewModel(int count, int pageNumber, int pageSize)
+        public IndexPageViewModel(int count, int pageNumber, int pageSize)
         {
             PageNumber = pageNumber;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
