@@ -1,15 +1,13 @@
-﻿using Lingva.BC.Common.Enums;
-using Lingva.BC.Contracts;
+﻿using Lingva.BC.Contracts;
 using Lingva.BC.DTO;
 using Lingva.Common.Mapping;
 using Lingva.WebAPI.Models.Request;
-using Lingva.WebAPI.Models.Response;
+using Lingva.WebAPI.Models.Request.Entities;
+using Lingva.WebAPI.Models.Response.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
@@ -32,46 +30,11 @@ namespace Lingva.WebAPI.Controllers
 
         // GET: api/group
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] FilterViewModel filters, [FromQuery] SorterViewModel sorters, int page = 1)
+        public async Task<IActionResult> Index(OptionsModel options)
         {
-            int pageSize = 3;
+            QueryOptionsDTO optionsDTO = _dataAdapter.Map<QueryOptionsDTO>(options);
 
-            IEnumerable<GroupDTO> groupsDto = await _groupService.GetListAsync();
-
-            if (filters.Language != 0)
-            {
-                groupsDto = groupsDto.Where(g => g.LanguageId == filters.Language).ToList();
-            }
-
-            if (!String.IsNullOrEmpty(filters.Name))
-            {
-                groupsDto = groupsDto.Where(g => g.Name.Contains(filters.Name, StringComparison.CurrentCultureIgnoreCase)).ToList();
-            }
-
-            //switch (sortOrder)
-            //{
-            //    case SortState.NameDesc:
-            //        groupsDto = groupsDto.OrderByDescending(s => s.Name);
-            //        break;
-            //    case SortState.DateAsc:
-            //        groupsDto = groupsDto.OrderBy(s => s.Description);
-            //        break;
-            //    case SortState.DateDesc:
-            //        groupsDto = groupsDto.OrderByDescending(s => s.Description);
-            //        break;
-            //    case SortState.LanguageAsc:
-            //        groupsDto = groupsDto.OrderBy(s => s.Picture);
-            //        break;
-            //    case SortState.LanguageDesc:
-            //        groupsDto = groupsDto.OrderByDescending(s => s.Picture);
-            //        break;
-            //    default:
-            //        groupsDto = groupsDto.OrderBy(s => s.Name);
-            //        break;
-            //}
-
-            var count = groupsDto.Count();
-            groupsDto = groupsDto.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            IEnumerable<GroupDTO> groupsDto = await _groupService.GetListAsync(optionsDTO);
 
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groupsDto));
         }

@@ -1,20 +1,23 @@
-﻿using Lingva.BC.Common.Enums;
-using Lingva.MVC.Models.Request;
+﻿using Lingva.MVC.Models.Request;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.MVC.Models.Response
+namespace Lingva.MVC.Models.Response.Group.Index
 {
     [ExcludeFromCodeCoverage]
     public class IndexSortViewModel
     {
-        public SortState NameSort { get; set; }
-        public SortState DateSort { get; set; }
-        public SortState LanguageSort { get; set; }
-        public SortState Current { get; set; }
-        public bool Up { get; set; }
+        //public SortState NameSort { get; set; }
+        //public SortState DateSort { get; set; }
+        //public SortState LanguageSort { get; set; }
+        //public SortState Current { get; set; }
+        //public bool Up { get; set; }
 
-        public IndexSortViewModel(SorterViewModel sorters)
+        public Dictionary<string, SorterModel> Sorters { get; set; }
+
+        public IndexSortViewModel(Dictionary<string, SorterModel> sorters)
         {
+            Sorters = sorters;
             //// значения по умолчанию
             //NameSort = SortState.NameAsc;
             //DateSort = SortState.DateAsc;

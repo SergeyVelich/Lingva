@@ -1,6 +1,7 @@
 ﻿using Lingva.BC.Contracts;
 using Lingva.BC.Services;
 using Lingva.WebAPI.Extensions;
+using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,7 +35,10 @@ namespace Lingva.WebAPI
             services.AddTransient<IInfoService, InfoService>();
             services.AddTransient<IUserService, UserService>();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

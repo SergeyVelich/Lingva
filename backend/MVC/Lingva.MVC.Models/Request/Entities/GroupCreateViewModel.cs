@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.WebAPI.Models.Request
+namespace Lingva.MVC.Models.Request.Entities
 {
     [ExcludeFromCodeCoverage]
     public class GroupCreateViewModel
@@ -13,7 +13,7 @@ namespace Lingva.WebAPI.Models.Request
         [DataType(DataType.DateTime)]
         public string Date { get; set; }
         [Display(Name = "Language")]
-        public string LanguageName { get; set; }
+        public int LanguageId { get; set; }
         [Display(Name = "Description")]
         public string Description { get; set; }
         [Display(Name = "Picture")]

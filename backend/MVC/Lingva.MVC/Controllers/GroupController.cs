@@ -1,11 +1,15 @@
 ﻿using Lingva.Common.Mapping;
 using Lingva.MVC.Extensions;
 using Lingva.MVC.Models.Request;
+using Lingva.MVC.Models.Request.Entities;
 using Lingva.MVC.Models.Response;
+using Lingva.MVC.Models.Response.Entities;
+using Lingva.MVC.Models.Response.Group.Index;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -37,10 +41,8 @@ namespace Lingva.MVC.Controllers
         }
 
         // GET: group    
-        public async Task<IActionResult> Index([FromQuery] FilterViewModel filters, [FromQuery] SorterViewModel sorters, int page = 1)
+        public async Task<IActionResult> Index(string filters, string sorters, int page = 1)
         {
-            int pageSize = 3;
-
             IEnumerable<GroupViewModel> groupsViewModel;
             List<LanguageViewModel> languages;
 
@@ -72,12 +74,18 @@ namespace Lingva.MVC.Controllers
             {
                 languages = new List<LanguageViewModel>();
             }
-            
+
+            OptionsModel options = new OptionsModel();//??
+            if (!await TryUpdateModelAsync<OptionsModel>(options))
+            {
+                return NotFound();
+            }
+
             IndexViewModel viewModel = new IndexViewModel
             {
-                PageViewModel = new IndexPageViewModel(4, page, pageSize),//??
-                SortViewModel = new IndexSortViewModel(sorters),
-                FilterViewModel = new IndexFilterViewModel(languages, filters),
+                PageViewModel = new IndexPageViewModel(4, options.Pagenator.CurrentPage, options.Pagenator.PageSize),//??
+                SortViewModel = new IndexSortViewModel(options.Sorters),
+                FilterViewModel = new IndexFilterViewModel(languages, options.Filters),
                 Groups = groupsViewModel,
             };
 

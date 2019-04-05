@@ -6,19 +6,24 @@
         Google,       
     }
 
-    public enum SortState
-    {
-        NameAsc,
-        NameDesc,
-        DateAsc,
-        DateDesc,
-        LanguageAsc,
-        LanguageDesc,
-    }
-
     public enum SortOrder
     {
         Asc,
         Desc,
+    }
+
+    public enum FilterOperation
+    {
+        Equal,
+        NotEqual,
+        Less,
+        More,
+        Contains,
+        NotContains,
+    }
+
+    public enum SortState
+    {
+
     }
 }

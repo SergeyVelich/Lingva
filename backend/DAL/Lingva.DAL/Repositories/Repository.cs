@@ -1,5 +1,4 @@
 ﻿using Lingva.DAL.Context;
-using Lingva.DAL.Extensions;
 using Lingva.DAL.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Lingva.DAL.Extensions;
 
 namespace Lingva.DAL.Repositories
 {
@@ -22,25 +22,55 @@ namespace Lingva.DAL.Repositories
             _entities = context.Set<T>();
         }
 
-        public virtual IEnumerable<T> GetList(Expression<Func<T, bool>> predicator = null)
+        public virtual IEnumerable<T> GetList(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, int skip = 0, int take = 0)
         {
             IQueryable<T> result = _entities.AsNoTracking();
 
             if (predicator != null)
             {
-                result.Where(predicator);
+                result = result.Where(predicator);
+            }
+
+            if (sorters != null)
+            {
+                result = result.OrderBy(sorters);
+            }
+
+            if (skip != 0)
+            {
+                result = result.Skip(skip);
+            }
+
+            if (take != 0)
+            {
+                result = result.Take(take);
             }
 
             return result.ToList();
         }
 
-        public virtual async Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> predicator = null)
+        public virtual async Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, int skip = 0, int take = 0)
         {
             IQueryable<T> result = _entities.AsNoTracking();
 
             if (predicator != null)
             {
-                result.Where(predicator);
+                result = result.Where(predicator);
+            }
+
+            if (sorters != null)
+            {
+                result = result.OrderBy(sorters);
+            }
+
+            if (skip != 0)
+            {
+                result = result.Skip(skip);
+            }
+
+            if (take != 0)
+            {
+                result = result.Take(take);
             }
 
             return await result.ToListAsync();
@@ -93,6 +123,60 @@ namespace Lingva.DAL.Repositories
                 _entities.Attach(entity);
             }
             _entities.Remove(entity);
+        }
+
+        public virtual async Task<int> CountAsync(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, int skip = 0, int take = 0)
+        {
+            IQueryable<T> result = _entities.AsNoTracking();
+
+            if (predicator != null)
+            {
+                result = result.Where(predicator);
+            }
+
+            if (sorters != null)
+            {
+                result = result.OrderBy(sorters);
+            }
+
+            if (skip != 0)
+            {
+                result = result.Skip(skip);
+            }
+
+            if (take != 0)
+            {
+                result = result.Take(take);
+            }
+
+            return await result.CountAsync();
+        }
+
+        public virtual int Count(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, int skip = 0, int take = 0)
+        {
+            IQueryable<T> result = _entities.AsNoTracking();
+
+            if (predicator != null)
+            {
+                result = result.Where(predicator);
+            }
+
+            if (sorters != null)
+            {
+                result = result.OrderBy(sorters);
+            }
+
+            if (skip != 0)
+            {
+                result = result.Skip(skip);
+            }
+
+            if (take != 0)
+            {
+                result = result.Take(take);
+            }
+
+            return result.Count();
         }
     }
 }

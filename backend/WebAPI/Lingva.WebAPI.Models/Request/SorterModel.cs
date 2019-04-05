@@ -2,10 +2,10 @@
 
 namespace Lingva.WebAPI.Models.Request
 {
-    public class SorterItemViewModel
+    public class SorterModel
     {
-        public string Name { get; set; }
+        public string SorterString { get; set; }
+        public string PropertyName { get; set; }
         public SortOrder SortOrder { get; set; }
-        public bool IsFirst { get; set; }
     }
 }

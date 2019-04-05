@@ -1,5 +1,6 @@
 ﻿using Lingva.MVC.Extensions;
 using Lingva.MVC.Filters;
+using Lingva.MVC.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,7 @@ namespace Lingva.MVC
             services.AddHttpClient();
             services.AddMvc(options =>
             {
+                options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
                 options.Filters.Add(typeof(GlobalExceptionFilter));
             });
         }

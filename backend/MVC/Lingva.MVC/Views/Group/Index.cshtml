@@ -1,5 +1,5 @@
-﻿@using Lingva.MVC.Models.Response
-@model Lingva.MVC.Models.Response.IndexViewModel
+﻿@using Lingva.MVC.Models.Response.Entities
+@model Lingva.MVC.Models.Response.Group.Index.IndexViewModel
 <!--импортируем tag-хелперы проекта-->
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, Lingva.MVC
@@ -14,23 +14,28 @@
 <form method="get">
     <div class="form-inline">
         <label class="control-label">Name: </label>
-        @Html.TextBox("filters.Name", Model.FilterViewModel.SelectedName, htmlAttributes: new { @class = "form-control" })
+        @Html.TextBox("Name", Model.FilterViewModel.SelectedName, htmlAttributes: new { @class = "form-control" })
 
         <label class="control-label">Language: </label>
-        @Html.DropDownList("filters.Language", Model.FilterViewModel.Languages as SelectList,
-                htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownList("Language", Model.FilterViewModel.Languages as SelectList, htmlAttributes: new { @class = "form-control" })
+
+        @*@Html.EditorFor("filters", "Name,4," + Model.FilterViewModel.SelectedName + ";Language,0," + Model.FilterViewModel.SelectedLanguage)
+            < label class="control-label">Language: </label>
+            @Html.TextBox("filters", )*@
 
         <input type="submit" value="Filter" class="btn btn-default" />
     </div>
 </form>
+
+@Html.ActionLink("Все книги", "Index", "Book", new { id = 10 }, null)
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 
 <table class="table">
-        <tr>
-            <th>
+    <tr>
+        @*<th>
                 <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Current" property="@Model.SortViewModel.NameSort">
                     Name
                 </sort-header>
@@ -44,24 +49,100 @@
                 <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Current" property="@Model.SortViewModel.LanguageSort">
                     Language
                 </sort-header>
-            </th>
-        </tr>
-        @foreach (GroupViewModel groupViewModel in Model.Groups)
-        {
-            <tr>
-                <td>@groupViewModel.Name</td>
-                <td>@groupViewModel.Date</td>
-                <td>@groupViewModel.LanguageId</td>
-                <td>@groupViewModel.Description</td>
-                <td>@groupViewModel.Picture</td>
-                <td>@Html.ActionLink("Get", "Get", new { id = groupViewModel.Id })</td>
-                <td>@Html.ActionLink("Update", "Update", new { id = groupViewModel.Id })</td>
-                <td>@Html.ActionLink("Delete", "Delete", new { id = groupViewModel.Id })</td>
-            </tr>
-        }
-    </table>
+            </th>*@
+    </tr>
+    @foreach (GroupViewModel groupViewModel in Model.Groups)
+    {
+        <tr>
+            <td>@groupViewModel.Name</td>
+            <td>@groupViewModel.Date</td>
+            <td>@groupViewModel.LanguageId</td>
+            <td>@groupViewModel.Description</td>
+            <td>@groupViewModel.Picture</td>
+            <td>
+                @Html.ActionLink("Get", "Get", new
+                {
+                    id = groupViewModel.Id
+})
+        </td>
+        <td>@Html.ActionLink("Update", "Update", new { id = groupViewModel.Id })</td>
+        <td>@Html.ActionLink("Delete", "Delete", new { id = groupViewModel.Id })</td>
+    </tr>
+}
+</table>
 
 <page-link page-model="Model.PageViewModel" page-action="Index"
-           page-url-name="@(Model.FilterViewModel.SelectedName)"
-           page-url-language="@(Model.FilterViewModel.SelectedLanguage)"
-           page-url-sortorder="@(Model.SortViewModel.Current)"></page-link>
+           page-url-filters="@("Name,4," + Model.FilterViewModel.SelectedName + ";Language,0," + Model.FilterViewModel.SelectedLanguage)"
+           page-url-sorters="@(Model.FilterViewModel.SelectedLanguage)"></page-link>
+
+
+
+
+
+
+@model Advance.Learning.WebApp.Models.ProductSearchModels
+
+@{
+
+    ViewBag.Title = "Index";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h1>Search Product</h1>
+
+
+
+@using (Html.BeginForm("index", "products", FormMethod.Get))
+{
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="col-lg-3">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Product Name" })
+            </div>
+            <div class="col-lg-3">
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @placeholder = "Price (max.)" })
+            </div>
+            <div class="col-lg-3">
+                @Html.DropDownListFor(m => m.Category, new SelectList(ViewBag.Categories, "CategoryId", "CategoryName"), "All Categories", new { @class = "form-control", @placeholder = "Category" })
+            </div>
+            <div class="col-lg-3">
+                <button type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+                <a class="btn btn-success pull-right" data-modal="" href="/Products/Create" id="btnCreate">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top:17px;">
+        @{
+            var grid = new WebGrid(
+                                canPage: true,
+                                rowsPerPage: Model.PageSize,
+                                canSort: true,
+                                ajaxUpdateContainerId: "grid");
+            grid.Bind(Model.Products, rowCount: Model.TotalRecords, autoSortAndPage: false);
+            grid.Pager(WebGridPagerModes.All);
+            @grid.GetHtml(htmlAttributes: new { id = "grid" },
+                    fillEmptyRows: false,
+                    tableStyle: "table table-bordered table-hover",
+                    mode: WebGridPagerModes.All,
+                    columns: grid.Columns(
+                          grid.Column("ProductId", "ID"),
+                          grid.Column("ProductName", "ProductName", style: "col-lg-6"),
+                          grid.Column("Price", header: "Price", format: @<text>@String.Format("{0:C}", item.Price) </text>),
+                          grid.Column("Categories.CategoryName", "Category", style: "col-lg-2"),
+                          grid.Column(header: "Action", canSort: false, style: "action",
+                                format: @<text>
+                                        @Html.Raw("<a data-modal='' href='/products/details/" + item.ProductId + "' id='" + item.ProductId + "' title='Detail'> <span class='glyphicon glyphicon-search'> </span> </a>")
+                                        @Html.Raw("<a data-modal='' href='/products/edit/" + item.ProductId + "' id='" + item.ProductId + "' title='Edit'> <span class='glyphicon glyphicon-edit'> </span> </a>")
+                                        @Html.Raw("<a data-modal='' href='/products/delete/" + item.ProductId + "' id='" + item.ProductId + "' title='Delete'> <span class='glyphicon glyphicon-trash'> </span> </a>")
+                                </text>)));
+        }
+    </div>
+}
+

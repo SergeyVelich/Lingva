@@ -6,7 +6,7 @@ namespace Lingva.BC.Contracts
 {
     public interface IGroupService
     {
-        Task<IEnumerable<GroupDTO>> GetListAsync();
+        Task<IEnumerable<GroupDTO>> GetListAsync(QueryOptionsDTO optionsDTO);
 
         Task<GroupDTO> GetByIdAsync(int id);
 

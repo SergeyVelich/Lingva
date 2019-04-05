@@ -8,12 +8,22 @@ namespace Lingva.DAL.Extensions
 {
     public static class IQueryableExtensions
     {
-        public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> query, string propertyName, 
-            SortOrder sortOrder = SortOrder.Asc, bool isFirst = true, IComparer<object> comparer = null)
+        public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> query, IEnumerable<string> sorters)
         {
-            string methodName = GetMethodName(sortOrder, isFirst);
+            IOrderedQueryable<T> orderedQuery = query.OrderBy(p => 0);
+            
+            bool isFirst = true;
+            foreach (string sorter in sorters)
+            {
+                var splitedSorter = sorter.Split(' ');
+                SortOrder sortOrder = Enum.Parse<SortOrder>(splitedSorter[1]);
+                string methodName = GetMethodName(sortOrder, isFirst);
 
-            return CallOrderedQueryable(query, methodName, propertyName, comparer);
+                orderedQuery = CallOrderedQueryable(orderedQuery, methodName, splitedSorter[0]);
+                isFirst = false;
+            }
+
+            return orderedQuery;
         }
 
         private static string GetMethodName(SortOrder sortOrder = SortOrder.Asc, bool isFirst = true)
@@ -29,13 +39,13 @@ namespace Lingva.DAL.Extensions
                     }
                     else
                     {
-                        methodName = "OrderByDescending";
+                        methodName = "ThenBy";
                     }
                     break;
                 case SortOrder.Desc:
                     if (isFirst)
                     {
-                        methodName = "ThenBy";
+                        methodName = "OrderByDescending";
                     }
                     else
                     {
@@ -50,10 +60,10 @@ namespace Lingva.DAL.Extensions
             return methodName;
         }
 
-        private static IOrderedQueryable<T> CallOrderedQueryable<T>(this IQueryable<T> query, string methodName,
+        private static IOrderedQueryable<T> CallOrderedQueryable<T>(IOrderedQueryable<T> query, string methodName,
             string propertyName, IComparer<object> comparer = null)
         {
-            if (!string.IsNullOrEmpty(methodName))
+            if (string.IsNullOrEmpty(methodName))
             {
                 throw new ArgumentException("Empty method name");
             }

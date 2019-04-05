@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.MVC.Models.Request
+namespace Lingva.MVC.Models.Response.Entities
 {
     [ExcludeFromCodeCoverage]
-    public class GroupCreateViewModel
+    public class GroupViewModel
     {
         public int Id { get; set; }
         [Display(Name = "Title")]
