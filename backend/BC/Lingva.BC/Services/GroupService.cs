@@ -85,12 +85,18 @@ namespace Lingva.BC.Services
             {
                 return null;
             }
-           
+
+            Expression<Func<Group, bool>> exp = null;
             Expression expression = null;
             var parameter = Expression.Parameter(typeof(Group), "x");
 
             foreach (var filter in filterModel)
             {
+                if (filter.PropertyValue == null)
+                {
+                    continue;
+                }
+
                 var property = Expression.Property(parameter, filter.PropertyName);
                 var propertyInfo = typeof(Group).GetProperty(filter.PropertyName);
                 var typeForValue = propertyInfo.PropertyType;
@@ -115,29 +121,22 @@ namespace Lingva.BC.Services
                     case FilterOperation.Contains:
                         MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
                         subExpression = Expression.Call(property, method, constant);
-                        //subExpression = Expression.Lambda<Func<Group, bool>>(containsMethodExp, parameter);
                         break;
                     case FilterOperation.NotContains:
                         method = typeof(string).GetMethod("NotContains", new[] { typeof(string) });
                         subExpression = Expression.Call(property, method, constant);
-                        //subExpression = Expression.Lambda<Func<Group, bool>>(containsMethodExp, parameter);
                         break;
                     default: throw new ArgumentOutOfRangeException();
                 }
 
-                //switch (filter.SqlCondition)
-                //{
-                //    case SqlCondition.And:
-                        expression = expression == null ? subExpression : Expression.AndAlso(expression, subExpression);
-                    //    break;
-                    //case SqlCondition.Or:
-                    //    expression = expression == null ? subExpression : Expression.OrElse(expression, subExpression);
-                    //    break;
-                    //default: throw new ArgumentOutOfRangeException();
-                //}
+                expression = expression == null ? subExpression : Expression.AndAlso(expression, subExpression);
             }
-            var exp = Expression.Lambda<Func<Group, bool>>(expression ?? throw new InvalidOperationException(), parameter);
 
+            if(expression != null)
+            {
+                exp = Expression.Lambda<Func<Group, bool>>(expression ?? throw new InvalidOperationException(), parameter);
+            }
+            
             return exp;
         }
 

@@ -30,7 +30,7 @@ namespace Lingva.MVC
             services.AddHttpClient();
             services.AddMvc(options =>
             {
-                //options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
+                options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
                 options.Filters.Add(typeof(GlobalExceptionFilter));
             });
         }

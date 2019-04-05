@@ -1,8 +1,6 @@
-﻿using Lingva.BC.Common.Enums;
-using Lingva.WebAPI.Models.Request;
+﻿using Lingva.WebAPI.Models.Request;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Infrastructure
@@ -29,98 +27,96 @@ namespace Lingva.WebAPI.Infrastructure
             string page = pagePartValue.FirstValue;
             string pageSize = pageSizePartValue.FirstValue;
 
-            OptionsModel options = new OptionsModel
-            {
-                Filters = GetFiltersFromQuery(filters),
-                Sorters = GetSortersFromQuery(sorters),
-                Pagenator = GetPagenatorFromQuery(page, pageSize)
-            };
+            OptionsModel options = new OptionsModel();
+            //options.Filters = GetFiltersFromQuery(filters);
+            //options.Sorters = GetSortersFromQuery(sorters);
+            //options.Pagenator = GetPagenatorFromQuery(page, pageSize);
 
             // set binding result
             bindingContext.Result = ModelBindingResult.Success(options);
             return Task.CompletedTask;
         }
 
-        private ICollection<FilterModel> GetFiltersFromQuery(string filtersString)
-        {
-            List<FilterModel> result = new List<FilterModel>();
+        //private ICollection<FilterModel> GetFiltersFromQuery(string filtersString)
+        //{
+        //    List<FilterModel> result = new List<FilterModel>();
 
-            if (filtersString == null)
-            {
-                return result;
-            }           
+        //    if (filtersString == null)
+        //    {
+        //        return result;
+        //    }           
 
-            string[] filtersArr = filtersString.Split(';');
-            foreach (string filter in filtersArr)
-            {
-                string[] parts = filter.Split(',');
-                FilterModel filterModel = new FilterModel
-                {
-                    PropertyName = parts[0],
-                    Operation = Enum.Parse<FilterOperation>(parts[1]),
-                    PropertyValue = parts[2]
-                };
-                result.Add(filterModel);
-            }
+        //    string[] filtersArr = filtersString.Split(';');
+        //    foreach (string filter in filtersArr)
+        //    {
+        //        string[] parts = filter.Split(',');
+        //        FilterModel filterModel = new FilterModel
+        //        {
+        //            PropertyName = parts[0],
+        //            Operation = Enum.Parse<FilterOperation>(parts[1]),
+        //            PropertyValue = parts[2]
+        //        };
+        //        result.Add(filterModel);
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        private ICollection<SorterModel> GetSortersFromQuery(string sortersString)
-        {
-            List<SorterModel> result = new List<SorterModel>();
+        //private ICollection<SorterModel> GetSortersFromQuery(string sortersString)
+        //{
+        //    List<SorterModel> result = new List<SorterModel>();
 
-            if (sortersString == null)
-            {
-                return result;
-            }
+        //    if (sortersString == null)
+        //    {
+        //        return result;
+        //    }
            
-            string[] sortersArr = sortersString.Split(';');
-            foreach(string sorter in sortersArr)
-            {
-                string[] parts = sorter.Split(',');
-                SorterModel sorterModel = new SorterModel
-                {
-                    PropertyName = parts[0],
-                    SortOrder = Enum.Parse<SortOrder>(parts[1])
-                };
-                sorterModel.SorterString = sorterModel.PropertyName + " " + sorterModel.SortOrder.ToString();
-                result.Add(sorterModel);
-            }
+        //    string[] sortersArr = sortersString.Split(';');
+        //    foreach(string sorter in sortersArr)
+        //    {
+        //        string[] parts = sorter.Split(',');
+        //        SorterModel sorterModel = new SorterModel
+        //        {
+        //            PropertyName = parts[0],
+        //            SortOrder = Enum.Parse<SortOrder>(parts[1])
+        //        };
+        //        sorterModel.SorterString = sorterModel.PropertyName + " " + sorterModel.SortOrder.ToString();
+        //        result.Add(sorterModel);
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        private PagenatorModel GetPagenatorFromQuery(string page, string pageSize)
-        {
-            if (string.IsNullOrEmpty(page) || !Int32.TryParse(page, out int pageNumber))
-            {
-                pageNumber = 1;
-            }
+        //private PagenatorModel GetPagenatorFromQuery(string page, string pageSize)
+        //{
+        //    if (string.IsNullOrEmpty(page) || !Int32.TryParse(page, out int pageNumber))
+        //    {
+        //        pageNumber = 1;
+        //    }
 
-            if (string.IsNullOrEmpty(pageSize) || !Int32.TryParse(pageSize, out int pageSizeNumber))
-            {
-                pageSizeNumber = 5;
-            }
+        //    if (string.IsNullOrEmpty(pageSize) || !Int32.TryParse(pageSize, out int pageSizeNumber))
+        //    {
+        //        pageSizeNumber = 5;
+        //    }
 
-            PagenatorModel result = new PagenatorModel
-            {
-                PageSize = pageSizeNumber,
-                CurrentPage = pageNumber
-            };
+        //    PagenatorModel result = new PagenatorModel
+        //    {
+        //        PageSize = pageSizeNumber,
+        //        CurrentPage = pageNumber
+        //    };
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        private void EnsurePropertyExists(string propertyName)//??
-        {
-            //var propertyExist = ValidateModelType.HasProperty(propertyName);
+        //private void EnsurePropertyExists(string propertyName)//??
+        //{
+        //    //var propertyExist = ValidateModelType.HasProperty(propertyName);
 
-            //if (!propertyExist)
-            //{
-            //    throw new InvalidModelException($"Filter{propertyName} is not acceptable for model {typeof(TValidateModel).Name}");
-            //}
-        }
+        //    //if (!propertyExist)
+        //    //{
+        //    //    throw new InvalidModelException($"Filter{propertyName} is not acceptable for model {typeof(TValidateModel).Name}");
+        //    //}
+        //}
 
     }
 }

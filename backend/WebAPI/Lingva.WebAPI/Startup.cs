@@ -35,6 +35,8 @@ namespace Lingva.WebAPI
             services.AddTransient<IInfoService, InfoService>();
             services.AddTransient<IUserService, UserService>();
 
+            services.AddTransient<QueryOptionsAdapter>();
+
             services.AddMvc(options =>
             {
                 options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());

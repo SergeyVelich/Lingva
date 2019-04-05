@@ -1,6 +1,7 @@
 ﻿using Lingva.BC.Contracts;
 using Lingva.BC.DTO;
 using Lingva.Common.Mapping;
+using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Models.Request;
 using Lingva.WebAPI.Models.Request.Entities;
 using Lingva.WebAPI.Models.Response.Entities;
@@ -20,19 +21,21 @@ namespace Lingva.WebAPI.Controllers
         private readonly IGroupService _groupService;
         private readonly IDataAdapter _dataAdapter;
         private readonly ILogger<GroupController> _logger;
+        private readonly QueryOptionsAdapter _queryOptionsAdapter;
 
-        public GroupController(IGroupService groupService, IDataAdapter dataAdapter, ILogger<GroupController> logger)
+        public GroupController(IGroupService groupService, IDataAdapter dataAdapter, ILogger<GroupController> logger, QueryOptionsAdapter queryOptionsAdapter)
         {
             _groupService = groupService;
             _dataAdapter = dataAdapter;
             _logger = logger;
+            _queryOptionsAdapter = queryOptionsAdapter;
         }
 
         // GET: api/group
         [HttpGet]
-        public async Task<IActionResult> Index(OptionsModel options)
+        public async Task<IActionResult> Index([FromQuery] OptionsModel options)
         {
-            QueryOptionsDTO optionsDTO = _dataAdapter.Map<QueryOptionsDTO>(options);
+            QueryOptionsDTO optionsDTO = _queryOptionsAdapter.Map(options);
 
             IEnumerable<GroupDTO> groupsDto = await _groupService.GetListAsync(optionsDTO);
 

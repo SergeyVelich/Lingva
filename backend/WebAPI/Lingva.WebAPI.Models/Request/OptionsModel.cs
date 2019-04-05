@@ -1,11 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using Lingva.WebAPI.Models.Response.Entities;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.WebAPI.Models.Request
 {
+    [ExcludeFromCodeCoverage]
     public class OptionsModel
     {
-        public ICollection<FilterModel> Filters { get; set; }
-        public ICollection<SorterModel> Sorters { get; set; }
-        public PagenatorModel Pagenator { get; set; }
+        [Display(Name = "Title")]
+        public string Name { get; set; }
+        [Display(Name = "Date")]
+        [DataType(DataType.DateTime)]
+        public DateTime Date { get; set; }
+        [Display(Name = "Language")]
+        public int? LanguageId { get; set; }
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+        public string SortProperty { get; set; }
+        public string SortOrder { get; set; }
+
+        public int Page { get; set; }
+        public int PageRecords { get; set; }
+        public int TotalRecords { get; set; }
+
+        public IEnumerable<GroupViewModel> Groups { get; set; }
+
+        public OptionsModel()
+        {
+            SortProperty = "Name";
+            SortOrder = "Desc";
+
+            Page = 1;
+            PageRecords = 5;
+        }
     }
 }

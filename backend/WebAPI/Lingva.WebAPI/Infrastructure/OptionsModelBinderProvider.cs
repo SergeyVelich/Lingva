@@ -14,10 +14,10 @@ namespace Lingva.WebAPI.Infrastructure
                 throw new ArgumentNullException(nameof(context));
             }
 
-            if (context.Metadata.ModelType == typeof(OptionsModel))
-            {
-                return new BinderTypeModelBinder(typeof(OptionsModelBinder));
-            }
+            //if (context.Metadata.ModelType == typeof(OptionsModel))
+            //{
+            //    return new BinderTypeModelBinder(typeof(OptionsModelBinder));
+            //}
 
             return null;
         }
