@@ -7,17 +7,20 @@ namespace Lingva.MVC.Models.Response.Group.Index
     [ExcludeFromCodeCoverage]
     public class IndexSortViewModel
     {
+        public string SortProperty { get; set; }
+        public string SortOrder { get; set; }
+        public string CurrentSortProperty { get; set; }
+
         //public SortState NameSort { get; set; }
         //public SortState DateSort { get; set; }
         //public SortState LanguageSort { get; set; }
         //public SortState Current { get; set; }
         //public bool Up { get; set; }
 
-        public Dictionary<string, SorterModel> Sorters { get; set; }
-
-        public IndexSortViewModel(Dictionary<string, SorterModel> sorters)
+        public IndexSortViewModel(string sortProperty, string sortOrder)
         {
-            Sorters = sorters;
+            SortProperty = sortProperty;
+            SortOrder = sortOrder;
             //// значения по умолчанию
             //NameSort = SortState.NameAsc;
             //DateSort = SortState.DateAsc;

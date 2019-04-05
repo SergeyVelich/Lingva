@@ -41,54 +41,46 @@ namespace Lingva.MVC.Controllers
         }
 
         // GET: group    
-        public async Task<IActionResult> Index(string filters, string sorters, int page = 1)
+        public async Task<IActionResult> Index(OptionsModel options)
         {
             IEnumerable<GroupViewModel> groupsViewModel;
             List<LanguageViewModel> languages;
 
             HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group");
-            Dictionary<string, object> parameters = new Dictionary<string, object>()
-                { { "filters", filters },
-                { "sorters", sorters },
-                { "page", page } };
-            request.AddParameters(parameters);
-            HttpResponseMessage response = await _client.SendAsync(request);
+            //HttpResponseMessage response = await _client.SendAsync(request);
 
-            if (response.IsSuccessStatusCode)
-            {
-                groupsViewModel = await response.Content.ReadAsAsync<IEnumerable<GroupViewModel>>();
-            }
-            else
-            {
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    groupsViewModel = await response.Content.ReadAsAsync<IEnumerable<GroupViewModel>>();
+            //}
+            //else
+            //{
                 groupsViewModel = Array.Empty<GroupViewModel>();
-            }
+            //}
 
-            request = await GetRequestAsync(HttpMethod.Get, "info/languages");
-            response = await _client.SendAsync(request);
+            //request = await GetRequestAsync(HttpMethod.Get, "info/languages");
+            //response = await _client.SendAsync(request);
 
-            if (response.IsSuccessStatusCode)
-            {
-                languages = await response.Content.ReadAsAsync<List<LanguageViewModel>>();
-            }
-            else
-            {
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    languages = await response.Content.ReadAsAsync<List<LanguageViewModel>>();
+            //}
+            //else
+            //{
                 languages = new List<LanguageViewModel>();
-            }
+            //}
 
-            OptionsModel options = new OptionsModel();//??
-            if (!await TryUpdateModelAsync<OptionsModel>(options))
-            {
-                return NotFound();
-            }
+            ViewBag.Languages = languages;
 
             IndexViewModel viewModel = new IndexViewModel
             {
-                PageViewModel = new IndexPageViewModel(4, options.Pagenator.CurrentPage, options.Pagenator.PageSize),//??
-                SortViewModel = new IndexSortViewModel(options.Sorters),
-                FilterViewModel = new IndexFilterViewModel(languages, options.Filters),
+                PageViewModel = new IndexPageViewModel(options.TotalRecords, options.Page, options.PageRecords),
+                SortViewModel = new IndexSortViewModel(options.SortProperty, options.SortOrder),
+                FilterViewModel = new IndexFilterViewModel(languages, options.Name, options.Language, options.Description, options.Date),
                 Groups = groupsViewModel,
             };
 
+            viewModel.Groups = groupsViewModel;
             return View(viewModel);
         }
 
@@ -102,8 +94,6 @@ namespace Lingva.MVC.Controllers
             }
 
             HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group/get");
-            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "id", id } };
-            request.AddParameters(parameters);
             HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -155,9 +145,7 @@ namespace Lingva.MVC.Controllers
                 return NotFound();
             }
 
-            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group/get");
-            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "id", id } };
-            request.AddParameters(parameters);          
+            HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group/get");       
             HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -203,8 +191,6 @@ namespace Lingva.MVC.Controllers
             }
 
             HttpRequestMessage request = await GetRequestAsync(HttpMethod.Get, "group/get");
-            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "id", id } };
-            request.AddParameters(parameters);
             HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -248,6 +234,7 @@ namespace Lingva.MVC.Controllers
 
             HttpRequestMessage request = new HttpRequestMessage(method, hostPatch + requestPatch);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            request.RequestUri = new Uri(request.RequestUri.ToString() + this.HttpContext.Request.QueryString);
 
             return request;
         }

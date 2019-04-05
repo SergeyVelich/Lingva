@@ -17,43 +17,6 @@ namespace Lingva.MVC.Extensions
             }
 
             return request;
-        }
-
-        public static HttpRequestMessage AddParameters(this HttpRequestMessage request, Dictionary<string, object> parameters)
-        {
-            Dictionary<string, object> allParameters = new Dictionary<string, object>();
-            foreach (var param in parameters)
-            {
-                var paramValue = param.Value;
-                if (paramValue != null)
-                {
-                    allParameters[param.Key] = paramValue;
-                }
-            }
-
-            StringBuilder parametersPatch = new StringBuilder();
-            if(allParameters.Count > 0)
-            {
-                parametersPatch.Append("?");
-
-                bool isFirst = true;
-
-                foreach (var param in allParameters)
-                {
-                    if (!isFirst)
-                    {
-                        parametersPatch.Append("&");
-                    }
-                    isFirst = false;
-                    parametersPatch.Append(param.Key);
-                    parametersPatch.Append("=");
-                    parametersPatch.Append(param.Value);
-                }
-            }
-
-            parametersPatch.Insert(0, request.RequestUri);
-            request.RequestUri = new Uri(parametersPatch.ToString());
-            return request;
-        }
+        }    
     }
 }
