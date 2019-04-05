@@ -25,10 +25,11 @@ namespace Lingva.BC.Services
 
         public async Task<IEnumerable<GroupDTO>> GetListAsync(QueryOptionsDTO optionsDTO)
         {
-            Expression<Func<Group, bool>> filters = GetFiltersExpression(optionsDTO.Filters);
-            IEnumerable<string> sorters = GetSortersExpression(optionsDTO.Sorters);
-            int skip = optionsDTO.Pagenator.Skip;
-            int take = optionsDTO.Pagenator.Take;
+            Expression<Func<Group, bool>> filters = optionsDTO.GetFiltersExpression<Group>();
+            IEnumerable<string> sorters = optionsDTO.GetSortersCollection<Group>();
+            QueryPagenatorDTO pagenator = optionsDTO.Pagenator;
+            int skip = pagenator.Skip;
+            int take = pagenator.Take;
 
             IEnumerable<Group> groups = await _unitOfWork.Groups.GetListAsync(filters, sorters, skip, take);
 
@@ -66,98 +67,6 @@ namespace Lingva.BC.Services
             Group group = _dataAdapter.Map<Group>(groupDTO);
             _unitOfWork.Groups.Delete(group);
             await _unitOfWork.SaveAsync();
-        }
-
-
-
-
-
-
-
-
-        private Expression<Func<Group, bool>> GetFiltersExpression(ICollection<QueryFilterDTO> filterModel)
-        {
-            if(filterModel == null)
-            {
-                return null;
-            }
-            if (filterModel.Count == 0)
-            {
-                return null;
-            }
-
-            Expression<Func<Group, bool>> exp = null;
-            Expression expression = null;
-            var parameter = Expression.Parameter(typeof(Group), "x");
-
-            foreach (var filter in filterModel)
-            {
-                if (filter.PropertyValue == null)
-                {
-                    continue;
-                }
-
-                var property = Expression.Property(parameter, filter.PropertyName);
-                var propertyInfo = typeof(Group).GetProperty(filter.PropertyName);
-                var typeForValue = propertyInfo.PropertyType;
-                var constant = Expression.Constant(Convert.ChangeType(filter.PropertyValue, typeForValue));
-
-                Expression subExpression = null;
-
-                switch (filter.Operation)
-                {
-                    case FilterOperation.Equal:
-                        subExpression = Expression.Equal(property, constant);
-                        break;
-                    case FilterOperation.NotEqual:
-                        subExpression = Expression.NotEqual(property, constant);
-                        break;
-                    case FilterOperation.Less:
-                        subExpression = Expression.LessThan(property, constant);
-                        break;
-                    case FilterOperation.More:
-                        subExpression = Expression.GreaterThan(property, constant);
-                        break;
-                    case FilterOperation.Contains:
-                        MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
-                        subExpression = Expression.Call(property, method, constant);
-                        break;
-                    case FilterOperation.NotContains:
-                        method = typeof(string).GetMethod("NotContains", new[] { typeof(string) });
-                        subExpression = Expression.Call(property, method, constant);
-                        break;
-                    default: throw new ArgumentOutOfRangeException();
-                }
-
-                expression = expression == null ? subExpression : Expression.AndAlso(expression, subExpression);
-            }
-
-            if(expression != null)
-            {
-                exp = Expression.Lambda<Func<Group, bool>>(expression ?? throw new InvalidOperationException(), parameter);
-            }
-            
-            return exp;
-        }
-
-        private ICollection<string> GetSortersExpression(ICollection<QuerySorterDTO> sorterModel)
-        {
-            if (sorterModel == null)
-            {
-                return null;
-            }
-            if (sorterModel.Count == 0)
-            {
-                return null;
-            }
-
-            ICollection<string> sorters = new List<string>();//??
-            foreach (var sorter in sorterModel)
-            {
-                sorters.Add(sorter.PropertyName + " " + sorter.SortOrder.ToString());
-            }
-
-            return sorters;
         }
     }
 }

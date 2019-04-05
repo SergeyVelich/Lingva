@@ -17,32 +17,18 @@ namespace Lingva.WebAPI.Infrastructure
 
         public QueryOptionsDTO Map(OptionsModel optionsModel)
         {
-            QueryOptionsDTO queryOptions = new QueryOptionsDTO();
-            queryOptions.Filters = new List<QueryFilterDTO>();
+            List<QueryFilterDTO> filters = new List<QueryFilterDTO>();
+            filters.Add(new QueryFilterDTO("Name", optionsModel.Name, FilterOperation.Contains));
+            filters.Add(new QueryFilterDTO("LanguageId", optionsModel.LanguageId, FilterOperation.Equal));
 
-            QueryFilterDTO filter;
-            filter = new QueryFilterDTO();
-            filter.PropertyName = "Name";
-            filter.PropertyValue = optionsModel.Name;
-            filter.Operation = FilterOperation.Contains;
-            queryOptions.Filters.Add(filter);
+            List<QuerySorterDTO> sorters = new List<QuerySorterDTO>();
+            sorters.Add(new QuerySorterDTO(optionsModel.SortProperty, Enum.Parse<SortOrder>(optionsModel.SortOrder)));
 
-            filter = new QueryFilterDTO();
-            filter.PropertyName = "LanguageId";
-            filter.PropertyValue = optionsModel.LanguageId;
-            filter.Operation = FilterOperation.Equal;
-            queryOptions.Filters.Add(filter);
+            int take = optionsModel.PageRecords;
+            int skip = optionsModel.PageRecords * (optionsModel.Page - 1);
+            QueryPagenatorDTO pagenator = new QueryPagenatorDTO(take, skip);
 
-            queryOptions.Sorters = new List<QuerySorterDTO>();
-            QuerySorterDTO sorter;
-            sorter = new QuerySorterDTO();
-            sorter.PropertyName = optionsModel.SortProperty;
-            sorter.SortOrder = Enum.Parse<SortOrder>(optionsModel.SortOrder);
-            queryOptions.Sorters.Add(sorter);
-
-            queryOptions.Pagenator = new QueryPagenatorDTO();
-            queryOptions.Pagenator.Skip = optionsModel.PageRecords * (optionsModel.Page - 1);
-            queryOptions.Pagenator.Take = optionsModel.PageRecords;
+            QueryOptionsDTO queryOptions = new QueryOptionsDTO(filters, sorters, pagenator);
 
             return queryOptions;
         }
