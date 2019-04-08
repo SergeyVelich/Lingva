@@ -18,7 +18,7 @@ namespace Lingva.MVC.Models.Request
         [Display(Name = "Description")]
         public string Description { get; set; }
         public string SortProperty { get; set; }
-        public SortOrder SortOrder { get; set; }
+        public string SortOrder { get; set; }
 
         public int Page { get; set; }
         public int PageRecords { get; set; }
@@ -29,7 +29,7 @@ namespace Lingva.MVC.Models.Request
         public OptionsModel()
         {
             SortProperty = "Name";
-            SortOrder = SortOrder.Desc;
+            SortOrder = "Desc";
 
             Name = "";
             LanguageId = 0;

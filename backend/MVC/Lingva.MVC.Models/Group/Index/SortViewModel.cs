@@ -7,15 +7,15 @@ namespace Lingva.MVC.Models.Group.Index
     public class SortViewModel
     {
         public string Property { get; set; }
-        public SortOrder Order { get; set; }
+        public string Order { get; set; }
         public bool Up { get; set; }
 
-        public SortViewModel(string sortProperty, SortOrder sortOrder)
+        public SortViewModel(string sortProperty, string sortOrder)
         {
             Property = sortProperty;
             Order = sortOrder;
 
-            Up = sortOrder == SortOrder.Asc;
+            Up = sortOrder == "Asc";
         }
     }
 }

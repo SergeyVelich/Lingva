@@ -1,10 +1,11 @@
-﻿using Lingva.BC.Common.Enums;
+﻿using QueryBuilder.QueryOptions;
+using QueryBuilder.QueryOptions.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Lingva.BC.DTO
+namespace QueryBuilder
 {
     public class QueryOptionsDTO
     {

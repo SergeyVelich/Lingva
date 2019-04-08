@@ -33,9 +33,7 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] OptionsModel options)
         {
-            QueryOptionsDTO optionsDTO = _queryOptionsAdapter.Map(options);
-
-            IEnumerable<GroupDTO> groupsDto = await _groupService.GetListAsync(optionsDTO);
+            IEnumerable<GroupDTO> groupsDto = await _groupService.GetListAsync(_queryOptionsAdapter.Map(options));
 
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groupsDto));
         }

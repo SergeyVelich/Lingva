@@ -1,6 +1,6 @@
-﻿using Lingva.BC.Common.Enums;
+﻿using QueryBuilder.QueryOptions.Enums;
 
-namespace Lingva.BC.DTO
+namespace QueryBuilder.QueryOptions
 {
     public class QueryFilterDTO
     {

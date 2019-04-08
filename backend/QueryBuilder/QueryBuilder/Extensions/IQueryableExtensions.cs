@@ -1,10 +1,10 @@
-﻿using Lingva.BC.Common.Enums;
+﻿using QueryBuilder.QueryOptions.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Lingva.DAL.Extensions
+namespace QueryBuilder.Extensions
 {
     public static class IQueryableExtensions
     {

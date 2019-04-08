@@ -1,12 +1,12 @@
 ﻿using Lingva.DAL.Context;
 using Lingva.DAL.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
+using QueryBuilder.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Lingva.DAL.Extensions;
 
 namespace Lingva.DAL.Repositories
 {

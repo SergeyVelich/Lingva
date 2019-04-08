@@ -37,7 +37,6 @@ namespace Lingva.MVC.TagHelpers
                 if (Up == true)
                 {
                     tag.AddCssClass("glyphicon-chevron-up");
-                    Order = "Desc";
                 }
                 else
                 {

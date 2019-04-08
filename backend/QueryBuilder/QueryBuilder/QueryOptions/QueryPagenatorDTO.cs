@@ -1,4 +1,4 @@
-﻿namespace Lingva.BC.DTO
+﻿namespace QueryBuilder.QueryOptions
 {
     public class QueryPagenatorDTO
     {

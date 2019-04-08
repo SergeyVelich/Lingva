@@ -1,6 +1,7 @@
-﻿using Lingva.BC.Common.Enums;
-using Lingva.BC.DTO;
-using Lingva.WebAPI.Models.Request;
+﻿using Lingva.WebAPI.Models.Request;
+using QueryBuilder;
+using QueryBuilder.QueryOptions;
+using QueryBuilder.QueryOptions.Enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -22,10 +23,11 @@ namespace Lingva.WebAPI.Infrastructure
             filters.Add(new QueryFilterDTO("LanguageId", optionsModel.LanguageId, FilterOperation.Equal));
 
             List<QuerySorterDTO> sorters = new List<QuerySorterDTO>();
-            sorters.Add(new QuerySorterDTO(optionsModel.SortProperty, optionsModel.SortOrder));
+            SortOrder sortOrder = Enum.Parse<SortOrder>(optionsModel.SortOrder);
+            sorters.Add(new QuerySorterDTO(optionsModel.SortProperty, sortOrder));
 
             List<QueryIncluderDTO> includers = new List<QueryIncluderDTO>();
-            sorters.Add(new QueryIncluderDTO(optionsModel.SortProperty));
+            includers.Add(new QueryIncluderDTO(optionsModel.SortProperty));
 
             int take = optionsModel.PageRecords;
             int skip = optionsModel.PageRecords * (optionsModel.Page - 1);

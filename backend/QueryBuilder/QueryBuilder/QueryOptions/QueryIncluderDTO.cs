@@ -1,6 +1,4 @@
-﻿using Lingva.BC.Common.Enums;
-
-namespace Lingva.BC.DTO
+﻿namespace QueryBuilder.QueryOptions
 {
     public class QueryIncluderDTO
     {
