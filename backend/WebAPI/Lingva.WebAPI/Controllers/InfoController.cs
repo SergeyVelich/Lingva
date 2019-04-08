@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [Route("api/info")]
     [ApiController]
     public class InfoController : ControllerBase

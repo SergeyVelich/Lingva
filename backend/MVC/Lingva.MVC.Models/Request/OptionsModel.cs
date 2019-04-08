@@ -1,4 +1,5 @@
-﻿using Lingva.MVC.Models.Response.Entities;
+﻿using Lingva.BC.Common.Enums;
+using Lingva.MVC.Models.Response.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,7 +18,7 @@ namespace Lingva.MVC.Models.Request
         [Display(Name = "Description")]
         public string Description { get; set; }
         public string SortProperty { get; set; }
-        public string SortOrder { get; set; }
+        public SortOrder SortOrder { get; set; }
 
         public int Page { get; set; }
         public int PageRecords { get; set; }
@@ -28,13 +29,14 @@ namespace Lingva.MVC.Models.Request
         public OptionsModel()
         {
             SortProperty = "Name";
-            SortOrder = "Desc";
+            SortOrder = SortOrder.Desc;
 
             Name = "";
             LanguageId = 0;
 
             Page = 1;
             PageRecords = 5;
+            TotalRecords = 15;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Lingva.WebAPI.Infrastructure
             filters.Add(new QueryFilterDTO("LanguageId", optionsModel.LanguageId, FilterOperation.Equal));
 
             List<QuerySorterDTO> sorters = new List<QuerySorterDTO>();
-            sorters.Add(new QuerySorterDTO(optionsModel.SortProperty, Enum.Parse<SortOrder>(optionsModel.SortOrder)));
+            sorters.Add(new QuerySorterDTO(optionsModel.SortProperty, optionsModel.SortOrder));
 
             int take = optionsModel.PageRecords;
             int skip = optionsModel.PageRecords * (optionsModel.Page - 1);

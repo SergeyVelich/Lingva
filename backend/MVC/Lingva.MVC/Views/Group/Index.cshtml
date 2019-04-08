@@ -14,12 +14,15 @@
 <form method="get">
     <div class="form-inline">
         <label class="control-label">Name: </label>
-        @Html.TextBox("Name", Model.FilterViewModel.SelectedName, htmlAttributes: new { @class = "form-control" })
+        @Html.TextBox("name", Model.FilterViewModel.SelectedName, htmlAttributes: new { @class = "form-control" })
 
         <label class="control-label">Language: </label>
-        @Html.DropDownList("Language", Model.FilterViewModel.Languages as SelectList, htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownList("language", Model.FilterViewModel.Languages as SelectList, htmlAttributes: new { @class = "form-control" })
 
-        <input type = "submit" value="Filter" class="btn btn-default" />
+        <input type="text" name="sortProperty" class="form-control" value="@(Model.SortViewModel.Property)" hidden />
+        <input type="text" name="sortOrder" class="form-control" value="@(Model.SortViewModel.Order)" hidden />
+
+        <input type="submit" value="Filter" class="btn btn-default" />
     </div>
 </form>
 
@@ -28,46 +31,71 @@
 </p>
 
 <table class="table">
-    @*<tr>
-            <th>
-                <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Current" property="@Model.SortViewModel.NameSort">
-                    Name
-                </sort-header>
-            </th>
-            <th>
-                <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Current" property="@Model.SortViewModel.DateSort">
-                    Date
-                </sort-header>
-            </th>
-            <th>
-                <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Current" property="@Model.SortViewModel.LanguageSort">
-                    Language
-                </sort-header>
-            </th>
-        </tr>*@
     <tr>
+        <th>
+            <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Property" property="@("Name")">
+                Name
+            </sort-header>
+        </th>
+        <th>
+            <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Property" property="@("Date")">
+                Date
+            </sort-header>
+        </th>
+        <th>
+            <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Property" property="@("Language")">
+                Language
+            </sort-header>
+        </th>
+        <th>
+            <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Property" property="@("Description")">
+                Description
+            </sort-header>
+        </th>
+        <th>
+            <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Property" property="@("Picture")">
+                Picture
+            </sort-header>
+        </th>
+    </tr>
+    @*<tr>
         <th>
             <a asp-action="Index"
                asp-route-sortProperty="@("Name")"
-               asp-route-sortOrder="@("Desc")"
+               asp-route-sortOrder="@(Model.SortViewModel.SortOrder)"
                asp-route-name="@(Model.FilterViewModel.SelectedName)"
                asp-route-language="@(Model.FilterViewModel.SelectedLanguage)">Name</a>
         </th>
         <th>
-            <a asp-action="Index" 
+            <a asp-action="Index"
                asp-route-sortProperty="@("Date")"
-               asp-route-sortOrder="@("Desc")"
+               asp-route-sortOrder="@(Model.SortViewModel.SortOrder)"
                asp-route-name="@(Model.FilterViewModel.SelectedName)"
                asp-route-language="@(Model.FilterViewModel.SelectedLanguage)">Date</a>
         </th>
         <th>
-            <a asp-action="Index" 
+            <a asp-action="Index"
                asp-route-sortProperty="@("Language")"
-               asp-route-sortOrder="@("Desc")"
+               asp-route-sortOrder="@(Model.SortViewModel.SortOrder)"
                asp-route-name="@(Model.FilterViewModel.SelectedName)"
                asp-route-language="@(Model.FilterViewModel.SelectedLanguage)">Language</a>
         </th>
-    </tr>
+        <th>
+            <a asp-action="Index"
+               asp-route-sortProperty="@("Description")"
+               asp-route-sortOrder="@(Model.SortViewModel.SortOrder)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
+               asp-route-language="@(Model.FilterViewModel.SelectedLanguage)">Description</a>
+        </th>
+        <th>
+            <a asp-action="Index"
+               asp-route-sortProperty="@("Picture")"
+               asp-route-sortOrder="@(Model.SortViewModel.SortOrder)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
+               asp-route-language="@(Model.FilterViewModel.SelectedLanguage)">Picture</a>
+        </th>
+        <th> Actions </th>
+    </tr>*@
     @foreach (GroupViewModel groupViewModel in Model.Groups)
     {
         <tr>
@@ -83,6 +111,14 @@
     }
 </table>
 
-    <page-link page-model="Model.PageViewModel" page-action="Index"
-                page-url-name="@(Model.FilterViewModel.SelectedName)"
-                page-url-language="@(Model.FilterViewModel.SelectedLanguage)"></page-link>
+@*<page-link page-model="Model.PageViewModel" page-action="Index"
+            page-url-name="@(Model.FilterViewModel.SelectedName)"
+            page-url-language="@(Model.FilterViewModel.SelectedLanguage)"
+            page-url-sortProperty="@(Model.SortViewModel.SortProperty)"
+            page-url-sortOrder="@(Model.SortViewModel.SortOrder)"></page-link>*@
+
+<page-link page-model="Model.PageViewModel" page-action="Index"
+           page-url-name="@(Model.FilterViewModel.SelectedName)"
+           page-url-language="@(Model.FilterViewModel.SelectedLanguage)"
+           page-url-sortProperty="@(Model.SortViewModel.Property)"
+           page-url-sortOrder="@(Model.SortViewModel.Order)"></page-link>

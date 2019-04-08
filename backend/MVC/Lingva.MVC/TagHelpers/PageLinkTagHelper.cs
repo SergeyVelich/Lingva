@@ -10,7 +10,7 @@ namespace Lingva.MVC.TagHelpers
 {
     public class PageLinkTagHelper : TagHelper
     {
-        private readonly IUrlHelperFactory urlHelperFactory;
+        private IUrlHelperFactory urlHelperFactory;
         public PageLinkTagHelper(IUrlHelperFactory helperFactory)
         {
             urlHelperFactory = helperFactory;
