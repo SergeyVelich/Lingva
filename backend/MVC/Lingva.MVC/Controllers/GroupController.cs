@@ -1,11 +1,9 @@
 ﻿using Lingva.Common.Mapping;
 using Lingva.MVC.Extensions;
+using Lingva.MVC.Models.Group.Index;
 using Lingva.MVC.Models.Request;
-using Lingva.MVC.Models.Request.Entities;
-using Lingva.MVC.Models.Response.Entities;
-using Lingva.MVC.Models.Response.Group.Index;
+using Lingva.MVC.Models.Response;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -41,40 +39,17 @@ namespace Lingva.MVC.Controllers
         // GET: group    
         public async Task<IActionResult> Index(OptionsModel options)
         {
-            IEnumerable<GroupViewModel> groupsViewModel;
-            List<LanguageViewModel> languages;
-
             HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Get, "group");
             HttpResponseMessage response = await _client.SendAsync(request);
 
-            if (response.IsSuccessStatusCode)
-            {
-                groupsViewModel = await response.Content.ReadAsAsync<IEnumerable<GroupViewModel>>();
-            }
-            else
-            {
-                groupsViewModel = Array.Empty<GroupViewModel>();
-            }
+            IEnumerable<GroupViewModel> groupsViewModel = await response.Content.ReadAsAsync<IEnumerable<GroupViewModel>>();
+            IList<LanguageViewModel> languages = await GetLanguagesCollectionAsync();
 
-            request = await GetRedirectRequestAsync(HttpMethod.Get, "info/languages");
-            response = await _client.SendAsync(request);
-
-            if (response.IsSuccessStatusCode)
+            Models.Group.Index.PageViewModel viewModel = new Models.Group.Index.PageViewModel
             {
-                languages = await response.Content.ReadAsAsync<List<LanguageViewModel>>();
-            }
-            else
-            {
-                languages = new List<LanguageViewModel>();
-            }
-
-            ViewBag.Languages = languages;
-
-            IndexViewModel viewModel = new IndexViewModel
-            {
-                PageViewModel = new IndexPageViewModel(options.TotalRecords, options.Page, options.PageRecords),
-                SortViewModel = new IndexSortViewModel(options.SortProperty, options.SortOrder),
-                FilterViewModel = new IndexFilterViewModel(languages, options.Name, options.LanguageId, options.Description, options.Date),
+                PagenatorViewModel = new PagenatorViewModel(options.TotalRecords, options.Page, options.PageRecords),
+                SortViewModel = new SortViewModel(options.SortProperty, options.SortOrder),
+                FilterViewModel = new FilterViewModel(languages, options.Name, options.LanguageId, options.Description, options.Date),
                 Groups = groupsViewModel,
             };
 
@@ -106,9 +81,13 @@ namespace Lingva.MVC.Controllers
 
         // GET: group/create
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            IList<LanguageViewModel> languages = await GetLanguagesCollectionAsync();
+
+            Models.Group.Create.PageViewModel viewModel = new Models.Group.Create.PageViewModel(languages);
+
+            return View(viewModel);
         }
 
         // POST: group/create
@@ -152,8 +131,11 @@ namespace Lingva.MVC.Controllers
             }
 
             GroupCreateViewModel groupCreateViewModel = await response.Content.ReadAsAsync<GroupCreateViewModel>();
+            IList<LanguageViewModel> languages = await GetLanguagesCollectionAsync();
 
-            return View(groupCreateViewModel);
+            Models.Group.Update.PageViewModel viewModel = new Models.Group.Update.PageViewModel(groupCreateViewModel, languages);
+
+            return View(viewModel);
         }
 
         // POST: group/update
@@ -242,6 +224,14 @@ namespace Lingva.MVC.Controllers
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             return request;
+        }
+
+        private async Task<IList<LanguageViewModel>> GetLanguagesCollectionAsync()
+        {
+            HttpRequestMessage request = await GetRedirectRequestAsync(HttpMethod.Get, "info/languages");
+            HttpResponseMessage response = await _client.SendAsync(request);
+
+            return await response.Content.ReadAsAsync<IList<LanguageViewModel>>();
         }
     }
 }

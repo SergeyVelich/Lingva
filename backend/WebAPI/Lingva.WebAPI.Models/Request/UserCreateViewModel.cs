@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.MVC.Models.Request.Entities
+namespace Lingva.WebAPI.Models.Request
 {
     [ExcludeFromCodeCoverage]
     public class UserCreateViewModel
     {
         public int Id { get; set; }
+
         [Required]
         [Display(Name = "Login")]
         public string Login { get; set; }

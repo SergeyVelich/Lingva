@@ -24,6 +24,9 @@ namespace Lingva.WebAPI.Infrastructure
             List<QuerySorterDTO> sorters = new List<QuerySorterDTO>();
             sorters.Add(new QuerySorterDTO(optionsModel.SortProperty, optionsModel.SortOrder));
 
+            List<QueryIncluderDTO> includers = new List<QueryIncluderDTO>();
+            sorters.Add(new QueryIncluderDTO(optionsModel.SortProperty));
+
             int take = optionsModel.PageRecords;
             int skip = optionsModel.PageRecords * (optionsModel.Page - 1);
             QueryPagenatorDTO pagenator = new QueryPagenatorDTO(take, skip);

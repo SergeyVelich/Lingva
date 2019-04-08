@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.MVC.Models.Request.Entities
+namespace Lingva.MVC.Models.Request
 {
     [ExcludeFromCodeCoverage]
     public class GroupCreateViewModel
@@ -11,7 +12,7 @@ namespace Lingva.MVC.Models.Request.Entities
         public string Name { get; set; }
         [Display(Name = "Date")]
         [DataType(DataType.DateTime)]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         [Display(Name = "Language")]
         public int LanguageId { get; set; }
         [Display(Name = "Description")]

@@ -1,19 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.WebAPI.Models.Request.Entities
+namespace Lingva.MVC.Models.Response
 {
     [ExcludeFromCodeCoverage]
-    public class GroupCreateViewModel
+    public class GroupViewModel
     {
         public int Id { get; set; }
         [Display(Name = "Title")]
         public string Name { get; set; }
         [Display(Name = "Date")]
         [DataType(DataType.DateTime)]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         [Display(Name = "Language")]
-        public string LanguageName { get; set; }
+        public int LanguageId { get; set; }
         [Display(Name = "Description")]
         public string Description { get; set; }
         [Display(Name = "Picture")]

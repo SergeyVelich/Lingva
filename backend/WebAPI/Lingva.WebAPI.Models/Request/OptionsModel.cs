@@ -1,5 +1,5 @@
 ﻿using Lingva.BC.Common.Enums;
-using Lingva.WebAPI.Models.Response.Entities;
+using Lingva.WebAPI.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

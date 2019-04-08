@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.MVC.Models.Response.Group.Index
+namespace Lingva.MVC.Models.Group.Index
 {
     [ExcludeFromCodeCoverage]
-    public class IndexPageViewModel
+    public class PagenatorViewModel
     {
         public int PageNumber { get; private set; }
         public int TotalPages { get; private set; }
 
-        public IndexPageViewModel(int count, int pageNumber, int pageSize)
+        public PagenatorViewModel(int count, int pageNumber, int pageSize)
         {
             PageNumber = pageNumber;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);

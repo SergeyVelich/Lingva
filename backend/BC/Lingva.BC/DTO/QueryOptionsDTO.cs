@@ -10,15 +10,15 @@ namespace Lingva.BC.DTO
     {
         private readonly ICollection<QueryFilterDTO> _filters;
         private readonly ICollection<QuerySorterDTO> _sorters;
-        private readonly QueryPagenatorDTO _pagenator;
+        private readonly ICollection<QueryFilterDTO> _includer;
 
-        public QueryPagenatorDTO Pagenator => _pagenator;
+        public QueryPagenatorDTO Pagenator { get; }
 
         public QueryOptionsDTO(ICollection<QueryFilterDTO> filters, ICollection<QuerySorterDTO> sorters, QueryPagenatorDTO pagenator)
         {
             _filters = filters;
             _sorters = sorters;
-            _pagenator = pagenator;
+            Pagenator = pagenator;
         }
         
         public Expression<Func<T, bool>> GetFiltersExpression<T>()

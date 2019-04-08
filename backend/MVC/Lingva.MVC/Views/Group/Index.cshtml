@@ -1,5 +1,5 @@
-﻿@using Lingva.MVC.Models.Response.Entities
-@model Lingva.MVC.Models.Response.Group.Index.IndexViewModel
+﻿@using Lingva.MVC.Models.Response
+@model Lingva.MVC.Models.Group.Index.PageViewModel
 <!--импортируем tag-хелперы проекта-->
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, Lingva.MVC
@@ -58,44 +58,6 @@
             </sort-header>
         </th>
     </tr>
-    @*<tr>
-        <th>
-            <a asp-action="Index"
-               asp-route-sortProperty="@("Name")"
-               asp-route-sortOrder="@(Model.SortViewModel.SortOrder)"
-               asp-route-name="@(Model.FilterViewModel.SelectedName)"
-               asp-route-language="@(Model.FilterViewModel.SelectedLanguage)">Name</a>
-        </th>
-        <th>
-            <a asp-action="Index"
-               asp-route-sortProperty="@("Date")"
-               asp-route-sortOrder="@(Model.SortViewModel.SortOrder)"
-               asp-route-name="@(Model.FilterViewModel.SelectedName)"
-               asp-route-language="@(Model.FilterViewModel.SelectedLanguage)">Date</a>
-        </th>
-        <th>
-            <a asp-action="Index"
-               asp-route-sortProperty="@("Language")"
-               asp-route-sortOrder="@(Model.SortViewModel.SortOrder)"
-               asp-route-name="@(Model.FilterViewModel.SelectedName)"
-               asp-route-language="@(Model.FilterViewModel.SelectedLanguage)">Language</a>
-        </th>
-        <th>
-            <a asp-action="Index"
-               asp-route-sortProperty="@("Description")"
-               asp-route-sortOrder="@(Model.SortViewModel.SortOrder)"
-               asp-route-name="@(Model.FilterViewModel.SelectedName)"
-               asp-route-language="@(Model.FilterViewModel.SelectedLanguage)">Description</a>
-        </th>
-        <th>
-            <a asp-action="Index"
-               asp-route-sortProperty="@("Picture")"
-               asp-route-sortOrder="@(Model.SortViewModel.SortOrder)"
-               asp-route-name="@(Model.FilterViewModel.SelectedName)"
-               asp-route-language="@(Model.FilterViewModel.SelectedLanguage)">Picture</a>
-        </th>
-        <th> Actions </th>
-    </tr>*@
     @foreach (GroupViewModel groupViewModel in Model.Groups)
     {
         <tr>
@@ -111,13 +73,7 @@
     }
 </table>
 
-@*<page-link page-model="Model.PageViewModel" page-action="Index"
-            page-url-name="@(Model.FilterViewModel.SelectedName)"
-            page-url-language="@(Model.FilterViewModel.SelectedLanguage)"
-            page-url-sortProperty="@(Model.SortViewModel.SortProperty)"
-            page-url-sortOrder="@(Model.SortViewModel.SortOrder)"></page-link>*@
-
-<page-link page-model="Model.PageViewModel" page-action="Index"
+<page-link page-model="Model.PagenatorViewModel" page-action="Index"
            page-url-name="@(Model.FilterViewModel.SelectedName)"
            page-url-language="@(Model.FilterViewModel.SelectedLanguage)"
            page-url-sortProperty="@(Model.SortViewModel.Property)"

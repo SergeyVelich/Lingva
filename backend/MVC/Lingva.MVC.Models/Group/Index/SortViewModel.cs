@@ -1,16 +1,16 @@
 ﻿using Lingva.BC.Common.Enums;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.MVC.Models.Response.Group.Index
+namespace Lingva.MVC.Models.Group.Index
 {
     [ExcludeFromCodeCoverage]
-    public class IndexSortViewModel
+    public class SortViewModel
     {
         public string Property { get; set; }
         public SortOrder Order { get; set; }
         public bool Up { get; set; }
 
-        public IndexSortViewModel(string sortProperty, SortOrder sortOrder)
+        public SortViewModel(string sortProperty, SortOrder sortOrder)
         {
             Property = sortProperty;
             Order = sortOrder;

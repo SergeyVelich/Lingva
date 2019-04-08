@@ -1,4 +1,4 @@
-﻿@model Lingva.MVC.Models.Request.Entities.GroupCreateViewModel
+﻿@model Lingva.MVC.Models.Group.Update.PageViewModel
 
 @{
     ViewData["Title"] = "Edit group";
@@ -8,38 +8,38 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Update" asp-route-id="@Model.Id">
+        <form asp-action="Update" asp-route-id="@Model.GroupViewModel.Id">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <dl class="dl-horizontal">
                 <dt>
-                    @Html.DisplayNameFor(model => model.Name)
+                    @Html.DisplayNameFor(model => model.GroupViewModel.Name)
                 </dt>
                 <dd>
-                    <input type="text" name="Name" class="form-control" value="@Html.DisplayFor(modelItem => Model.Name)" />
+                    <input type="text" name="Name" class="form-control" value="@Html.DisplayFor(modelItem => Model.GroupViewModel.Name)" />
                 </dd>
                 <dt>
-                    @Html.DisplayNameFor(model => model.Date)
+                    @Html.DisplayNameFor(model => model.GroupViewModel.Date)
                 </dt>
                 <dd>
-                    <input type="text" name="Date" class="form-control" value="@Html.DisplayFor(modelItem => Model.Date)" />
+                    <input type="text" name="Date" class="form-control" value="@Html.DisplayFor(modelItem => Model.GroupViewModel.Date)" />
                 </dd>
                 <dt>
-                    @Html.DisplayNameFor(model => model.LanguageId)
-                </dt>
+                    @Html.DisplayNameFor(model => model.GroupViewModel.LanguageId)
+                </dt>                
                 <dd>
-                    <input type="text" name="LanguageId" class="form-control" value="@Html.DisplayFor(modelItem => Model.LanguageId)" />
+                    @Html.DropDownList("LanguageId", Model.Languages as SelectList, htmlAttributes: new { @class = "form-control" })
                 </dd>
                 <dt>
-                    @Html.DisplayNameFor(model => model.Description)
+                    @Html.DisplayNameFor(model => model.GroupViewModel.Description)
                 </dt>
                 <dd>
-                    <input type="text" name="Description" class="form-control" value="@Html.DisplayFor(modelItem => Model.Description)" />
+                    <input type="text" name="Description" class="form-control" value="@Html.DisplayFor(modelItem => Model.GroupViewModel.Description)" />
                 </dd>
                 <dt>
-                    @Html.DisplayNameFor(model => model.Picture)
+                    @Html.DisplayNameFor(model => model.GroupViewModel.Picture)
                 </dt>
                 <dd>
-                    <input type="text" name="Picture" class="form-control" value="@Html.DisplayFor(modelItem => Model.Picture)" />
+                    <input type="text" name="Picture" class="form-control" value="@Html.DisplayFor(modelItem => Model.GroupViewModel.Picture)" />
                 </dd>
             </dl>
             <div class="form-group">
