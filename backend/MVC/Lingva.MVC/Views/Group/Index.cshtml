@@ -104,7 +104,7 @@
             <td>@groupViewModel.LanguageId</td>
             <td>@groupViewModel.Description</td>
             <td>@groupViewModel.Picture</td>
-            <td>@Html.ActionLink("Get", "Get", new { id = groupViewModel.Id })</td>
+            <td>@Html.ActionLink("Get", "Get", "Group", new { id = groupViewModel.Id })</td>
             <td>@Html.ActionLink("Update", "Update", new { id = groupViewModel.Id })</td>
             <td>@Html.ActionLink("Delete", "Delete", new { id = groupViewModel.Id })</td>
         </tr>

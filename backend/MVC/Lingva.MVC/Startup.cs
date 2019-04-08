@@ -51,7 +51,12 @@ namespace Lingva.MVC
             app.UseCors("CorsPolicy");
             app.UseStaticFiles();
             app.UseAuthentication();
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(config =>
+            {
+                config.MapRoute(name: "Default",
+                    template: "{controller}/{action}",
+                    defaults: new {Controller = "Home", Action = "Index"});
+            });
         }
     }
 }
