@@ -2,6 +2,7 @@
 using QueryBuilder.QueryOptions.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -11,14 +12,15 @@ namespace QueryBuilder
     {
         private readonly ICollection<QueryFilterDTO> _filters;
         private readonly ICollection<QuerySorterDTO> _sorters;
-        private readonly ICollection<QueryFilterDTO> _includer;
+        private readonly ICollection<QueryIncluderDTO> _includers;
 
         public QueryPagenatorDTO Pagenator { get; }
 
-        public QueryOptionsDTO(ICollection<QueryFilterDTO> filters, ICollection<QuerySorterDTO> sorters, QueryPagenatorDTO pagenator)
+        public QueryOptionsDTO(ICollection<QueryFilterDTO> filters, ICollection<QuerySorterDTO> sorters, ICollection<QueryIncluderDTO> includers, QueryPagenatorDTO pagenator)
         {
             _filters = filters;
             _sorters = sorters;
+            _includers = includers;
             Pagenator = pagenator;
         }
         
@@ -105,6 +107,72 @@ namespace QueryBuilder
             }
 
             return sorters;
+        }
+
+        public ICollection<Expression<Func<T, bool>>> GetIncludersCollection<T>()
+        {
+            if (_includers == null)
+            {
+                return null;
+            }
+            if (_includers.Count == 0)
+            {
+                return null;
+            }
+
+            ICollection<Expression<Func<T, bool>>> includers = new List<Expression<Func<T, bool>>>();//??
+
+            foreach (var includer in _includers)
+            {
+                var parameter = Expression.Parameter(typeof(T), "x");
+                var property = Expression.Property(parameter, includer.PropertyName);
+                //var propertyInfo = typeof(T).GetProperty(filter.PropertyName);
+                //var typeForValue = propertyInfo.PropertyType;
+                //var constant = Expression.Constant(Convert.ChangeType(filter.PropertyValue, typeForValue));
+
+                Expression expression = Expression.PropertyOrField(parameter, includer.PropertyName);
+                Expression<Func<T, bool>> exp = Expression.Lambda<Func<T, bool>>(expression ?? throw new InvalidOperationException(), parameter);
+
+                //var body = includer.PropertyName.Split('.').Aggregate<string, Expression>(parameter, Expression.PropertyOrField);
+                //var exp = Expression.Lambda<Func<T, bool>>(body, parameter);
+                includers.Add(exp);
+                //    switch (filter.Operation)
+                //    {
+                //        case FilterOperation.Equal:
+                //            subExpression = Expression.Equal(property, constant);
+                //            break;
+                //        case FilterOperation.NotEqual:
+                //            subExpression = Expression.NotEqual(property, constant);
+                //            break;
+                //        case FilterOperation.Less:
+                //            subExpression = Expression.LessThan(property, constant);
+                //            break;
+                //        case FilterOperation.More:
+                //            subExpression = Expression.GreaterThan(property, constant);
+                //            break;
+                //        case FilterOperation.Contains:
+                //            MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+                //            subExpression = Expression.Call(property, method, constant);
+                //            break;
+                //        case FilterOperation.NotContains:
+                //            method = typeof(string).GetMethod("NotContains", new[] { typeof(string) });
+                //            subExpression = Expression.Call(property, method, constant);
+                //            break;
+                //        default: throw new ArgumentOutOfRangeException();
+                //    }
+
+                //    expression = expression == null ? subExpression : Expression.AndAlso(expression, subExpression);
+                //}
+
+                //if (expression != null)
+                //{
+                //    exp = Expression.Lambda<Func<T, bool>>(expression ?? throw new InvalidOperationException(), parameter);
+                //}
+
+                //return exp;                
+            }
+
+            return includers;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Lingva.DAL.Repositories
             _entities = context.Set<T>();
         }
 
-        public virtual IEnumerable<T> GetList(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, int skip = 0, int take = 0)
+        public virtual IEnumerable<T> GetList(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, IEnumerable<Expression<Func<T, bool>>> includers = null, int skip = 0, int take = 0)
         {
             IQueryable<T> result = _entities.AsNoTracking();
 
@@ -49,13 +49,21 @@ namespace Lingva.DAL.Repositories
             return result.ToList();
         }
 
-        public virtual async Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, int skip = 0, int take = 0)
+        public virtual async Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, ICollection<Expression<Func<T, bool>>> includers = null, int skip = 0, int take = 0)
         {
             IQueryable<T> result = _entities.AsNoTracking();
 
             if (predicator != null)
             {
                 result = result.Where(predicator);
+            }
+
+            if (includers != null)
+            {
+                foreach(var includer in includers)
+                {
+                    result = result.Include(includer);
+                }               
             }
 
             if (sorters != null)

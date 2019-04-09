@@ -100,9 +100,7 @@ namespace Lingva.MVC.Controllers
             }
 
             HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Post, "group/create");
-            string parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
-            StringContent content = new StringContent(parametersString, Encoding.UTF8, "application/json");
-            request.AddBody(content);
+            request.AddBody(groupCreateViewModel);
             HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -148,9 +146,7 @@ namespace Lingva.MVC.Controllers
             }
 
             HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Put, "group/update");
-            string parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
-            StringContent content = new StringContent(parametersString, Encoding.UTF8, "application/json");
-            request.AddBody(content);
+            request.AddBody(groupCreateViewModel);
             HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -193,9 +189,7 @@ namespace Lingva.MVC.Controllers
             }
             
             HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Delete, "group/delete");
-            string parametersString = JsonConvert.SerializeObject(groupCreateViewModel);
-            StringContent content = new StringContent(parametersString, Encoding.UTF8, "application/json");
-            request.AddBody(content);
+            request.AddBody(groupCreateViewModel);
             HttpResponseMessage response = await _client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
