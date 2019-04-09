@@ -58,6 +58,22 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // POST: api/group/create
+        /// <summary>
+        /// Creates a Group.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Todo
+        ///     {
+        ///        "Name": "Harry Potter",
+        ///        "Date": 12.10.2019,
+        ///        "LanguageId": 2,
+        ///        "Description": "3",
+        ///        "Picture": "2"
+        ///     }
+        ///
+        /// </remarks>
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] GroupCreateViewModel groupCreateViewModel)
         {
@@ -88,6 +104,10 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // DELETE: api/group/delete
+        /// <summary>
+        /// Deletes a specific Group.
+        /// </summary>
+        /// <param name="id"></param>  
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete([FromBody] GroupCreateViewModel groupCreateViewModel)
         {

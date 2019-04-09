@@ -27,11 +27,13 @@ namespace Lingva.BC.Services
         {
             Expression<Func<Group, bool>> filters = optionsDTO.GetFiltersExpression<Group>();
             IEnumerable<string> sorters = optionsDTO.GetSortersCollection<Group>();
+            ICollection<Expression<Func<Group, bool>>> includers = null;
+            //ICollection<Expression<Func<Group, bool>>> includers = optionsDTO.GetIncludersCollection<Group>();//??
             QueryPagenatorDTO pagenator = optionsDTO.Pagenator;
             int skip = pagenator.Skip;
             int take = pagenator.Take;
 
-            IEnumerable<Group> groups = await _unitOfWork.Groups.GetListAsync(filters, sorters, skip, take);
+            IEnumerable<Group> groups = await _unitOfWork.Groups.GetListAsync(filters, sorters, includers, skip, take);
 
             return _dataAdapter.Map<IEnumerable<GroupDTO>>(groups);
         }

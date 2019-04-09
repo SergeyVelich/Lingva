@@ -27,13 +27,13 @@ namespace Lingva.WebAPI.Infrastructure
             sorters.Add(new QuerySorterDTO(optionsModel.SortProperty, sortOrder));
 
             List<QueryIncluderDTO> includers = new List<QueryIncluderDTO>();
-            includers.Add(new QueryIncluderDTO(optionsModel.SortProperty));
+            includers.Add(new QueryIncluderDTO("Language"));
 
             int take = optionsModel.PageRecords;
             int skip = optionsModel.PageRecords * (optionsModel.Page - 1);
             QueryPagenatorDTO pagenator = new QueryPagenatorDTO(take, skip);
 
-            QueryOptionsDTO queryOptions = new QueryOptionsDTO(filters, sorters, pagenator);
+            QueryOptionsDTO queryOptions = new QueryOptionsDTO(filters, sorters, includers, pagenator);
 
             return queryOptions;
         }
