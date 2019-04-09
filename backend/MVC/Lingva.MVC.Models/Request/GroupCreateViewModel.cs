@@ -1,14 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.MVC.ViewModel.Request
+namespace Lingva.MVC.Models.Request
 {
     [ExcludeFromCodeCoverage]
     public class GroupCreateViewModel
     {
         public int Id { get; set; }
-        [Display(Name = "Group's title")]
+        [Display(Name = "Title")]
         public string Name { get; set; }
+        [Display(Name = "Date")]
+        [DataType(DataType.DateTime)]
+        public string Date { get; set; }
+        [Display(Name = "Language")]
+        public int LanguageId { get; set; }
         [Display(Name = "Description")]
         public string Description { get; set; }
         [Display(Name = "Picture")]

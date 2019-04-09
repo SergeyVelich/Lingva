@@ -10,8 +10,8 @@ namespace AuthServer
     {
         public static async Task InitializeAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            string adminEmail = "admin89_gmail.com";
-            string password = "AdmiN89_gmail.com";
+            string adminEmail = "Sergey";
+            string password = "Qwerty1!";
             if (await roleManager.FindByNameAsync("admin") == null)
             {
                 await roleManager.CreateAsync(new IdentityRole("admin"));

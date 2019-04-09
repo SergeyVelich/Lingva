@@ -1,4 +1,4 @@
-﻿@model Lingva.MVC.ViewModel.Request.GroupCreateViewModel
+﻿@model Lingva.MVC.Models.Request.GroupCreateViewModel
 
 @{
     ViewData["Title"] = "Create group";
@@ -17,6 +17,18 @@
                 </dt>
                 <dd>
                     <input type="text" name="Name" class="form-control" />
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Date)
+                </dt>
+                <dd>
+                    <input type="text" name="Date" class="form-control" />
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.LanguageId)
+                </dt>
+                <dd>
+                    <input type="text" name="LanguageId" class="form-control" />
                 </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.Description)

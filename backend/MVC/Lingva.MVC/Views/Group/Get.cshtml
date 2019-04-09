@@ -1,4 +1,4 @@
-﻿@model Lingva.MVC.ViewModel.Response.GroupViewModel
+﻿@model Lingva.MVC.Models.Response.GroupViewModel
 
 @{
     ViewData["Title"] = "Group info";
@@ -14,6 +14,18 @@
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.LanguageId)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.LanguageId)
             </dd>
             <dt>
                 @Html.DisplayNameFor(model => model.Description)
