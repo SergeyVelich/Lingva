@@ -1,6 +1,8 @@
 ﻿using Lingva.BC.Contracts;
 using Lingva.BC.Services;
 using Lingva.WebAPI.Extensions;
+using Lingva.WebAPI.Infrastructure;
+using Lingva.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -33,7 +35,12 @@ namespace Lingva.WebAPI
             services.AddTransient<IInfoService, InfoService>();
             services.AddTransient<IUserService, UserService>();
 
-            services.AddMvc();
+            services.AddTransient<QueryOptionsAdapter>();
+
+            services.AddMvc(options =>
+            {
+                options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -42,6 +49,8 @@ namespace Lingva.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseCors("CorsPolicy");
             app.UseAuthentication();

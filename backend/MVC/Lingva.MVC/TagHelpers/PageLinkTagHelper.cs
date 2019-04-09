@@ -1,4 +1,4 @@
-﻿using Lingva.MVC.Models.Response;
+﻿using Lingva.MVC.Models.Group.Index;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -18,7 +18,7 @@ namespace Lingva.MVC.TagHelpers
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext ViewContext { get; set; }
-        public PageViewModel PageModel { get; set; }
+        public PagenatorViewModel PageModel { get; set; }
         public string PageAction { get; set; }
 
         [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]

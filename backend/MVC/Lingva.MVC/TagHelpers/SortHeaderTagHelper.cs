@@ -9,12 +9,12 @@ namespace Lingva.MVC.TagHelpers
 {
     public class SortHeaderTagHelper : TagHelper
     {
-        public SortState Property { get; set; } // значение текущего свойства, для которого создается тег
-        public SortState Current { get; set; }  // значение активного свойства, выбранного для сортировки
-        public string Action { get; set; }  // действие контроллера, на которое создается ссылка
-        public bool Up { get; set; }    // сортировка по возрастанию или убыванию
+        public string Property { get; set; }
+        public string Current { get; set; }
+        public string Action { get; set; }
+        public bool Up { get; set; }
 
-        private IUrlHelperFactory urlHelperFactory;
+        private readonly IUrlHelperFactory urlHelperFactory;
         public SortHeaderTagHelper(IUrlHelperFactory helperFactory)
         {
             urlHelperFactory = helperFactory;
@@ -25,23 +25,29 @@ namespace Lingva.MVC.TagHelpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
+            string Order = "Desc";
             IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             output.TagName = "a";
-            string url = urlHelper.Action(Action, new { sortOrder = Property });
-            output.Attributes.SetAttribute("href", url);
-            // если текущее свойство имеет значение CurrentSort
+
             if (Current == Property)
             {
                 TagBuilder tag = new TagBuilder("i");
                 tag.AddCssClass("glyphicon");
 
-                if (Up == true)   // если сортировка по возрастанию
+                if (Up == true)
+                {
                     tag.AddCssClass("glyphicon-chevron-up");
-                else   // если сортировка по убыванию
+                }
+                else
+                {
                     tag.AddCssClass("glyphicon-chevron-down");
+                    Order = "Asc";
+                }
 
                 output.PreContent.AppendHtml(tag);
             }
+            string url = urlHelper.Action(Action, new { sortProperty = Property, sortOrder = Order });
+            output.Attributes.SetAttribute("href", url);
         }
     }
 }

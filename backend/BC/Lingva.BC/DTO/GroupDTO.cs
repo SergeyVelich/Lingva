@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.BC.DTO
 {
@@ -7,7 +8,7 @@ namespace Lingva.BC.DTO
         [ExcludeFromCodeCoverage]
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         public int LanguageId { get; set; }
         public string Description { get; set; }
         public string Picture { get; set; }

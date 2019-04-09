@@ -3,6 +3,8 @@ using Lingva.BC.DTO;
 using Lingva.Common.Mapping;
 using Lingva.DAL.Entities;
 using Lingva.DAL.UnitsOfWork.Contracts;
+using QueryBuilder;
+using QueryBuilder.QueryOptions;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -21,9 +23,16 @@ namespace Lingva.BC.Services
             _dataAdapter = dataAdapter;
         }
 
-        public async Task<IEnumerable<GroupDTO>> GetListAsync()
+        public async Task<IEnumerable<GroupDTO>> GetListAsync(QueryOptionsDTO optionsDTO)
         {
-            IEnumerable<Group> groups = await _unitOfWork.Groups.GetListAsync();
+            Expression<Func<Group, bool>> filters = optionsDTO.GetFiltersExpression<Group>();
+            IEnumerable<string> sorters = optionsDTO.GetSortersCollection<Group>();
+            QueryPagenatorDTO pagenator = optionsDTO.Pagenator;
+            int skip = pagenator.Skip;
+            int take = pagenator.Take;
+
+            IEnumerable<Group> groups = await _unitOfWork.Groups.GetListAsync(filters, sorters, skip, take);
+
             return _dataAdapter.Map<IEnumerable<GroupDTO>>(groups);
         }
 
@@ -53,15 +62,9 @@ namespace Lingva.BC.Services
             return _dataAdapter.Map<GroupDTO>(currentGroup);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(GroupDTO groupDTO)
         {
-            Group group = await _unitOfWork.Groups.GetByIdAsync(id);
-
-            if (group == null)
-            {
-                return;
-            }
-
+            Group group = _dataAdapter.Map<Group>(groupDTO);
             _unitOfWork.Groups.Delete(group);
             await _unitOfWork.SaveAsync();
         }

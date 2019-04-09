@@ -1,4 +1,6 @@
 ﻿using Lingva.MVC.Extensions;
+using Lingva.MVC.Filters;
+using Lingva.MVC.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +28,11 @@ namespace Lingva.MVC
             services.ConfigureAutoMapper();
 
             services.AddHttpClient();
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
+                options.Filters.Add(typeof(GlobalExceptionFilter));
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -37,6 +43,7 @@ namespace Lingva.MVC
             }
             else
             {
+                app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
@@ -44,7 +51,12 @@ namespace Lingva.MVC
             app.UseCors("CorsPolicy");
             app.UseStaticFiles();
             app.UseAuthentication();
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(config =>
+            {
+                config.MapRoute(name: "Default",
+                    template: "{controller}/{action}",
+                    defaults: new {Controller = "Home", Action = "Index"});
+            });
         }
     }
 }
