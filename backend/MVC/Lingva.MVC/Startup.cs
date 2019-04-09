@@ -1,4 +1,5 @@
 ﻿using Lingva.MVC.Extensions;
+using Lingva.MVC.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +27,10 @@ namespace Lingva.MVC
             services.ConfigureAutoMapper();
 
             services.AddHttpClient();
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(GlobalExceptionFilter));
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
