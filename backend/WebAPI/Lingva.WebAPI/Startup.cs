@@ -28,6 +28,7 @@ namespace Lingva.WebAPI
             services.ConfigureOptions(Configuration);
             services.ConfigureAuthentication();
             services.ConfigureAutoMapper();
+            services.ConfigureSwagger();
             services.ConfigureUnitsOfWork();
             services.ConfigureRepositories();
            
@@ -53,6 +54,14 @@ namespace Lingva.WebAPI
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseCors("CorsPolicy");
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lingva API V1");
+                c.RoutePrefix = string.Empty;
+            });
+
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
         }
