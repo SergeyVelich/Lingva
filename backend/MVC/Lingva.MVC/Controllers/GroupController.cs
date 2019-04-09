@@ -6,6 +6,7 @@ using Lingva.MVC.Models.Response;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -16,19 +17,22 @@ using System.Threading.Tasks;
 namespace Lingva.MVC.Controllers
 {
     //[Authorize]
+    [ResponseCache(CacheProfileName = "NoCashing")]
     public class GroupController : Controller
     {
         private readonly IDataAdapter _dataAdapter;
         private readonly ILogger<GroupController> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
+        private IMemoryCache _memoryCache;
 
         private readonly HttpClient _client;
 
-        public GroupController(IDataAdapter dataAdapter, ILogger<GroupController> logger, IHttpClientFactory httpClientFactory)
+        public GroupController(IDataAdapter dataAdapter, ILogger<GroupController> logger, IHttpClientFactory httpClientFactory, IMemoryCache memoryCache)
         {
             _logger = logger;
             _dataAdapter = dataAdapter;
             _httpClientFactory = httpClientFactory;
+            _memoryCache = memoryCache;
 
             _client = _httpClientFactory.CreateClient();
             _client.BaseAddress = new Uri("http://localhost:6001/api");
@@ -53,6 +57,7 @@ namespace Lingva.MVC.Controllers
 
         // GET: group/get?id=2
         [HttpGet]
+        [ResponseCache(CacheProfileName = "Default30")]
         public async Task<IActionResult> Get(int? id)
         {
             if (id == null)
