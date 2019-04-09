@@ -7,12 +7,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Lingva.MVC.Controllers
@@ -39,10 +37,7 @@ namespace Lingva.MVC.Controllers
         // GET: group    
         public async Task<IActionResult> Index(OptionsModel options)
         {
-            HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Get, "group");
-            HttpResponseMessage response = await _client.SendAsync(request);
-
-            IEnumerable<GroupViewModel> groupsViewModel = await response.Content.ReadAsAsync<IEnumerable<GroupViewModel>>();
+            IEnumerable<GroupViewModel> groups = await GetGroupsCollectionAsync();
             IList<LanguageViewModel> languages = await GetLanguagesCollectionAsync();
 
             Models.Group.Index.PageViewModel viewModel = new Models.Group.Index.PageViewModel
@@ -50,10 +45,9 @@ namespace Lingva.MVC.Controllers
                 PagenatorViewModel = new PagenatorViewModel(options.TotalRecords, options.Page, options.PageRecords),
                 SortViewModel = new SortViewModel(options.SortProperty, options.SortOrder),
                 FilterViewModel = new FilterViewModel(languages, options.Name, options.LanguageId, options.Description, options.Date),
-                Groups = groupsViewModel,
+                Groups = groups,
             };
 
-            viewModel.Groups = groupsViewModel;
             return View(viewModel);
         }
 
@@ -225,7 +219,37 @@ namespace Lingva.MVC.Controllers
             HttpRequestMessage request = await GetRedirectRequestAsync(HttpMethod.Get, "info/languages");
             HttpResponseMessage response = await _client.SendAsync(request);
 
-            return await response.Content.ReadAsAsync<IList<LanguageViewModel>>();
+            IList<LanguageViewModel> languages;
+
+            if (response.IsSuccessStatusCode)
+            {
+                languages = await response.Content.ReadAsAsync<IList<LanguageViewModel>>();
+            }
+            else
+            {
+                languages = Array.Empty<LanguageViewModel>();
+            }
+
+            return languages;
+        }
+
+        private async Task<IEnumerable<GroupViewModel>> GetGroupsCollectionAsync()
+        {
+            HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Get, "group");
+            HttpResponseMessage response = await _client.SendAsync(request);
+
+            IEnumerable<GroupViewModel> groups;
+
+            if (response.IsSuccessStatusCode)
+            {
+                groups = await response.Content.ReadAsAsync<IEnumerable<GroupViewModel>>();
+            }
+            else
+            {
+                groups = Array.Empty<GroupViewModel>();
+            }
+
+            return groups;
         }
     }
 }

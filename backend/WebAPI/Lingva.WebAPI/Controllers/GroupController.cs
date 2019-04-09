@@ -107,7 +107,6 @@ namespace Lingva.WebAPI.Controllers
         /// <summary>
         /// Deletes a specific Group.
         /// </summary>
-        /// <param name="id"></param>  
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete([FromBody] GroupCreateViewModel groupCreateViewModel)
         {
