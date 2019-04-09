@@ -1,0 +1,43 @@
+﻿@model Lingva.MVC.ViewModel.Request.GroupCreateViewModel
+
+@{
+    ViewData["Title"] = "Create group";
+}
+
+<h2>Create new group</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd>
+                    <input type="text" name="Name" class="form-control" />
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd>
+                    <input type="text" name="Description" class="form-control" />
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Picture)
+                </dt>
+                <dd>
+                    <input type="text" name="Picture" class="form-control" />
+                </dd>
+            </dl>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
