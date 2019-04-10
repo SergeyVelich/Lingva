@@ -2,12 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.DAL.Context
+namespace Lingva.DAL.EF.Context
 {
     [ExcludeFromCodeCoverage]
     public class DictionaryContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
 
         public DictionaryContext(DbContextOptions<DictionaryContext> options)

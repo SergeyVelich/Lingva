@@ -1,4 +1,4 @@
-﻿using Lingva.DAL.Context;
+﻿using Lingva.DAL.EF.Context;
 using Lingva.DAL.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using QueryBuilder.Extensions;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Lingva.DAL.Repositories
+namespace Lingva.DAL.EF.Repositories
 {
     public abstract class Repository<T> : IRepository<T> 
         where T : class
@@ -131,60 +131,6 @@ namespace Lingva.DAL.Repositories
                 _entities.Attach(entity);
             }
             _entities.Remove(entity);
-        }
-
-        public virtual async Task<int> CountAsync(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, int skip = 0, int take = 0)
-        {
-            IQueryable<T> result = _entities.AsNoTracking();
-
-            if (predicator != null)
-            {
-                result = result.Where(predicator);
-            }
-
-            if (sorters != null)
-            {
-                result = result.OrderBy(sorters);
-            }
-
-            if (skip != 0)
-            {
-                result = result.Skip(skip);
-            }
-
-            if (take != 0)
-            {
-                result = result.Take(take);
-            }
-
-            return await result.CountAsync();
-        }
-
-        public virtual int Count(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, int skip = 0, int take = 0)
-        {
-            IQueryable<T> result = _entities.AsNoTracking();
-
-            if (predicator != null)
-            {
-                result = result.Where(predicator);
-            }
-
-            if (sorters != null)
-            {
-                result = result.OrderBy(sorters);
-            }
-
-            if (skip != 0)
-            {
-                result = result.Skip(skip);
-            }
-
-            if (take != 0)
-            {
-                result = result.Take(take);
-            }
-
-            return result.Count();
         }
     }
 }

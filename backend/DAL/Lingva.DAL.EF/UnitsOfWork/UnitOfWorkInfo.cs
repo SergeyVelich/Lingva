@@ -1,8 +1,8 @@
-﻿using Lingva.DAL.Context;
+﻿using Lingva.DAL.EF.Context;
 using Lingva.DAL.Repositories.Contracts;
 using Lingva.DAL.UnitsOfWork.Contracts;
 
-namespace Lingva.DAL.UnitsOfWork
+namespace Lingva.DAL.EF.UnitsOfWork
 {
     public class UnitOfWorkInfo : UnitOfWork, IUnitOfWorkInfo
     {

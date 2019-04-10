@@ -1,14 +1,13 @@
-﻿using Lingva.DAL.Context;
-using Lingva.DAL.Repositories.Contracts;
+﻿using Lingva.DAL.Repositories.Contracts;
 using Lingva.DAL.UnitsOfWork.Contracts;
 
-namespace Lingva.DAL.UnitsOfWork
+namespace Lingva.DAL.Dapper.UnitsOfWork
 {
     public class UnitOfWorkGroup : UnitOfWork, IUnitOfWorkGroup
     {
         private readonly IRepositoryGroup _groups;
 
-        public UnitOfWorkGroup(DictionaryContext context, IRepositoryGroup groups) : base(context)
+        public UnitOfWorkGroup(IConnectionFactory connectionFactory, IRepositoryGroup groups) : base(connectionFactory)
         {
             _groups = groups;
         }

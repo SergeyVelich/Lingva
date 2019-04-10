@@ -3,10 +3,9 @@ using IdentityServer4.AccessTokenValidation;
 using Lingva.BC;
 using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
-using Lingva.DAL.Context;
-using Lingva.DAL.Repositories;
+using Lingva.DAL.Dapper;
+using Lingva.DAL.EF.Context;
 using Lingva.DAL.Repositories.Contracts;
-using Lingva.DAL.UnitsOfWork;
 using Lingva.DAL.UnitsOfWork.Contracts;
 using Lingva.WebAPI.Mapper;
 using Microsoft.AspNetCore.Builder;
@@ -34,6 +33,20 @@ namespace Lingva.WebAPI.Extensions
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
+        }
+
+        public static void ConfigureEF(this IServiceCollection services, IConfiguration config)
+        {
+            services.ConfigureSqlContext(config);
+            services.ConfigureEFUnitsOfWork();
+            services.ConfigureEFRepositories();
+        }
+
+        public static void ConfigureDapper(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddScoped<IConnectionFactory, ConnectionFactory>();           
+            services.ConfigureDapperUnitsOfWork();
+            services.ConfigureDapperRepositories();
         }
 
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
@@ -98,18 +111,28 @@ namespace Lingva.WebAPI.Extensions
             });
         }
 
-        public static void ConfigureUnitsOfWork(this IServiceCollection services)
+        public static void ConfigureEFUnitsOfWork(this IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWorkGroup, UnitOfWorkGroup>();
-            services.AddScoped<IUnitOfWorkInfo, UnitOfWorkInfo>();
-            services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
+            services.AddScoped<IUnitOfWorkGroup, DAL.EF.UnitsOfWork.UnitOfWorkGroup>();
+            services.AddScoped<IUnitOfWorkInfo, DAL.EF.UnitsOfWork.UnitOfWorkInfo>();
         }
 
-        public static void ConfigureRepositories(this IServiceCollection services)
+        public static void ConfigureEFRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IRepositoryGroup, RepositoryGroup>();
-            services.AddScoped<IRepositoryLanguage, RepositoryLanguage>();
-            services.AddScoped<IRepositoryUser, RepositoryUser>();
+            services.AddScoped<IRepositoryGroup, DAL.EF.Repositories.RepositoryGroup>();
+            services.AddScoped<IRepositoryLanguage, DAL.EF.Repositories.RepositoryLanguage>();
+        }
+
+        public static void ConfigureDapperUnitsOfWork(this IServiceCollection services)
+        {
+            services.AddScoped<IUnitOfWorkGroup, DAL.Dapper.UnitsOfWork.UnitOfWorkGroup>();
+            services.AddScoped<IUnitOfWorkInfo, DAL.Dapper.UnitsOfWork.UnitOfWorkInfo>();
+        }
+
+        public static void ConfigureDapperRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IRepositoryGroup, DAL.Dapper.Repositories.RepositoryGroup>();
+            services.AddScoped<IRepositoryLanguage, DAL.Dapper.Repositories.RepositoryLanguage>();
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿using Lingva.DAL.Context;
+﻿using Lingva.DAL.EF.Context;
 using Lingva.DAL.UnitsOfWork.Contracts;
 using System;
 using System.Threading.Tasks;
 
-namespace Lingva.DAL.UnitsOfWork
+namespace Lingva.DAL.EF.UnitsOfWork
 {
     public abstract class UnitOfWork : IUnitOfWork
     {

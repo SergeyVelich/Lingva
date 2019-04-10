@@ -1,8 +1,8 @@
-﻿using Lingva.DAL.Context;
+﻿using Lingva.DAL.EF.Context;
 using Lingva.DAL.Entities;
 using Lingva.DAL.Repositories.Contracts;
 
-namespace Lingva.DAL.Repositories
+namespace Lingva.DAL.EF.Repositories
 {
     public class RepositoryLanguage : Repository<Language>, IRepositoryLanguage
     {

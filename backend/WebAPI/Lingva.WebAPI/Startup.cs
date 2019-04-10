@@ -24,17 +24,15 @@ namespace Lingva.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
-            services.ConfigureSqlContext(Configuration);
+            //services.ConfigureEF(Configuration);
+            services.ConfigureDapper(Configuration);
             services.ConfigureOptions(Configuration);
             services.ConfigureAuthentication();
             services.ConfigureAutoMapper();
             services.ConfigureSwagger();
-            services.ConfigureUnitsOfWork();
-            services.ConfigureRepositories();
            
             services.AddTransient<IGroupService, GroupService>();
             services.AddTransient<IInfoService, InfoService>();
-            services.AddTransient<IUserService, UserService>();
 
             services.AddTransient<QueryOptionsAdapter>();
 

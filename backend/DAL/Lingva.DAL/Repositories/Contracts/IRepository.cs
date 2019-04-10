@@ -18,8 +18,5 @@ namespace Lingva.DAL.Repositories.Contracts
         T Create(T entity);
         T Update(T entity);
         void Delete(T entity);
-
-        Task<int> CountAsync(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, int skip = 0, int take = 0);
-        int Count(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, int skip = 0, int take = 0);
     }
 }
