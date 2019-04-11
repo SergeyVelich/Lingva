@@ -7,8 +7,6 @@ namespace Lingva.DAL.EF.Context
     [ExcludeFromCodeCoverage]
     public class DictionaryContext : DbContext
     {
-        public DbSet<Group> Groups { get; set; }
-
         public DictionaryContext(DbContextOptions<DictionaryContext> options)
             : base(options)
         {
@@ -18,7 +16,9 @@ namespace Lingva.DAL.EF.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Group>();
+            modelBuilder.Entity<Language>();
         }
     }
 }

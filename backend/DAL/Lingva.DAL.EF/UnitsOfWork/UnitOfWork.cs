@@ -1,24 +1,24 @@
 ﻿using Lingva.DAL.EF.Context;
-using Lingva.DAL.UnitsOfWork.Contracts;
+using Lingva.DAL.Repositories;
+using Lingva.DAL.UnitsOfWork;
 using System;
 using System.Threading.Tasks;
 
 namespace Lingva.DAL.EF.UnitsOfWork
 {
-    public abstract class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         protected static DictionaryContext _context;
+        protected static IRepository _repository;
 
         protected bool disposed = false;
 
-        public UnitOfWork(DictionaryContext context)
+        public IRepository Repository { get => _repository; }
+
+        public UnitOfWork(DictionaryContext context, IRepository repository)
         {
             _context = context;
-        }
-
-        public virtual void Save()
-        {
-            _context.SaveChanges();
+            _repository = repository;
         }
 
         public virtual async Task SaveAsync()

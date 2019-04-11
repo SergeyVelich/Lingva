@@ -1,17 +1,21 @@
-﻿using Lingva.DAL.UnitsOfWork.Contracts;
+﻿using Lingva.DAL.Repositories;
+using Lingva.DAL.UnitsOfWork;
 using System;
 using System.Data;
 using System.Threading.Tasks;
 
 namespace Lingva.DAL.Dapper.UnitsOfWork
 {
-    public abstract class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         protected readonly IConnectionFactory _connectionFactory;
         private readonly IDbTransaction _dbTransaction;
         protected readonly IDbConnection _dbConnection;
+        protected static IRepository _repository;
 
         protected bool disposed = false;
+
+        public IRepository Repository { get => _repository; }
 
         public IDbTransaction GetTransaction
         {
@@ -21,24 +25,12 @@ namespace Lingva.DAL.Dapper.UnitsOfWork
             }
         }
 
-        public UnitOfWork(IConnectionFactory connectionFactory)
+        public UnitOfWork(IConnectionFactory connectionFactory, IRepository repository)
         {
             _connectionFactory = connectionFactory;
             _dbConnection = connectionFactory.GetConnection;
             _dbTransaction = connectionFactory.GetTransaction;
-        }
-
-        public virtual void Save()
-        {
-            try
-            {
-                _dbTransaction.Commit();
-            }
-            catch
-            {
-                _dbTransaction.Rollback();
-                throw;
-            }
+            _repository = repository;
         }
 
         public virtual async Task SaveAsync()

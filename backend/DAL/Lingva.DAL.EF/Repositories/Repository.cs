@@ -1,5 +1,6 @@
 ﻿using Lingva.DAL.EF.Context;
-using Lingva.DAL.Repositories.Contracts;
+using Lingva.DAL.Entities;
+using Lingva.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using QueryBuilder.Extensions;
 using System;
@@ -10,48 +11,18 @@ using System.Threading.Tasks;
 
 namespace Lingva.DAL.EF.Repositories
 {
-    public abstract class Repository<T> : IRepository<T> 
-        where T : class
+    public class Repository : IRepository 
     {
-        protected readonly DictionaryContext _context;
-        protected readonly DbSet<T> _entities;
+        protected readonly DictionaryContext _dbContext;
 
-        public Repository(DictionaryContext context)
+        public Repository(DictionaryContext dbContext)
         {
-            _context = context;
-            _entities = context.Set<T>();
+            _dbContext = dbContext;
         }
 
-        public virtual IEnumerable<T> GetList(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, IEnumerable<Expression<Func<T, bool>>> includers = null, int skip = 0, int take = 0)
+        public virtual async Task<IEnumerable<T>> GetListAsync<T>(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, ICollection<Expression<Func<T, bool>>> includers = null, int skip = 0, int take = 0) where T : BaseBE, new()
         {
-            IQueryable<T> result = _entities.AsNoTracking();
-
-            if (predicator != null)
-            {
-                result = result.Where(predicator);
-            }
-
-            if (sorters != null)
-            {
-                result = result.OrderBy(sorters);
-            }
-
-            if (skip != 0)
-            {
-                result = result.Skip(skip);
-            }
-
-            if (take != 0)
-            {
-                result = result.Take(take);
-            }
-
-            return result.ToList();
-        }
-
-        public virtual async Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, ICollection<Expression<Func<T, bool>>> includers = null, int skip = 0, int take = 0)
-        {
-            IQueryable<T> result = _entities.AsNoTracking();
+            IQueryable<T> result = _dbContext.Set<T>().AsNoTracking();
 
             if (predicator != null)
             {
@@ -84,53 +55,34 @@ namespace Lingva.DAL.EF.Repositories
             return await result.ToListAsync();
         }
 
-        public virtual T GetById(int id)
+        public virtual async Task<T> GetByIdAsync<T>(int id) where T : BaseBE, new()
         {
-            return _entities.Find((int)id);
+            return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public virtual async Task<T> GetByIdAsync(int id)
+        public virtual async Task<T> GetAsync<T>(Expression<Func<T, bool>> predicator) where T : BaseBE, new()
         {
-            return await _entities.FindAsync((int)id);
+            return await _dbContext.Set<T>().Where(predicator).FirstOrDefaultAsync();
         }
 
-        public virtual T Get(Expression<Func<T, bool>> predicator)
+        public virtual T Create<T>(T entity) where T : BaseBE, new()
         {
-            return _entities.Where(predicator).FirstOrDefault();
-        }
-
-        public virtual async Task<T> GetAsync(Expression<Func<T, bool>> predicator)
-        {
-            return await _entities.Where(predicator).FirstOrDefaultAsync();
-        }
-
-        public virtual T Create(T entity)
-        {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("Tried to insert null entity!");
-            }
-
-            _entities.Add(entity);
+            _dbContext.Set<T>().Add(entity);
 
             return entity;
         }
 
-        public virtual T Update(T entity)
+        public virtual T Update<T>(T entity) where T : BaseBE, new()
         {
-            _entities.Attach(entity);
-            _entities.Update(entity);
+            //_dbContext.Set<T>().Attach(entity);
+            _dbContext.Set<T>().Update(entity);
 
             return entity;
         }
 
-        public virtual void Delete(T entity)
+        public virtual void Delete<T>(T entity) where T : BaseBE, new()
         {
-            if (_context.Entry(entity).State == EntityState.Detached)
-            {
-                _entities.Attach(entity);
-            }
-            _entities.Remove(entity);
+            _dbContext.Set<T>().Remove(entity);
         }
     }
 }

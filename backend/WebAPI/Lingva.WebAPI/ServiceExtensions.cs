@@ -5,8 +5,8 @@ using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
 using Lingva.DAL.Dapper;
 using Lingva.DAL.EF.Context;
-using Lingva.DAL.Repositories.Contracts;
-using Lingva.DAL.UnitsOfWork.Contracts;
+using Lingva.DAL.Repositories;
+using Lingva.DAL.UnitsOfWork;
 using Lingva.WebAPI.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -113,26 +113,22 @@ namespace Lingva.WebAPI.Extensions
 
         public static void ConfigureEFUnitsOfWork(this IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWorkGroup, DAL.EF.UnitsOfWork.UnitOfWorkGroup>();
-            services.AddScoped<IUnitOfWorkInfo, DAL.EF.UnitsOfWork.UnitOfWorkInfo>();
+            services.AddScoped<IUnitOfWork, DAL.EF.UnitsOfWork.UnitOfWork>();
         }
 
         public static void ConfigureEFRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IRepositoryGroup, DAL.EF.Repositories.RepositoryGroup>();
-            services.AddScoped<IRepositoryLanguage, DAL.EF.Repositories.RepositoryLanguage>();
+            services.AddScoped<IRepository, DAL.EF.Repositories.Repository>();
         }
 
         public static void ConfigureDapperUnitsOfWork(this IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWorkGroup, DAL.Dapper.UnitsOfWork.UnitOfWorkGroup>();
-            services.AddScoped<IUnitOfWorkInfo, DAL.Dapper.UnitsOfWork.UnitOfWorkInfo>();
+            services.AddScoped<IUnitOfWork, DAL.Dapper.UnitsOfWork.UnitOfWork>();
         }
 
         public static void ConfigureDapperRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IRepositoryGroup, DAL.Dapper.Repositories.RepositoryGroup>();
-            services.AddScoped<IRepositoryLanguage, DAL.Dapper.Repositories.RepositoryLanguage>();
+            services.AddScoped<IRepository, DAL.Dapper.Repositories.Repository>();
         }
     }
 }
