@@ -16,15 +16,13 @@
                     @Html.DisplayNameFor(model => model.GroupViewModel.Name)
                 </dt>
                 <dd>
-                    @Html.EditorFor(model => model.GroupViewModel.Name)
-                    @*<input type="text" name="Name" class="form-control" />*@
+                    @Html.TextBox("Name", "", htmlAttributes: new { @class = "form-control" })
                 </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.GroupViewModel.Date)
                 </dt>
                 <dd>
-                    @Html.EditorFor(model => model.GroupViewModel.Date)
-                    @*<input type="text" name="Date" class="form-control" />*@
+                    @Html.TextBox("Date", "", htmlAttributes: new { @class = "form-control", @type = "date" })
                 </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.GroupViewModel.LanguageId)
@@ -36,15 +34,13 @@
                     @Html.DisplayNameFor(model => model.GroupViewModel.Description)
                 </dt>
                 <dd>
-                    @Html.EditorFor(model => model.GroupViewModel.Description)
-                    @*<input type="text" name="Description" class="form-control" />*@
+                    @Html.TextBox("Description", "", htmlAttributes: new { @class = "form-control" })
                 </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.GroupViewModel.Picture)
                 </dt>
                 <dd>
-                    @Html.EditorFor(model => model.GroupViewModel.Picture)
-                    @*<input type="text" name="Picture" class="form-control" />*@
+                    @Html.TextBox("Picture", "", htmlAttributes: new { @class = "form-control" })
                 </dd>
             </dl>
             <div class="form-group">

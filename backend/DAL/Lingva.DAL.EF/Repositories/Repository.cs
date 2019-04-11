@@ -11,13 +11,22 @@ using System.Threading.Tasks;
 
 namespace Lingva.DAL.EF.Repositories
 {
-    public class Repository : IRepository 
+    public class Repository : IRepository, IDisposable
     {
         protected readonly DictionaryContext _dbContext;
+
+        protected bool disposed = false;
 
         public Repository(DictionaryContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public virtual async Task<IEnumerable<T>> GetListAsync<T>() where T : BaseBE, new()
+        {
+            IQueryable<T> result = _dbContext.Set<T>().AsNoTracking();
+
+            return await result.ToListAsync();
         }
 
         public virtual async Task<IEnumerable<T>> GetListAsync<T>(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, ICollection<Expression<Func<T, bool>>> includers = null, int skip = 0, int take = 0) where T : BaseBE, new()
@@ -65,24 +74,50 @@ namespace Lingva.DAL.EF.Repositories
             return await _dbContext.Set<T>().Where(predicator).FirstOrDefaultAsync();
         }
 
-        public virtual T Create<T>(T entity) where T : BaseBE, new()
+        public virtual async Task<T> CreateAsync<T>(T entity) where T : BaseBE, new()
         {
-            _dbContext.Set<T>().Add(entity);
+            entity.CreateDate = DateTime.Now;
+            entity.ModifyDate = DateTime.Now;
+            await _dbContext.Set<T>().AddAsync(entity);//??
+            await _dbContext.SaveChangesAsync(true);
 
             return entity;
         }
 
-        public virtual T Update<T>(T entity) where T : BaseBE, new()
+        public virtual async Task<T> UpdateAsync<T>(T entity) where T : BaseBE, new()
         {
+            entity.ModifyDate = DateTime.Now;
             //_dbContext.Set<T>().Attach(entity);
             _dbContext.Set<T>().Update(entity);
+            await _dbContext.SaveChangesAsync(true);
 
             return entity;
         }
 
-        public virtual void Delete<T>(T entity) where T : BaseBE, new()
+        public virtual async Task DeleteAsync<T>(T entity) where T : BaseBE, new()
         {
+            entity.ModifyDate = DateTime.Now;
             _dbContext.Set<T>().Remove(entity);
+
+            await _dbContext.SaveChangesAsync(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    _dbContext.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

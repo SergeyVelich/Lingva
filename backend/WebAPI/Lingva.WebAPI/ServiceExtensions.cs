@@ -6,7 +6,6 @@ using Lingva.Common.Mapping;
 using Lingva.DAL.Dapper;
 using Lingva.DAL.EF.Context;
 using Lingva.DAL.Repositories;
-using Lingva.DAL.UnitsOfWork;
 using Lingva.WebAPI.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -38,14 +37,12 @@ namespace Lingva.WebAPI.Extensions
         public static void ConfigureEF(this IServiceCollection services, IConfiguration config)
         {
             services.ConfigureSqlContext(config);
-            services.ConfigureEFUnitsOfWork();
             services.ConfigureEFRepositories();
         }
 
         public static void ConfigureDapper(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<IConnectionFactory, ConnectionFactory>();           
-            services.ConfigureDapperUnitsOfWork();
             services.ConfigureDapperRepositories();
         }
 
@@ -111,19 +108,9 @@ namespace Lingva.WebAPI.Extensions
             });
         }
 
-        public static void ConfigureEFUnitsOfWork(this IServiceCollection services)
-        {
-            services.AddScoped<IUnitOfWork, DAL.EF.UnitsOfWork.UnitOfWork>();
-        }
-
         public static void ConfigureEFRepositories(this IServiceCollection services)
         {
             services.AddScoped<IRepository, DAL.EF.Repositories.Repository>();
-        }
-
-        public static void ConfigureDapperUnitsOfWork(this IServiceCollection services)
-        {
-            services.AddScoped<IUnitOfWork, DAL.Dapper.UnitsOfWork.UnitOfWork>();
         }
 
         public static void ConfigureDapperRepositories(this IServiceCollection services)
