@@ -42,7 +42,7 @@ namespace Lingva.WebAPI.Extensions
 
         public static void ConfigureDapper(this IServiceCollection services, IConfiguration config)
         {
-            services.AddScoped<IConnectionFactory, ConnectionFactory>();           
+            services.AddScoped<DapperContext>();           
             services.ConfigureDapperRepositories();
         }
 

@@ -78,7 +78,7 @@ namespace Lingva.DAL.EF.Repositories
         {
             entity.CreateDate = DateTime.Now;
             entity.ModifyDate = DateTime.Now;
-            await _dbContext.Set<T>().AddAsync(entity);//??
+            await _dbContext.Set<T>().AddAsync(entity);
             await _dbContext.SaveChangesAsync(true);
 
             return entity;
@@ -87,7 +87,6 @@ namespace Lingva.DAL.EF.Repositories
         public virtual async Task<T> UpdateAsync<T>(T entity) where T : BaseBE, new()
         {
             entity.ModifyDate = DateTime.Now;
-            //_dbContext.Set<T>().Attach(entity);
             _dbContext.Set<T>().Update(entity);
             await _dbContext.SaveChangesAsync(true);
 
