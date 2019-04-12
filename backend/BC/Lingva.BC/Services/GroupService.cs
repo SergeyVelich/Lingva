@@ -23,17 +23,9 @@ namespace Lingva.BC.Services
             _dataAdapter = dataAdapter;
         }
 
-        public async Task<IEnumerable<GroupDTO>> GetListAsync(QueryOptionsDTO optionsDTO)
+        public async Task<IEnumerable<GroupDTO>> GetListAsync(QueryOptions queryOptions)
         {
-            Expression<Func<Group, bool>> filters = optionsDTO.GetFiltersExpression<Group>();
-            IEnumerable<string> sorters = optionsDTO.GetSortersCollection<Group>();
-            ICollection<Expression<Func<Group, bool>>> includers = null;
-            //ICollection<Expression<Func<Group, bool>>> includers = optionsDTO.GetIncludersCollection<Group>();//??
-            QueryPagenatorDTO pagenator = optionsDTO.Pagenator;
-            int skip = pagenator.Skip;
-            int take = pagenator.Take;
-
-            IEnumerable<Group> groups = await _repository.GetListAsync<Group>(filters, sorters, includers, skip, take);
+            IEnumerable<Group> groups = await _repository.GetListAsync<Group>(queryOptions);
 
             return _dataAdapter.Map<IEnumerable<GroupDTO>>(groups);
         }

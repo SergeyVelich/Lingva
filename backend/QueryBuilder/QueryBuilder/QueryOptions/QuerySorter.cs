@@ -1,13 +1,13 @@
-﻿using QueryBuilder.QueryOptions.Enums;
+﻿using QueryBuilder.Enums;
 
 namespace QueryBuilder.QueryOptions
 {
-    public class QuerySorterDTO
+    public class QuerySorter
     {
         public string PropertyName { get; set; }
         public SortOrder SortOrder { get; set; }
 
-        public QuerySorterDTO(string propertyName, SortOrder sortOrder)
+        public QuerySorter(string propertyName, SortOrder sortOrder)
         {
             PropertyName = propertyName;
             SortOrder = sortOrder;

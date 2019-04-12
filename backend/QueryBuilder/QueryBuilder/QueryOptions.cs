@@ -1,22 +1,20 @@
-﻿using QueryBuilder.QueryOptions;
-using QueryBuilder.QueryOptions.Enums;
+﻿using QueryBuilder.Enums;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace QueryBuilder
+namespace QueryBuilder.QueryOptions
 {
-    public class QueryOptionsDTO
+    public class QueryOptions
     {
-        private readonly ICollection<QueryFilterDTO> _filters;
-        private readonly ICollection<QuerySorterDTO> _sorters;
-        private readonly ICollection<QueryIncluderDTO> _includers;
+        private readonly ICollection<QueryFilter> _filters;
+        private readonly ICollection<QuerySorter> _sorters;
+        private readonly ICollection<QueryIncluder> _includers;
 
-        public QueryPagenatorDTO Pagenator { get; }
+        public QueryPagenator Pagenator { get; }
 
-        public QueryOptionsDTO(ICollection<QueryFilterDTO> filters, ICollection<QuerySorterDTO> sorters, ICollection<QueryIncluderDTO> includers, QueryPagenatorDTO pagenator)
+        public QueryOptions(ICollection<QueryFilter> filters, ICollection<QuerySorter> sorters, ICollection<QueryIncluder> includers, QueryPagenator pagenator)
         {
             _filters = filters;
             _sorters = sorters;

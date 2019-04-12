@@ -24,8 +24,8 @@ namespace Lingva.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
-            //services.ConfigureEF(Configuration);
-            services.ConfigureDapper(Configuration);
+            services.ConfigureEF(Configuration);
+            //services.ConfigureDapper(Configuration);
             services.ConfigureOptions(Configuration);
             services.ConfigureAuthentication();
             services.ConfigureAutoMapper();

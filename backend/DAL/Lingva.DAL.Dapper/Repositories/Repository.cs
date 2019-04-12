@@ -1,5 +1,6 @@
 ﻿using Lingva.DAL.Entities;
 using Lingva.DAL.Repositories;
+using QueryBuilder.QueryOptions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,42 +24,6 @@ namespace Lingva.DAL.Dapper.Repositories
         public virtual async Task<IEnumerable<T>> GetListAsync<T>() where T : BaseBE, new()
         {
             return await _dbContext.Set<T>().SelectAllAsync();
-        }
-
-        public virtual async Task<IEnumerable<T>> GetListAsync<T>(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, ICollection<Expression<Func<T, bool>>> includers = null, int skip = 0, int take = 0) where T : BaseBE, new()
-        {
-            //IQueryable<T> result = _dbContext.Set<T>().AsNoTracking();
-
-            //if (predicator != null)
-            //{
-            //    result = result.Where(predicator);
-            //}
-
-            //if (includers != null)
-            //{
-            //    foreach (var includer in includers)
-            //    {
-            //        result = result.Include(includer);
-            //    }
-            //}
-
-            //if (sorters != null)
-            //{
-            //    result = result.OrderBy(sorters);
-            //}
-
-            //if (skip != 0)
-            //{
-            //    result = result.Skip(skip);
-            //}
-
-            //if (take != 0)
-            //{
-            //    result = result.Take(take);
-            //}
-
-            //return await result.ToListAsync();
-            return await _dbContext.Set<T>().SelectAllAsync();//??
         }
 
         public virtual async Task<T> GetByIdAsync<T>(int id) where T : BaseBE, new()
@@ -132,6 +97,49 @@ namespace Lingva.DAL.Dapper.Repositories
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+
+        public virtual async Task<IEnumerable<T>> GetListAsync<T>(QueryOptions queryOptions) where T : BaseBE, new()
+        {
+            //Expression<Func<T, bool>> filters = queryOptions.GetFiltersExpression<T>();
+            //IEnumerable<string> sorters = queryOptions.GetSortersCollection<T>();
+            //ICollection<Expression<Func<T, bool>>> includers = null;
+            ////ICollection<Expression<Func<Group, bool>>> includers = optionsDTO.GetIncludersCollection<T>();//??
+            //QueryPagenator pagenator = queryOptions.Pagenator;
+            //int skip = pagenator.Skip;
+            //int take = pagenator.Take; IQueryable<T> result = _dbContext.Set<T>().AsNoTracking();
+
+            //if (predicator != null)
+            //{
+            //    result = result.Where(predicator);
+            //}
+
+            //if (includers != null)
+            //{
+            //    foreach (var includer in includers)
+            //    {
+            //        result = result.Include(includer);
+            //    }
+            //}
+
+            //if (sorters != null)
+            //{
+            //    result = result.OrderBy(sorters);
+            //}
+
+            //if (skip != 0)
+            //{
+            //    result = result.Skip(skip);
+            //}
+
+            //if (take != 0)
+            //{
+            //    result = result.Take(take);
+            //}
+
+            //return await result.ToListAsync();
+            return await _dbContext.Set<T>().SelectAllAsync();//??
         }
     }
 }

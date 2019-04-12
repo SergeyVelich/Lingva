@@ -1,10 +1,10 @@
 ﻿namespace QueryBuilder.QueryOptions
 {
-    public class QueryIncluderDTO
+    public class QueryIncluder
     {
         public string PropertyName { get; set; }
 
-        public QueryIncluderDTO(string propertyName)
+        public QueryIncluder(string propertyName)
         {
             PropertyName = propertyName;
         }

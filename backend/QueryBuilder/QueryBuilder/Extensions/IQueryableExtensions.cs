@@ -1,4 +1,4 @@
-﻿using QueryBuilder.QueryOptions.Enums;
+﻿using QueryBuilder.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

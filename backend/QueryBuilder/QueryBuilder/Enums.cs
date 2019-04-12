@@ -1,4 +1,4 @@
-﻿namespace QueryBuilder.QueryOptions.Enums
+﻿namespace QueryBuilder.Enums
 {
     public enum SortOrder
     {

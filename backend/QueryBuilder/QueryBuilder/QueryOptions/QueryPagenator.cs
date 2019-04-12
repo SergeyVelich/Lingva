@@ -1,11 +1,11 @@
 ﻿namespace QueryBuilder.QueryOptions
 {
-    public class QueryPagenatorDTO
+    public class QueryPagenator
     {
         public int Skip { get; set; }
         public int Take { get; set; }
 
-        public QueryPagenatorDTO(int take, int skip)
+        public QueryPagenator(int take, int skip)
         {
             Take = take;
             Skip = skip;

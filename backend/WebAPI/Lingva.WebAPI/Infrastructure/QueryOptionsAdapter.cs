@@ -1,7 +1,6 @@
 ﻿using Lingva.WebAPI.Models.Request;
-using QueryBuilder;
+using QueryBuilder.Enums;
 using QueryBuilder.QueryOptions;
-using QueryBuilder.QueryOptions.Enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -16,24 +15,24 @@ namespace Lingva.WebAPI.Infrastructure
 
         }
 
-        public QueryOptionsDTO Map(OptionsModel optionsModel)
+        public QueryOptions Map(OptionsModel optionsModel)
         {
-            List<QueryFilterDTO> filters = new List<QueryFilterDTO>();
-            filters.Add(new QueryFilterDTO("Name", optionsModel.Name, FilterOperation.Contains));
-            filters.Add(new QueryFilterDTO("LanguageId", optionsModel.LanguageId, FilterOperation.Equal));
+            List<QueryFilter> filters = new List<QueryFilter>();
+            filters.Add(new QueryFilter("Name", optionsModel.Name, FilterOperation.Contains));
+            filters.Add(new QueryFilter("LanguageId", optionsModel.LanguageId, FilterOperation.Equal));
 
-            List<QuerySorterDTO> sorters = new List<QuerySorterDTO>();
+            List<QuerySorter> sorters = new List<QuerySorter>();
             SortOrder sortOrder = Enum.Parse<SortOrder>(optionsModel.SortOrder);
-            sorters.Add(new QuerySorterDTO(optionsModel.SortProperty, sortOrder));
+            sorters.Add(new QuerySorter(optionsModel.SortProperty, sortOrder));
 
-            List<QueryIncluderDTO> includers = new List<QueryIncluderDTO>();
-            includers.Add(new QueryIncluderDTO("Language"));
+            List<QueryIncluder> includers = new List<QueryIncluder>();
+            includers.Add(new QueryIncluder("Language"));
 
             int take = optionsModel.PageRecords;
             int skip = optionsModel.PageRecords * (optionsModel.Page - 1);
-            QueryPagenatorDTO pagenator = new QueryPagenatorDTO(take, skip);
+            QueryPagenator pagenator = new QueryPagenator(take, skip);
 
-            QueryOptionsDTO queryOptions = new QueryOptionsDTO(filters, sorters, includers, pagenator);
+            QueryOptions queryOptions = new QueryOptions(filters, sorters, includers, pagenator);
 
             return queryOptions;
         }
