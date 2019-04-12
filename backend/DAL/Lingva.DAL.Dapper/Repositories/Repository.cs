@@ -27,6 +27,37 @@ namespace Lingva.DAL.Dapper.Repositories
 
         public virtual async Task<IEnumerable<T>> GetListAsync<T>(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, ICollection<Expression<Func<T, bool>>> includers = null, int skip = 0, int take = 0) where T : BaseBE, new()
         {
+            //IQueryable<T> result = _dbContext.Set<T>().AsNoTracking();
+
+            //if (predicator != null)
+            //{
+            //    result = result.Where(predicator);
+            //}
+
+            //if (includers != null)
+            //{
+            //    foreach (var includer in includers)
+            //    {
+            //        result = result.Include(includer);
+            //    }
+            //}
+
+            //if (sorters != null)
+            //{
+            //    result = result.OrderBy(sorters);
+            //}
+
+            //if (skip != 0)
+            //{
+            //    result = result.Skip(skip);
+            //}
+
+            //if (take != 0)
+            //{
+            //    result = result.Take(take);
+            //}
+
+            //return await result.ToListAsync();
             return await _dbContext.Set<T>().SelectAllAsync();//??
         }
 
