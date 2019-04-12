@@ -1,10 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Lingva.MVC.Infrastructure.Exceptions;
+using Lingva.MVC.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Lingva.MVC.Filters
 {
-    public class GlobalExceptionFilter : IExceptionFilter
+    public class GlobalExceptionFilter : IAsyncExceptionFilter
     {
         private readonly ILogger<GlobalExceptionFilter> _logger;
 
@@ -12,12 +18,36 @@ namespace Lingva.MVC.Filters
         {
             _logger = logger;
         }
-        public void OnException(ExceptionContext context)
+        public async Task OnExceptionAsync(ExceptionContext context)
         {
-            _logger.LogError(0, context.Exception, context.Exception.Message);
+            HttpStatusCode status = HttpStatusCode.InternalServerError;
+            string msgForUser;
+            string msgForLog;
+            //string stack = null;
+
+            if (context.Exception is LingvaCustomException)
+            {
+                msgForUser = context.Exception.Message;
+                msgForLog = context.Exception.Message;
+
+                context.Exception = null;               
+            }
+            else
+            {
+                msgForUser = "An unhandled error occurred.";                    
+                msgForLog = context.Exception.Message;
+            }
+
+            _logger.LogError(0, context.Exception, msgForLog);
+
+            ErrorViewModel errorViewModel = new ErrorViewModel(msgForUser);
 
             context.ExceptionHandled = true;
-            context.Result = new ViewResult { ViewName = "Error-500" };
+            HttpResponse response = context.HttpContext.Response;
+            response.StatusCode = (int)status;
+            response.ContentType = "application/json";
+            context.Result = new JsonResult(errorViewModel);
+            //context.Result = new ViewResult { ViewName = "Error" };
         }
     }
 }

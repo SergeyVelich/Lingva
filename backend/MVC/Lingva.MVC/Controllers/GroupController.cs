@@ -1,5 +1,6 @@
 ﻿using Lingva.Common.Mapping;
 using Lingva.MVC.Extensions;
+using Lingva.MVC.Infrastructure.Exceptions;
 using Lingva.MVC.Models.Group.Index;
 using Lingva.MVC.Models.Request;
 using Lingva.MVC.Models.Response;
@@ -51,7 +52,7 @@ namespace Lingva.MVC.Controllers
                 FilterViewModel = new FilterViewModel(languages, options.Name, options.LanguageId, options.Description, options.Date),
                 Groups = groups,
             };
-
+            
             return View(viewModel);
         }
 
@@ -70,7 +71,7 @@ namespace Lingva.MVC.Controllers
 
             if (!response.IsSuccessStatusCode)
             {
-                return NotFound();
+                throw new LingvaCustomException("Connection with app is broken");
             }
 
             GroupViewModel groupViewModel = await response.Content.ReadAsAsync<GroupViewModel>();

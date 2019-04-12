@@ -46,6 +46,8 @@ namespace Lingva.MVC
                         Duration = 30
                     });
             });
+
+            services.AddScoped<GlobalExceptionFilter>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -57,7 +59,7 @@ namespace Lingva.MVC
             else
             {
                 app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");//??
                 app.UseHsts();
             }
 
