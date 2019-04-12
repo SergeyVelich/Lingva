@@ -22,17 +22,17 @@ namespace Lingva.DAL.Dapper.Repositories
 
         public virtual async Task<IEnumerable<T>> GetListAsync<T>() where T : BaseBE, new()
         {
-            return await _dbContext.SelectAllAsync<T>();
+            return await _dbContext.Set<T>().SelectAllAsync();
         }
 
         public virtual async Task<IEnumerable<T>> GetListAsync<T>(Expression<Func<T, bool>> predicator = null, IEnumerable<string> sorters = null, ICollection<Expression<Func<T, bool>>> includers = null, int skip = 0, int take = 0) where T : BaseBE, new()
         {
-            return await _dbContext.SelectAllAsync<T>();//??
+            return await _dbContext.Set<T>().SelectAllAsync();//??
         }
 
         public virtual async Task<T> GetByIdAsync<T>(int id) where T : BaseBE, new()
         {
-            return await _dbContext.FindAsync<T>(id);
+            return await _dbContext.Set<T>().FindAsync(id);
         }
 
         public virtual async Task<T> GetAsync<T>(Expression<Func<T, bool>> predicator) where T : BaseBE, new()//??
@@ -44,8 +44,7 @@ namespace Lingva.DAL.Dapper.Repositories
         {
             entity.CreateDate = DateTime.Now;
             entity.ModifyDate = DateTime.Now;
-            await _dbContext.AddAsync(entity, _dbTransaction);
-            EndTransaction();
+            await _dbContext.Set<T>().AddAsync(entity, _dbTransaction);
 
             return entity;
         }
@@ -53,16 +52,14 @@ namespace Lingva.DAL.Dapper.Repositories
         public virtual async Task<T> UpdateAsync<T>(T entity) where T : BaseBE, new()
         {
             entity.ModifyDate = DateTime.Now;
-            await _dbContext.UpdateAsync(entity, _dbTransaction);
-            EndTransaction();
+            await _dbContext.Set<T>().UpdateAsync(entity, _dbTransaction);
 
             return entity;
         }
 
         public virtual async Task DeleteAsync<T>(T entity) where T : BaseBE, new()
         {
-            await _dbContext.RemoveAsync<T>(entity, _dbTransaction);
-            EndTransaction();
+            await _dbContext.Set<T>().RemoveAsync(entity, _dbTransaction);
         }
 
         public IDbTransaction BeginTransaction()

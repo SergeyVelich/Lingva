@@ -79,6 +79,7 @@ namespace Lingva.DAL.EF.Repositories
             entity.CreateDate = DateTime.Now;
             entity.ModifyDate = DateTime.Now;
             await _dbContext.Set<T>().AddAsync(entity);
+            _dbContext.Set<T>().Remove(entity);
             await _dbContext.SaveChangesAsync(true);
 
             return entity;
