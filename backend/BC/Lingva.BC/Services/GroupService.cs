@@ -3,11 +3,8 @@ using Lingva.BC.DTO;
 using Lingva.Common.Mapping;
 using Lingva.DAL.Entities;
 using Lingva.DAL.Repositories;
-using QueryBuilder;
 using QueryBuilder.QueryOptions;
-using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Lingva.BC.Services
@@ -21,6 +18,13 @@ namespace Lingva.BC.Services
         {
             _repository = repository;
             _dataAdapter = dataAdapter;
+        }
+
+        public async Task<IEnumerable<GroupDTO>> GetListAsync()
+        {
+            IEnumerable<Group> groups = await _repository.GetListAsync<Group>();
+
+            return _dataAdapter.Map<IEnumerable<GroupDTO>>(groups);
         }
 
         public async Task<IEnumerable<GroupDTO>> GetListAsync(QueryOptions queryOptions)
