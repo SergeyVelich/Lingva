@@ -5,25 +5,24 @@ using Lingva.Common.Mapping;
 using Lingva.DAL.Entities;
 using Lingva.DAL.Repositories;
 using Moq;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Lingva.BC.UnitTest
 {
     [ExcludeFromCodeCoverage]
     public class InfoServiceTests
     {
-        private List<Language> _languageList;
-        private List<LanguageDto> _languageListDto;
+        private readonly List<Language> _languageList;
+        private readonly List<LanguageDto> _languageListDto;
         private IInfoService _infoService;
-        private Mock<IRepository> _repoMock;
-        private Mock<IDataAdapter> _data;
+        private readonly Mock<IRepository> _repoMock;
+        private readonly Mock<IDataAdapter> _data;
 
-        [SetUp]
-        public void Setup()
+        public InfoServiceTests()
         {
             _languageList = new List<Language>
             {
@@ -58,7 +57,7 @@ namespace Lingva.BC.UnitTest
             _infoService = new InfoService(_repoMock.Object, _data.Object);
         }
 
-        [Test]
+        [Fact]
         public async Task GetLanguagesListAsync_ShouldNot_Return_NotNull()
         {
             //arrange
@@ -72,7 +71,7 @@ namespace Lingva.BC.UnitTest
             Assert.NotNull(result);
         }
 
-        [Test]
+        [Fact]
         public async Task GetLanguagesListAsync_Should_Return_SetValue()
         {
             //arrange

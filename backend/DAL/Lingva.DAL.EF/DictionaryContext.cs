@@ -15,7 +15,7 @@ namespace Lingva.DAL.EF.Context
             : base(options)
         {
             //Database.EnsureDeleted();
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,7 +27,7 @@ namespace Lingva.DAL.EF.Context
             Seed(modelBuilder);
         }
 
-        private void Seed(ModelBuilder modelBuilder)
+        public virtual void Seed(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Language>().HasData(
                 new { Id = 1, Name = "en", CreateDate = DateTime.Now, ModifyDate = DateTime.Now },

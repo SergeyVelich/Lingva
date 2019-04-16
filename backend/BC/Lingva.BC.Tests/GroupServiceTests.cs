@@ -5,27 +5,26 @@ using Lingva.Common.Mapping;
 using Lingva.DAL.Entities;
 using Lingva.DAL.Repositories;
 using Moq;
-using NUnit.Framework;
 using QueryBuilder.QueryOptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Lingva.BC.UnitTest
 {
     [ExcludeFromCodeCoverage]
     public class GroupServiceTests
     {
-        private List<Group> _groupList;
-        private List<GroupDto> _groupListDto;
+        private readonly List<Group> _groupList;
+        private readonly List<GroupDto> _groupListDto;
         private IGroupService _groupService;
-        private Mock<IRepository> _repoMock;
-        private Mock<IDataAdapter> _dataAdapter;
+        private readonly Mock<IRepository> _repoMock;
+        private readonly Mock<IDataAdapter> _dataAdapter;
 
-        [SetUp]
-        public void Setup()
+        public GroupServiceTests()
         {
             _groupList = new List<Group>
             {
@@ -86,7 +85,7 @@ namespace Lingva.BC.UnitTest
             _groupService = new GroupService(_repoMock.Object, _dataAdapter.Object);
         }
 
-        [Test]
+        [Fact]
         public async Task GetListAsync_ShouldNot_Return_NotNull()
         {
             //arrange
@@ -100,7 +99,7 @@ namespace Lingva.BC.UnitTest
             Assert.NotNull(result);
         }
 
-        [Test]
+        [Fact]
         public async Task GetListAsync_Should_Return_SetValue()
         {
             //arrange
@@ -115,7 +114,7 @@ namespace Lingva.BC.UnitTest
             Assert.True(result.Count() == _groupList.Count());
         }
 
-        [Test]
+        [Fact]
         public async Task GetListAsyncWithOptions_ShouldNot_Return_NotNull()
         {
             //arrange
@@ -136,8 +135,8 @@ namespace Lingva.BC.UnitTest
             Assert.NotNull(result);
         }
 
-        [Test]
-        public async Task GetOrderByValidId_ShouldNot_Return_Null()
+        [Fact]
+        public async Task GetByValidId_ShouldNot_Return_Null()
         {
             //arrange
             int validId = 1;
@@ -155,8 +154,8 @@ namespace Lingva.BC.UnitTest
             Assert.NotNull(order);
         }
 
-        [Test]
-        public async Task GetOrderByInvalidId_Should_Return_Null()
+        [Fact]
+        public async Task GetByInvalidId_Should_Return_Null()
         {
             //arrange
             int invalidId = -1;
@@ -171,7 +170,7 @@ namespace Lingva.BC.UnitTest
             Assert.Null(order);
         }
 
-        [Test]
+        [Fact]
         public async Task AddAsync_WasExecute()
         {
             //arrange
@@ -188,7 +187,7 @@ namespace Lingva.BC.UnitTest
             _repoMock.Verify(mock => mock.CreateAsync(group), Times.Once());
         }
 
-        [Test]
+        [Fact]
         public async Task UpdateAsync_WasExecute()
         {
             //arrange
@@ -206,7 +205,7 @@ namespace Lingva.BC.UnitTest
             _repoMock.Verify(mock => mock.UpdateAsync(group), Times.Once());
         }
 
-        [Test]
+        [Fact]
         public async Task DeleteAsync_WasExecute()
         {
             //arrange

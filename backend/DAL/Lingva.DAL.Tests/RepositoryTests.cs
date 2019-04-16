@@ -3,63 +3,108 @@ using Lingva.DAL.EF.Repositories;
 using Lingva.DAL.Entities;
 using Lingva.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
-using NSubstitute;
-using QueryBuilder.QueryOptions;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace Lingva.DAL.EF.Tests
 {
     [ExcludeFromCodeCoverage]
     public class RepositoryTests
     {
-        private DictionaryContext _context;
-        private Group _group;
+        private IRepository _repository;
         private List<Group> _groupList;
 
-        public RepositoryTests()
+        [SetUp]
+        public void Setup()
         {
-            _groupList = new List<Group>
+            var optionsBuilder = new DbContextOptionsBuilder<DictionaryContext>();
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Lingva;Trusted_Connection=True;MultipleActiveResultSets=true;");
+            var _dbContext = new DictionaryContext(optionsBuilder.Options);
+            _dbContext.Database.EnsureDeleted();
+            _dbContext.Database.EnsureCreated();
+            _groupList = new List<Group>()
             {
                 new Group
                 {
-                    Id = 1,
                     Name = "Harry Potter",
                     Date = DateTime.Now,
                     Description = "Description",
                     Picture = "Picture",
                     LanguageId = 1,
-                    Language = new Language
-                    {
-                        Id = 1,
-                        Name = "en",
-                    },
                 },
                 new Group
                 {
-                    Id = 12,
-                    Name = "Librium",
+                    Name = "Harry Potter",
                     Date = DateTime.Now,
                     Description = "Description",
                     Picture = "Picture",
-                    LanguageId = 2,
-                    Language = new Language
-                    {
-                        Id = 2,
-                        Name = "ru",
-                    },
+                    LanguageId = 1,
                 }
             };
+            _dbContext.Set<Group>().AddRange(_groupList);
+            _dbContext.SaveChanges();
 
-            IQueryable<Group> dbSet = Substitute.For<IQueryable<Group>>();
-            dbSet.AsNoTracking();
-            dbSet.ToListAsync().Returns(_groupList);
-            DictionaryContext _context = Substitute.For<DictionaryContext>();
-            _context.Set<Group>().Returns(dbSet);
+            _repository = new Repository(_dbContext);
+        }
+
+        [Test]
+        public async Task GetListAsync_ShouldNot_ReturnNull()
+        {
+            var orders = await _repository.GetListAsync<Group>();
+
+            Assert.NotNull(orders);
+        }
+
+        [Test]
+        public async Task GetByIdAsync_ValidId_ReturnGroup()
+        {
+            var groups = await _repository.GetListAsync<Group>();
+            int validId = groups.First().Id;
+            var result = await _repository.GetByIdAsync<Group>(validId);
+
+            Assert.NotNull(result);
+        }
+
+        [Test]
+        public async Task GetByIdAsync_InvalidId_ReturnNull()
+        {
+            int invalidId = -1;
+            var result = await _repository.GetByIdAsync<Group>(invalidId);
+
+            Assert.Null(result);
+        }
+
+        [Test]
+        public async Task AddAsync_Group_ReturnGroup()
+        {
+            var result = await _repository.CreateAsync(_groupList[0]);
+
+            Assert.True(result.Id != 0);
+        }
+
+        [Test]
+        public async Task UpdateAsync_Group_ReturnGroup()
+        {
+            var groupFromDb = await _repository.GetByIdAsync<Group>(1);
+            int languageId = groupFromDb.LanguageId;
+            groupFromDb.LanguageId ++;
+            var result = await _repository.UpdateAsync(groupFromDb);
+
+            Assert.True(result.LanguageId != languageId);
+        }
+
+        [Test]
+        public async Task DeleteAsync_Group_ReturnGroup()
+        {
+            var groupFromDb = await _repository.GetByIdAsync<Group>(2);
+            await _repository.DeleteAsync(groupFromDb);
+            var result = await _repository.GetByIdAsync<Group>(groupFromDb.Id);
+
+            Assert.Null(result);
         }
 
         //[Fact]
