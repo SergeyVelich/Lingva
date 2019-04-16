@@ -35,11 +35,6 @@ namespace Lingva.DAL.EF.Repositories
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public virtual async Task<T> GetAsync<T>(Expression<Func<T, bool>> predicator) where T : BaseBE, new()
-        {
-            return await _dbContext.Set<T>().Where(predicator).FirstOrDefaultAsync();
-        }
-
         public virtual async Task<T> CreateAsync<T>(T entity) where T : BaseBE, new()
         {
             entity.CreateDate = DateTime.Now;
