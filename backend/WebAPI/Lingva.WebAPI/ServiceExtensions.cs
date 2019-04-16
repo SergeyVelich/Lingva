@@ -40,7 +40,7 @@ namespace Lingva.WebAPI.Extensions
             services.ConfigureEFRepositories();
         }
 
-        public static void ConfigureDapper(this IServiceCollection services, IConfiguration config)
+        public static void ConfigureDapper(this IServiceCollection services)
         {
             services.AddScoped<DapperContext>();           
             services.ConfigureDapperRepositories();
