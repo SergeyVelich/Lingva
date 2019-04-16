@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.BC.DTO
+namespace Lingva.BC.Dto
 {
-    public class GroupDTO
+    public class GroupDto
     {
         [ExcludeFromCodeCoverage]
         public int Id { get; set; }

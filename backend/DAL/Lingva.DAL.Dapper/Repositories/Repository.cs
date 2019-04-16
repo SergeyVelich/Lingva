@@ -100,7 +100,7 @@ namespace Lingva.DAL.Dapper.Repositories
         }
 
 
-        public virtual async Task<IEnumerable<T>> GetListAsync<T>(QueryOptions queryOptions) where T : BaseBE, new()
+        public virtual async Task<IEnumerable<T>> GetListAsync<T>(IQueryOptions queryOptions) where T : BaseBE, new()
         {
             //Expression<Func<T, bool>> filters = queryOptions.GetFiltersExpression<T>();
             //IEnumerable<string> sorters = queryOptions.GetSortersCollection<T>();

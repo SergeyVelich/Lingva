@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Lingva.BC.DTO;
+using Lingva.BC.Dto;
 using Lingva.DAL.Entities;
 using System.Diagnostics.CodeAnalysis;
 
@@ -10,8 +10,8 @@ namespace Lingva.BC.Mapper.Adapters
     {
         public LanguageAdapter()
         {
-            CreateMap<Language, LanguageDTO>();
-            CreateMap<LanguageDTO, Language>();
+            CreateMap<Language, LanguageDto>();
+            CreateMap<LanguageDto, Language>();
         }
     }
 }

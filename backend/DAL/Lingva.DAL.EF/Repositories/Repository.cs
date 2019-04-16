@@ -88,12 +88,12 @@ namespace Lingva.DAL.EF.Repositories
 
 
 
-        public virtual async Task<IEnumerable<T>> GetListAsync<T>(QueryOptions queryOptions) where T : BaseBE, new()
+        public virtual async Task<IEnumerable<T>> GetListAsync<T>(IQueryOptions queryOptions) where T : BaseBE, new()
         {
             Expression<Func<T, bool>> filters = queryOptions.GetFiltersExpression<T>();
             IEnumerable<string> sorters = queryOptions.GetSortersCollection<T>();
             ICollection<Expression<Func<T, bool>>> includers = null;
-            //ICollection<Expression<Func<Group, bool>>> includers = optionsDTO.GetIncludersCollection<T>();//??
+            //ICollection<Expression<Func<Group, bool>>> includers = optionsDto.GetIncludersCollection<T>();//??
             QueryPagenator pagenator = queryOptions.Pagenator;
             int skip = pagenator.Skip;
             int take = pagenator.Take; IQueryable<T> result = _dbContext.Set<T>().AsNoTracking();

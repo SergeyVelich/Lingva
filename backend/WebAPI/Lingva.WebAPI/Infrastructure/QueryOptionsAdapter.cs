@@ -15,7 +15,7 @@ namespace Lingva.WebAPI.Infrastructure
 
         }
 
-        public QueryOptions Map(OptionsModel optionsModel)
+        public virtual IQueryOptions Map(OptionsModel optionsModel)
         {
             List<QueryFilter> filters = new List<QueryFilter>();
             filters.Add(new QueryFilter("Name", optionsModel.Name, FilterOperation.Contains));
@@ -32,7 +32,7 @@ namespace Lingva.WebAPI.Infrastructure
             int skip = optionsModel.PageRecords * (optionsModel.Page - 1);
             QueryPagenator pagenator = new QueryPagenator(take, skip);
 
-            QueryOptions queryOptions = new QueryOptions(filters, sorters, includers, pagenator);
+            IQueryOptions queryOptions = new QueryOptions(filters, sorters, includers, pagenator);
 
             return queryOptions;
         }

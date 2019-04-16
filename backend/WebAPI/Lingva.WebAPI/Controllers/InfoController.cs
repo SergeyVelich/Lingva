@@ -1,5 +1,5 @@
 ﻿using Lingva.BC.Contracts;
-using Lingva.BC.DTO;
+using Lingva.BC.Dto;
 using Lingva.Common.Mapping;
 using Lingva.WebAPI.Models.Response;
 using Microsoft.AspNetCore.Authorization;
@@ -30,7 +30,7 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet("languages")]
         public async Task<IActionResult> GetLanguagesList()
         {
-            IEnumerable<LanguageDTO> languages = await _infoService.GetLanguagesListAsync();
+            IEnumerable<LanguageDto> languages = await _infoService.GetLanguagesListAsync();
 
             return Ok(_dataAdapter.Map<IEnumerable<LanguageViewModel>>(languages));
         }
