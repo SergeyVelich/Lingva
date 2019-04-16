@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace QueryBuilder.QueryOptions
+namespace QueryBuilder.QueryOptions 
 {
-    public class QueryOptions
+    public class QueryOptions : IQueryOptions
     {
         private readonly ICollection<QueryFilter> _filters;
         private readonly ICollection<QuerySorter> _sorters;

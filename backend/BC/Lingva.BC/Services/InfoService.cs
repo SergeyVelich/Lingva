@@ -1,5 +1,5 @@
 ﻿using Lingva.BC.Contracts;
-using Lingva.BC.DTO;
+using Lingva.BC.Dto;
 using Lingva.Common.Mapping;
 using Lingva.DAL.Entities;
 using Lingva.DAL.Repositories;
@@ -19,10 +19,10 @@ namespace Lingva.BC.Services
             _dataAdapter = dataAdapter;
         }
 
-        public async Task<IEnumerable<LanguageDTO>> GetLanguagesListAsync()
+        public async Task<IEnumerable<LanguageDto>> GetLanguagesListAsync()
         {
             IEnumerable<Language> languages = await _repository.GetListAsync<Language>();
-            return _dataAdapter.Map<IEnumerable<LanguageDTO>>(languages);
+            return _dataAdapter.Map<IEnumerable<LanguageDto>>(languages);
         }
     }
 }

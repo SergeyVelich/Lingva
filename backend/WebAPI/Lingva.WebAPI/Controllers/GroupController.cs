@@ -1,5 +1,5 @@
 ﻿using Lingva.BC.Contracts;
-using Lingva.BC.DTO;
+using Lingva.BC.Dto;
 using Lingva.Common.Mapping;
 using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Models.Request;
@@ -33,7 +33,7 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] OptionsModel options)
         {
-            IEnumerable<GroupDTO> groupsDto = await _groupService.GetListAsync(_queryOptionsAdapter.Map(options));
+            IEnumerable<GroupDto> groupsDto = await _groupService.GetListAsync(_queryOptionsAdapter.Map(options));
 
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groupsDto));
         }
@@ -42,12 +42,7 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet("get")]
         public async Task<IActionResult> Get([FromQuery] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            GroupDTO groupDto = await _groupService.GetByIdAsync(id);
+            GroupDto groupDto = await _groupService.GetByIdAsync(id);
 
             if (groupDto == null)
             {
@@ -82,7 +77,7 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            GroupDTO groupDto = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
+            GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupCreateViewModel);
             await _groupService.AddAsync(groupDto);
 
             return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));
@@ -97,8 +92,8 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            GroupDTO groupDto = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
-            await _groupService.UpdateAsync(groupDto.Id, groupDto);
+            GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupCreateViewModel);
+            await _groupService.UpdateAsync(groupDto);
 
             return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));
         }
@@ -115,7 +110,7 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            GroupDTO groupDto = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
+            GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupCreateViewModel);
             await _groupService.DeleteAsync(groupDto);
 
             return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));

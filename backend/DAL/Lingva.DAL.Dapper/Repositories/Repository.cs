@@ -31,11 +31,6 @@ namespace Lingva.DAL.Dapper.Repositories
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public virtual async Task<T> GetAsync<T>(Expression<Func<T, bool>> predicator) where T : BaseBE, new()//??
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual async Task<T> CreateAsync<T>(T entity) where T : BaseBE, new()
         {
             entity.CreateDate = DateTime.Now;
@@ -100,7 +95,7 @@ namespace Lingva.DAL.Dapper.Repositories
         }
 
 
-        public virtual async Task<IEnumerable<T>> GetListAsync<T>(QueryOptions queryOptions) where T : BaseBE, new()
+        public virtual async Task<IEnumerable<T>> GetListAsync<T>(IQueryOptions queryOptions) where T : BaseBE, new()
         {
             //Expression<Func<T, bool>> filters = queryOptions.GetFiltersExpression<T>();
             //IEnumerable<string> sorters = queryOptions.GetSortersCollection<T>();

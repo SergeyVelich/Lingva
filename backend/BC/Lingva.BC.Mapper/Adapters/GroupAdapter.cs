@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Lingva.BC.DTO;
+using Lingva.BC.Dto;
 using Lingva.DAL.Entities;
 using System.Diagnostics.CodeAnalysis;
 
@@ -10,8 +10,8 @@ namespace Lingva.BC.Mapper.Adapters
     {
         public GroupAdapter()
         {
-            CreateMap<Group, GroupDTO>();
-            CreateMap<GroupDTO, Group>();
+            CreateMap<Group, GroupDto>();
+            CreateMap<GroupDto, Group>();
 
             CreateMap<Group, Group>();
         }
