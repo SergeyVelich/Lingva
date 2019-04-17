@@ -11,7 +11,8 @@ namespace Lingva.MVC.Models.Response
         [Display(Name = "Title")]
         public string Name { get; set; }
         [Display(Name = "Date")]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
         [Display(Name = "Language")]
         public int LanguageId { get; set; }

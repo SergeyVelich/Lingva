@@ -80,7 +80,8 @@ namespace Lingva.WebAPI.Controllers
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupCreateViewModel);
             await _groupService.AddAsync(groupDto);
 
-            return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));
+
+            return CreatedAtAction("Get", new { id = groupDto.Id }, _dataAdapter.Map<GroupViewModel>(groupDto));
         }
 
         // PUT: api/group/update

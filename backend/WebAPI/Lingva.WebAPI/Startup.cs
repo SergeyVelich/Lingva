@@ -31,10 +31,10 @@ namespace Lingva.WebAPI
             services.ConfigureAutoMapper();
             services.ConfigureSwagger();
            
-            services.AddTransient<IGroupService, GroupService>();
-            services.AddTransient<IInfoService, InfoService>();
+            services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<IInfoService, InfoService>();
 
-            services.AddTransient<QueryOptionsAdapter>();
+            services.AddScoped<QueryOptionsAdapter>();
 
             services.AddMvc(options =>
             {
