@@ -10,14 +10,20 @@ namespace QueryBuilder.QueryOptions
     {
         private readonly ICollection<QueryFilter> _filters;
         private readonly ICollection<QuerySorter> _sorters;
+        private readonly ICollection<QuerySelector> _selectors;
         private readonly ICollection<QueryIncluder> _includers;
 
         public QueryPagenator Pagenator { get; }
 
-        public QueryOptions(ICollection<QueryFilter> filters, ICollection<QuerySorter> sorters, ICollection<QueryIncluder> includers, QueryPagenator pagenator)
+        public QueryOptions(ICollection<QueryFilter> filters = null, 
+            ICollection<QuerySorter> sorters = null,
+            ICollection<QuerySelector> selectors = null,
+            ICollection<QueryIncluder> includers = null, 
+            QueryPagenator pagenator = null)
         {
             _filters = filters;
             _sorters = sorters;
+            _selectors = selectors;
             _includers = includers;
             Pagenator = pagenator;
         }

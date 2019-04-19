@@ -32,7 +32,11 @@ namespace Lingva.WebAPI.Infrastructure
             int skip = optionsModel.PageRecords * (optionsModel.Page - 1);
             QueryPagenator pagenator = new QueryPagenator(take, skip);
 
-            IQueryOptions queryOptions = new QueryOptions(filters, sorters, includers, pagenator);
+            IQueryOptions queryOptions = new QueryOptions(
+                filters: filters,
+                sorters: sorters,
+                includers: includers, 
+                pagenator: pagenator);
 
             return queryOptions;
         }

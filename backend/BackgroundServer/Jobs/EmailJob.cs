@@ -44,7 +44,8 @@ namespace Lingva.Background.Jobs
 
                 List<QueryFilter> filters = new List<QueryFilter>();
                 filters.Add(new QueryFilter("GroupId", groupDto.Id, FilterOperation.Contains));
-                QueryOptions queryOptions = new QueryOptions(filters, null, null, null);
+                QueryOptions queryOptions = new QueryOptions(filters: filters);
+
                 var users = await _userService.GetListAsync(queryOptions);
                 List<string> recepients = new List<string>();
                 foreach (UserDto recepient in users)
