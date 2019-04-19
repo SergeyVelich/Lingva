@@ -46,7 +46,6 @@ namespace Lingva.MVC.Filters
             response.StatusCode = (int)status;
             response.ContentType = "application/json";
             context.Result = new JsonResult(errorViewModel);
-            //context.Result = new ViewResult { ViewName = "Error" };
         }
     }
 }

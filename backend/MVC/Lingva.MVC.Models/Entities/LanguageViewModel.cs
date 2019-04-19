@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.MVC.Models.Response
+namespace Lingva.MVC.Models.Entities
 {
     [ExcludeFromCodeCoverage]
     public class LanguageViewModel

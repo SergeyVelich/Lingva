@@ -1,11 +1,11 @@
-﻿using Lingva.MVC.Models.Response;
+﻿using Lingva.MVC.Models.Entities;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.MVC.Models.Group.Index
 {
     [ExcludeFromCodeCoverage]
-    public class PageViewModel
+    public class GroupsListPageViewModel
     {
         public IEnumerable<GroupViewModel> Groups { get; set; }
         public PagenatorViewModel PagenatorViewModel { get; set; }

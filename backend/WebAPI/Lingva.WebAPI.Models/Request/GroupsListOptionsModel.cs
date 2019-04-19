@@ -1,5 +1,4 @@
-﻿using Lingva.WebAPI.Models.Response;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
@@ -7,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Lingva.WebAPI.Models.Request
 {
     [ExcludeFromCodeCoverage]
-    public class OptionsModel
+    public class GroupsListOptionsModel
     {
         [Display(Name = "Title")]
         public virtual string Name { get; set; }
@@ -27,7 +26,7 @@ namespace Lingva.WebAPI.Models.Request
 
         public virtual IEnumerable<GroupViewModel> Groups { get; set; }
 
-        public OptionsModel()
+        public GroupsListOptionsModel()
         {
             SortProperty = "Name";
             SortOrder = "Desc";

@@ -1,4 +1,4 @@
-﻿@model Lingva.MVC.Models.Request.GroupCreateViewModel
+﻿@model Lingva.MVC.Models.Group.GroupPageViewModel
 
 @{
     ViewData["Title"] = "Remove group";
@@ -8,39 +8,42 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Delete" asp-route-id="@Model.Id">
+        <form asp-action="Delete">
             <div class="row">
                 <div class="col-md-4">
                     <dl class="dl-horizontal">
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Name)
-                        </dt>
                         <dd>
-                            @Html.DisplayFor(model => model.Name)
+                            @Html.TextBoxFor(model => model.GroupViewModel.Id, htmlAttributes: new { @class = "form-control", style = "display: none;" })
                         </dd>
                         <dt>
-                            @Html.DisplayNameFor(model => model.Date)
+                            @Html.DisplayNameFor(model => model.GroupViewModel.Name)
                         </dt>
                         <dd>
-                            @Html.DisplayFor(model => model.Date)
+                            @Html.DisplayFor(model => model.GroupViewModel.Name)
                         </dd>
                         <dt>
-                            @Html.DisplayNameFor(model => model.LanguageId)
+                            @Html.DisplayNameFor(model => model.GroupViewModel.Date)
                         </dt>
                         <dd>
-                            @Html.DisplayFor(model => model.LanguageId)
+                            @Html.DisplayFor(model => model.GroupViewModel.Date, "{0:yyyy-MM-dd}")
                         </dd>
                         <dt>
-                            @Html.DisplayNameFor(model => model.Description)
+                            @Html.DisplayNameFor(model => model.GroupViewModel.LanguageId)
                         </dt>
                         <dd>
-                            @Html.DisplayFor(model => model.Description)
+                            @Html.DisplayFor(model => model.GroupViewModel.LanguageId)
                         </dd>
                         <dt>
-                            @Html.DisplayNameFor(model => model.Picture)
+                            @Html.DisplayNameFor(model => model.GroupViewModel.Description)
                         </dt>
                         <dd>
-                            @Html.DisplayFor(model => model.Picture)
+                            @Html.DisplayFor(model => model.GroupViewModel.Description)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.GroupViewModel.Picture)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.GroupViewModel.Picture)
                         </dd>
                     </dl>
                 </div>

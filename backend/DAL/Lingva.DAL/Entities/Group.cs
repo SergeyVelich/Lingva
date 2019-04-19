@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.DAL.Entities
@@ -14,5 +15,6 @@ namespace Lingva.DAL.Entities
         public int LanguageId { get; set; }
 
         public virtual Language Language { get; set; }
+        public virtual ICollection<GroupUser> GroupUsers { get; set; }
     }
 }

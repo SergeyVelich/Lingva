@@ -1,4 +1,5 @@
-﻿using Lingva.DAL.Entities;
+﻿using Lingva.DAL.EF.Options;
+using Lingva.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -10,6 +11,7 @@ namespace Lingva.DAL.EF.Context
     {
         public DbSet<Group> Groups { get; set; }
         public DbSet<Language> Languages { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DictionaryContext(DbContextOptions<DictionaryContext> options)
             : base(options)
@@ -21,10 +23,15 @@ namespace Lingva.DAL.EF.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Group>();
-            modelBuilder.Entity<Language>();
+
+            modelBuilder.ApplyConfiguration(new GroupOptions());
+            modelBuilder.ApplyConfiguration(new UserOptions());
+            modelBuilder.ApplyConfiguration(new GroupUserOptions());
+            modelBuilder.ApplyConfiguration(new LanguageOptions());
 
             Seed(modelBuilder);
+
+            base.OnModelCreating(modelBuilder);
         }
 
         public virtual void Seed(ModelBuilder modelBuilder)

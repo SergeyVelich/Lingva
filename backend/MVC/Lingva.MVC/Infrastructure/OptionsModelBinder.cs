@@ -1,8 +1,6 @@
-﻿using Lingva.BC.Common.Enums;
-using Lingva.MVC.Models.Request;
+﻿using Lingva.MVC.Models.Group.Index;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Lingva.MVC.Infrastructure
@@ -18,18 +16,18 @@ namespace Lingva.MVC.Infrastructure
             }
 
             // get data from query by values privider
-            var filtersPartValues = bindingContext.ValueProvider.GetValue("filters");
-            var sortersPartValues = bindingContext.ValueProvider.GetValue("sorters");
-            var pagePartValue = bindingContext.ValueProvider.GetValue("page");
-            var pageSizePartValue = bindingContext.ValueProvider.GetValue("pagesize");
+            //var filtersPartValues = bindingContext.ValueProvider.GetValue("filters");
+            //var sortersPartValues = bindingContext.ValueProvider.GetValue("sorters");
+            //var pagePartValue = bindingContext.ValueProvider.GetValue("page");
+            //var pageSizePartValue = bindingContext.ValueProvider.GetValue("pagesize");
 
             // get values
-            string filters = filtersPartValues.FirstValue;
-            string sorters = sortersPartValues.FirstValue;
-            string page = pagePartValue.FirstValue;
-            string pageSize = pageSizePartValue.FirstValue;
+            //string filters = filtersPartValues.FirstValue;
+            //string sorters = sortersPartValues.FirstValue;
+            //string page = pagePartValue.FirstValue;
+            //string pageSize = pageSizePartValue.FirstValue;
 
-            OptionsModel model = (OptionsModel)bindingContext.Model ?? new OptionsModel();
+            GroupsListOptionsModel model = (GroupsListOptionsModel)bindingContext.Model ?? new GroupsListOptionsModel();
             //model.Filters = GetFiltersFromQuery(filters);
             //model.Sorters = GetSortersFromQuery(sorters);
             //model.Pagenator = GetPagenatorFromQuery(page, pageSize);

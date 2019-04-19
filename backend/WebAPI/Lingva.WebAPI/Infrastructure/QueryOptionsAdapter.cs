@@ -15,7 +15,7 @@ namespace Lingva.WebAPI.Infrastructure
 
         }
 
-        public virtual IQueryOptions Map(OptionsModel optionsModel)
+        public virtual IQueryOptions Map(GroupsListOptionsModel optionsModel)
         {
             List<QueryFilter> filters = new List<QueryFilter>();
             filters.Add(new QueryFilter("Name", optionsModel.Name, FilterOperation.Contains));

@@ -1,12 +1,11 @@
-﻿using Lingva.BC.Common.Enums;
-using Lingva.MVC.Models.Response;
+﻿using Lingva.MVC.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lingva.MVC.Models.Request
+namespace Lingva.MVC.Models.Group.Index
 {
-    public class OptionsModel
+    public class GroupsListOptionsModel
     {
         [Display(Name = "Title")]
         public string Name { get; set; }
@@ -26,7 +25,7 @@ namespace Lingva.MVC.Models.Request
 
         public IEnumerable<GroupViewModel> Groups { get; set; }
 
-        public OptionsModel()
+        public GroupsListOptionsModel()
         {
             SortProperty = "Name";
             SortOrder = "Desc";

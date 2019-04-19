@@ -1,4 +1,4 @@
-﻿@model Lingva.MVC.Models.Group.Update.PageViewModel
+﻿@model Lingva.MVC.Models.Group.GroupPageViewModel
 
 @{
     ViewData["Title"] = "Edit group";
@@ -8,38 +8,42 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Update" asp-route-id="@Model.GroupViewModel.Id">
+        <form asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <dl class="dl-horizontal">
+                <dd>
+                    @Html.TextBoxFor(model => model.GroupViewModel.Id, htmlAttributes: new { @class = "form-control", style = "display: none;" })
+                </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.GroupViewModel.Name)
                 </dt>
                 <dd>
-                    @Html.TextBox("Name", Model.GroupViewModel.Name, htmlAttributes: new { @class = "form-control" })
+                    @Html.TextBoxFor(model => model.GroupViewModel.Name, htmlAttributes: new { @class = "form-control" })
                 </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.GroupViewModel.Date)
                 </dt>
                 <dd>
-                    @Html.TextBox("Date", Model.GroupViewModel.Date, htmlAttributes: new { @class = "form-control" })
+                    @*@Html.TextBox("Date", Model.GroupViewModel.Date, htmlAttributes: new { @class = "form-control" })*@
+                    @Html.TextBoxFor(model => model.GroupViewModel.Date, "{0:yyyy-MM-dd}", htmlAttributes: new { @class = "form-control", @type = "date" })
                 </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.GroupViewModel.LanguageId)
-                </dt>                
+                </dt>
                 <dd>
-                    @Html.DropDownList("LanguageId", Model.Languages as SelectList, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.GroupViewModel.LanguageId, Model.Languages as SelectList, htmlAttributes: new { @class = "form-control" })
                 </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.GroupViewModel.Description)
                 </dt>
                 <dd>
-                    @Html.TextBox("Description", Model.GroupViewModel.Description, htmlAttributes: new { @class = "form-control" })
+                    @Html.TextBoxFor(model => model.GroupViewModel.Description, htmlAttributes: new { @class = "form-control" })
                 </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.GroupViewModel.Picture)
                 </dt>
                 <dd>
-                    @Html.TextBox("Picture", Model.GroupViewModel.Picture, htmlAttributes: new { @class = "form-control" })
+                    @Html.TextBoxFor(model => model.GroupViewModel.Picture, htmlAttributes: new { @class = "form-control" })
                 </dd>
             </dl>
             <div class="form-group">
