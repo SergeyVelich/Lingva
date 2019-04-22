@@ -11,21 +11,21 @@ namespace Lingva.BC.Services
 {
     public class UserService : IUserService
     {
-        private readonly IRepository _repository;
+        private readonly IUserRepository _repository;
         private readonly IDataAdapter _dataAdapter;
            
-        public UserService(IRepository repository, IDataAdapter dataAdapter)
+        public UserService(IUserRepository repository, IDataAdapter dataAdapter)
         {
             _repository = repository;
             _dataAdapter = dataAdapter;
         }
 
-        public async Task<IEnumerable<UserDto>> GetListAsync(IQueryOptions queryOptions)
+        public async Task<IEnumerable<UserDto>> GetListByGroupAsync(int id)
         {
-            IEnumerable<User> users = await _repository.GetListAsync<User>(queryOptions);
+            IEnumerable<User> users = await _repository.GetListByGroupAsync(id);
 
             return _dataAdapter.Map<IEnumerable<UserDto>>(users);
-        }
+        }      
     }
 }
 

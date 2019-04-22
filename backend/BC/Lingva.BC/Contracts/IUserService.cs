@@ -7,6 +7,6 @@ namespace Lingva.BC.Contracts
 {
     public interface IUserService
     {
-        Task<IEnumerable<UserDto>> GetListAsync(IQueryOptions queryOptions);
+        Task<IEnumerable<UserDto>> GetListByGroupAsync(int id);
     }
 }

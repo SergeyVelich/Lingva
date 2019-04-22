@@ -8,4 +8,8 @@
     <PackageReference Include="MailKit" Version="2.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\DAL\Lingva.DAL\Lingva.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

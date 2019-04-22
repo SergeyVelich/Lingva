@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace SenderService.Email.Contracts
 {
-    public interface ITemplateSource
+    public interface ISendingOptionsSource
     {
-        Task<EmailTemplate> GetTemplateAsync(int id);
+        Task<EmailSendingOption> GetSendingOptionsAsync(int id);
     }
 }

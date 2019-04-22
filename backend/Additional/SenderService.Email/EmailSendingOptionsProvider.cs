@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace SenderService.Email
 {
-    public class EmailTemplateProvider : IEmailTemplateProvider
+    public class EmailSendingOptionsProvider : IEmailSendingOptionsProvider
     {
-        public virtual async Task<EmailTemplate> GetTemplateAsync(ITemplateSource templateSource, int id)
+        public virtual async Task<EmailSendingOption> GetSendingOptionsAsync(ISendingOptionsSource sendingOptionsSource, int id)
         {
-            return await templateSource.GetTemplateAsync(id);
+            return await sendingOptionsSource.GetSendingOptionsAsync(id);
         }
 
-        public virtual async Task<EmailTemplate> GetTemplateAsync(string pathDirectory, string nameTemplate)
+        public virtual async Task<EmailSendingOption> GetSendingOptionsAsync(string pathDirectory, string nameTemplate)
         {
             string template;
 
@@ -23,7 +23,7 @@ namespace SenderService.Email
                 template = await reader.ReadToEndAsync();
             }
 
-            return null;
+            return null;//??
         }
     }
 }

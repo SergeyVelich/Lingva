@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Additional\SenderService.Email\SenderService.Email.csproj" />
     <ProjectReference Include="..\..\DAL\Lingva.DAL\Lingva.DAL.csproj" />
     <ProjectReference Include="..\Lingva.Common\Lingva.Common.csproj" />
   </ItemGroup>

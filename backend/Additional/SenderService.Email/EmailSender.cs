@@ -1,4 +1,5 @@
-﻿using MailKit.Net.Smtp;
+﻿using Lingva.DAL.Entities;
+using MailKit.Net.Smtp;
 using MimeKit;
 using SenderService.Email.Contracts;
 using System;
@@ -9,7 +10,22 @@ namespace SenderService.Email
 {
     public class EmailSender : IEmailSender
     {
-        public virtual async Task<MimeMessage> CreateAsync(string subject, string htmlBody, string[] recepients, object[] attachments)
+        private readonly IEmailTemplateProvider _templateProvider;
+        private readonly IEmailSendingOptionsProvider _sendingOptionsProvider;
+
+        public string Host { get; set; }
+        public int Port { get; set; }
+        public bool UseSsl { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+
+        public EmailSender(IEmailTemplateProvider templateProvider, IEmailSendingOptionsProvider sendingOptionsProvider)
+        {
+            _templateProvider = templateProvider;
+            _sendingOptionsProvider = sendingOptionsProvider;
+        }
+
+        public virtual MimeMessage Create(string subject, string htmlBody, IList<string> recepients)
         {
             MimeMessage emailMessage = new MimeMessage();
 
@@ -17,7 +33,7 @@ namespace SenderService.Email
             emailMessage.Date = DateTime.UtcNow;
             foreach (string recepient in recepients)
             {
-                emailMessage.To.Add(new MailboxAddress("", recepient));
+                emailMessage.To.Add(new MailboxAddress(recepient, recepient));
             }
             
             emailMessage.Subject = subject;
@@ -32,16 +48,48 @@ namespace SenderService.Email
         {
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync("smtp.gmail.com", 587, false);
-                await client.AuthenticateAsync("faweradf@gmail.com", "Q!w2e3r4");
+                await client.ConnectAsync(Host, Port, UseSsl);
+                await client.AuthenticateAsync(UserName, Password);
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
             }
         }
-        public virtual async Task CreateSendAsync(string title, string htmlBody, string[] recepients, object[] attachments)
+        public virtual async Task CreateSendAsync(string subject, string htmlBody, IList<string> recepients)
         {
-            MimeMessage emailMessage = await CreateAsync(title, htmlBody, recepients, attachments);
+
+            MimeMessage emailMessage = Create(subject, htmlBody, recepients);
             await SendAsync(emailMessage);
+        }
+
+        public virtual async Task<EmailTemplate> GetTemplateAsync(ITemplateSource templateSource, int id)
+        {
+            return await _templateProvider.GetTemplateAsync(templateSource, id);
+        }
+
+        public virtual async Task<EmailTemplate> GetTemplateAsync(string pathDirectory, string nameTemplate)
+        {
+            return await _templateProvider.GetTemplateAsync(pathDirectory, nameTemplate);
+        }
+
+        public virtual async Task SetSendingOptionsAsync(ISendingOptionsSource sendingOptionsSource, int id)
+        {
+            EmailSendingOption sendingOptions = await _sendingOptionsProvider.GetSendingOptionsAsync(sendingOptionsSource, id);
+            SetSendingOptions(sendingOptions);
+        }
+
+        public virtual async Task SetSendingOptionsAsync(string pathDirectory, string nameTemplate)
+        {
+            EmailSendingOption sendingOptions = await _sendingOptionsProvider.GetSendingOptionsAsync(pathDirectory, nameTemplate);
+            SetSendingOptions(sendingOptions);
+        }
+
+        public virtual void SetSendingOptions(EmailSendingOption sendingOptions)
+        {
+            Host = sendingOptions.Host;
+            Port = sendingOptions.Port;
+            UseSsl = sendingOptions.UseSsl;
+            UserName = sendingOptions.UserName;
+            Password = sendingOptions.Password;
         }
     }
 }

@@ -1,13 +1,18 @@
-﻿using MimeKit;
+﻿using Lingva.DAL.Entities;
+using MimeKit;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SenderService.Email.Contracts
 {
-    public interface IEmailSender
+    public interface IEmailSender : IEmailTemplateProvider
     {
-        Task<MimeMessage> CreateAsync(string title, string htmlBody, string[] recepients, object[] attachments);
+        MimeMessage Create(string title, string htmlBody, IList<string> recepients);
         Task SendAsync(MimeMessage emailMessage);
-        Task CreateSendAsync(string subject, string htmlBody, IList<string> recepients, object[] attachments = null);
+        Task CreateSendAsync(string subject, string htmlBody, IList<string> recepients);
+
+        Task SetSendingOptionsAsync(ISendingOptionsSource templateSource, int id);
+        Task SetSendingOptionsAsync(string path, string nameTemplate);
+        void SetSendingOptions(EmailSendingOption sendingOptions);
     }
 }
