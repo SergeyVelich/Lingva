@@ -55,9 +55,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Additional", "Additional", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sender", "Sender", "{72FC2DF9-E09E-433D-9F4B-F8A5176E5605}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SenderService.Email", "Additional\SenderService.Email\SenderService.Email.csproj", "{B1425401-C2CB-431B-A91B-DF2131852725}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SenderService.Email", "Additional\SenderService.Email\SenderService.Email.csproj", "{B1425401-C2CB-431B-A91B-DF2131852725}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lingva.Background", "BackgroundServer\Lingva.Background.csproj", "{5DF391B1-D8AE-4FD2-A1BC-321E26FED340}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.Background", "BackgroundServer\Lingva.Background.csproj", "{5DF391B1-D8AE-4FD2-A1BC-321E26FED340}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SenderService.Email.EF", "Additional\SenderService\SenderService.Email.EF\SenderService.Email.EF.csproj", "{DD554FEA-DDF3-48F3-A7B4-43A00A2A1A4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,6 +155,10 @@ Global
 		{5DF391B1-D8AE-4FD2-A1BC-321E26FED340}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DF391B1-D8AE-4FD2-A1BC-321E26FED340}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DF391B1-D8AE-4FD2-A1BC-321E26FED340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD554FEA-DDF3-48F3-A7B4-43A00A2A1A4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD554FEA-DDF3-48F3-A7B4-43A00A2A1A4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD554FEA-DDF3-48F3-A7B4-43A00A2A1A4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD554FEA-DDF3-48F3-A7B4-43A00A2A1A4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -179,6 +185,7 @@ Global
 		{129D29BE-AF60-481A-8BF3-D21D34D84619} = {C2F66234-532F-4891-ACF1-043B6ABCF7D7}
 		{72FC2DF9-E09E-433D-9F4B-F8A5176E5605} = {F672D062-C6F8-4730-9038-AB2EEC3E681E}
 		{B1425401-C2CB-431B-A91B-DF2131852725} = {72FC2DF9-E09E-433D-9F4B-F8A5176E5605}
+		{DD554FEA-DDF3-48F3-A7B4-43A00A2A1A4F} = {72FC2DF9-E09E-433D-9F4B-F8A5176E5605}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {52773F80-9AFD-49EA-9A94-EBC8FBCA9951}

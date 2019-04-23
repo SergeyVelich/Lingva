@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.DAL.Dapper
 {
-    public class DapperSet<T> where T : BaseBE, new()
+    public class DapperSet<T> where T : class, new()
     {
         private readonly DapperContext _dbContext;
         private string _tableName;
@@ -55,7 +55,7 @@ namespace Lingva.DAL.Dapper
         }
         public async Task RemoveAsync(T entity, IDbTransaction transaction = null)
         {
-            await _dbContext.Connection.ExecuteAsync(SqlRemove(), new { entity.Id }, transaction: transaction);
+            await _dbContext.Connection.ExecuteAsync(SqlRemove(), new { (entity as BaseBE).Id }, transaction: transaction);
         }
 
         protected string SqlSelectAll()

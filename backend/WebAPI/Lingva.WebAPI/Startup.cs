@@ -1,5 +1,6 @@
 ﻿using Lingva.BC.Contracts;
 using Lingva.BC.Services;
+using Lingva.DAL.EF.Context;
 using Lingva.DAL.EF.Repositories;
 using Lingva.DAL.Repositories;
 using Lingva.WebAPI.Extensions;
@@ -7,10 +8,14 @@ using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SenderService.Email;
 using SenderService.Email.Contracts;
+using SenderService.Email.EF;
+using SenderService.Email.EF.Providers;
+using SenderService.Email.EF.Repositories;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.WebAPI
@@ -37,16 +42,16 @@ namespace Lingva.WebAPI
            
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<IInfoService, InfoService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<QueryOptionsAdapter>();
 
-            services.AddScoped<IEmailSender, EmailSender>();
-            services.AddScoped<IEmailSendingOptionsProvider, EmailSendingOptionsProvider>();
-            services.AddScoped<IEmailTemplateProvider, EmailTemplateProvider>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ISendingOptionsSource, EmailService>();
-            services.AddScoped<ITemplateSource, EmailService>();
+            services.AddScoped<EFEmailSender>();
+            services.AddScoped<IEmailSenderRepository, EmailEFRepository>();
+            services.AddScoped<DbContext, DictionaryContext>();
+            services.AddScoped<IEmailSendingOptionsProvider, EFSendingOptionsProvider>();
+            services.AddScoped<IEmailTemplateProvider, EFTemplateProvider>();
+
 
             services.AddMvc(options =>
             {

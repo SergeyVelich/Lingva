@@ -1,7 +1,7 @@
-﻿using Lingva.DAL.Entities;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using MimeKit;
 using SenderService.Email.Contracts;
+using SenderService.Email.EF.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,8 +10,8 @@ namespace SenderService.Email
 {
     public class EmailSender : IEmailSender
     {
-        private readonly IEmailTemplateProvider _templateProvider;
-        private readonly IEmailSendingOptionsProvider _sendingOptionsProvider;
+        protected readonly IEmailTemplateProvider _templateProvider;
+        protected readonly IEmailSendingOptionsProvider _sendingOptionsProvider;
 
         public string Host { get; set; }
         public int Port { get; set; }
@@ -56,31 +56,8 @@ namespace SenderService.Email
         }
         public virtual async Task CreateSendAsync(string subject, string htmlBody, IList<string> recepients)
         {
-
             MimeMessage emailMessage = Create(subject, htmlBody, recepients);
             await SendAsync(emailMessage);
-        }
-
-        public virtual async Task<EmailTemplate> GetTemplateAsync(ITemplateSource templateSource, int id)
-        {
-            return await _templateProvider.GetTemplateAsync(templateSource, id);
-        }
-
-        public virtual async Task<EmailTemplate> GetTemplateAsync(string pathDirectory, string nameTemplate)
-        {
-            return await _templateProvider.GetTemplateAsync(pathDirectory, nameTemplate);
-        }
-
-        public virtual async Task SetSendingOptionsAsync(ISendingOptionsSource sendingOptionsSource, int id)
-        {
-            EmailSendingOption sendingOptions = await _sendingOptionsProvider.GetSendingOptionsAsync(sendingOptionsSource, id);
-            SetSendingOptions(sendingOptions);
-        }
-
-        public virtual async Task SetSendingOptionsAsync(string pathDirectory, string nameTemplate)
-        {
-            EmailSendingOption sendingOptions = await _sendingOptionsProvider.GetSendingOptionsAsync(pathDirectory, nameTemplate);
-            SetSendingOptions(sendingOptions);
         }
 
         public virtual void SetSendingOptions(EmailSendingOption sendingOptions)

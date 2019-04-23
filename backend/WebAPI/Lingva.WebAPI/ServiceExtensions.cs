@@ -5,6 +5,7 @@ using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
 using Lingva.DAL.Dapper;
 using Lingva.DAL.EF.Context;
+using Lingva.DAL.EF.Repositories;
 using Lingva.DAL.Repositories;
 using Lingva.WebAPI.Mapper;
 using Microsoft.AspNetCore.Builder;
@@ -75,7 +76,7 @@ namespace Lingva.WebAPI.Extensions
         public static void ConfigureAutoMapper(this IServiceCollection services)
         {
             services.AddScoped<IDataAdapter, DataAdapter>();
-            services.AddSingleton<IMapper>(AppMapperConfig.GetMapper());
+            services.AddSingleton(AppMapperConfig.GetMapper());
         }
 
         public static void ConfigureSwagger(this IServiceCollection services)
@@ -110,7 +111,8 @@ namespace Lingva.WebAPI.Extensions
 
         public static void ConfigureEFRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IRepository, DAL.EF.Repositories.Repository>();
+            services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         public static void ConfigureDapperRepositories(this IServiceCollection services)

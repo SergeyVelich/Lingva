@@ -2,12 +2,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace Lingva.DAL.Entities
+namespace SenderService.Email.EF.Entities
 {
     [ExcludeFromCodeCoverage]
-    public class EmailTemplate : BaseBE
+    public class EmailTemplate
     {
-       
+        public int Id { get; set; }
         public string Text { get; set; }
         public string ParametersString { get; set; }
         public string[] Parameters

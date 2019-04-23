@@ -1,6 +1,7 @@
 ﻿using Lingva.DAL.EF.Options;
 using Lingva.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using SenderService.Email.EF.Extensions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
@@ -12,8 +13,6 @@ namespace Lingva.DAL.EF.Context
         public DbSet<Group> Groups { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<EmailTemplate> EmailTemplates { get; set; }
-        public DbSet<EmailSendingOption> EmailSendingOptions { get; set; }
 
         public DictionaryContext(DbContextOptions<DictionaryContext> options)
             : base(options)
@@ -30,10 +29,10 @@ namespace Lingva.DAL.EF.Context
             modelBuilder.ApplyConfiguration(new UserOptions());
             modelBuilder.ApplyConfiguration(new GroupUserOptions());
             modelBuilder.ApplyConfiguration(new LanguageOptions());
-
-            modelBuilder.Entity<EmailTemplate>().Ignore(c => c.Parameters);
-
+         
             Seed(modelBuilder);
+
+            modelBuilder.AddEmailSender();
 
             base.OnModelCreating(modelBuilder);
         }
@@ -56,12 +55,6 @@ namespace Lingva.DAL.EF.Context
             modelBuilder.Entity<GroupUser>().HasData(
                 new { Id = 1, CreateDate = DateTime.Now, ModifyDate = DateTime.Now, GroupId = 1, UserId = 1 },
                 new { Id = 2, CreateDate = DateTime.Now, ModifyDate = DateTime.Now, GroupId = 1, UserId = 2 });
-
-            modelBuilder.Entity<EmailTemplate>().HasData(
-                new { Id = 1, CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Text = "You will have meeting {{GroupName}} at {{GroupDate}}", ParametersString = "GroupName; GroupDate" });
-
-            modelBuilder.Entity<EmailSendingOption>().HasData(
-                new { Id = 1, CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Host = "smtp.gmail.com", Port = 587, UseSsl = false, UserName = "worksoftserve@gmail.com", Password = "worksoftserve_90" });
         }
     }
 }

@@ -1,12 +1,9 @@
 ﻿using Lingva.BC.Contracts;
 using Lingva.BC.Dto;
-using Lingva.DAL.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QueryBuilder.Enums;
-using QueryBuilder.QueryOptions;
-using SenderService.Email;
-using SenderService.Email.Contracts;
+using SenderService.Email.EF;
+using SenderService.Email.EF.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,18 +14,14 @@ namespace Lingva.WebAPI.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        private readonly IEmailSender _emailSender;
-        private readonly ITemplateSource _templateSource;
-        private readonly ISendingOptionsSource _sendingOptionsSource;
+        private readonly EFEmailSender _emailSender;
         private readonly IGroupService _groupService;
         private readonly IUserService _userService;
         
 
-        public HomeController(IEmailSender emailSender, ITemplateSource templateSource, ISendingOptionsSource sendingOptionsSource, IGroupService groupService, IUserService userService)
+        public HomeController(EFEmailSender emailSender, IGroupService groupService, IUserService userService)
         {
             _emailSender = emailSender;
-            _templateSource = templateSource;
-            _sendingOptionsSource = sendingOptionsSource;
             _groupService = groupService;
             _userService = userService;
         }
@@ -40,19 +33,15 @@ namespace Lingva.WebAPI.Controllers
             int id = 1;
             string subject = "Remember!";
 
-            EmailTemplate emailTemplate = await _emailSender.GetTemplateAsync(_templateSource, id);
-            await _emailSender.SetSendingOptionsAsync(_sendingOptionsSource, id);
-
-            string body = emailTemplate.Text;
-            string[] parameters = emailTemplate.Parameters;
+            EmailTemplate template = await _emailSender.GetTemplateAsync(id);
+            string body = template.Text;
+            await _emailSender.SetSendingOptionsAsync(id);
 
             var groupsDto = await _groupService.GetListAsync();
             foreach (var groupDto in groupsDto)
             {
-                foreach (string paramName in parameters)
-                {
-                    body = body.Replace("{{" + paramName + "}}", "dsfdfgdgf");
-                }
+                body = body.Replace("{{GroupName}}", groupDto.Name);
+                body = body.Replace("{{GroupDate}}", groupDto.Date.ToString());
 
                 List<string> recepients = new List<string>();
                 var users = await _userService.GetListByGroupAsync(groupDto.Id);

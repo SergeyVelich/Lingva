@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.DAL.Entities
+namespace SenderService.Email.EF.Entities
 {
     [ExcludeFromCodeCoverage]
-    public class EmailSendingOption : BaseBE
+    public class EmailSendingOption
     {
+        public int Id { get; set; }
         public string Host { get; set; }
         public int Port { get; set; }
         public bool UseSsl { get; set; }

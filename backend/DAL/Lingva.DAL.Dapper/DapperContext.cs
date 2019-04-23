@@ -1,5 +1,4 @@
 ﻿using Lingva.Common.Extensions;
-using Lingva.DAL.Entities;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -47,7 +46,7 @@ namespace Lingva.DAL.Dapper
             GC.SuppressFinalize(this);
         }
 
-        public DapperSet<T> Set<T>() where T : BaseBE, new()
+        public DapperSet<T> Set<T>() where T : class, new()
         {
             DapperSet<T> set = null;
 
