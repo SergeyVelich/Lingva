@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SenderService.Email.EF.Providers
 {
-    public class EFSendingOptionsProvider : IEmailSendingOptionsProvider
+    public class EFSendingOptionsProvider : IEFSendingOptionsProvider
     {
         private readonly IEmailSenderRepository _repository;
 
