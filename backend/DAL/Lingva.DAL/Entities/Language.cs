@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.DAL.Entities
 {
-    public class Language
+    [ExcludeFromCodeCoverage]
+    public class Language : BaseBE
     {
-        [Key]
-        public int Id { get; set; }
         public string Name { get; set; }
         public virtual ICollection<Group> Groups { get; set; }
 

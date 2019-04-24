@@ -3,11 +3,10 @@ using IdentityServer4.AccessTokenValidation;
 using Lingva.BC;
 using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
-using Lingva.DAL.Context;
+using Lingva.DAL.Dapper;
+using Lingva.DAL.EF.Context;
+using Lingva.DAL.EF.Repositories;
 using Lingva.DAL.Repositories;
-using Lingva.DAL.Repositories.Contracts;
-using Lingva.DAL.UnitsOfWork;
-using Lingva.DAL.UnitsOfWork.Contracts;
 using Lingva.WebAPI.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +33,18 @@ namespace Lingva.WebAPI.Extensions
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
+        }
+
+        public static void ConfigureEF(this IServiceCollection services, IConfiguration config)
+        {
+            services.ConfigureSqlContext(config);
+            services.ConfigureEFRepositories();
+        }
+
+        public static void ConfigureDapper(this IServiceCollection services)
+        {
+            services.AddScoped<DapperContext>();           
+            services.ConfigureDapperRepositories();
         }
 
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
@@ -65,7 +76,7 @@ namespace Lingva.WebAPI.Extensions
         public static void ConfigureAutoMapper(this IServiceCollection services)
         {
             services.AddScoped<IDataAdapter, DataAdapter>();
-            services.AddSingleton<IMapper>(AppMapperConfig.GetMapper());
+            services.AddSingleton(AppMapperConfig.GetMapper());
         }
 
         public static void ConfigureSwagger(this IServiceCollection services)
@@ -98,18 +109,15 @@ namespace Lingva.WebAPI.Extensions
             });
         }
 
-        public static void ConfigureUnitsOfWork(this IServiceCollection services)
+        public static void ConfigureEFRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWorkGroup, UnitOfWorkGroup>();
-            services.AddScoped<IUnitOfWorkInfo, UnitOfWorkInfo>();
-            services.AddScoped<IUnitOfWorkUser, UnitOfWorkUser>();
+            services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
-        public static void ConfigureRepositories(this IServiceCollection services)
+        public static void ConfigureDapperRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IRepositoryGroup, RepositoryGroup>();
-            services.AddScoped<IRepositoryLanguage, RepositoryLanguage>();
-            services.AddScoped<IRepositoryUser, RepositoryUser>();
+            services.AddScoped<IRepository, DAL.Dapper.Repositories.Repository>();
         }
     }
 }

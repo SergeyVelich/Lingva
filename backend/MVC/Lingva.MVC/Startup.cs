@@ -3,6 +3,7 @@ using Lingva.MVC.Filters;
 using Lingva.MVC.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -32,7 +33,21 @@ namespace Lingva.MVC
             {
                 options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
                 options.Filters.Add(typeof(GlobalExceptionFilter));
+                options.CacheProfiles.Add("NoCashing",
+                    new CacheProfile()
+                    {
+                        NoStore = true
+                    });
+                options.CacheProfiles.Add("Default30",
+                    new CacheProfile()
+                    {
+                        NoStore = false,
+                        Location = ResponseCacheLocation.Client,
+                        Duration = 30
+                    });
             });
+
+            services.AddScoped<GlobalExceptionFilter>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -44,7 +59,7 @@ namespace Lingva.MVC
             else
             {
                 app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");//??
                 app.UseHsts();
             }
 

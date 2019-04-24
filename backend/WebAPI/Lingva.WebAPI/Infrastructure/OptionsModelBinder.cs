@@ -16,18 +16,18 @@ namespace Lingva.WebAPI.Infrastructure
             }
 
             // get data from query by values privider
-            var filtersPartValues = bindingContext.ValueProvider.GetValue("filters");
-            var sortersPartValues = bindingContext.ValueProvider.GetValue("sorters");
-            var pagePartValue = bindingContext.ValueProvider.GetValue("page");
-            var pageSizePartValue = bindingContext.ValueProvider.GetValue("pagesize");
+            //var filtersPartValues = bindingContext.ValueProvider.GetValue("filters");
+            //var sortersPartValues = bindingContext.ValueProvider.GetValue("sorters");
+            //var pagePartValue = bindingContext.ValueProvider.GetValue("page");
+            //var pageSizePartValue = bindingContext.ValueProvider.GetValue("pagesize");
 
             // get values
-            string filters = filtersPartValues.FirstValue;
-            string sorters = sortersPartValues.FirstValue;
-            string page = pagePartValue.FirstValue;
-            string pageSize = pageSizePartValue.FirstValue;
+            //string filters = filtersPartValues.FirstValue;
+            //string sorters = sortersPartValues.FirstValue;
+            //string page = pagePartValue.FirstValue;
+            //string pageSize = pageSizePartValue.FirstValue;
 
-            OptionsModel options = new OptionsModel();
+            GroupsListOptionsModel options = new GroupsListOptionsModel();
             //options.Filters = GetFiltersFromQuery(filters);
             //options.Sorters = GetSortersFromQuery(sorters);
             //options.Pagenator = GetPagenatorFromQuery(page, pageSize);

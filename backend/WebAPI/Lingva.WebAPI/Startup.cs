@@ -1,10 +1,12 @@
 ﻿using Lingva.BC.Contracts;
 using Lingva.BC.Services;
+using Lingva.DAL.EF.Context;
 using Lingva.WebAPI.Extensions;
 using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
@@ -24,19 +26,18 @@ namespace Lingva.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
-            services.ConfigureSqlContext(Configuration);
+            services.ConfigureEF(Configuration);
+            //services.ConfigureDapper(Configuration);
             services.ConfigureOptions(Configuration);
             services.ConfigureAuthentication();
             services.ConfigureAutoMapper();
             services.ConfigureSwagger();
-            services.ConfigureUnitsOfWork();
-            services.ConfigureRepositories();
            
-            services.AddTransient<IGroupService, GroupService>();
-            services.AddTransient<IInfoService, InfoService>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<IInfoService, InfoService>();
+            services.AddScoped<IUserService, UserService>();
 
-            services.AddTransient<QueryOptionsAdapter>();
+            services.AddScoped<QueryOptionsAdapter>();
 
             services.AddMvc(options =>
             {

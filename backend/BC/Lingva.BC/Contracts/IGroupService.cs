@@ -1,5 +1,5 @@
-﻿using Lingva.BC.DTO;
-using QueryBuilder;
+﻿using Lingva.BC.Dto;
+using QueryBuilder.QueryOptions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,14 +7,15 @@ namespace Lingva.BC.Contracts
 {
     public interface IGroupService
     {
-        Task<IEnumerable<GroupDTO>> GetListAsync(QueryOptionsDTO optionsDTO);
+        Task<IEnumerable<GroupDto>> GetListAsync();
+        Task<IEnumerable<GroupDto>> GetListAsync(IQueryOptions queryOptions);
 
-        Task<GroupDTO> GetByIdAsync(int id);
+        Task<GroupDto> GetByIdAsync(int id);
 
-        Task<GroupDTO> AddAsync(GroupDTO groupDTO);
+        Task<GroupDto> AddAsync(GroupDto groupDto);
 
-        Task<GroupDTO> UpdateAsync(int id, GroupDTO groupDTO);
+        Task<GroupDto> UpdateAsync(GroupDto groupDto);
 
-        Task DeleteAsync(GroupDTO groupDTO);
+        Task DeleteAsync(GroupDto groupDto);
     }
 }

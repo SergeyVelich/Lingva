@@ -22,14 +22,14 @@
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.7.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.1" />
-    <PackageReference Include="Serilog" Version="2.8.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\BC\Lingva.BC\Lingva.BC.csproj" />
     <ProjectReference Include="..\..\BC\Lingva.Common\Lingva.Common.csproj" />
-    <ProjectReference Include="..\..\QueryBuilder\QueryBuilder\QueryBuilder.csproj" />
+    <ProjectReference Include="..\..\DAL\Lingva.DAL.Dapper\Lingva.DAL.Dapper.csproj" />
+    <ProjectReference Include="..\..\DAL\Lingva.DAL.EF\Lingva.DAL.EF.csproj" />
     <ProjectReference Include="..\Lingva.WebAPI.Mapper\Lingva.WebAPI.Mapper.csproj" />
   </ItemGroup>
 

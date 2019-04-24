@@ -1,5 +1,5 @@
 ﻿using Lingva.BC.Contracts;
-using Lingva.BC.DTO;
+using Lingva.BC.Dto;
 using Lingva.Common.Mapping;
 using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Models.Request;
@@ -31,9 +31,9 @@ namespace Lingva.WebAPI.Controllers
 
         // GET: api/group
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] OptionsModel options)
+        public async Task<IActionResult> Index([FromQuery] GroupsListOptionsModel groupsListOptionsModel)
         {
-            IEnumerable<GroupDTO> groupsDto = await _groupService.GetListAsync(_queryOptionsAdapter.Map(options));
+            IEnumerable<GroupDto> groupsDto = await _groupService.GetListAsync(_queryOptionsAdapter.Map(groupsListOptionsModel));
 
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groupsDto));
         }
@@ -42,12 +42,7 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet("get")]
         public async Task<IActionResult> Get([FromQuery] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            GroupDTO groupDto = await _groupService.GetByIdAsync(id);
+            GroupDto groupDto = await _groupService.GetByIdAsync(id);
 
             if (groupDto == null)
             {
@@ -75,30 +70,31 @@ namespace Lingva.WebAPI.Controllers
         ///
         /// </remarks>
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] GroupCreateViewModel groupCreateViewModel)
+        public async Task<IActionResult> Create([FromBody] GroupViewModel groupViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            GroupDTO groupDto = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
+            GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
             await _groupService.AddAsync(groupDto);
 
-            return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));
+
+            return CreatedAtAction("Get", new { id = groupDto.Id }, _dataAdapter.Map<GroupViewModel>(groupDto));
         }
 
         // PUT: api/group/update
         [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody] GroupCreateViewModel groupCreateViewModel)
+        public async Task<IActionResult> Update([FromBody] GroupViewModel groupViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            GroupDTO groupDto = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
-            await _groupService.UpdateAsync(groupDto.Id, groupDto);
+            GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
+            await _groupService.UpdateAsync(groupDto);
 
             return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));
         }
@@ -108,14 +104,14 @@ namespace Lingva.WebAPI.Controllers
         /// Deletes a specific Group.
         /// </summary>
         [HttpDelete("delete")]
-        public async Task<IActionResult> Delete([FromBody] GroupCreateViewModel groupCreateViewModel)
+        public async Task<IActionResult> Delete([FromBody] GroupViewModel groupViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            GroupDTO groupDto = _dataAdapter.Map<GroupDTO>(groupCreateViewModel);
+            GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
             await _groupService.DeleteAsync(groupDto);
 
             return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));

@@ -1,8 +1,8 @@
 ﻿using Lingva.BC.Contracts;
-using Lingva.BC.DTO;
+using Lingva.BC.Dto;
 using Lingva.Common.Mapping;
 using Lingva.DAL.Entities;
-using Lingva.DAL.UnitsOfWork.Contracts;
+using Lingva.DAL.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,19 +10,19 @@ namespace Lingva.BC.Services
 {
     public class InfoService : IInfoService
     {
-        private readonly IUnitOfWorkInfo _unitOfWork;
+        private readonly IRepository _repository;
         private readonly IDataAdapter _dataAdapter;
            
-        public InfoService(IUnitOfWorkInfo unitOfWork, IDataAdapter dataAdapter)
+        public InfoService(IRepository repository, IDataAdapter dataAdapter)
         {
-            _unitOfWork = unitOfWork;
+            _repository = repository;
             _dataAdapter = dataAdapter;
         }
 
-        public async Task<IEnumerable<LanguageDTO>> GetLanguagesListAsync()
+        public async Task<IEnumerable<LanguageDto>> GetLanguagesListAsync()
         {
-            IEnumerable<Language> languages = await _unitOfWork.Languages.GetListAsync();
-            return _dataAdapter.Map<IEnumerable<LanguageDTO>>(languages);
+            IEnumerable<Language> languages = await _repository.GetListAsync<Language>();
+            return _dataAdapter.Map<IEnumerable<LanguageDto>>(languages);
         }
     }
 }

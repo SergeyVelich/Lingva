@@ -1,4 +1,4 @@
-﻿using Lingva.MVC.Models.Response;
+﻿using Lingva.MVC.Models.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
