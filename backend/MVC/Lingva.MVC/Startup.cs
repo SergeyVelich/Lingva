@@ -4,6 +4,7 @@ using Lingva.MVC.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -62,6 +63,11 @@ namespace Lingva.MVC
                 //app.UseExceptionHandler("/Home/Error");//??
                 app.UseHsts();
             }
+
+            var options = new RewriteOptions()
+                .AddRedirect("(.*)/$", "$1")
+                .AddRedirect("[h,H]ome[/]?$", "home/index");
+            app.UseRewriter(options);
 
             app.UseCors("CorsPolicy");
             app.UseStaticFiles();

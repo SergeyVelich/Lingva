@@ -6,6 +6,7 @@ using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,8 +52,15 @@ namespace Lingva.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseMiddleware<ExceptionHandlerMiddleware>();
+            }           
 
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
+            var options = new RewriteOptions()
+                .AddRedirect("(.*)/$", "$1")
+                .AddRedirect("[h,H]ome[/]?$", "home/index"); 
+            app.UseRewriter(options);
 
             app.UseCors("CorsPolicy");
 
