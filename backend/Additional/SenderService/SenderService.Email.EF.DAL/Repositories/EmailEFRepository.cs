@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SenderService.Email.Contracts;
+using SenderService.Email.EF.DAL.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SenderService.Email.EF.Repositories
+namespace SenderService.Email.EF.DAL.Repositories
 {
     public class EmailEFRepository : IEmailSenderRepository, IDisposable
     {

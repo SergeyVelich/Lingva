@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace SenderService.Email.EF.Entities
+namespace SenderService.Email.EF.DAL.Entities
 {
     [ExcludeFromCodeCoverage]
     public class EmailSendingOption

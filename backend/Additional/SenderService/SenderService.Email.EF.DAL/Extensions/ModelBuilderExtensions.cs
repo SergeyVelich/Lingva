@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SenderService.Email.EF.Entities;
+using SenderService.Email.EF.DAL.Entities;
 using System;
 
-namespace SenderService.Email.EF.Extensions
+namespace SenderService.Email.EF.DAL.Extensions
 {
     public static class ModelBuilderExtensions
     {

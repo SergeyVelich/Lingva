@@ -1,7 +1,7 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
 using SenderService.Email.Contracts;
-using SenderService.Email.EF.Entities;
+using SenderService.Email.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -60,7 +60,7 @@ namespace SenderService.Email
             await SendAsync(emailMessage);
         }
 
-        public virtual void SetSendingOptions(EmailSendingOption sendingOptions)
+        public virtual void SetSendingOptions(SendingOption sendingOptions)
         {
             Host = sendingOptions.Host;
             Port = sendingOptions.Port;

@@ -41,14 +41,13 @@ namespace Lingva.Background
             string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
 
             services.AddDbContext<DictionaryContext>(options =>
-                options.UseSqlServer(connectionStringValue), 
-                ServiceLifetime.Transient);
+                options.UseSqlServer(connectionStringValue));
         }
 
         public static void ConfigureEFRepositories(this IServiceCollection services)
         {
-            services.AddTransient<IRepository, Repository>();
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }

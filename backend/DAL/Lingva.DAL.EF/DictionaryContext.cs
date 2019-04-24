@@ -1,7 +1,7 @@
 ﻿using Lingva.DAL.EF.Options;
 using Lingva.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
-using SenderService.Email.EF.Extensions;
+using SenderService.Email.EF.DAL.Extensions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 

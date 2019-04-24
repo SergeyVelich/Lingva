@@ -69,6 +69,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.Background.Mapper", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Email", "Email", "{3E229970-575D-40DC-BAB5-E9983CA41F11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SenderService.Email.EF.DAL", "Additional\SenderService\SenderService.Email.EF.DAL\SenderService.Email.EF.DAL.csproj", "{F5B998DE-FA49-481B-B8DF-B7DEAC0D2BF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -175,6 +177,10 @@ Global
 		{DD591813-C555-4987-B0FA-75F888C8C24F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD591813-C555-4987-B0FA-75F888C8C24F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD591813-C555-4987-B0FA-75F888C8C24F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5B998DE-FA49-481B-B8DF-B7DEAC0D2BF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5B998DE-FA49-481B-B8DF-B7DEAC0D2BF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5B998DE-FA49-481B-B8DF-B7DEAC0D2BF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5B998DE-FA49-481B-B8DF-B7DEAC0D2BF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -206,6 +212,7 @@ Global
 		{F7C83F29-284D-414A-83EF-48CBDC89570D} = {3E229970-575D-40DC-BAB5-E9983CA41F11}
 		{DD591813-C555-4987-B0FA-75F888C8C24F} = {F721C046-30A1-470A-8814-F5ABDA2ED8A1}
 		{3E229970-575D-40DC-BAB5-E9983CA41F11} = {72FC2DF9-E09E-433D-9F4B-F8A5176E5605}
+		{F5B998DE-FA49-481B-B8DF-B7DEAC0D2BF6} = {3E229970-575D-40DC-BAB5-E9983CA41F11}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {52773F80-9AFD-49EA-9A94-EBC8FBCA9951}

@@ -2,8 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using SenderService.Email.Contracts;
 using SenderService.Email.EF.Contracts;
+using SenderService.Email.EF.DAL.Contracts;
+using SenderService.Email.EF.DAL.Repositories;
 using SenderService.Email.EF.Providers;
-using SenderService.Email.EF.Repositories;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SenderService.Email.EF.Extensions

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SenderService.Email.Contracts
+namespace SenderService.Email.EF.DAL.Contracts
 {
     public interface IEmailSenderRepository
     {

@@ -2,7 +2,7 @@
 using Lingva.BC.Dto;
 using Quartz;
 using SenderService.Email.EF.Contracts;
-using SenderService.Email.EF.Entities;
+using SenderService.Email.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -35,7 +35,7 @@ namespace Lingva.Background
                 int id = 1;
                 string subject = "Remember!";
 
-                EmailTemplate template = await _emailSender.GetTemplateAsync(id);
+                Template template = await _emailSender.GetTemplateAsync(id);
                 string body = template.Text;
                 await _emailSender.SetSendingOptionsAsync(id);
 
