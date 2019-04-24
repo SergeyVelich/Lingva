@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BC\Lingva.Common\Lingva.Common.csproj" />
+    <ProjectReference Include="..\..\Sender\SenderService.Email\SenderService.Email.csproj" />
   </ItemGroup>
 
 </Project>

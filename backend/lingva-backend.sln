@@ -3,9 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28705.295
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{6434D792-2B23-4755-A35A-1E48F75E062E}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.DAL", "DAL\Lingva.DAL\Lingva.DAL.csproj", "{587FA791-3135-48A8-8CED-2AA6A9C459EA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.DAL.EF", "DAL\Lingva.DAL.EF\Lingva.DAL.EF.csproj", "{6EB251F4-4C86-4A53-BD6D-3EB48B1D57F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.DAL.Dapper", "DAL\Lingva.DAL.Dapper\Lingva.DAL.Dapper.csproj", "{BE38058D-7A6B-4423-ABC9-5DB0FED0F1CE}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.DAL.EF.Tests", "DAL\Lingva.DAL.Tests\Lingva.DAL.EF.Tests.csproj", "{F575E75B-6EA2-4A33-B97C-D0D43B29CD61}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BC", "BC", "{3E71A635-EF3C-43BF-A9BF-670F085D687A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.BC", "BC\Lingva.BC\Lingva.BC.csproj", "{987C54A5-35B1-4909-AE28-CB49798A9D6C}"
 EndProject
@@ -15,9 +23,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.BC.Tests", "BC\Lingv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.Common", "BC\Lingva.Common\Lingva.Common.csproj", "{D5AF45F2-DC2A-430C-9AEF-9E77E1DBC709}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVC", "MVC", "{ED2FD1BD-3D55-4E6A-BE3B-502B1D1F1467}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC", "MVC\Lingva.MVC\Lingva.MVC.csproj", "{9A37911E-B51E-4BBD-A401-2B8CD6122EAF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Mapper", "MVC\Lingva.MVC.Mapper\Lingva.MVC.Mapper.csproj", "{5645584E-909A-4D0B-8DB4-43CB1288B938}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Models", "MVC\Lingva.MVC.Models\Lingva.MVC.Models.csproj", "{06F6E2C7-9F3E-46D6-911D-E30EF0AB8A26}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Models.Mapper", "MVC\Lingva.MVC.Models.Mapper\Lingva.MVC.Models.Mapper.csproj", "{C075D8A3-7AF0-4006-A0A2-8D26E5AD3D66}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Tests", "MVC\Lingva.MVC.Tests\Lingva.MVC.Tests.csproj", "{A3136D41-1FB7-4B37-B16D-9F5B31BBA566}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAPI", "WebAPI", "{C2F66234-532F-4891-ACF1-043B6ABCF7D7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI", "WebAPI\Lingva.WebAPI\Lingva.WebAPI.csproj", "{A89DFC63-C61F-4981-893F-656C4B9A2F54}"
 EndProject
@@ -27,40 +45,29 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Models", "Web
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Models.Mapper", "WebAPI\Lingva.WebAPI.Models.Mapper\Lingva.WebAPI.Models.Mapper.csproj", "{14EB43E0-B6BC-408F-A88B-B91F07F6DED5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BC", "BC", "{3E71A635-EF3C-43BF-A9BF-670F085D687A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{6434D792-2B23-4755-A35A-1E48F75E062E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVC", "MVC", "{ED2FD1BD-3D55-4E6A-BE3B-502B1D1F1467}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAPI", "WebAPI", "{C2F66234-532F-4891-ACF1-043B6ABCF7D7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Models.Mapper", "MVC\Lingva.MVC.Models.Mapper\Lingva.MVC.Models.Mapper.csproj", "{C075D8A3-7AF0-4006-A0A2-8D26E5AD3D66}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Mapper", "MVC\Lingva.MVC.Mapper\Lingva.MVC.Mapper.csproj", "{5645584E-909A-4D0B-8DB4-43CB1288B938}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Models", "MVC\Lingva.MVC.Models\Lingva.MVC.Models.csproj", "{06F6E2C7-9F3E-46D6-911D-E30EF0AB8A26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Tests", "WebAPI\Lingva.WebAPI.Tests\Lingva.WebAPI.Tests.csproj", "{129D29BE-AF60-481A-8BF3-D21D34D84619}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthServer", "AuthServer\AuthServer\AuthServer.csproj", "{E3BB3121-5EB5-4DA7-A99E-6BD8094886D9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryBuilder", "QueryBuilder\QueryBuilder\QueryBuilder.csproj", "{6E27C679-E7E0-4A60-B8DE-78DBBF4A1E84}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Background", "Background", "{205C916E-7710-44E8-9065-CDA4486AB57E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.DAL.EF", "DAL\Lingva.DAL.EF\Lingva.DAL.EF.csproj", "{6EB251F4-4C86-4A53-BD6D-3EB48B1D57F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.Background", "Background\Lingva.Background\Lingva.Background.csproj", "{5DF391B1-D8AE-4FD2-A1BC-321E26FED340}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.DAL.Dapper", "DAL\Lingva.DAL.Dapper\Lingva.DAL.Dapper.csproj", "{BE38058D-7A6B-4423-ABC9-5DB0FED0F1CE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Tests", "WebAPI\Lingva.WebAPI.Tests\Lingva.WebAPI.Tests.csproj", "{129D29BE-AF60-481A-8BF3-D21D34D84619}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.Background.Mapper", "Background\Lingva.Background.Mapper\Lingva.Background.Mapper.csproj", "{D40FFA0A-9D3C-409A-A625-F673D7E92A72}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Additional", "Additional", "{F672D062-C6F8-4730-9038-AB2EEC3E681E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sender", "Sender", "{72FC2DF9-E09E-433D-9F4B-F8A5176E5605}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SenderService.Email", "Additional\SenderService.Email\SenderService.Email.csproj", "{B1425401-C2CB-431B-A91B-DF2131852725}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SenderService.Email", "Additional\Sender\SenderService.Email\SenderService.Email.csproj", "{B1425401-C2CB-431B-A91B-DF2131852725}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.Background", "BackgroundServer\Lingva.Background.csproj", "{5DF391B1-D8AE-4FD2-A1BC-321E26FED340}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SenderService.Email.EF", "Additional\Sender\SenderService.Email.EF\SenderService.Email.EF.csproj", "{DD554FEA-DDF3-48F3-A7B4-43A00A2A1A4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SenderService.Email.EF", "Additional\SenderService\SenderService.Email.EF\SenderService.Email.EF.csproj", "{DD554FEA-DDF3-48F3-A7B4-43A00A2A1A4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SenderService.Email.IO", "Additional\Sender\SenderService.Email.IO\SenderService.Email.IO.csproj", "{0A53FC0E-18D8-4DCB-932C-63A2C763E132}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryBuilder", "QueryBuilder\QueryBuilder\QueryBuilder.csproj", "{6E27C679-E7E0-4A60-B8DE-78DBBF4A1E84}"
+EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +166,14 @@ Global
 		{DD554FEA-DDF3-48F3-A7B4-43A00A2A1A4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD554FEA-DDF3-48F3-A7B4-43A00A2A1A4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD554FEA-DDF3-48F3-A7B4-43A00A2A1A4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A53FC0E-18D8-4DCB-932C-63A2C763E132}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A53FC0E-18D8-4DCB-932C-63A2C763E132}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A53FC0E-18D8-4DCB-932C-63A2C763E132}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A53FC0E-18D8-4DCB-932C-63A2C763E132}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D40FFA0A-9D3C-409A-A625-F673D7E92A72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D40FFA0A-9D3C-409A-A625-F673D7E92A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D40FFA0A-9D3C-409A-A625-F673D7E92A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D40FFA0A-9D3C-409A-A625-F673D7E92A72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -185,7 +200,10 @@ Global
 		{129D29BE-AF60-481A-8BF3-D21D34D84619} = {C2F66234-532F-4891-ACF1-043B6ABCF7D7}
 		{72FC2DF9-E09E-433D-9F4B-F8A5176E5605} = {F672D062-C6F8-4730-9038-AB2EEC3E681E}
 		{B1425401-C2CB-431B-A91B-DF2131852725} = {72FC2DF9-E09E-433D-9F4B-F8A5176E5605}
+		{5DF391B1-D8AE-4FD2-A1BC-321E26FED340} = {205C916E-7710-44E8-9065-CDA4486AB57E}
 		{DD554FEA-DDF3-48F3-A7B4-43A00A2A1A4F} = {72FC2DF9-E09E-433D-9F4B-F8A5176E5605}
+		{0A53FC0E-18D8-4DCB-932C-63A2C763E132} = {72FC2DF9-E09E-433D-9F4B-F8A5176E5605}
+		{D40FFA0A-9D3C-409A-A625-F673D7E92A72} = {205C916E-7710-44E8-9065-CDA4486AB57E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {52773F80-9AFD-49EA-9A94-EBC8FBCA9951}

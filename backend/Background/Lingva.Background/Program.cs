@@ -1,5 +1,4 @@
-﻿using Lingva.Background.Jobs;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Lingva.Background
@@ -9,7 +8,6 @@ namespace Lingva.Background
         public static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
-            EmailScheduler.Start();
             host.Run();
         }
 

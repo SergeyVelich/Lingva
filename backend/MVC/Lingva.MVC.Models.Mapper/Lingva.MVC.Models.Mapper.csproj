@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -11,12 +11,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\BC\Lingva.BC\Lingva.BC.csproj" />
     <ProjectReference Include="..\Lingva.MVC.Models\Lingva.MVC.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="netstandard">
-      <HintPath>..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\netstandard.library\2.0.3\build\netstandard2.0\ref\netstandard.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

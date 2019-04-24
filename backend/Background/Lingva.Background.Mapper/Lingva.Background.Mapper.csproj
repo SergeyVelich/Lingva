@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BC\Lingva.BC.Mapper\Lingva.BC.Mapper.csproj" />
-    <ProjectReference Include="..\Lingva.WebAPI.Models.Mapper\Lingva.WebAPI.Models.Mapper.csproj" />
   </ItemGroup>
 
 </Project>

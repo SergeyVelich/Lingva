@@ -1,21 +1,12 @@
 ﻿using Lingva.BC.Contracts;
 using Lingva.BC.Services;
-using Lingva.DAL.EF.Context;
-using Lingva.DAL.EF.Repositories;
-using Lingva.DAL.Repositories;
 using Lingva.WebAPI.Extensions;
 using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SenderService.Email;
-using SenderService.Email.Contracts;
-using SenderService.Email.EF;
-using SenderService.Email.EF.Providers;
-using SenderService.Email.EF.Repositories;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.WebAPI
@@ -45,14 +36,7 @@ namespace Lingva.WebAPI
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<QueryOptionsAdapter>();
-
-            services.AddScoped<EFEmailSender>();
-            services.AddScoped<IEmailSenderRepository, EmailEFRepository>();
-            services.AddScoped<DbContext, DictionaryContext>();
-            services.AddScoped<IEmailSendingOptionsProvider, EFSendingOptionsProvider>();
-            services.AddScoped<IEmailTemplateProvider, EFTemplateProvider>();
-
-
+           
             services.AddMvc(options =>
             {
                 options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());

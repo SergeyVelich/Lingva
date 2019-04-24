@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SenderService.Email.EF.Providers
 {
-    public class EFTemplateProvider : IEmailTemplateProvider
+    public class EFTemplateProvider : IEFTemplateProvider
     {
         private readonly IEmailSenderRepository _repository;
 
