@@ -26,13 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Additional\SenderService.Email\SenderService.Email.csproj" />
-    <ProjectReference Include="..\..\Additional\SenderService\SenderService.Email.EF\SenderService.Email.EF.csproj" />
     <ProjectReference Include="..\..\BC\Lingva.BC\Lingva.BC.csproj" />
     <ProjectReference Include="..\..\BC\Lingva.Common\Lingva.Common.csproj" />
     <ProjectReference Include="..\..\DAL\Lingva.DAL.Dapper\Lingva.DAL.Dapper.csproj" />
     <ProjectReference Include="..\..\DAL\Lingva.DAL.EF\Lingva.DAL.EF.csproj" />
-    <ProjectReference Include="..\..\QueryBuilder\QueryBuilder\QueryBuilder.csproj" />
     <ProjectReference Include="..\Lingva.WebAPI.Mapper\Lingva.WebAPI.Mapper.csproj" />
   </ItemGroup>
 

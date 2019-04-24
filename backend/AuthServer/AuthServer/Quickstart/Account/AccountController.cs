@@ -214,10 +214,10 @@ namespace IdentityServer4.Quickstart.UI
         /// Entry point into the registration workflow
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Register(string returnUrl)
+        public IActionResult Register(string returnUrl)
         {
             // build a model so we know what to show on the login page
-            RegisterViewModel vm = await BuildRegisterViewModelAsync(returnUrl);
+            RegisterViewModel vm = BuildRegisterViewModel(returnUrl);
 
             return View(vm);
         }
@@ -262,7 +262,7 @@ namespace IdentityServer4.Quickstart.UI
             }
 
             // something went wrong, show form with error
-            var vm = await BuildRegisterViewModelAsync(model);
+            var vm = BuildRegisterViewModel(model);
             return View(vm);         
         }
 
@@ -392,7 +392,7 @@ namespace IdentityServer4.Quickstart.UI
             return vm;
         }
 
-        private async Task<RegisterViewModel> BuildRegisterViewModelAsync(string returnUrl)
+        private RegisterViewModel BuildRegisterViewModel(string returnUrl)
         {           
             return new RegisterViewModel
             {
@@ -400,9 +400,9 @@ namespace IdentityServer4.Quickstart.UI
             };
         }
 
-        private async Task<RegisterViewModel> BuildRegisterViewModelAsync(RegisterInputModel model)
+        private RegisterViewModel BuildRegisterViewModel(RegisterInputModel model)
         {
-            var vm = await BuildRegisterViewModelAsync(model.ReturnUrl);
+            var vm = BuildRegisterViewModel(model.ReturnUrl);
             return vm;
         }
 

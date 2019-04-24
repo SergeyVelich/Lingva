@@ -60,7 +60,7 @@ namespace Lingva.Background
             }
             catch (Exception ex)
             {
-
+                //logger
             }
             finally
             {

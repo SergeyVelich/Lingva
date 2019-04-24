@@ -43,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Models", "MVC\Li
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthServer", "AuthServer\AuthServer\AuthServer.csproj", "{E3BB3121-5EB5-4DA7-A99E-6BD8094886D9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryBuilder", "QueryBuilder\QueryBuilder\QueryBuilder.csproj", "{6E27C679-E7E0-4A60-B8DE-78DBBF4A1E84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryBuilder", "Additional\QueryBuilder\QueryBuilder.csproj", "{6E27C679-E7E0-4A60-B8DE-78DBBF4A1E84}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.DAL.EF", "DAL\Lingva.DAL.EF\Lingva.DAL.EF.csproj", "{6EB251F4-4C86-4A53-BD6D-3EB48B1D57F3}"
 EndProject
@@ -55,17 +55,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Additional", "Additional", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SenderService", "SenderService", "{72FC2DF9-E09E-433D-9F4B-F8A5176E5605}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SenderService.Email", "Additional\SenderService.Email\SenderService.Email.csproj", "{B1425401-C2CB-431B-A91B-DF2131852725}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SenderService.Email", "Additional\SenderService\SenderService.Email\SenderService.Email.csproj", "{B1425401-C2CB-431B-A91B-DF2131852725}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.Background", "BackgroundServer\Lingva.Background.csproj", "{5DF391B1-D8AE-4FD2-A1BC-321E26FED340}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.Background", "Background\Lingva.Background\Lingva.Background.csproj", "{5DF391B1-D8AE-4FD2-A1BC-321E26FED340}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SenderService.Email.EF", "Additional\SenderService\SenderService.Email.EF\SenderService.Email.EF.csproj", "{DD554FEA-DDF3-48F3-A7B4-43A00A2A1A4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SenderService.Email.IO", "Additional\Sender\SenderService.Email.IO\SenderService.Email.IO.csproj", "{F7C83F29-284D-414A-83EF-48CBDC89570D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SenderService.Email.IO", "Additional\SenderService\SenderService.Email.IO\SenderService.Email.IO.csproj", "{F7C83F29-284D-414A-83EF-48CBDC89570D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Background", "Background", "{F721C046-30A1-470A-8814-F5ABDA2ED8A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lingva.Background.Mapper", "Background\Lingva.Background.Mapper\Lingva.Background.Mapper.csproj", "{DD591813-C555-4987-B0FA-75F888C8C24F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.Background.Mapper", "Background\Lingva.Background.Mapper\Lingva.Background.Mapper.csproj", "{DD591813-C555-4987-B0FA-75F888C8C24F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Email", "Email", "{3E229970-575D-40DC-BAB5-E9983CA41F11}"
 EndProject
