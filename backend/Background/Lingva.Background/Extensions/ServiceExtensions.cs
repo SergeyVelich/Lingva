@@ -24,7 +24,7 @@ namespace Lingva.Background
 
         public static void ConfigureQuartzSheduler(this IServiceCollection services)
         {
-            services.AddTransient<IJobFactory, JobFactory>((provider) => new JobFactory(services.BuildServiceProvider()));
+            services.AddTransient<IJobFactory, QuartzJobFactory>((provider) => new QuartzJobFactory(services.BuildServiceProvider()));
             services.AddTransient<EmailJob>();
         }
 
