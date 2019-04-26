@@ -1,4 +1,4 @@
-﻿using Lingva.MVC.Infrastructure.Exceptions;
+using Lingva.MVC.Infrastructure.Exceptions;
 using Lingva.MVC.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +17,7 @@ namespace Lingva.MVC.Filters
         {
             _logger = logger;
         }
+        
         public async Task OnExceptionAsync(ExceptionContext context)
         {
             HttpStatusCode status = HttpStatusCode.InternalServerError;

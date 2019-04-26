@@ -1,4 +1,4 @@
-﻿using Lingva.MVC.Extensions;
+using Lingva.MVC.Extensions;
 using Lingva.MVC.Filters;
 using Lingva.MVC.Infrastructure;
 using Microsoft.AspNetCore.Builder;

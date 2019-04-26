@@ -1,4 +1,4 @@
-﻿using Lingva.BC.Contracts;
+using Lingva.BC.Contracts;
 using Lingva.BC.Services;
 using Lingva.DAL.EF.Context;
 using Lingva.WebAPI.Extensions;
@@ -61,6 +61,8 @@ namespace Lingva.WebAPI
                 .AddRedirect("(.*)/$", "$1")
                 .AddRedirect("[h,H]ome[/]?$", "home/index"); 
             app.UseRewriter(options);
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseCors("CorsPolicy");
 
