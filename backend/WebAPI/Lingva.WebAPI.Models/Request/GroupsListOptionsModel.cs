@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lingva.WebAPI.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;

@@ -1,4 +1,4 @@
-﻿using Lingva.DAL.EF.Options;
+﻿using Lingva.DAL.EF.EntityConfigurations;
 using Lingva.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using SenderService.Email.EF.DAL.Extensions;
@@ -25,10 +25,10 @@ namespace Lingva.DAL.EF.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new GroupOptions());
-            modelBuilder.ApplyConfiguration(new UserOptions());
-            modelBuilder.ApplyConfiguration(new GroupUserOptions());
-            modelBuilder.ApplyConfiguration(new LanguageOptions());
+            modelBuilder.ApplyConfiguration(new GroupConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new GroupUserConfiguration());
+            modelBuilder.ApplyConfiguration(new LanguageConfiguration());
          
             Seed(modelBuilder);
 

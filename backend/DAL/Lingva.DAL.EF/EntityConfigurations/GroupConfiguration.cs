@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Lingva.DAL.EF.Options
+namespace Lingva.DAL.EF.EntityConfigurations
 {
-    public class GroupOptions : IEntityTypeConfiguration<Group>
+    public class GroupConfiguration : IEntityTypeConfiguration<Group>
     {
         public void Configure(EntityTypeBuilder<Group> builder)
         {

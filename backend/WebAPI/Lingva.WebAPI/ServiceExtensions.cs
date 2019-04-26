@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using IdentityServer4.AccessTokenValidation;
+﻿using IdentityServer4.AccessTokenValidation;
 using Lingva.BC;
 using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
@@ -54,7 +53,10 @@ namespace Lingva.WebAPI.Extensions
             string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
 
             services.AddDbContext<DictionaryContext>(options =>
-                options.UseSqlServer(connectionStringValue));
+            {
+                options.UseSqlServer(connectionStringValue);
+                options.UseLazyLoadingProxies();
+            });
         }
 
         public static void ConfigureOptions(this IServiceCollection services, IConfiguration config)

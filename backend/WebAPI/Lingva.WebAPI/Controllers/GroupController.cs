@@ -2,8 +2,8 @@
 using Lingva.BC.Dto;
 using Lingva.Common.Mapping;
 using Lingva.WebAPI.Infrastructure;
+using Lingva.WebAPI.Models.Entities;
 using Lingva.WebAPI.Models.Request;
-using Lingva.WebAPI.Models.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;

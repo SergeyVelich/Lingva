@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Lingva.DAL.EF.Options
+namespace Lingva.DAL.EF.EntityConfigurations
 {
-    public class LanguageOptions : IEntityTypeConfiguration<Language>
+    public class LanguageConfiguration : IEntityTypeConfiguration<Language>
     {
         public void Configure(EntityTypeBuilder<Language> builder)
         {
