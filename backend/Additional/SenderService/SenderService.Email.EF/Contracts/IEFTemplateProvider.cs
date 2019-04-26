@@ -1,10 +1,10 @@
-﻿using SenderService.Email.EF.Entities;
+﻿using SenderService.Email.Entities;
 using System.Threading.Tasks;
 
 namespace SenderService.Email.Contracts
 {
     public interface IEFTemplateProvider : IEmailTemplateProvider
     {
-        Task<EmailTemplate> GetTemplateAsync(int id);
+        Task<Template> GetTemplateAsync(int id);
     }
 }

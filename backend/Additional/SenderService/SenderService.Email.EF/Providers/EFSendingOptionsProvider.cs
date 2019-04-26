@@ -1,5 +1,7 @@
 ﻿using SenderService.Email.Contracts;
-using SenderService.Email.EF.Entities;
+using SenderService.Email.EF.DAL.Contracts;
+using SenderService.Email.EF.DAL.Entities;
+using SenderService.Email.Entities;
 using System.Threading.Tasks;
 
 namespace SenderService.Email.EF.Providers
@@ -13,10 +15,10 @@ namespace SenderService.Email.EF.Providers
             _repository = repository;
         }
 
-        public async Task<EmailSendingOption> GetSendingOptionsAsync(int id)
+        public async Task<SendingOption> GetSendingOptionsAsync(int id)
         {
-            EmailSendingOption sendingOption = await _repository.GetByIdAsync<EmailSendingOption>(id);
-            return sendingOption;
+            EmailSendingOption emailSendingOption = await _repository.GetByIdAsync<EmailSendingOption>(id);
+            return new SendingOption(emailSendingOption);
         }
     }
 }

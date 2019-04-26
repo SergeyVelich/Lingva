@@ -1,6 +1,6 @@
 ﻿using SenderService.Email.Contracts;
 using SenderService.Email.EF.Contracts;
-using SenderService.Email.EF.Entities;
+using SenderService.Email.Entities;
 using System.Threading.Tasks;
 
 namespace SenderService.Email.EF
@@ -17,14 +17,15 @@ namespace SenderService.Email.EF
             _sendingOptionsProvider = sendingOptionsProvider;
         }
        
-        public virtual async Task<EmailTemplate> GetTemplateAsync(int id)
+        public virtual async Task<Template> GetTemplateAsync(int id)
         {
-            return await _templateProvider.GetTemplateAsync(id);
+            Template template = await _templateProvider.GetTemplateAsync(id);
+            return template;
         }
 
         public virtual async Task SetSendingOptionsAsync(int id)
         {
-            EmailSendingOption sendingOptions = await _sendingOptionsProvider.GetSendingOptionsAsync(id);
+            SendingOption sendingOptions = await _sendingOptionsProvider.GetSendingOptionsAsync(id);
             SetSendingOptions(sendingOptions);
         }
     }

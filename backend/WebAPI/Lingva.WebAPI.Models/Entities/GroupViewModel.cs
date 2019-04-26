@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.WebAPI.Models.Request
+namespace Lingva.WebAPI.Models.Entities
 {
     [ExcludeFromCodeCoverage]
     public class GroupViewModel

@@ -5,11 +5,11 @@ using System;
 
 namespace Lingva.Background
 {
-    public class JobFactory : IJobFactory
+    public class QuartzJobFactory : IJobFactory
     {
         protected readonly IServiceScope _scope;
 
-        public JobFactory(IServiceProvider container)
+        public QuartzJobFactory(IServiceProvider container)
         {
             _scope = container.CreateScope();
         }

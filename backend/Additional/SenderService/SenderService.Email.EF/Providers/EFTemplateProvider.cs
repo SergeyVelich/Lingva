@@ -1,5 +1,7 @@
 ﻿using SenderService.Email.Contracts;
-using SenderService.Email.EF.Entities;
+using SenderService.Email.EF.DAL.Contracts;
+using SenderService.Email.EF.DAL.Entities;
+using SenderService.Email.Entities;
 using System.Threading.Tasks;
 
 namespace SenderService.Email.EF.Providers
@@ -13,10 +15,10 @@ namespace SenderService.Email.EF.Providers
             _repository = repository;
         }
 
-        public async Task<EmailTemplate> GetTemplateAsync(int id)
+        public async Task<Template> GetTemplateAsync(int id)
         {
-            EmailTemplate template = await _repository.GetByIdAsync<EmailTemplate>(id);
-            return template;
+            EmailTemplate emailTemplate = await _repository.GetByIdAsync<EmailTemplate>(id);
+            return new Template(emailTemplate);
         }
     }
 }
