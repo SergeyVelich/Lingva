@@ -1,14 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.DAL.Entities
 {
     [ExcludeFromCodeCoverage]
-    public class User
+    public class User : BaseBE
     {
-        [Key]
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+
+        public virtual ICollection<GroupUser> GroupUsers { get; set; }
     }
 }

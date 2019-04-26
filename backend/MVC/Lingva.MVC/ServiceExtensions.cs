@@ -61,5 +61,14 @@ namespace Lingva.MVC.Extensions
             services.AddScoped<IDataAdapter, DataAdapter>();
             services.AddSingleton<IMapper>(AppMapperConfig.GetMapper());
         }
+
+        public static void ConfigureCaching(this IServiceCollection services)
+        {
+            services.AddResponseCaching(options =>
+            {
+                options.UseCaseSensitivePaths = false;
+                options.MaximumBodySize = 1024;
+            });
+        }
     }
 }

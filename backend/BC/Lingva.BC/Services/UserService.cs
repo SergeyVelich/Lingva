@@ -1,8 +1,9 @@
 ﻿using Lingva.BC.Contracts;
-using Lingva.BC.DTO;
+using Lingva.BC.Dto;
 using Lingva.Common.Mapping;
 using Lingva.DAL.Entities;
-using Lingva.DAL.UnitsOfWork.Contracts;
+using Lingva.DAL.Repositories;
+using QueryBuilder.QueryOptions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,58 +11,21 @@ namespace Lingva.BC.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUnitOfWorkUser _unitOfWork;
+        private readonly IUserRepository _repository;
         private readonly IDataAdapter _dataAdapter;
-
-        public UserService(IUnitOfWorkUser unitOfWork, IDataAdapter dataAdapter)
+           
+        public UserService(IUserRepository repository, IDataAdapter dataAdapter)
         {
-            _unitOfWork = unitOfWork;
+            _repository = repository;
             _dataAdapter = dataAdapter;
         }
 
-        public async Task<IEnumerable<UserDTO>> GetListAsync()
+        public async Task<IEnumerable<UserDto>> GetListByGroupAsync(int id)
         {
-            IEnumerable<User> users = await _unitOfWork.Users.GetListAsync();
-            return _dataAdapter.Map<IEnumerable<UserDTO>>(users);
-        }
+            IEnumerable<User> users = await _repository.GetListByGroupAsync(id);
 
-        public async Task<UserDTO> GetByIdAsync(int id)
-        {
-            User user = await _unitOfWork.Users.GetByIdAsync(id);
-            return _dataAdapter.Map<UserDTO>(user);
-        }
-
-        public async Task<UserDTO> AddAsync(UserDTO userDTO)
-        {
-            User user = _dataAdapter.Map<User>(userDTO);
-            _unitOfWork.Users.Create(user);
-            await _unitOfWork.SaveAsync();
-
-            return _dataAdapter.Map<UserDTO>(user);
-        }
-
-        public async Task<UserDTO> UpdateAsync(int id, UserDTO updateUserDTO)
-        {
-            User currentUser = await _unitOfWork.Users.GetByIdAsync(id);
-            User updateUser = _dataAdapter.Map<User>(updateUserDTO);
-            _dataAdapter.Update<User>(updateUser, currentUser);
-            _unitOfWork.Users.Update(currentUser);
-            await _unitOfWork.SaveAsync();
-
-            return _dataAdapter.Map<UserDTO>(currentUser);
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            User user = await _unitOfWork.Users.GetByIdAsync(id);
-
-            if (user == null)
-            {
-                return;
-            }
-
-            _unitOfWork.Users.Delete(user);
-            await _unitOfWork.SaveAsync();
-        }
+            return _dataAdapter.Map<IEnumerable<UserDto>>(users);
+        }      
     }
 }
+

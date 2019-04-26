@@ -1,4 +1,9 @@
-﻿@model IEnumerable<Lingva.MVC.ViewModel.Response.GroupViewModel>
+﻿@using Lingva.MVC.Models.Entities
+@model Lingva.MVC.Models.Group.Index.GroupsListPageViewModel
+<!--импортируем tag-хелперы проекта-->
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Lingva.MVC
+
 @{
     ViewData["Title"] = "Group's List";
 }
@@ -6,49 +11,70 @@
 <!DOCTYPE html>
 
 <h3>Groups</h3>
+<form method="get">
+    <div class="form-inline">
+        <label class="control-label">Name: </label>
+        @Html.TextBox("name", Model.FilterViewModel.SelectedName, htmlAttributes: new { @class = "form-control" })
+
+        <label class="control-label">Language: </label>
+        @Html.DropDownList("language", Model.FilterViewModel.Languages as SelectList, htmlAttributes: new { @class = "form-control" })
+
+        <input type="text" name="sortProperty" class="form-control" value="@(Model.SortViewModel.Property)" hidden />
+        <input type="text" name="sortOrder" class="form-control" value="@(Model.SortViewModel.Order)" hidden />
+
+        <input type="submit" value="Filter" class="btn btn-default" />
+    </div>
+</form>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 
 <table class="table">
-    <thead>
+    <tr>
+        <th>
+            <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Property" property="@("Name")">
+                Name
+            </sort-header>
+        </th>
+        <th>
+            <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Property" property="@("Date")">
+                Date
+            </sort-header>
+        </th>
+        <th>
+            <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Property" property="@("Language")">
+                Language
+            </sort-header>
+        </th>
+        <th>
+            <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Property" property="@("Description")">
+                Description
+            </sort-header>
+        </th>
+        <th>
+            <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Property" property="@("Picture")">
+                Picture
+            </sort-header>
+        </th>
+    </tr>
+    @foreach (GroupViewModel groupViewModel in Model.Groups)
+    {
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Picture)
-            </th>
-            <th></th>
+            <td>@groupViewModel.Name</td>
+            <td>@groupViewModel.Date</td>
+            <td>@groupViewModel.LanguageId</td>
+            <td>@groupViewModel.Description</td>
+            <td>@groupViewModel.Picture</td>
+            <td>@Html.ActionLink("Get", "Get", "Group", new { id = groupViewModel.Id })</td>
+            <td>@Html.ActionLink("Update", "Update", new { id = groupViewModel.Id })</td>
+            <td>@Html.ActionLink("Delete", "Delete", new { id = groupViewModel.Id })</td>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Picture)
-            </td>
-            <td>
-                @Html.ActionLink("Get", "Get", new { id = item.Id })
-            </td>
-            <td>
-                @Html.ActionLink("Update", "Update", new { id = item.Id })
-            </td>
-            <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-        }
-    </tbody>
+    }
 </table>
+
+<page-link page-model="Model.PagenatorViewModel" page-action="Index"
+           page-url-name="@(Model.FilterViewModel.SelectedName)"
+           page-url-language="@(Model.FilterViewModel.SelectedLanguage)"
+           page-url-sortProperty="@(Model.SortViewModel.Property)"
+           page-url-sortOrder="@(Model.SortViewModel.Order)"></page-link>

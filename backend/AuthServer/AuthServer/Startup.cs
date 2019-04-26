@@ -23,7 +23,7 @@ namespace AuthServer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string configStringValue = Configuration.GetConnectionString("LingvaConnection");
+            string configStringValue = Configuration.GetConnectionString("AccountConnection");
             string configVariableName = configStringValue.GetVariableName();
             string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
 
@@ -38,7 +38,6 @@ namespace AuthServer
                         .AddInMemoryApiResources(Config.GetApiResources())
                         .AddInMemoryIdentityResources(Config.GetIdentityResources())
                         .AddInMemoryClients(Config.GetClients())
-                        //.AddTestUsers(Config.GetUsers())
                         .AddAspNetIdentity<ApplicationUser>();
 
             services.AddMvc();
