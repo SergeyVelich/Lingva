@@ -1,4 +1,4 @@
-﻿using AuthServer.Identity;
+﻿using AuthServer.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;

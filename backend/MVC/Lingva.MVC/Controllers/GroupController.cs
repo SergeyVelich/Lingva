@@ -5,6 +5,7 @@ using Lingva.MVC.Models.Entities;
 using Lingva.MVC.Models.Group;
 using Lingva.MVC.Models.Group.Index;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -17,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.MVC.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ResponseCache(CacheProfileName = "NoCashing")]
     public class GroupController : Controller
     {

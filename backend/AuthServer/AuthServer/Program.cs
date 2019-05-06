@@ -1,4 +1,4 @@
-﻿using AuthServer.Identity;
+﻿using AuthServer.Identity.Entities;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;

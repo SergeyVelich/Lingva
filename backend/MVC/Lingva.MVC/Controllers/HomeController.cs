@@ -59,7 +59,7 @@ namespace Lingva.MVC.Controllers
         [AllowAnonymous]
         public IActionResult Register()
         {
-            return Redirect("http://localhost:6050/account/register?returnUrl=" + "http://localhost:6002");
+            return RedirectToAction("http://localhost:6050/account/register?returnUrl=" + "http://localhost:6002");
         }
     }
 }

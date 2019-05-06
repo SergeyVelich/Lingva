@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-
-using AuthServer.Identity;
+using AuthServer.Identity.Constants;
+using AuthServer.Identity.Entities;
+using AuthServer.Models;
 using IdentityModel;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
+using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
@@ -18,10 +20,11 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer4.Quickstart.UI
+namespace AuthServer.Controllers
 {
     [SecurityHeaders]
     [AllowAnonymous]
+    //[Route("api/[controller]")]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -75,45 +78,60 @@ namespace IdentityServer4.Quickstart.UI
             // check if we are in the context of an authorization request
             var context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
 
+            if (button == "registration")
+            {
+                return Redirect("~/account/register?returnUrl=" + model.ReturnUrl);
+            };
+
             // the user clicked the "cancel" button
             if (button != "login")
             {
-                if(button != "registration")
+                if (context != null)
                 {
-                    if (context != null)
-                    {
-                        // if the user cancels, send a result back into IdentityServer as if they 
-                        // denied the consent (even if this client does not require consent).
-                        // this will send back an access denied OIDC error response to the client.
-                        await _interaction.GrantConsentAsync(context, ConsentResponse.Denied);
+                    // if the user cancels, send a result back into IdentityServer as if they 
+                    // denied the consent (even if this client does not require consent).
+                    // this will send back an access denied OIDC error response to the client.
+                    await _interaction.GrantConsentAsync(context, ConsentResponse.Denied);
 
-                        // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-                        if (await _clientStore.IsPkceClientAsync(context.ClientId))
-                        {
-                            // if the client is PKCE then we assume it's native, so this change in how to
-                            // return the response is for better UX for the end user.
-                            return View("Redirect", new RedirectViewModel { RedirectUrl = model.ReturnUrl });
-                        }
-
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else
+                    // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
+                    if (await _clientStore.IsPkceClientAsync(context.ClientId))
                     {
-                        // since we don't have a valid context, then we just go back to the home page
-                        return Redirect("~/");
+                        // if the client is PKCE then we assume it's native, so this change in how to
+                        // return the response is for better UX for the end user.
+                        return View("Redirect", new RedirectViewModel { RedirectUrl = model.ReturnUrl });
                     }
+
+                    return Redirect(model.ReturnUrl);
                 }
-
-                return Redirect("~/account/register?returnUrl=" + model.ReturnUrl);
+                else
+                {
+                    // since we don't have a valid context, then we just go back to the home page
+                    return Redirect("~/");
+                }               
             }
 
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: true);
-                if (result.Succeeded)
+                var user = await _userManager.FindByNameAsync(model.Username);
+                if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
-                    var user = await _userManager.FindByNameAsync(model.Username);
-                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName));
+                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.Name));
+
+                    // only set explicit expiration here if user chooses "remember me". 
+                    // otherwise we rely upon expiration configured in cookie middleware.
+                    AuthenticationProperties props = null;
+                    if (AccountOptions.AllowRememberLogin && model.RememberLogin)
+                    {
+                        props = new AuthenticationProperties
+                        {
+                            IsPersistent = true,
+                            ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
+                        };
+                    };
+
+                    // issue authentication cookie with subject ID and username
+                    await HttpContext.SignInAsync(user.Id, user.UserName, props);
+                    //var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: true);                          
 
                     if (context != null)
                     {
@@ -210,61 +228,82 @@ namespace IdentityServer4.Quickstart.UI
         }
 
 
-        /// <summary>
-        /// Entry point into the registration workflow
-        /// </summary>
-        [HttpGet]
-        public IActionResult Register(string returnUrl)
-        {
-            // build a model so we know what to show on the login page
-            RegisterViewModel vm = BuildRegisterViewModel(returnUrl);
+        ///// <summary>
+        ///// Entry point into the registration workflow
+        ///// </summary>
+        //[HttpGet]
+        //public IActionResult Register(string returnUrl)
+        //{
+        //    // build a model so we know what to show on the login page
+        //    RegisterViewModel vm = BuildRegisterViewModel(returnUrl);
 
-            return View(vm);
+        //    return View(vm);
+        //}
+
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody]RegisterInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = new ApplicationUser { UserName = model.Email, Name = model.Name, Email = model.Email };
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded) return BadRequest(result.Errors);
+
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("userName", user.UserName));
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("name", user.Name));
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("email", user.Email));
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", Roles.User.ToString()));
+
+            return Ok(new RegisterViewModel(user));
         }
 
         /// <summary>
         /// Handle postback from registration
         /// </summary>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterInputModel model, string button)
-        {
-            // the user clicked the "cancel" button
-            if (button != "register")
-            {
-                if (button != "login")
-                {
-                    return Redirect(model.ReturnUrl);
-                }
-                return Redirect("~/account/login?returnUrl=" + model.ReturnUrl);
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Register(RegisterInputModel model, string button)
+        //{
+        //    // the user clicked the "cancel" button
+        //    if (button != "register")
+        //    {
+        //        if (button != "login")
+        //        {
+        //            return Redirect(model.ReturnUrl);
+        //        }
+        //        return Redirect("~/account/login?returnUrl=" + model.ReturnUrl);
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                ApplicationUser user = new ApplicationUser
-                {
-                    Email = model.Username,
-                    UserName = model.Username
-                };
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, "user");
-                    return Redirect(model.ReturnUrl);
-                }
-                else
-                {
-                    foreach(IdentityError err in result.Errors)
-                    {
-                        ModelState.AddModelError("Password", err.Description);
-                    }                    
-                }                
-            }
+        //    if (ModelState.IsValid)
+        //    {
+        //        ApplicationUser user = new ApplicationUser
+        //        {
+        //            Email = model.Username,
+        //            UserName = model.Username
+        //        };
+        //        var result = await _userManager.CreateAsync(user, model.Password);
+        //        if (result.Succeeded)
+        //        {
+        //            await _userManager.AddToRoleAsync(user, "user");
+        //            return Redirect(model.ReturnUrl);
+        //        }
+        //        else
+        //        {
+        //            foreach(IdentityError err in result.Errors)
+        //            {
+        //                ModelState.AddModelError("Password", err.Description);
+        //            }                    
+        //        }                
+        //    }
 
-            // something went wrong, show form with error
-            var vm = BuildRegisterViewModel(model);
-            return View(vm);         
-        }
+        //    // something went wrong, show form with error
+        //    var vm = BuildRegisterViewModel(model);
+        //    return View(vm);         
+        //}
 
 
         /*****************************************/
@@ -275,14 +314,22 @@ namespace IdentityServer4.Quickstart.UI
             var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
             if (context?.IdP != null)
             {
+                var local = context.IdP == IdentityServer4.IdentityServerConstants.LocalIdentityProvider;
+
                 // this is meant to short circuit the UI and only trigger the one external IdP
-                return new LoginViewModel
+                var vm = new LoginViewModel
                 {
-                    EnableLocalLogin = false,
+                    EnableLocalLogin = local,
                     ReturnUrl = returnUrl,
                     Username = context?.LoginHint,
-                    ExternalProviders = new ExternalProvider[] { new ExternalProvider { AuthenticationScheme = context.IdP } }
                 };
+
+                if (!local)
+                {
+                    vm.ExternalProviders = new[] { new ExternalProvider { AuthenticationScheme = context.IdP } };
+                }
+
+                return vm;
             }
 
             var schemes = await _schemeProvider.GetAllSchemesAsync();
@@ -392,19 +439,19 @@ namespace IdentityServer4.Quickstart.UI
             return vm;
         }
 
-        private RegisterViewModel BuildRegisterViewModel(string returnUrl)
-        {           
-            return new RegisterViewModel
-            {
-                ReturnUrl = returnUrl,
-            };
-        }
+        //private RegisterViewModel BuildRegisterViewModel(string returnUrl)
+        //{           
+        //    return new RegisterViewModel
+        //    {
+        //        ReturnUrl = returnUrl,
+        //    };
+        //}
 
-        private RegisterViewModel BuildRegisterViewModel(RegisterInputModel model)
-        {
-            var vm = BuildRegisterViewModel(model.ReturnUrl);
-            return vm;
-        }
+        //private RegisterViewModel BuildRegisterViewModel(RegisterInputModel model)
+        //{
+        //    var vm = BuildRegisterViewModel(model.ReturnUrl);
+        //    return vm;
+        //}
 
     }
 }

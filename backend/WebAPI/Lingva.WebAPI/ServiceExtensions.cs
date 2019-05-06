@@ -1,5 +1,4 @@
-﻿using IdentityServer4.AccessTokenValidation;
-using Lingva.BC;
+﻿using Lingva.BC;
 using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
 using Lingva.DAL.Dapper;
@@ -7,7 +6,7 @@ using Lingva.DAL.EF.Context;
 using Lingva.DAL.EF.Repositories;
 using Lingva.DAL.Repositories;
 using Lingva.WebAPI.Mapper;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +15,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
+using System.Security.Claims;
 
 namespace Lingva.WebAPI.Extensions
 {
@@ -66,13 +66,30 @@ namespace Lingva.WebAPI.Extensions
 
         public static void ConfigureAuthentication(this IServiceCollection services)
         {
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                    .AddIdentityServerAuthentication(options =>
-                    {
-                        options.Authority = "http://localhost:6050"; // Auth Server
-                        options.RequireHttpsMetadata = false;
-                        options.ApiName = "fiver_auth_api"; // API Resource Id
-                    });
+            //services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+            //        .AddIdentityServerAuthentication(options =>
+            //        {
+            //            options.Authority = "http://localhost:6050"; // Auth Server
+            //            options.RequireHttpsMetadata = false;
+            //            options.ApiName = "resourceapi"; // API Resource Id
+            //        });
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.Authority = "http://localhost:6050"; // Auth Server
+                o.Audience = "resourceapi"; // API Resource Id
+                o.RequireHttpsMetadata = false;
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ApiReader", policy => policy.RequireClaim("scope", "api.read"));
+                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+            });
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection services)

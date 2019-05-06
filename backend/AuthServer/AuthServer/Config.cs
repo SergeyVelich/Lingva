@@ -10,7 +10,7 @@ namespace AuthServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("fiver_auth_api", "Lingva.WebAPI")
+                new ApiResource("resourceapi", "Lingva.WebAPI")
             };
         }
 
@@ -31,7 +31,7 @@ namespace AuthServer
                 // To use both Identity and Access Tokens
                 new Client
                 {
-                    ClientId = "fiver_auth_client",
+                    ClientId = "mvc_client",
                     ClientName = "Lingva.MVC",
                     ClientSecrets = { new Secret("secret".Sha256()) },
 
@@ -46,9 +46,20 @@ namespace AuthServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "fiver_auth_api"
+                        "resourceapi"
                     },
                 },
+                new Client {
+                    ClientId = "angular_spa",
+                    ClientName = "Angular SPA",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedScopes = { "openid", "profile", "email", "api.read" },
+                    RedirectUris = {"http://localhost:4200/auth-callback"},
+                    PostLogoutRedirectUris = {"http://localhost:4200/"},
+                    AllowedCorsOrigins = {"http://localhost:4200"},
+                    AllowAccessTokensViaBrowser = true,
+                    AccessTokenLifetime = 3600
+                }
             };
         }
     }

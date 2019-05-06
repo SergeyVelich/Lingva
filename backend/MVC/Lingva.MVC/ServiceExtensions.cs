@@ -46,10 +46,10 @@ namespace Lingva.MVC.Extensions
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme; // cookie middle setup above
                 options.Authority = "http://localhost:6050"; // Auth Server  
                 options.RequireHttpsMetadata = false; // only for development   
-                options.ClientId = "fiver_auth_client"; // client setup in Auth Server  
+                options.ClientId = "mvc_client"; // client setup in Auth Server  
                 options.ClientSecret = "secret";
                 options.ResponseType = "code id_token"; // means Hybrid flow (id + access token)  
-                options.Scope.Add("fiver_auth_api");
+                options.Scope.Add("resourceapi");
                 options.Scope.Add("offline_access");
                 options.GetClaimsFromUserInfoEndpoint = true;
                 options.SaveTokens = true;

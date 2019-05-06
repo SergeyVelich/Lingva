@@ -1,4 +1,4 @@
-using AuthServer.Identity;
+using AuthServer.Identity.Entities;
 using IdentityModel;
 using IdentityServer4.Events;
 using IdentityServer4.Quickstart.UI;
@@ -16,7 +16,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 
-namespace Host.Quickstart.Account
+namespace AuthServer.Controllers
 {
     [SecurityHeaders]
     [AllowAnonymous]
