@@ -55,9 +55,9 @@ namespace Lingva.DAL.Dapper.Repositories
             return entity;
         }
 
-        public virtual async Task DeleteAsync<T>(T entity) where T : class, new()
+        public virtual async Task DeleteAsync<T>(int id) where T : class, new()
         {
-            await _dbContext.Set<T>().RemoveAsync(entity, _dbTransaction);
+            await _dbContext.Set<T>().RemoveAsync(id, _dbTransaction);
         }
 
         public IDbTransaction BeginTransaction()

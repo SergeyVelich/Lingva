@@ -189,7 +189,7 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
             
-            HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Delete, "group/delete");
+            HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Delete, "group/delete?id=" + groupViewModel.Id);
             request.AddBody(groupViewModel);
             HttpResponseMessage response = await _client.SendAsync(request);
 

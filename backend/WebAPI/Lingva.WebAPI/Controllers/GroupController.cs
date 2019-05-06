@@ -38,7 +38,7 @@ namespace Lingva.WebAPI.Controllers
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groupsDto));
         }
 
-        // GET: api/group/get?id=2
+        // GET: api/group/get?id=1
         [HttpGet("get")]
         public async Task<IActionResult> Get([FromQuery] int id)
         {
@@ -99,22 +99,21 @@ namespace Lingva.WebAPI.Controllers
             return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));
         }
 
-        // DELETE: api/group/delete
+        // DELETE: api/group/delete?id=1
         /// <summary>
         /// Deletes a specific Group.
         /// </summary>
         [HttpDelete("delete")]
-        public async Task<IActionResult> Delete([FromBody] GroupViewModel groupViewModel)
+        public async Task<IActionResult> Delete([FromQuery] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
-            await _groupService.DeleteAsync(groupDto);
+            await _groupService.DeleteAsync(id);
 
-            return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));
+            return Ok();
         }
     }
 }

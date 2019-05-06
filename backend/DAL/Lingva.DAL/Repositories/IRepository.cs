@@ -12,6 +12,6 @@ namespace Lingva.DAL.Repositories
 
         Task<T> CreateAsync<T>(T entity) where T : class, new();
         Task<T> UpdateAsync<T>(T entity) where T : class, new();
-        Task DeleteAsync<T>(T entity) where T : class, new();
+        Task DeleteAsync<T>(int id) where T : class, new();
     }
 }

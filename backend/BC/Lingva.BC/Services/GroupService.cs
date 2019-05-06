@@ -58,10 +58,9 @@ namespace Lingva.BC.Services
             return _dataAdapter.Map<GroupDto>(currentGroup);
         }
 
-        public async Task DeleteAsync(GroupDto groupDto)
+        public async Task DeleteAsync(int id)
         {
-            Group group = _dataAdapter.Map<Group>(groupDto);
-            await _repository.DeleteAsync(group);
+            await _repository.DeleteAsync<Group>(id);
         }
     }
 }
