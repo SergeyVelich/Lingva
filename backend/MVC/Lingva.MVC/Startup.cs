@@ -1,3 +1,5 @@
+using Lingva.BC.Contracts;
+using Lingva.BC.Services;
 using Lingva.MVC.Extensions;
 using Lingva.MVC.Filters;
 using Lingva.MVC.Infrastructure;
@@ -25,15 +27,21 @@ namespace Lingva.MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
+            services.ConfigureEF(Configuration);
+            //services.ConfigureDapper(Configuration);
             services.ConfigureOptions(Configuration);
             services.ConfigureAuthentication();
             services.ConfigureAutoMapper();
 
-            services.AddHttpClient();
+            services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<IInfoService, InfoService>();
+
+            services.AddScoped<QueryOptionsAdapter>();
+
             services.AddMvc(options =>
             {
-                options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
-                options.Filters.Add(typeof(GlobalExceptionFilter));
+                //options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
+                //options.Filters.Add(typeof(GlobalExceptionFilter));
                 options.CacheProfiles.Add("NoCashing",
                     new CacheProfile()
                     {

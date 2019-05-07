@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.1" />
   </ItemGroup>
@@ -17,6 +18,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BC\Lingva.Common\Lingva.Common.csproj" />
+    <ProjectReference Include="..\..\DAL\Lingva.DAL.Dapper\Lingva.DAL.Dapper.csproj" />
+    <ProjectReference Include="..\..\DAL\Lingva.DAL.EF\Lingva.DAL.EF.csproj" />
     <ProjectReference Include="..\..\DAL\Lingva.DAL\Lingva.DAL.csproj" />
     <ProjectReference Include="..\..\WebAPI\Lingva.WebAPI.Models\Lingva.WebAPI.Models.csproj" />
     <ProjectReference Include="..\Lingva.MVC.Mapper\Lingva.MVC.Mapper.csproj" />

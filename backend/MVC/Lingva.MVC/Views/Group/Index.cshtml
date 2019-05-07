@@ -17,7 +17,7 @@
         @Html.TextBox("name", Model.FilterViewModel.SelectedName, htmlAttributes: new { @class = "form-control" })
 
         <label class="control-label">Language: </label>
-        @Html.DropDownList("language", Model.FilterViewModel.Languages as SelectList, htmlAttributes: new { @class = "form-control" })
+        @Html.DropDownList("languageId", Model.FilterViewModel.Languages as SelectList, htmlAttributes: new { @class = "form-control" })
 
         <input type="text" name="sortProperty" class="form-control" value="@(Model.SortViewModel.Property)" hidden />
         <input type="text" name="sortOrder" class="form-control" value="@(Model.SortViewModel.Order)" hidden />

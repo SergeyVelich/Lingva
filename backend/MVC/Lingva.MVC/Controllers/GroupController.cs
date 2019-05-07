@@ -1,19 +1,17 @@
-﻿using Lingva.Common.Mapping;
-using Lingva.MVC.Extensions;
+﻿using Lingva.BC.Contracts;
+using Lingva.BC.Dto;
+using Lingva.Common.Mapping;
+using Lingva.MVC.Infrastructure;
 using Lingva.MVC.Infrastructure.Exceptions;
 using Lingva.MVC.Models.Entities;
 using Lingva.MVC.Models.Group;
 using Lingva.MVC.Models.Group.Index;
-using Microsoft.AspNetCore.Authentication;
+using Lingva.MVC.Models.Request;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Lingva.MVC.Controllers
@@ -22,28 +20,27 @@ namespace Lingva.MVC.Controllers
     [ResponseCache(CacheProfileName = "NoCashing")]
     public class GroupController : Controller
     {
+        private readonly IGroupService _groupService;
+        private readonly IInfoService _infoService;
         private readonly IDataAdapter _dataAdapter;
         private readonly ILogger<GroupController> _logger;
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly QueryOptionsAdapter _queryOptionsAdapter;
         private readonly IMemoryCache _memoryCache;
 
-        private readonly HttpClient _client;
-
-        public GroupController(IDataAdapter dataAdapter, ILogger<GroupController> logger, IHttpClientFactory httpClientFactory, IMemoryCache memoryCache)
+        public GroupController(IGroupService groupService, IInfoService infoService, IDataAdapter dataAdapter, ILogger<GroupController> logger, IMemoryCache memoryCache, QueryOptionsAdapter queryOptionsAdapter)
         {
-            _logger = logger;
+            _groupService = groupService;
+            _infoService = infoService;
             _dataAdapter = dataAdapter;
-            _httpClientFactory = httpClientFactory;
+            _logger = logger;                
             _memoryCache = memoryCache;
-
-            _client = _httpClientFactory.CreateClient();
-            _client.BaseAddress = new Uri("http://localhost:6001/api");
+            _queryOptionsAdapter = queryOptionsAdapter;
         }
 
         // GET: group    
         public async Task<IActionResult> Index(GroupsListOptionsModel modelOptions)
         {
-            IEnumerable<GroupViewModel> groups = await GetGroupsCollectionAsync();
+            IEnumerable<GroupViewModel> groups = await GetGroupsCollectionAsync(modelOptions);
             IList<LanguageViewModel> languages = await GetLanguagesCollectionAsync();
 
             GroupsListPageViewModel viewModel = new GroupsListPageViewModel
@@ -67,15 +64,14 @@ namespace Lingva.MVC.Controllers
                 return NotFound();
             }
 
-            HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Get, "group/get");
-            HttpResponseMessage response = await _client.SendAsync(request);
+            GroupDto groupDto = await _groupService.GetByIdAsync((int)id);
 
-            if (!response.IsSuccessStatusCode)
+            if (groupDto == null)
             {
                 throw new LingvaCustomException("Connection with app is broken");
             }
 
-            GroupViewModel groupViewModel = await response.Content.ReadAsAsync<GroupViewModel>();
+            GroupViewModel groupViewModel = _dataAdapter.Map<GroupViewModel>(groupDto);
             GroupPageViewModel viewModel = new GroupPageViewModel(groupViewModel);
 
             return View(viewModel);
@@ -100,14 +96,8 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Post, "group/create");
-            request.AddBody(groupViewModel);
-            HttpResponseMessage response = await _client.SendAsync(request);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                return NotFound();
-            }
+            GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
+            await _groupService.AddAsync(groupDto);
 
             return RedirectToAction("Index");
         }
@@ -121,15 +111,13 @@ namespace Lingva.MVC.Controllers
                 return NotFound();
             }
 
-            HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Get, "group/get");       
-            HttpResponseMessage response = await _client.SendAsync(request);
-
-            if (!response.IsSuccessStatusCode)
+            GroupDto groupDto = await _groupService.GetByIdAsync((int)id);
+            if (groupDto == null)
             {
                 return NotFound();
             }
 
-            GroupViewModel groupViewModel = await response.Content.ReadAsAsync<GroupViewModel>();
+            GroupViewModel groupViewModel = _dataAdapter.Map<GroupViewModel>(groupDto);
             IList<LanguageViewModel> languages = await GetLanguagesCollectionAsync();
 
             GroupPageViewModel viewModel = new GroupPageViewModel(groupViewModel, languages);
@@ -146,14 +134,8 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Put, "group/update");
-            request.AddBody(groupViewModel);
-            HttpResponseMessage response = await _client.SendAsync(request);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                return NotFound();
-            }
+            GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
+            await _groupService.UpdateAsync(groupDto);
 
             return RedirectToAction("Index");
         }
@@ -167,15 +149,13 @@ namespace Lingva.MVC.Controllers
                 return NotFound();
             }
 
-            HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Get, "group/get");
-            HttpResponseMessage response = await _client.SendAsync(request);
-
-            if (!response.IsSuccessStatusCode)
+            GroupDto groupDto = await _groupService.GetByIdAsync((int)id);
+            if (groupDto == null)
             {
                 return NotFound();
             }
 
-            GroupViewModel groupViewModel = await response.Content.ReadAsAsync<GroupViewModel>();
+            GroupViewModel groupViewModel = _dataAdapter.Map<GroupViewModel>(groupDto);
             GroupPageViewModel viewModel = new GroupPageViewModel(groupViewModel);
 
             return View(viewModel);
@@ -189,73 +169,24 @@ namespace Lingva.MVC.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
-            HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Delete, "group/delete?id=" + groupViewModel.Id);
-            request.AddBody(groupViewModel);
-            HttpResponseMessage response = await _client.SendAsync(request);
 
-            if (!response.IsSuccessStatusCode)
-            {
-                return NotFound();
-            }
+            await _groupService.DeleteAsync(groupViewModel.Id);
 
             return RedirectToAction("Index");
         }
 
-        private async Task<HttpRequestMessage> GetRedirectRequestWithParametersAsync(HttpMethod method, string requestUri = "")
-        {
-            HttpRequestMessage request = await GetRedirectRequestAsync(method, requestUri); 
-            request.RequestUri = new Uri(request.RequestUri.ToString() + this.HttpContext.Request.QueryString);
-
-            return request;
-        }
-
-        private async Task<HttpRequestMessage> GetRedirectRequestAsync(HttpMethod method, string requestUri = "")
-        {
-            string accessToken = await HttpContext.GetTokenAsync("access_token");
-            string hostPatch = _client.BaseAddress.ToString();
-            string requestPatch = (string.IsNullOrWhiteSpace(requestUri) ? "" : "/") + requestUri;
-
-            HttpRequestMessage request = new HttpRequestMessage(method, hostPatch + requestPatch);
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-            return request;
-        }
-
         private async Task<IList<LanguageViewModel>> GetLanguagesCollectionAsync()
         {
-            HttpRequestMessage request = await GetRedirectRequestAsync(HttpMethod.Get, "info/languages");
-            HttpResponseMessage response = await _client.SendAsync(request);
-
-            IList<LanguageViewModel> languages;
-
-            if (response.IsSuccessStatusCode)
-            {
-                languages = await response.Content.ReadAsAsync<IList<LanguageViewModel>>();
-            }
-            else
-            {
-                languages = Array.Empty<LanguageViewModel>();
-            }
+            IEnumerable<LanguageDto> languagessDto = await _infoService.GetLanguagesListAsync();
+            IList<LanguageViewModel> languages = _dataAdapter.Map<IList<LanguageViewModel>>(languagessDto);
 
             return languages;
         }
 
-        private async Task<IEnumerable<GroupViewModel>> GetGroupsCollectionAsync()
+        private async Task<IEnumerable<GroupViewModel>> GetGroupsCollectionAsync(GroupsListOptionsModel modelOptions)
         {
-            HttpRequestMessage request = await GetRedirectRequestWithParametersAsync(HttpMethod.Get, "group");
-            HttpResponseMessage response = await _client.SendAsync(request);
-
-            IEnumerable<GroupViewModel> groups;
-
-            if (response.IsSuccessStatusCode)
-            {
-                groups = await response.Content.ReadAsAsync<IEnumerable<GroupViewModel>>();
-            }
-            else
-            {
-                groups = Array.Empty<GroupViewModel>();
-            }
+            IEnumerable<GroupDto> groupsDto = await _groupService.GetListAsync(_queryOptionsAdapter.Map(modelOptions));
+            IEnumerable<GroupViewModel> groups = _dataAdapter.Map<IEnumerable<GroupViewModel>>(groupsDto);
 
             return groups;
         }

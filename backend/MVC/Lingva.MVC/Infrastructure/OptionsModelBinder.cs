@@ -1,4 +1,4 @@
-﻿using Lingva.MVC.Models.Group.Index;
+﻿using Lingva.MVC.Models.Request;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Threading.Tasks;

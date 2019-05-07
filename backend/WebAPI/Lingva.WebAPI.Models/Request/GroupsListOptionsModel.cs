@@ -32,8 +32,12 @@ namespace Lingva.WebAPI.Models.Request
             SortProperty = "Name";
             SortOrder = "Desc";
 
+            Name = "";
+            LanguageId = 0;
+
             Page = 1;
             PageRecords = 5;
+            TotalRecords = 15;
         }
     }
 }

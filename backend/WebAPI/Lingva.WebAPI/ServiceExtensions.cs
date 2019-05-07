@@ -131,7 +131,6 @@ namespace Lingva.WebAPI.Extensions
         public static void ConfigureEFRepositories(this IServiceCollection services)
         {
             services.AddScoped<IRepository, Repository>();
-            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         public static void ConfigureDapperRepositories(this IServiceCollection services)

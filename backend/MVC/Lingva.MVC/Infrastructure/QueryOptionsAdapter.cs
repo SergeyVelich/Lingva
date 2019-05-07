@@ -1,11 +1,11 @@
-﻿using Lingva.WebAPI.Models.Request;
+﻿using Lingva.MVC.Models.Request;
 using QueryBuilder.Enums;
 using QueryBuilder.QueryOptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.WebAPI.Infrastructure
+namespace Lingva.MVC.Infrastructure
 {
     [ExcludeFromCodeCoverage]
     public class QueryOptionsAdapter
@@ -20,7 +20,7 @@ namespace Lingva.WebAPI.Infrastructure
             List<QueryFilter> filters = new List<QueryFilter>();
             if (optionsModel.Name != null && optionsModel.Name.Trim().Length > 0)
                 filters.Add(new QueryFilter("Name", optionsModel.Name, FilterOperation.Contains));
-            if(optionsModel.LanguageId > 0)
+            if (optionsModel.LanguageId > 0)
                 filters.Add(new QueryFilter("LanguageId", optionsModel.LanguageId, FilterOperation.Equal));
 
             List<QuerySorter> sorters = new List<QuerySorter>();
@@ -37,7 +37,7 @@ namespace Lingva.WebAPI.Infrastructure
             IQueryOptions queryOptions = new QueryOptions(
                 filters: filters,
                 sorters: sorters,
-                includers: includers, 
+                includers: includers,
                 pagenator: pagenator);
 
             return queryOptions;

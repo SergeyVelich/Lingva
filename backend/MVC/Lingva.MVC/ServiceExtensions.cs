@@ -1,11 +1,18 @@
 ﻿using AutoMapper;
 using Lingva.BC;
+using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
+using Lingva.DAL.Dapper;
+using Lingva.DAL.EF.Context;
+using Lingva.DAL.EF.Repositories;
+using Lingva.DAL.Repositories;
 using Lingva.MVC.Mapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -23,6 +30,31 @@ namespace Lingva.MVC.Extensions
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
+            });
+        }
+
+        public static void ConfigureEF(this IServiceCollection services, IConfiguration config)
+        {
+            services.ConfigureSqlContext(config);
+            services.ConfigureEFRepositories();
+        }
+
+        public static void ConfigureDapper(this IServiceCollection services)
+        {
+            services.AddScoped<DapperContext>();
+            services.ConfigureDapperRepositories();
+        }
+
+        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
+        {
+            string configStringValue = config.GetConnectionString("LingvaConnection");
+            string configVariableName = configStringValue.GetVariableName();
+            string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
+
+            services.AddDbContext<DictionaryContext>(options =>
+            {
+                options.UseSqlServer(connectionStringValue);
+                options.UseLazyLoadingProxies();
             });
         }
 
@@ -69,6 +101,16 @@ namespace Lingva.MVC.Extensions
                 options.UseCaseSensitivePaths = false;
                 options.MaximumBodySize = 1024;
             });
+        }
+
+        public static void ConfigureEFRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IRepository, Repository>();
+        }
+
+        public static void ConfigureDapperRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IRepository, DAL.Dapper.Repositories.Repository>();
         }
     }
 }

@@ -36,7 +36,6 @@ namespace Lingva.WebAPI
            
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<IInfoService, InfoService>();
-            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<QueryOptionsAdapter>();
 

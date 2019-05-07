@@ -2,28 +2,30 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.MVC.Models.Group.Index
+namespace Lingva.MVC.Models.Request
 {
+    [ExcludeFromCodeCoverage]
     public class GroupsListOptionsModel
     {
         [Display(Name = "Title")]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
         [Display(Name = "Date")]
         [DataType(DataType.DateTime)]
-        public DateTime Date { get; set; }
+        public virtual DateTime Date { get; set; }
         [Display(Name = "Language")]
-        public int? LanguageId { get; set; }
+        public virtual int? LanguageId { get; set; }
         [Display(Name = "Description")]
-        public string Description { get; set; }
-        public string SortProperty { get; set; }
-        public string SortOrder { get; set; }
+        public virtual string Description { get; set; }
+        public virtual string SortProperty { get; set; }
+        public virtual string SortOrder { get; set; }
 
-        public int Page { get; set; }
-        public int PageRecords { get; set; }
-        public int TotalRecords { get; set; }
+        public virtual int Page { get; set; }
+        public virtual int PageRecords { get; set; }
+        public virtual int TotalRecords { get; set; }
 
-        public IEnumerable<GroupViewModel> Groups { get; set; }
+        public virtual IEnumerable<GroupViewModel> Groups { get; set; }
 
         public GroupsListOptionsModel()
         {
