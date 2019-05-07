@@ -11,6 +11,9 @@ namespace AuthServer
             return new List<ApiResource>
             {
                 new ApiResource("resourceapi", "Lingva.WebAPI")
+                {
+                    Scopes = {new Scope("api.read")}
+                }
             };
         }
 
@@ -19,6 +22,7 @@ namespace AuthServer
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
+                new IdentityResources.Email(),
                 new IdentityResources.Profile(),
             };
         }
@@ -50,7 +54,8 @@ namespace AuthServer
                     },
                 },
                 new Client {
-                    ClientId = "angular_spa",
+                    RequireConsent = false,
+                    ClientId = "angular_client",
                     ClientName = "Angular SPA",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowedScopes = { "openid", "profile", "email", "api.read" },
@@ -58,7 +63,7 @@ namespace AuthServer
                     PostLogoutRedirectUris = {"http://localhost:4200/"},
                     AllowedCorsOrigins = {"http://localhost:4200"},
                     AllowAccessTokensViaBrowser = true,
-                    AccessTokenLifetime = 3600
+                    AccessTokenLifetime = 120
                 }
             };
         }
