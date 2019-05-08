@@ -24,6 +24,15 @@ namespace AuthServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
             string configStringValue = Configuration.GetConnectionString("AccountConnection");
             string configVariableName = configStringValue.GetVariableName();
             string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
@@ -76,6 +85,8 @@ namespace AuthServer
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseStaticFiles();
             app.UseIdentityServer();            

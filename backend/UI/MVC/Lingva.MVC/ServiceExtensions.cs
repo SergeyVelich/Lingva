@@ -65,7 +65,7 @@ namespace Lingva.MVC.Extensions
 
         public static void ConfigureAuthentication(this IServiceCollection services)
         {
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();//не совсем понятно, для чего это
 
             services.AddAuthentication(options =>
             {

@@ -66,14 +66,6 @@ namespace Lingva.WebAPI.Extensions
 
         public static void ConfigureAuthentication(this IServiceCollection services)
         {
-            //services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-            //        .AddIdentityServerAuthentication(options =>
-            //        {
-            //            options.Authority = "http://localhost:6050"; // Auth Server
-            //            options.RequireHttpsMetadata = false;
-            //            options.ApiName = "resourceapi"; // API Resource Id
-            //        });
-
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

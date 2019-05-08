@@ -23,7 +23,6 @@ namespace Lingva.MVC.Filters
             HttpStatusCode status = HttpStatusCode.InternalServerError;
             string msgForUser;
             string msgForLog;
-            //string stack = null;
 
             if (context.Exception is LingvaCustomException)
             {

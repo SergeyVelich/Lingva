@@ -248,7 +248,7 @@ namespace AuthServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser { UserName = model.Email, Name = model.Name, Email = model.Email };
+            var user = new ApplicationUser { UserName = model.Name, Name = model.Name, Email = model.Email };
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded) return BadRequest(result.Errors);
