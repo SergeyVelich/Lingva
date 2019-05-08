@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="8.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lingva.BC\Lingva.BC.csproj" />
+    <ProjectReference Include="..\..\..\BC\Lingva.Common\Lingva.Common.csproj" />
   </ItemGroup>
 
 </Project>

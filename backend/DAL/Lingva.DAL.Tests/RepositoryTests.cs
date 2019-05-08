@@ -101,7 +101,7 @@ namespace Lingva.DAL.EF.Tests
         public async Task DeleteAsync_Group_ReturnGroup()
         {
             var groupFromDb = await _repository.GetByIdAsync<Group>(2);
-            await _repository.DeleteAsync(groupFromDb);
+            await _repository.DeleteAsync<Group>(groupFromDb.Id);
             var result = await _repository.GetByIdAsync<Group>(groupFromDb.Id);
 
             Assert.Null(result);

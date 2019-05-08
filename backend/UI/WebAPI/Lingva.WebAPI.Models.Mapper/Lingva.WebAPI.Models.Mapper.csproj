@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="AutoMapper" Version="8.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BC\Lingva.BC\Lingva.BC.csproj" />
+    <ProjectReference Include="..\..\..\BC\Lingva.BC\Lingva.BC.csproj" />
     <ProjectReference Include="..\Lingva.WebAPI.Models\Lingva.WebAPI.Models.csproj" />
   </ItemGroup>
 

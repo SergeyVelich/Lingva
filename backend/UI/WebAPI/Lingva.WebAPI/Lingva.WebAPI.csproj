@@ -22,15 +22,15 @@
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.7.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.1" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BC\Lingva.BC\Lingva.BC.csproj" />
-    <ProjectReference Include="..\..\BC\Lingva.Common\Lingva.Common.csproj" />
-    <ProjectReference Include="..\..\DAL\Lingva.DAL.Dapper\Lingva.DAL.Dapper.csproj" />
-    <ProjectReference Include="..\..\DAL\Lingva.DAL.EF\Lingva.DAL.EF.csproj" />
+    <ProjectReference Include="..\..\..\BC\Lingva.BC\Lingva.BC.csproj" />
+    <ProjectReference Include="..\..\..\BC\Lingva.Common\Lingva.Common.csproj" />
+    <ProjectReference Include="..\..\..\DAL\Lingva.DAL.Dapper\Lingva.DAL.Dapper.csproj" />
+    <ProjectReference Include="..\..\..\DAL\Lingva.DAL.EF\Lingva.DAL.EF.csproj" />
     <ProjectReference Include="..\Lingva.WebAPI.Mapper\Lingva.WebAPI.Mapper.csproj" />
   </ItemGroup>
 

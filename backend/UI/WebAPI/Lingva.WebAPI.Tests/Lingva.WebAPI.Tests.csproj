@@ -7,23 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
-    <PackageReference Include="NSubstitute" Version="4.0.0" />
+    <PackageReference Include="NSubstitute" Version="4.1.0" />
     <PackageReference Include="nunit" Version="3.11.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BC\Lingva.BC\Lingva.BC.csproj" />
+    <ProjectReference Include="..\..\..\BC\Lingva.BC\Lingva.BC.csproj" />
     <ProjectReference Include="..\Lingva.WebAPI.Models\Lingva.WebAPI.Models.csproj" />
     <ProjectReference Include="..\Lingva.WebAPI\Lingva.WebAPI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.Extensions.Logging.Abstractions">
-      <HintPath>..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.logging.abstractions\2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

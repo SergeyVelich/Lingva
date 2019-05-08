@@ -9,7 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lingva.BC\Lingva.BC.csproj" />
+    <ProjectReference Include="..\..\..\BC\Lingva.BC\Lingva.BC.csproj" />
+    <ProjectReference Include="..\Lingva.MVC.Models\Lingva.MVC.Models.csproj" />
   </ItemGroup>
 
 </Project>

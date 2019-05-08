@@ -3,6 +3,7 @@ using Lingva.BC.Dto;
 using Lingva.Common.Mapping;
 using Lingva.WebAPI.Controllers;
 using Lingva.WebAPI.Infrastructure;
+using Lingva.WebAPI.Models.Entities;
 using Lingva.WebAPI.Models.Request;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -135,13 +136,13 @@ namespace Lingva.WebAPI.Tests
             GroupViewModel groupViewModel = new GroupViewModel { Id = 1 };
             GroupDto groupDto = new GroupDto { Id = 1 };
 
-            _groupService.DeleteAsync(Arg.Any<GroupDto>()).Returns(Task.FromResult(groupDto));
+            _groupService.DeleteAsync(Arg.Any<int>()).Returns(Task.FromResult(groupDto));
             _dataAdapter.Map<GroupDto>(groupViewModel).Returns(groupDto);
             _dataAdapter.Map<GroupViewModel>(groupDto).Returns(groupViewModel);
             _groupController = new GroupController(_groupService, _dataAdapter, _logger, _queryOptionsAdapter);
 
             //act
-            var result = await _groupController.Delete(groupViewModel);
+            var result = await _groupController.Delete(groupViewModel.Id);
 
             //assert
             Assert.NotNull(result);
