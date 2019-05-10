@@ -170,8 +170,7 @@ namespace AuthServer.Controllers
             var vm = await BuildLoginViewModelAsync(model);
             return View(vm);
         }
-
-        
+       
         /// <summary>
         /// Show logout page
         /// </summary>
@@ -223,10 +222,7 @@ namespace AuthServer.Controllers
             }
 
             return View("LoggedOut", vm);
-
-            //return Redirect(vm.PostLogoutRedirectUri);
         }
-
 
         ///// <summary>
         ///// Entry point into the registration workflow
@@ -239,7 +235,6 @@ namespace AuthServer.Controllers
 
         //    return View(vm);
         //}
-
         [HttpPost]
         public async Task<IActionResult> Register([FromBody]RegisterInputModel model)
         {
@@ -251,7 +246,11 @@ namespace AuthServer.Controllers
             var user = new ApplicationUser { UserName = model.Name, Name = model.Name, Email = model.Email };
             var result = await _userManager.CreateAsync(user, model.Password);
 
-            if (!result.Succeeded) return BadRequest(result.Errors);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+            await _userManager.AddToRoleAsync(user, Roles.User.ToString());
 
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("userName", user.UserName));
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("name", user.Name));
@@ -261,52 +260,7 @@ namespace AuthServer.Controllers
             return Ok(new RegisterViewModel(user));
         }
 
-        /// <summary>
-        /// Handle postback from registration
-        /// </summary>
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Register(RegisterInputModel model, string button)
-        //{
-        //    // the user clicked the "cancel" button
-        //    if (button != "register")
-        //    {
-        //        if (button != "login")
-        //        {
-        //            return Redirect(model.ReturnUrl);
-        //        }
-        //        return Redirect("~/account/login?returnUrl=" + model.ReturnUrl);
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        ApplicationUser user = new ApplicationUser
-        //        {
-        //            Email = model.Username,
-        //            UserName = model.Username
-        //        };
-        //        var result = await _userManager.CreateAsync(user, model.Password);
-        //        if (result.Succeeded)
-        //        {
-        //            await _userManager.AddToRoleAsync(user, "user");
-        //            return Redirect(model.ReturnUrl);
-        //        }
-        //        else
-        //        {
-        //            foreach(IdentityError err in result.Errors)
-        //            {
-        //                ModelState.AddModelError("Password", err.Description);
-        //            }                    
-        //        }                
-        //    }
-
-        //    // something went wrong, show form with error
-        //    var vm = BuildRegisterViewModel(model);
-        //    return View(vm);         
-        //}
-
-
-        /*****************************************/
+         /*****************************************/
         /* helper APIs for the AccountController */
         /*****************************************/
         private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl)
@@ -438,20 +392,5 @@ namespace AuthServer.Controllers
 
             return vm;
         }
-
-        //private RegisterViewModel BuildRegisterViewModel(string returnUrl)
-        //{           
-        //    return new RegisterViewModel
-        //    {
-        //        ReturnUrl = returnUrl,
-        //    };
-        //}
-
-        //private RegisterViewModel BuildRegisterViewModel(RegisterInputModel model)
-        //{
-        //    var vm = BuildRegisterViewModel(model.ReturnUrl);
-        //    return vm;
-        //}
-
     }
 }
