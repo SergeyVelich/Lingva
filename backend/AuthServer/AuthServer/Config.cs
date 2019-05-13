@@ -10,10 +10,7 @@ namespace AuthServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("resourceapi", "Lingva.WebAPI")
-                {
-                    Scopes = {new Scope("api.read")}
-                }
+                new ApiResource("resourceapi", "Lingva.WebAPI"),
             };
         }
 
@@ -36,34 +33,45 @@ namespace AuthServer
                 new Client
                 {
                     ClientId = "mvc_client",
-                    ClientName = "Lingva.MVC",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    ClientName = "Lingva.MVC",                    
 
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
-                    AllowOfflineAccess = true,
-                    RequireConsent = false,
+                    ClientSecrets = { new Secret("secret".Sha256()) },
 
                     RedirectUris = { "http://localhost:6002/signin-oidc" },
                     PostLogoutRedirectUris = { "http://localhost:6002/signout-callback-oidc" },
-
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "resourceapi"
                     },
-                },
-                new Client {
+
+                    AllowOfflineAccess = true,
                     RequireConsent = false,
+                },
+                new Client
+                {                   
                     ClientId = "angular_client",
                     ClientName = "Angular SPA",
+
                     AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowedScopes = { "openid", "profile", "email", "api.read" },
+                    AccessTokenType = AccessTokenType.Reference,
+                    AllowAccessTokensViaBrowser = true,
+                    
                     RedirectUris = {"http://localhost:4200/auth-callback"},
                     PostLogoutRedirectUris = {"http://localhost:4200/"},
                     AllowedCorsOrigins = {"http://localhost:4200"},
-                    AllowAccessTokensViaBrowser = true,
-                    AccessTokenLifetime = 120
+                    //AllowedScopes = { "openid", "profile", "email", "api.read" },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "resourceapi"
+                    },
+
+                    AccessTokenLifetime = 120,
+                    RequireConsent = false
                 }
             };
         }
