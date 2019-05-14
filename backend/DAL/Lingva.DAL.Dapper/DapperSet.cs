@@ -53,9 +53,9 @@ namespace Lingva.DAL.Dapper
             T result = await _dbContext.Connection.QueryFirstOrDefaultAsync<T>(SqlUpdate(fields), entity, transaction: transaction);
             return result;
         }
-        public async Task RemoveAsync(T entity, IDbTransaction transaction = null)
+        public async Task RemoveAsync(int id, IDbTransaction transaction = null)
         {
-            await _dbContext.Connection.ExecuteAsync(SqlRemove(), new { (entity as BaseBE).Id }, transaction: transaction);
+            await _dbContext.Connection.ExecuteAsync(SqlRemove(), new { id }, transaction: transaction);
         }
 
         protected string SqlSelectAll()

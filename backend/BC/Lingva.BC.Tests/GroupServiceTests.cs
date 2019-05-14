@@ -211,15 +211,15 @@ namespace Lingva.BC.UnitTest
             //arrange
             Group group = new Group { Id = 1 };
 
-            _repoMock.Setup(r => r.DeleteAsync<Group>(null));
+            _repoMock.Setup(r => r.DeleteAsync<Group>(group.Id));
             _dataAdapter.Setup(d => d.Map<Group>(null)).Returns(group);
             _groupService = new GroupService(_repoMock.Object, _dataAdapter.Object);
 
             //act
-            await _groupService.DeleteAsync(null);
+            await _groupService.DeleteAsync(group.Id);
 
             //assert
-            _repoMock.Verify(mock => mock.DeleteAsync(group), Times.Once());
+            _repoMock.Verify(mock => mock.DeleteAsync<Group>(group.Id), Times.Once());
         }
     }
 }

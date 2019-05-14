@@ -60,12 +60,15 @@ namespace Lingva.DAL.EF.Repositories
             return entity;
         }
 
-        public virtual async Task DeleteAsync<T>(T entity) where T : class, new()
+        public virtual async Task DeleteAsync<T>(int id) where T : class, new()
         {
+            T entity = new T();
             if (entity is BaseBE)
             {
-                (entity as BaseBE).ModifyDate = DateTime.Now;
+                (entity as BaseBE).Id = id;
+                _dbContext.Set<T>().Attach(entity);
             }
+
             _dbContext.Set<T>().Remove(entity);
 
             await _dbContext.SaveChangesAsync(true);
