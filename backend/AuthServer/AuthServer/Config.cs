@@ -10,7 +10,7 @@ namespace AuthServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("resourceapi", "Lingva.WebAPI"),
+                new ApiResource("resourceapi", "Lingva.WebAPI")
             };
         }
 
@@ -44,6 +44,7 @@ namespace AuthServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
                         "resourceapi"
                     },
 
@@ -54,23 +55,19 @@ namespace AuthServer
                 {                   
                     ClientId = "angular_client",
                     ClientName = "Angular SPA",
-
                     AllowedGrantTypes = GrantTypes.Implicit,
-                    AccessTokenType = AccessTokenType.Reference,
-                    AllowAccessTokensViaBrowser = true,
-                    
-                    RedirectUris = {"http://localhost:4200/auth-callback"},
-                    PostLogoutRedirectUris = {"http://localhost:4200/"},
-                    AllowedCorsOrigins = {"http://localhost:4200"},
-                    //AllowedScopes = { "openid", "profile", "email", "api.read" },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
                         "resourceapi"
                     },
-
-                    AccessTokenLifetime = 120,
+                    RedirectUris = {"http://localhost:4200/auth-callback"},
+                    PostLogoutRedirectUris = {"http://localhost:4200/"},
+                    AllowedCorsOrigins = {"http://localhost:4200"},
+                    AllowAccessTokensViaBrowser = true,
+                    AccessTokenLifetime = 3600,
                     RequireConsent = false
                 }
             };

@@ -79,8 +79,8 @@ namespace Lingva.WebAPI.Extensions
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("ApiReader", policy => policy.RequireClaim("scope", "api.read"));
-                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+                options.AddPolicy("ApiReader", policy => policy.RequireClaim("scope", "resourceapi"));
+                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
             });
         }
 

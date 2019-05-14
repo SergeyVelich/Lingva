@@ -22,7 +22,7 @@ namespace AuthServer
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
                     var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     await UserInitializer.InitializeAsync(userManager, rolesManager);
                 }

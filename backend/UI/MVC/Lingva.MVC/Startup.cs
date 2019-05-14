@@ -54,7 +54,8 @@ namespace Lingva.MVC
                         Location = ResponseCacheLocation.Client,
                         Duration = 30
                     });
-            });
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddScoped<GlobalExceptionFilter>();
         }

@@ -6,6 +6,7 @@ using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -42,7 +43,8 @@ namespace Lingva.WebAPI
             services.AddMvc(options =>
             {
                 options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
-            });
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

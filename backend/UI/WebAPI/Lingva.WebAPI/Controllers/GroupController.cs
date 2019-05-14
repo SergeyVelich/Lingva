@@ -4,6 +4,7 @@ using Lingva.Common.Mapping;
 using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Models.Entities;
 using Lingva.WebAPI.Models.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {
-    //[Authorize]
+    [Authorize(Policy = "ApiReader")]
     [Route("api/group")]
     [ApiController]
     public class GroupController : ControllerBase
@@ -30,6 +31,7 @@ namespace Lingva.WebAPI.Controllers
         }
 
         // GET: api/group
+        //[Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] GroupsListOptionsModel groupsListOptionsModel)
         {

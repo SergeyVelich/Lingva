@@ -11,7 +11,7 @@ namespace AuthServer.Models
         public string Name { get; set; }
         public string Email { get; set; }
 
-        public RegisterViewModel(ApplicationUser user)
+        public RegisterViewModel(AppUser user)
         {
             Id = user.Id;
             Name = user.Name;
