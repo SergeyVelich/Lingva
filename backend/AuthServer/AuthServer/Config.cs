@@ -68,6 +68,7 @@ namespace AuthServer
                     AllowedCorsOrigins = {"http://localhost:4200"},
                     AllowAccessTokensViaBrowser = true,
                     AccessTokenLifetime = 3600,
+                    IdentityTokenLifetime = 300,
                     RequireConsent = false
                 }
             };
