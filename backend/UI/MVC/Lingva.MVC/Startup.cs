@@ -60,7 +60,7 @@ namespace Lingva.MVC
             services.AddScoped<GlobalExceptionFilter>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {

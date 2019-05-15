@@ -15,7 +15,7 @@ namespace Lingva.MVC
             var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             try
             {
-                logger.Debug("init main");
+                logger.Debug("Starting web host");
                 CreateWebHostBuilder(args).Build().Run();
             }
             catch (Exception exception)
@@ -35,7 +35,7 @@ namespace Lingva.MVC
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
-                    logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                    logging.SetMinimumLevel(LogLevel.Trace);
                 })
                 .UseNLog();
     }

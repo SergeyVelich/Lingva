@@ -1,44 +1,49 @@
-﻿using AuthServer.Identity.Entities;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Serilog;
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace AuthServer
 {
     [ExcludeFromCodeCoverage]
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
+            IConfiguration configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("serilog.config.json", optional: false, reloadOnChange: true)
+            .Build();
 
-            using (var scope = host.Services.CreateScope())
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+
+            Log.Information("Logger created");
+
+            try
             {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
-                    var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    await UserInitializer.InitializeAsync(userManager, rolesManager);
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while seeding the database.");
-                }
+                Log.Information("Starting web host");
+                CreateWebHostBuilder(args).Build().Run();
             }
-            
-            host.Run();
+            catch (Exception exception)
+            {
+                Log.Fatal(exception, "Stopped program because of exception");
+                throw;
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseUrls("http://localhost:6050")
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseSerilog();
     }
 }
