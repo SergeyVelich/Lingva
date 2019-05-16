@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
-using Microsoft.Extensions.Configuration;
-using Lingva.Common.Extensions;
 
 namespace AuthServer.Identity.Contexts.Factories
 {
@@ -32,11 +30,7 @@ namespace AuthServer.Identity.Contexts.Factories
 
             var config = builder.Build();
 
-            string configStringValue = config.GetConnectionString("AccountConnection");
-            string configVariableName = configStringValue.GetVariableName();
-            string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
-
-            //var connectionStringValue = config.GetConnectionString("Default");
+            string connectionStringValue = config.GetConnectionString("Default");
 
             if (string.IsNullOrWhiteSpace(connectionStringValue))
             {

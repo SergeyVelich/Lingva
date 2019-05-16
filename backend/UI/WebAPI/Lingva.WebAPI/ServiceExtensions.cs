@@ -1,5 +1,4 @@
 ﻿using Lingva.BC;
-using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
 using Lingva.DAL.Dapper;
 using Lingva.DAL.EF.Context;
@@ -48,9 +47,7 @@ namespace Lingva.WebAPI.Extensions
 
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
         {
-            string configStringValue = config.GetConnectionString("LingvaConnection");
-            string configVariableName = configStringValue.GetVariableName();
-            string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
+            string connectionStringValue = config.GetConnectionString("LingvaConnection");
 
             services.AddDbContext<DictionaryContext>(options =>
             {

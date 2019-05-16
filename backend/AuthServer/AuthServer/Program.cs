@@ -1,17 +1,23 @@
-﻿using Microsoft.AspNetCore;
+﻿using AuthServer.Identity;
+using AuthServer.Identity.Entities;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace AuthServer
 {
     [ExcludeFromCodeCoverage]
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             IConfiguration configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -27,7 +33,29 @@ namespace AuthServer
             try
             {
                 Log.Information("Starting web host");
-                CreateWebHostBuilder(args).Build().Run();
+                var host = CreateWebHostBuilder(args).Build();
+
+                using (var scope = host.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+                    try
+                    {
+                        //services.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+                        //services.GetRequiredService<AppIdentityDbContext>().Database.Migrate();                        
+
+                        var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                        var usersManager = services.GetRequiredService<UserManager<AppUser>>();
+                        await DataInitializer.AddDefaultRolesAsync(rolesManager);
+                        await DataInitializer.AddDefaultUsersAsync(usersManager);
+                    }
+                    catch (Exception ex)
+                    {
+                        var logger = services.GetRequiredService<ILogger<Program>>();
+                        logger.LogError(ex, "An error occurred while seeding the database.");
+                    }
+                }
+
+                host.Run();
             }
             catch (Exception exception)
             {

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Lingva.BC;
-using Lingva.Common.Extensions;
 using Lingva.Common.Mapping;
 using Lingva.DAL.Dapper;
 using Lingva.DAL.EF.Context;
@@ -12,7 +11,6 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.MVC.Extensions
@@ -46,9 +44,7 @@ namespace Lingva.MVC.Extensions
 
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
         {
-            string configStringValue = config.GetConnectionString("LingvaConnection");
-            string configVariableName = configStringValue.GetVariableName();
-            string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
+            string connectionStringValue = config.GetConnectionString("LingvaConnection");
 
             services.AddDbContext<DictionaryContext>(options =>
             {
