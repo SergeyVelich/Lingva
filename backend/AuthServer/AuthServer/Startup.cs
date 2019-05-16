@@ -1,5 +1,6 @@
 ﻿using AuthServer.Extensions;
 using AuthServer.Identity.Contexts;
+using AuthServer.Identity.Contexts.Factories;
 using AuthServer.Identity.Entities;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Builder;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
+using System.Reflection;
 
 namespace AuthServer
 {
@@ -43,7 +45,8 @@ namespace AuthServer
                 // this adds the operational data from DB (codes, tokens, consents)
                 .AddOperationalStore(options =>
                 {
-                    options.ConfigureDbContext = builder => builder.UseSqlServer(connectionStringValue);
+                    options.ConfigureDbContext = builder => builder.UseSqlServer(connectionStringValue, 
+                        sql => sql.MigrationsAssembly(typeof(PersistedGrantDbContextFactory).GetTypeInfo().Assembly.GetName().Name));
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;
                     options.TokenCleanupInterval = 30; // interval in seconds
