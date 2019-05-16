@@ -3,24 +3,22 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace AuthServer.Identity.Contexts.Factories
 {
     public abstract class DesignTimeDbContextFactoryBase<TContext> : IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {
-        public TContext CreateDbContext(string[] args)
-        {
-            return Create(Directory.GetCurrentDirectory(), Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
-        }
+        public abstract TContext CreateDbContext(string[] args);
 
-        public TContext Create()
+        public DbContextOptions<TContext> GetDbContextOptions()
         {
             var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            var basePath = AppContext.BaseDirectory;
-            return Create(basePath, environmentName);
+            var basePath = Directory.GetCurrentDirectory(); //var basePath = AppContext.BaseDirectory;
+            return GetDbContextOptions(basePath, environmentName);
         }
 
-        private TContext Create(string basePath, string environmentName)
+        private DbContextOptions<TContext> GetDbContextOptions(string basePath, string environmentName)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(basePath)
@@ -37,10 +35,10 @@ namespace AuthServer.Identity.Contexts.Factories
                 throw new InvalidOperationException(
                     "Could not find a connection string named 'Default'.");
             }
-            return Create(connectionStringValue);
+            return GetDbContextOptions(connectionStringValue);
         }
 
-        private TContext Create(string connectionString)
+        private DbContextOptions<TContext> GetDbContextOptions(string connectionString)
         {
             if (string.IsNullOrEmpty(connectionString))
                 throw new ArgumentException(
@@ -51,12 +49,11 @@ namespace AuthServer.Identity.Contexts.Factories
 
             Console.WriteLine("DesignTimeDbContextFactory.Create(string): Connection string: {0}", connectionString);
 
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlServer(connectionString, 
+                sql => sql.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name));
 
             var options = optionsBuilder.Options;
-            return CreateNewInstance(options);
+            return options;
         }
-
-        protected abstract TContext CreateNewInstance(DbContextOptions<TContext> options);
     }
 }

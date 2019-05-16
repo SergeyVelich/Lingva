@@ -4,8 +4,9 @@ namespace AuthServer.Identity.Contexts.Factories
 {
     public class AppIdentityDbContextFactory : DesignTimeDbContextFactoryBase<AppIdentityDbContext>
     {
-        protected override AppIdentityDbContext CreateNewInstance(DbContextOptions<AppIdentityDbContext> options)
+        public override AppIdentityDbContext CreateDbContext(string[] args)
         {
+            DbContextOptions<AppIdentityDbContext> options = GetDbContextOptions();
             return new AppIdentityDbContext(options);
         }
     }
