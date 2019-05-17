@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.Common.Mapping
+namespace Lingva.Additional.Mapping.DataAdapter
 {
     [ExcludeFromCodeCoverage]
     public class DataAdapter : IDataAdapter

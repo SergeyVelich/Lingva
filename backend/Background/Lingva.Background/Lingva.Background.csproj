@@ -15,7 +15,6 @@
     <ProjectReference Include="..\..\Additional\SenderService\SenderService.Email.EF\SenderService.Email.EF.csproj" />
     <ProjectReference Include="..\..\Additional\SenderService\SenderService.Email\SenderService.Email.csproj" />
     <ProjectReference Include="..\..\BC\Lingva.BC\Lingva.BC.csproj" />
-    <ProjectReference Include="..\..\BC\Lingva.Common\Lingva.Common.csproj" />
     <ProjectReference Include="..\..\DAL\Lingva.DAL.EF\Lingva.DAL.EF.csproj" />
     <ProjectReference Include="..\Lingva.Background.Mapper\Lingva.Background.Mapper.csproj" />
   </ItemGroup>

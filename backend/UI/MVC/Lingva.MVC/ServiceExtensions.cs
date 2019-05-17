@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Lingva.Additional.Mapping.DataAdapter;
 using Lingva.BC;
-using Lingva.Common.Mapping;
 using Lingva.DAL.Dapper;
 using Lingva.DAL.EF.Context;
 using Lingva.DAL.EF.Repositories;

@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BC\Lingva.Common\Lingva.Common.csproj" />
+
   </ItemGroup>
 
   <ItemGroup>

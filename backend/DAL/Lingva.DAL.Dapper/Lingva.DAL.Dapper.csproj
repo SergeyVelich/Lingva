@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BC\Lingva.BC\Lingva.BC.csproj" />
-    <ProjectReference Include="..\..\BC\Lingva.Common\Lingva.Common.csproj" />
     <ProjectReference Include="..\Lingva.DAL\Lingva.DAL.csproj" />
   </ItemGroup>
 

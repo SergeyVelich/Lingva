@@ -1,4 +1,4 @@
-﻿namespace Lingva.Common.Mapping
+﻿namespace Lingva.Additional.Mapping.DataAdapter
 {
     public interface IDataAdapter
     {

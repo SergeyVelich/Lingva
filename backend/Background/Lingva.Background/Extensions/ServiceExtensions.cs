@@ -1,5 +1,5 @@
-﻿using Lingva.Background.Mapper;
-using Lingva.Common.Mapping;
+﻿using Lingva.Additional.Mapping.DataAdapter;
+using Lingva.Background.Mapper;
 using Lingva.DAL.EF.Context;
 using Lingva.DAL.EF.Repositories;
 using Lingva.DAL.Repositories;
