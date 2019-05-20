@@ -22,8 +22,4 @@
     <ProjectReference Include="..\..\DAL\Lingva.DAL\Lingva.DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Factories\" />
-  </ItemGroup>
-
 </Project>

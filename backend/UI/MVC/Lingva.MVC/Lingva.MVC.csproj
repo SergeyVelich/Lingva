@@ -19,6 +19,7 @@
     <ProjectReference Include="..\..\..\Additional\Mapping\DataAdapter\DataAdapter.csproj" />
     <ProjectReference Include="..\..\..\DAL\Lingva.DAL.Dapper\Lingva.DAL.Dapper.csproj" />
     <ProjectReference Include="..\..\..\DAL\Lingva.DAL.EF\Lingva.DAL.EF.csproj" />
+    <ProjectReference Include="..\..\..\DAL\Lingva.DAL.Mongo\Lingva.DAL.Mongo.csproj" />
     <ProjectReference Include="..\..\..\DAL\Lingva.DAL\Lingva.DAL.csproj" />
     <ProjectReference Include="..\Lingva.MVC.Mapper\Lingva.MVC.Mapper.csproj" />
   </ItemGroup>

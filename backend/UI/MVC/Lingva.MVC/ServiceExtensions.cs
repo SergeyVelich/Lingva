@@ -4,6 +4,7 @@ using Lingva.BC;
 using Lingva.DAL.Dapper;
 using Lingva.DAL.EF.Context;
 using Lingva.DAL.EF.Repositories;
+using Lingva.DAL.Mongo;
 using Lingva.DAL.Repositories;
 using Lingva.MVC.Mapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -32,7 +33,7 @@ namespace Lingva.MVC.Extensions
 
         public static void ConfigureEF(this IServiceCollection services, IConfiguration config)
         {
-            services.ConfigureSqlContext(config);
+            services.ConfigureEFContext(config);
             services.ConfigureEFRepositories();
         }
 
@@ -42,9 +43,15 @@ namespace Lingva.MVC.Extensions
             services.ConfigureDapperRepositories();
         }
 
-        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
+        public static void ConfigureMongo(this IServiceCollection services)
         {
-            string connectionStringValue = config.GetConnectionString("LingvaConnection");
+            services.AddTransient<MongoContext>();
+            services.ConfigureMongoRepositories();
+        }
+
+        public static void ConfigureEFContext(this IServiceCollection services, IConfiguration config)
+        {
+            string connectionStringValue = config.GetConnectionString("LingvaEFConnection");
 
             services.AddDbContext<DictionaryContext>(options =>
             {
@@ -106,6 +113,11 @@ namespace Lingva.MVC.Extensions
         public static void ConfigureDapperRepositories(this IServiceCollection services)
         {
             services.AddScoped<IRepository, DAL.Dapper.Repositories.Repository>();
+        }
+
+        public static void ConfigureMongoRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IRepository, DAL.Mongo.Repositories.Repository>();
         }
     }
 }

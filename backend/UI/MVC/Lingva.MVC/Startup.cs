@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.MVC
@@ -29,6 +28,7 @@ namespace Lingva.MVC
             services.ConfigureCors();
             services.ConfigureEF(Configuration);
             //services.ConfigureDapper(Configuration);
+            //services.ConfigureMongo(Configuration);
             services.ConfigureOptions(Configuration);
             services.ConfigureAuthentication();
             services.ConfigureAutoMapper();

@@ -1,6 +1,5 @@
 using Lingva.BC.Contracts;
 using Lingva.BC.Services;
-using Lingva.DAL.EF.Context;
 using Lingva.WebAPI.Extensions;
 using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Middlewares;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
@@ -30,6 +28,7 @@ namespace Lingva.WebAPI
             services.ConfigureCors();
             services.ConfigureEF(Configuration);
             //services.ConfigureDapper(Configuration);
+            //services.ConfigureMongo(Configuration);
             services.ConfigureOptions(Configuration);
             services.ConfigureAuthentication();
             services.ConfigureAutoMapper();

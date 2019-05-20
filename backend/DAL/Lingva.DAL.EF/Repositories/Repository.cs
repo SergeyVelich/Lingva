@@ -2,6 +2,7 @@
 using Lingva.DAL.Entities;
 using Lingva.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using QueryBuilder.Extensions;
 using QueryBuilder.QueryOptions;
 using System;
@@ -12,9 +13,10 @@ using System.Threading.Tasks;
 
 namespace Lingva.DAL.EF.Repositories
 {
-    public class Repository : IRepository, IDisposable
+    public class Repository : IRepository, IDisposable, ITransactionProvider
     {
         protected readonly DictionaryContext _dbContext;
+        protected IDbContextTransaction _dbTransaction;
 
         protected bool disposed = false;
 
@@ -23,55 +25,78 @@ namespace Lingva.DAL.EF.Repositories
             _dbContext = dbContext;
         }
 
-        public virtual async Task<IEnumerable<T>> GetListAsync<T>() where T : class, new()
+        public virtual async Task<IEnumerable<T>> GetListAsync<T>() where T : BaseBE, new()
         {
             IQueryable<T> result = _dbContext.Set<T>().AsNoTracking();
 
             return await result.ToListAsync();
         }      
 
-        public virtual async Task<T> GetByIdAsync<T>(int id) where T : class, new()
+        public virtual async Task<T> GetByIdAsync<T>(int id) where T : BaseBE, new()
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public virtual async Task<T> CreateAsync<T>(T entity) where T : class, new()
+        public virtual async Task<T> CreateAsync<T>(T entity) where T : BaseBE, new()
         {
-            if (entity is BaseBE)
-            {
-                (entity as BaseBE).CreateDate = DateTime.Now;
-                (entity as BaseBE).ModifyDate = DateTime.Now;
-            }
+            entity.CreateDate = DateTime.Now;
+            entity.ModifyDate = DateTime.Now;
+
             await _dbContext.Set<T>().AddAsync(entity);
             await _dbContext.SaveChangesAsync(true);
 
             return entity;
         }
 
-        public virtual async Task<T> UpdateAsync<T>(T entity) where T : class, new()
+        public virtual async Task<T> UpdateAsync<T>(T entity) where T : BaseBE, new()
         {
-            if (entity is BaseBE)
-            {
-                (entity as BaseBE).ModifyDate = DateTime.Now;
-            }
+            entity.ModifyDate = DateTime.Now;
+
             _dbContext.Set<T>().Update(entity);
             await _dbContext.SaveChangesAsync(true);
 
             return entity;
         }
 
-        public virtual async Task DeleteAsync<T>(int id) where T : class, new()
+        public virtual async Task DeleteAsync<T>(int id) where T : BaseBE, new()
         {
-            T entity = new T();
-            if (entity is BaseBE)
+            T entity = new T
             {
-                (entity as BaseBE).Id = id;
-                _dbContext.Set<T>().Attach(entity);
-            }
+                Id = id
+            };
+            _dbContext.Set<T>().Attach(entity);
 
             _dbContext.Set<T>().Remove(entity);
 
             await _dbContext.SaveChangesAsync(true);
+        }
+
+        public void StartTransaction()
+        {
+            _dbTransaction = _dbContext.Database.BeginTransaction();
+        }
+
+        public void CommitTransaction()
+        {
+            _dbTransaction.Commit();
+        }
+
+        public void AbortTransaction()
+        {
+            _dbTransaction.Rollback();
+        }
+
+        public void EndTransaction()
+        {
+            try
+            {
+                CommitTransaction();
+            }
+            catch
+            {
+                AbortTransaction();
+                throw;
+            }
         }
 
         protected virtual void Dispose(bool disposing)
@@ -94,7 +119,7 @@ namespace Lingva.DAL.EF.Repositories
 
 
 
-        public virtual async Task<IEnumerable<T>> GetListAsync<T>(IQueryOptions queryOptions) where T : class, new()
+        public virtual async Task<IEnumerable<T>> GetListAsync<T>(IQueryOptions queryOptions) where T : BaseBE, new()
         {
             Expression<Func<T, bool>> filters = queryOptions.GetFiltersExpression<T>();
             IEnumerable<string> sorters = queryOptions.GetSortersCollection<T>();

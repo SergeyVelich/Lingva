@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.DAL.Entities
 {
     [ExcludeFromCodeCoverage]
-    public class GroupUser : BaseBE
+    public partial class GroupUser : BaseBE
     {
         public int GroupId { get; set; }
         public virtual Group Group { get; set; }
