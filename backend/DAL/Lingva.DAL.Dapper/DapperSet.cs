@@ -17,6 +17,7 @@ namespace Lingva.DAL.Dapper
         public DapperSet(DapperContext dbContext, string collectionName)
         {
             _dbContext = dbContext;
+            _collectionName = collectionName;
         }
 
         public async Task<IEnumerable<T>> SelectAllAsync()

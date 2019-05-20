@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore;
+﻿using Lingva.DAL.EF.Context;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
 using System;
@@ -16,7 +19,22 @@ namespace Lingva.MVC
             try
             {
                 logger.Debug("Starting web host");
-                CreateWebHostBuilder(args).Build().Run();
+                var host = CreateWebHostBuilder(args).Build();
+
+                using (var scope = host.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+                    try
+                    {
+                        services.GetRequiredService<DictionaryContext>().Database.Migrate();
+                    }
+                    catch (Exception exception)
+                    {
+                        logger.Error(exception, "An error occurred while seeding the database.");
+                    }
+                }
+
+                host.Run();
             }
             catch (Exception exception)
             {                
