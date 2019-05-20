@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AuthServer.Identity.Migrations
+namespace AuthServer.Identity.Migrations.AppIdentityDb
 {
     public partial class initial : Migration
     {

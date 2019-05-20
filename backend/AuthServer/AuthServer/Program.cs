@@ -1,11 +1,18 @@
-﻿using AuthServer.Identity.Entities;
+﻿using AuthServer.Identity;
+using AuthServer.Identity.Contexts;
+using AuthServer.Identity.Entities;
+using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace AuthServer
@@ -15,30 +22,59 @@ namespace AuthServer
     {
         public static async Task Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
+            IConfiguration configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("serilog.config.json", optional: false, reloadOnChange: true)
+            .Build();
 
-            using (var scope = host.Services.CreateScope())
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+
+            Log.Information("Logger created");
+
+            try
             {
-                var services = scope.ServiceProvider;
-                try
+                Log.Information("Starting web host");
+                var host = CreateWebHostBuilder(args).Build();
+
+                using (var scope = host.Services.CreateScope())
                 {
-                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
-                    var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    await UserInitializer.InitializeAsync(userManager, rolesManager);
+                    var services = scope.ServiceProvider;
+                    try
+                    {
+                        services.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+                        services.GetRequiredService<AppIdentityDbContext>().Database.Migrate();                        
+
+                        var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                        var usersManager = services.GetRequiredService<UserManager<AppUser>>();
+                        await DataInitializer.AddDefaultRolesAsync(rolesManager);
+                        await DataInitializer.AddDefaultUsersAsync(usersManager);
+                    }
+                    catch (Exception ex)
+                    {
+                        var logger = services.GetRequiredService<ILogger<Program>>();
+                        logger.LogError(ex, "An error occurred while seeding the database.");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while seeding the database.");
-                }
+
+                host.Run();
             }
-            
-            host.Run();
+            catch (Exception exception)
+            {
+                Log.Fatal(exception, "Stopped program because of exception");
+                throw;
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseUrls("http://localhost:6050")
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseSerilog();
     }
 }

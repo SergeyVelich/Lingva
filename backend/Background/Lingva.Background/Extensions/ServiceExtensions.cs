@@ -1,6 +1,5 @@
-﻿using Lingva.Background.Mapper;
-using Lingva.Common.Extensions;
-using Lingva.Common.Mapping;
+﻿using Lingva.Additional.Mapping.DataAdapter;
+using Lingva.Background.Mapper;
 using Lingva.DAL.EF.Context;
 using Lingva.DAL.EF.Repositories;
 using Lingva.DAL.Repositories;
@@ -8,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz.Spi;
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.Background
@@ -36,9 +34,7 @@ namespace Lingva.Background
 
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
         {
-            string configStringValue = config.GetConnectionString("LingvaConnection");
-            string configVariableName = configStringValue.GetVariableName();
-            string connectionStringValue = Environment.GetEnvironmentVariable(configVariableName);
+            string connectionStringValue = config.GetConnectionString("LingvaConnection");
 
             services.AddDbContext<DictionaryContext>(options =>
                 options.UseSqlServer(connectionStringValue));

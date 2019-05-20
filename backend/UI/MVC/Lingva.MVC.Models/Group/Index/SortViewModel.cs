@@ -1,5 +1,4 @@
-﻿using Lingva.BC.Common.Enums;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.MVC.Models.Group.Index
 {

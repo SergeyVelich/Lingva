@@ -1,9 +1,8 @@
-﻿using Lingva.BC.Contracts;
+﻿using Lingva.Additional.Mapping.DataAdapter;
+using Lingva.BC.Contracts;
 using Lingva.BC.Dto;
-using Lingva.Common.Mapping;
 using Lingva.DAL.Entities;
 using Lingva.DAL.Repositories;
-using QueryBuilder.QueryOptions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
