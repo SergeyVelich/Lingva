@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Lingva.ASP.Infrastructure
+namespace Lingva.ASP.Infrastructure.Binders
 {
 
     public class OptionsModelBinder : IModelBinder

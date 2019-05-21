@@ -1,4 +1,4 @@
-﻿using Lingva.ASP.Infrastructure;
+﻿using Lingva.ASP.Infrastructure.Adapters;
 using Lingva.BC;
 using Lingva.BC.Contracts;
 using Lingva.BC.Services;
@@ -39,7 +39,6 @@ namespace Lingva.ASP.Extensions
         {
             DbProviders dbProvider = (DbProviders)Enum.Parse(typeof(DbProviders), config.GetSection("Selectors:DbProvider").Value, true);
 
-            services.ConfigureCors();
             switch (dbProvider)
             {
                 case DbProviders.Dapper:

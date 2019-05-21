@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.ASP.Infrastructure
+namespace Lingva.ASP.Infrastructure.Adapters
 {
     [ExcludeFromCodeCoverage]
     public class QueryOptionsAdapter

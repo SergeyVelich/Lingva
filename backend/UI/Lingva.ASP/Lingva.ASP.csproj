@@ -14,8 +14,4 @@
     <ProjectReference Include="..\..\DAL\Lingva.DAL.Mongo\Lingva.DAL.Mongo.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-
-  </ItemGroup>
-
 </Project>

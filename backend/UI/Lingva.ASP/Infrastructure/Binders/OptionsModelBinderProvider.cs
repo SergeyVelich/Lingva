@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 
-namespace Lingva.ASP.Infrastructure
+namespace Lingva.ASP.Infrastructure.Binders
 {
     public class OptionsModelBinderProvider : IModelBinderProvider
     {

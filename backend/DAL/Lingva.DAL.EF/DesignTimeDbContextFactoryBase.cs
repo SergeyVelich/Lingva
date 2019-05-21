@@ -28,7 +28,7 @@ namespace Lingva.DAL.EF.Context
 
             var config = builder.Build();
 
-            string connectionStringValue = config.GetConnectionString("Default");
+            string connectionStringValue = config.GetConnectionString("LingvaEFConnection");
 
             if (string.IsNullOrWhiteSpace(connectionStringValue))
             {

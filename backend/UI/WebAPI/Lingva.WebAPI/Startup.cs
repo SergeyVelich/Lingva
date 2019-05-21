@@ -1,5 +1,6 @@
+using Lingva.ASP;
 using Lingva.ASP.Extensions;
-using Lingva.ASP.Infrastructure;
+using Lingva.ASP.Infrastructure.Binders;
 using Lingva.WebAPI.Extensions;
 using Lingva.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NLog;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.WebAPI
@@ -70,6 +72,8 @@ namespace Lingva.WebAPI
 
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
+
+            DbInitializer.Initialize(Configuration);
         }
     }
 }
