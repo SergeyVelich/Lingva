@@ -68,9 +68,7 @@ namespace AuthServer
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(
-            IApplicationBuilder app, 
-            IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -98,6 +96,8 @@ namespace AuthServer
             app.UseHttpsRedirection();
             app.UseIdentityServer();
             app.UseMvcWithDefaultRoute();
+
+            DbInitializer.Initialize(userManager, roleManager);
         }
     }
 }
