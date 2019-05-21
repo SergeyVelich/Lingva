@@ -25,8 +25,8 @@ namespace Lingva.Background
             services.ConfigureEmailSenderEF<DictionaryContext>();
             services.ConfigureQuartzSheduler();
 
-            services.AddScoped<IGroupService, GroupService>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IGroupManager, GroupManager>();
+            services.AddScoped<IUserManager, UserManager>();
 
             services.ConfigureAutoMapper();
         }

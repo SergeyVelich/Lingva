@@ -1,4 +1,4 @@
-using Lingva.MVC.Infrastructure.Exceptions;
+using Lingva.ASP.Infrastructure.Exceptions;
 using Lingva.MVC.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

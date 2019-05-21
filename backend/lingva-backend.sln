@@ -85,7 +85,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mapping", "Mapping", "{9B6A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAdapter", "Additional\Mapping\DataAdapter\DataAdapter.csproj", "{C8A8D2E1-2B65-4A60-B526-2D2637A435E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lingva.DAL.Mongo", "DAL\Lingva.DAL.Mongo\Lingva.DAL.Mongo.csproj", "{557585BC-481E-48EB-A4AD-18D85738E08E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.DAL.Mongo", "DAL\Lingva.DAL.Mongo\Lingva.DAL.Mongo.csproj", "{557585BC-481E-48EB-A4AD-18D85738E08E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

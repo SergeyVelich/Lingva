@@ -1,9 +1,9 @@
 ﻿using Lingva.Additional.Mapping.DataAdapter;
+using Lingva.ASP.Infrastructure;
+using Lingva.ASP.Infrastructure.Models;
 using Lingva.BC.Contracts;
 using Lingva.BC.Dto;
-using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Models.Entities;
-using Lingva.WebAPI.Models.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,12 +17,12 @@ namespace Lingva.WebAPI.Controllers
     [ApiController]
     public class GroupController : ControllerBase
     {
-        private readonly IGroupService _groupService;
+        private readonly IGroupManager _groupService;
         private readonly IDataAdapter _dataAdapter;
         private readonly ILogger<GroupController> _logger;
         private readonly QueryOptionsAdapter _queryOptionsAdapter;
 
-        public GroupController(IGroupService groupService, IDataAdapter dataAdapter, ILogger<GroupController> logger, QueryOptionsAdapter queryOptionsAdapter)
+        public GroupController(IGroupManager groupService, IDataAdapter dataAdapter, ILogger<GroupController> logger, QueryOptionsAdapter queryOptionsAdapter)
         {
             _groupService = groupService;
             _dataAdapter = dataAdapter;

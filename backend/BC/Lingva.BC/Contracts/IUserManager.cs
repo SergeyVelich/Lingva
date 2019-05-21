@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.BC.Contracts
 {
-    public interface IUserService
+    public interface IUserManager
     {
         Task<IEnumerable<UserDto>> GetListByGroupAsync(int id);
     }

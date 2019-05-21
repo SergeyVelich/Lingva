@@ -15,11 +15,11 @@ namespace Lingva.WebAPI.Controllers
     [ApiController]
     public class InfoController : ControllerBase
     {
-        private readonly IInfoService _infoService;
+        private readonly IInfoManager _infoService;
         private readonly IDataAdapter _dataAdapter;
         private readonly ILogger<InfoController> _logger;
 
-        public InfoController(IInfoService infoService, IDataAdapter dataAdapter, ILogger<InfoController> logger)
+        public InfoController(IInfoManager infoService, IDataAdapter dataAdapter, ILogger<InfoController> logger)
         {
             _infoService = infoService;
             _dataAdapter = dataAdapter;

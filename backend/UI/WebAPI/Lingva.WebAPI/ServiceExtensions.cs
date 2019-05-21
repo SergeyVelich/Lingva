@@ -1,14 +1,6 @@
 ﻿using Lingva.Additional.Mapping.DataAdapter;
-using Lingva.BC;
-using Lingva.DAL.Dapper;
-using Lingva.DAL.EF.Context;
-using Lingva.DAL.EF.Repositories;
-using Lingva.DAL.Mongo;
-using Lingva.DAL.Repositories;
 using Lingva.WebAPI.Mapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -22,52 +14,6 @@ namespace Lingva.WebAPI.Extensions
     [ExcludeFromCodeCoverage]
     public static class ServiceExtensions
     {
-        public static void ConfigureCors(this IServiceCollection services)
-        {
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
-        }
-
-        public static void ConfigureEF(this IServiceCollection services, IConfiguration config)
-        {
-            services.ConfigureEFContext(config);
-            services.ConfigureEFRepositories();
-        }
-
-        public static void ConfigureDapper(this IServiceCollection services)
-        {
-            services.AddScoped<DapperContext>();           
-            services.ConfigureDapperRepositories();
-        }
-
-        public static void ConfigureMongo(this IServiceCollection services)
-        {
-            services.AddTransient<MongoContext>();
-            services.ConfigureMongoRepositories();
-        }
-
-        public static void ConfigureEFContext(this IServiceCollection services, IConfiguration config)
-        {
-            string connectionStringValue = config.GetConnectionString("LingvaEFConnection");
-
-            services.AddDbContext<DictionaryContext>(options =>
-            {
-                options.UseSqlServer(connectionStringValue);
-                options.UseLazyLoadingProxies();
-            });
-        }
-
-        public static void ConfigureOptions(this IServiceCollection services, IConfiguration config)
-        {
-            services.Configure<StorageOptions>(config.GetSection("StorageConfig"));
-        }
-
         public static void ConfigureAuthentication(this IServiceCollection services)
         {
             services.AddAuthentication(options =>
@@ -122,21 +68,6 @@ namespace Lingva.WebAPI.Extensions
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
-        }
-
-        public static void ConfigureEFRepositories(this IServiceCollection services)
-        {
-            services.AddScoped<IRepository, Repository>();
-        }
-
-        public static void ConfigureDapperRepositories(this IServiceCollection services)
-        {
-            services.AddScoped<IRepository, DAL.Dapper.Repositories.Repository>();
-        }
-
-        public static void ConfigureMongoRepositories(this IServiceCollection services)
-        {
-            services.AddScoped<IRepository, DAL.Mongo.Repositories.Repository>();
         }
     }
 }

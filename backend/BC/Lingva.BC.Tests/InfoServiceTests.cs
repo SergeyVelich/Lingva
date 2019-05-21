@@ -18,7 +18,7 @@ namespace Lingva.BC.UnitTest
     {
         private readonly List<Language> _languageList;
         private readonly List<LanguageDto> _languageListDto;
-        private IInfoService _infoService;
+        private IInfoManager _infoService;
         private readonly Mock<IRepository> _repoMock;
         private readonly Mock<IDataAdapter> _data;
 
@@ -54,7 +54,7 @@ namespace Lingva.BC.UnitTest
 
             _repoMock = new Mock<IRepository>();
             _data = new Mock<IDataAdapter>();
-            _infoService = new InfoService(_repoMock.Object, _data.Object);
+            _infoService = new InfoManager(_repoMock.Object, _data.Object);
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace Lingva.BC.UnitTest
         {
             //arrange
             _repoMock.Setup(r => r.GetListAsync<Language>()).Returns(Task.FromResult<IEnumerable<Language>>(_languageList));
-            _infoService = new InfoService(_repoMock.Object, _data.Object);
+            _infoService = new InfoManager(_repoMock.Object, _data.Object);
 
             //act
             var result = await _infoService.GetLanguagesListAsync();
@@ -76,7 +76,7 @@ namespace Lingva.BC.UnitTest
         {
             //arrange
             _repoMock.Setup(r => r.GetListAsync<Language>()).Returns(Task.FromResult<IEnumerable<Language>>(_languageList));
-            _infoService = new InfoService(_repoMock.Object, _data.Object);
+            _infoService = new InfoManager(_repoMock.Object, _data.Object);
             _data.Setup(d => d.Map<IEnumerable<LanguageDto>>(_languageList)).Returns(_languageListDto);
 
             //act

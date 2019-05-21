@@ -61,12 +61,18 @@ namespace Lingva.DAL.Mongo.Repositories
 
         public void CommitTransaction()
         {
-            _dbContext.Session.CommitTransaction();
+            if (_dbContext.Session.IsInTransaction)
+            {
+                _dbContext.Session.CommitTransaction();
+            }
         }
 
         public void AbortTransaction()
         {
-            _dbContext.Session.AbortTransaction();
+            if (_dbContext.Session.IsInTransaction)
+            {
+                _dbContext.Session.AbortTransaction();
+            }           
         }
 
         public void EndTransaction()
@@ -100,8 +106,11 @@ namespace Lingva.DAL.Mongo.Repositories
             GC.SuppressFinalize(this);
         }
 
-        public Task<IEnumerable<T>> GetListAsync<T>(IQueryOptions queryOptions) where T : BaseBE, new()
+        public async Task<IEnumerable<T>> GetListAsync<T>(IQueryOptions queryOptions) where T : BaseBE, new()
         {
+            var documents = await _dbContext.Set<T>().Find(_ => true).ToListAsync();
+            return documents;
+
             throw new NotImplementedException();
         }
     }

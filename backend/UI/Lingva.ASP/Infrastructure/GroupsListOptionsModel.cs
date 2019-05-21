@@ -1,10 +1,8 @@
-﻿using Lingva.WebAPI.Models.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.WebAPI.Models.Request
+namespace Lingva.ASP.Infrastructure.Models
 {
     [ExcludeFromCodeCoverage]
     public class GroupsListOptionsModel
@@ -24,8 +22,6 @@ namespace Lingva.WebAPI.Models.Request
         public virtual int Page { get; set; }
         public virtual int PageRecords { get; set; }
         public virtual int TotalRecords { get; set; }
-
-        public virtual IEnumerable<GroupViewModel> Groups { get; set; }
 
         public GroupsListOptionsModel()
         {

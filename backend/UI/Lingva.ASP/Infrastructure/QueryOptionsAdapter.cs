@@ -1,11 +1,11 @@
-﻿using Lingva.MVC.Models.Request;
+﻿using Lingva.ASP.Infrastructure.Models;
 using QueryBuilder.Enums;
 using QueryBuilder.QueryOptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.MVC.Infrastructure
+namespace Lingva.ASP.Infrastructure
 {
     [ExcludeFromCodeCoverage]
     public class QueryOptionsAdapter

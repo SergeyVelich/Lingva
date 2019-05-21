@@ -1,8 +1,7 @@
-using Lingva.BC.Contracts;
-using Lingva.BC.Services;
+using Lingva.ASP.Extensions;
+using Lingva.ASP.Infrastructure;
 using Lingva.MVC.Extensions;
 using Lingva.MVC.Filters;
-using Lingva.MVC.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -26,22 +25,19 @@ namespace Lingva.MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
-            services.ConfigureEF(Configuration);
-            //services.ConfigureDapper(Configuration);
-            //services.ConfigureMongo(Configuration);
-            services.ConfigureOptions(Configuration);
+            services.ConfigureOptions(Configuration);                      
             services.ConfigureAuthentication();
             services.ConfigureAutoMapper();
+            services.ConfigureFilters();
 
-            services.AddScoped<IGroupService, GroupService>();
-            services.AddScoped<IInfoService, InfoService>();
-
-            services.AddScoped<QueryOptionsAdapter>();
-
+            services.ConfigureDbProvider(Configuration);
+            services.ConfigureManagers();
+            services.ConfigureDataAdapters();
+          
             services.AddMvc(options =>
             {
-                //options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
-                //options.Filters.Add(typeof(GlobalExceptionFilter));
+                options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
+                options.Filters.Add(typeof(GlobalExceptionFilter));
                 options.CacheProfiles.Add("NoCashing",
                     new CacheProfile()
                     {
@@ -55,9 +51,7 @@ namespace Lingva.MVC
                         Duration = 30
                     });
             })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddScoped<GlobalExceptionFilter>();
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);            
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

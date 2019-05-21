@@ -1,12 +1,12 @@
 ﻿using Lingva.Additional.Mapping.DataAdapter;
+using Lingva.ASP.Infrastructure;
+using Lingva.ASP.Infrastructure.Exceptions;
+using Lingva.ASP.Infrastructure.Models;
 using Lingva.BC.Contracts;
 using Lingva.BC.Dto;
-using Lingva.MVC.Infrastructure;
-using Lingva.MVC.Infrastructure.Exceptions;
 using Lingva.MVC.Models.Entities;
 using Lingva.MVC.Models.Group;
 using Lingva.MVC.Models.Group.Index;
-using Lingva.MVC.Models.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -20,14 +20,14 @@ namespace Lingva.MVC.Controllers
     [ResponseCache(CacheProfileName = "NoCashing")]
     public class GroupController : Controller
     {
-        private readonly IGroupService _groupService;
-        private readonly IInfoService _infoService;
+        private readonly IGroupManager _groupService;
+        private readonly IInfoManager _infoService;
         private readonly IDataAdapter _dataAdapter;
         private readonly ILogger<GroupController> _logger;
         private readonly QueryOptionsAdapter _queryOptionsAdapter;
         private readonly IMemoryCache _memoryCache;
 
-        public GroupController(IGroupService groupService, IInfoService infoService, IDataAdapter dataAdapter, ILogger<GroupController> logger, IMemoryCache memoryCache, QueryOptionsAdapter queryOptionsAdapter)
+        public GroupController(IGroupManager groupService, IInfoManager infoService, IDataAdapter dataAdapter, ILogger<GroupController> logger, IMemoryCache memoryCache, QueryOptionsAdapter queryOptionsAdapter)
         {
             _groupService = groupService;
             _infoService = infoService;
@@ -65,12 +65,6 @@ namespace Lingva.MVC.Controllers
             }
 
             GroupDto groupDto = await _groupService.GetByIdAsync((int)id);
-
-            if (groupDto == null)
-            {
-                throw new LingvaCustomException("Connection with app is broken");
-            }
-
             GroupViewModel groupViewModel = _dataAdapter.Map<GroupViewModel>(groupDto);
             GroupPageViewModel viewModel = new GroupPageViewModel(groupViewModel);
 
@@ -119,7 +113,6 @@ namespace Lingva.MVC.Controllers
 
             GroupViewModel groupViewModel = _dataAdapter.Map<GroupViewModel>(groupDto);
             IList<LanguageViewModel> languages = await GetLanguagesCollectionAsync();
-
             GroupPageViewModel viewModel = new GroupPageViewModel(groupViewModel, languages);
 
             return View(viewModel);

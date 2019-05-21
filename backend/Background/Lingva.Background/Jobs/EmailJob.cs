@@ -12,12 +12,12 @@ namespace Lingva.Background
     public class EmailJob : IJob
     {
         private readonly IEFEmailSender _emailSender;
-        private readonly IGroupService _groupService;
-        private readonly IUserService _userService;
+        private readonly IGroupManager _groupService;
+        private readonly IUserManager _userService;
 
         private static bool IsBusy = false;
 
-        public EmailJob(IEFEmailSender emailSender, IGroupService groupService, IUserService userService)
+        public EmailJob(IEFEmailSender emailSender, IGroupManager groupService, IUserManager userService)
         {
             _emailSender = emailSender;
             _groupService = groupService;

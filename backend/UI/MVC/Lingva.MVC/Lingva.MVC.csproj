@@ -8,17 +8,13 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.2" />
   </ItemGroup>
 
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Additional\Mapping\DataAdapter\DataAdapter.csproj" />
-    <ProjectReference Include="..\..\..\DAL\Lingva.DAL.Dapper\Lingva.DAL.Dapper.csproj" />
-    <ProjectReference Include="..\..\..\DAL\Lingva.DAL.EF\Lingva.DAL.EF.csproj" />
-    <ProjectReference Include="..\..\..\DAL\Lingva.DAL.Mongo\Lingva.DAL.Mongo.csproj" />
-    <ProjectReference Include="..\..\..\DAL\Lingva.DAL\Lingva.DAL.csproj" />
+    <ProjectReference Include="..\..\Lingva.ASP\Lingva.ASP.csproj" />
     <ProjectReference Include="..\Lingva.MVC.Mapper\Lingva.MVC.Mapper.csproj" />
   </ItemGroup>
 
