@@ -1,6 +1,7 @@
 ﻿using Lingva.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace Lingva.DAL.EF.EntityConfigurations
 {
@@ -12,6 +13,9 @@ namespace Lingva.DAL.EF.EntityConfigurations
             //    .HasMany(x => x.GroupUsers)
             //    .WithOne(x => x.Group)
             //    .HasForeignKey(gu => gu.GroupId);
+            builder
+                .Property(e => e.Date)
+                .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
         }
     }
 }

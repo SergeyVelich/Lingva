@@ -46,7 +46,7 @@ namespace Lingva.MVC.Controllers
             {
                 PagenatorViewModel = new PagenatorViewModel(modelOptions.TotalRecords, modelOptions.Page, modelOptions.PageRecords),
                 SortViewModel = new SortViewModel(modelOptions.SortProperty, modelOptions.SortOrder),
-                FilterViewModel = new FilterViewModel(languages, modelOptions.Name, modelOptions.LanguageId, modelOptions.Description, modelOptions.Date),
+                FilterViewModel = new FilterViewModel(languages, modelOptions.Name, modelOptions.LanguageId, modelOptions.Description, modelOptions.DateFrom, modelOptions.DateTo),
                 Groups = groups,
             };
             

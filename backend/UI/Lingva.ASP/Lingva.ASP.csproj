@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BC\Lingva.Common\Lingva.Common.csproj" />
     <ProjectReference Include="..\..\DAL\Lingva.DAL.Dapper\Lingva.DAL.Dapper.csproj" />
     <ProjectReference Include="..\..\DAL\Lingva.DAL.EF\Lingva.DAL.EF.csproj" />
     <ProjectReference Include="..\..\DAL\Lingva.DAL.Mongo\Lingva.DAL.Mongo.csproj" />

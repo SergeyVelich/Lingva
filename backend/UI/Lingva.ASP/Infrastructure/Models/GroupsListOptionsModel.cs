@@ -9,9 +9,10 @@ namespace Lingva.ASP.Infrastructure.Models
     {
         [Display(Name = "Title")]
         public virtual string Name { get; set; }
-        [Display(Name = "Date")]
-        [DataType(DataType.DateTime)]
-        public virtual DateTime Date { get; set; }
+        [Display(Name = "Date from")]   
+        public virtual DateTime? DateFrom { get; set; }
+        [Display(Name = "Date to")]
+        public virtual DateTime? DateTo { get; set; }
         [Display(Name = "Language")]
         public virtual int? LanguageId { get; set; }
         [Display(Name = "Description")]
@@ -28,8 +29,10 @@ namespace Lingva.ASP.Infrastructure.Models
             SortProperty = "Name";
             SortOrder = "Desc";
 
-            Name = "";
-            LanguageId = 0;
+            //Name = "";
+            //LanguageId = 0;
+            //DateFrom = DateTime.MinValue;
+            //DateTo = DateTime.MaxValue;
 
             Page = 1;
             PageRecords = 5;

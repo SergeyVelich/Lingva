@@ -10,8 +10,10 @@
     {
         Equal,
         NotEqual,
-        Less,
-        More,
+        LessThan,
+        LessThanOrEqual,
+        GreaterThan,
+        GreaterThanOrEqual,
         Contains,
         NotContains,
     }

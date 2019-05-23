@@ -53,9 +53,10 @@ namespace QueryBuilder.QueryOptions
                 var property = Expression.Property(parameter, filter.PropertyName);
                 var propertyInfo = typeof(T).GetProperty(filter.PropertyName);
                 var typeForValue = propertyInfo.PropertyType;
-                var constant = Expression.Constant(Convert.ChangeType(filter.PropertyValue, typeForValue));
 
                 Expression subExpression = null;
+
+                var constant = Expression.Constant(Convert.ChangeType(filter.PropertyValue, typeForValue));
 
                 switch (filter.Operation)
                 {
@@ -65,11 +66,17 @@ namespace QueryBuilder.QueryOptions
                     case FilterOperation.NotEqual:
                         subExpression = Expression.NotEqual(property, constant);
                         break;
-                    case FilterOperation.Less:
+                    case FilterOperation.LessThan:
                         subExpression = Expression.LessThan(property, constant);
                         break;
-                    case FilterOperation.More:
+                    case FilterOperation.LessThanOrEqual:
+                        subExpression = Expression.LessThanOrEqual(property, constant);
+                        break;
+                    case FilterOperation.GreaterThan:
                         subExpression = Expression.GreaterThan(property, constant);
+                        break;
+                    case FilterOperation.GreaterThanOrEqual:
+                        subExpression = Expression.GreaterThanOrEqual(property, constant);
                         break;
                     case FilterOperation.Contains:
                         MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
