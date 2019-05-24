@@ -34,7 +34,7 @@ namespace Lingva.ASP.Infrastructure.Adapters
             }              
 
             List<QuerySorter> sorters = new List<QuerySorter>();
-            SortOrder sortOrder = Enum.Parse<SortOrder>(optionsModel.SortOrder);
+            SortOrder sortOrder = Enum.Parse<SortOrder>(optionsModel.SortOrder, true);
             sorters.Add(new QuerySorter(optionsModel.SortProperty, sortOrder));
 
             List<QueryIncluder> includers = new List<QueryIncluder>();
