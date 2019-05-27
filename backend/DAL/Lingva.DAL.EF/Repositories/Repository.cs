@@ -8,7 +8,6 @@ using QueryBuilder.QueryOptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Lingva.DAL.EF.Repositories
@@ -101,14 +100,14 @@ namespace Lingva.DAL.EF.Repositories
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     _dbContext.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
 
         public void Dispose()
@@ -120,36 +119,21 @@ namespace Lingva.DAL.EF.Repositories
 
         public virtual async Task<IEnumerable<T>> GetListAsync<T>(IQueryOptions queryOptions) where T : BaseBE, new()
         {
-            Expression<Func<T, bool>> filters = queryOptions.GetFiltersExpression<T>();
-            IEnumerable<string> sorters = queryOptions.GetSortersCollection<T>();
-            IList<string> includers = queryOptions.GetIncludersCollection(); 
-            QueryPagenator pagenator = queryOptions.Pagenator;
-            int skip = pagenator.Skip;
-            int take = pagenator.Take; IQueryable<T> result = _dbContext.Set<T>().AsNoTracking();
+            IQueryable<T> result = _dbContext.Set<T>().AsNoTracking();
 
-            if (filters != null)
-            {
-                result = result.Where(filters);
-            }
+            result = result.Where(queryOptions.Filters);
 
-            if (includers != null)
-            {
-                foreach (string includer in includers)
-                {
-                    result = result.Include(includer);
-                }
-            }
+            result = result.Include(queryOptions.Includers);
 
-            if (sorters != null)
-            {
-                result = result.OrderBy(sorters);
-            }
+            result = result.OrderBy(queryOptions.Sorters);
 
+            int skip = queryOptions.Pagenator.Skip;
             if (skip != 0)
             {
                 result = result.Skip(skip);
             }
 
+            int take = queryOptions.Pagenator.Take;
             if (take != 0)
             {
                 result = result.Take(take);

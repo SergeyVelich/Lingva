@@ -15,17 +15,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.BC.Tests", "BC\Lingv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.Common", "BC\Lingva.Common\Lingva.Common.csproj", "{D5AF45F2-DC2A-430C-9AEF-9E77E1DBC709}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC", "UI\MVC\Lingva.MVC\Lingva.MVC.csproj", "{9A37911E-B51E-4BBD-A401-2B8CD6122EAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC", "UI\Lingva.MVC\Lingva.MVC\Lingva.MVC.csproj", "{9A37911E-B51E-4BBD-A401-2B8CD6122EAF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Tests", "UI\MVC\Lingva.MVC.Tests\Lingva.MVC.Tests.csproj", "{A3136D41-1FB7-4B37-B16D-9F5B31BBA566}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Tests", "UI\Lingva.MVC\Lingva.MVC.Tests\Lingva.MVC.Tests.csproj", "{A3136D41-1FB7-4B37-B16D-9F5B31BBA566}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI", "UI\WebAPI\Lingva.WebAPI\Lingva.WebAPI.csproj", "{A89DFC63-C61F-4981-893F-656C4B9A2F54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI", "UI\Lingva.WebAPI\Lingva.WebAPI\Lingva.WebAPI.csproj", "{A89DFC63-C61F-4981-893F-656C4B9A2F54}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Mapper", "UI\WebAPI\Lingva.WebAPI.Mapper\Lingva.WebAPI.Mapper.csproj", "{910C408F-D51F-40FB-8798-8B4C48B91DE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Mapper", "UI\Lingva.WebAPI\Lingva.WebAPI.Mapper\Lingva.WebAPI.Mapper.csproj", "{910C408F-D51F-40FB-8798-8B4C48B91DE1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Models", "UI\WebAPI\Lingva.WebAPI.Models\Lingva.WebAPI.Models.csproj", "{479DA151-2ECC-4961-AC3A-BDDBF0A62200}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Models", "UI\Lingva.WebAPI\Lingva.WebAPI.Models\Lingva.WebAPI.Models.csproj", "{479DA151-2ECC-4961-AC3A-BDDBF0A62200}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Models.Mapper", "UI\WebAPI\Lingva.WebAPI.Models.Mapper\Lingva.WebAPI.Models.Mapper.csproj", "{14EB43E0-B6BC-408F-A88B-B91F07F6DED5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Models.Mapper", "UI\Lingva.WebAPI\Lingva.WebAPI.Models.Mapper\Lingva.WebAPI.Models.Mapper.csproj", "{14EB43E0-B6BC-408F-A88B-B91F07F6DED5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BC", "BC", "{3E71A635-EF3C-43BF-A9BF-670F085D687A}"
 EndProject
@@ -35,11 +35,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVC", "MVC", "{ED2FD1BD-3D5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAPI", "WebAPI", "{C2F66234-532F-4891-ACF1-043B6ABCF7D7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Models.Mapper", "UI\MVC\Lingva.MVC.Models.Mapper\Lingva.MVC.Models.Mapper.csproj", "{C075D8A3-7AF0-4006-A0A2-8D26E5AD3D66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Models.Mapper", "UI\Lingva.MVC\Lingva.MVC.Models.Mapper\Lingva.MVC.Models.Mapper.csproj", "{C075D8A3-7AF0-4006-A0A2-8D26E5AD3D66}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Mapper", "UI\MVC\Lingva.MVC.Mapper\Lingva.MVC.Mapper.csproj", "{5645584E-909A-4D0B-8DB4-43CB1288B938}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Mapper", "UI\Lingva.MVC\Lingva.MVC.Mapper\Lingva.MVC.Mapper.csproj", "{5645584E-909A-4D0B-8DB4-43CB1288B938}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Models", "UI\MVC\Lingva.MVC.Models\Lingva.MVC.Models.csproj", "{06F6E2C7-9F3E-46D6-911D-E30EF0AB8A26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.MVC.Models", "UI\Lingva.MVC\Lingva.MVC.Models\Lingva.MVC.Models.csproj", "{06F6E2C7-9F3E-46D6-911D-E30EF0AB8A26}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthServer", "AuthServer\AuthServer\AuthServer.csproj", "{E3BB3121-5EB5-4DA7-A99E-6BD8094886D9}"
 EndProject
@@ -49,7 +49,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.DAL.EF", "DAL\Lingva
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.DAL.Dapper", "DAL\Lingva.DAL.Dapper\Lingva.DAL.Dapper.csproj", "{BE38058D-7A6B-4423-ABC9-5DB0FED0F1CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Tests", "UI\WebAPI\Lingva.WebAPI.Tests\Lingva.WebAPI.Tests.csproj", "{129D29BE-AF60-481A-8BF3-D21D34D84619}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Tests", "UI\Lingva.WebAPI\Lingva.WebAPI.Tests\Lingva.WebAPI.Tests.csproj", "{129D29BE-AF60-481A-8BF3-D21D34D84619}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Additional", "Additional", "{F672D062-C6F8-4730-9038-AB2EEC3E681E}"
 EndProject

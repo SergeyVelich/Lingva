@@ -6,7 +6,7 @@
         Desc,
     }
 
-    public enum FilterOperation
+    public enum FilterElementOperation
     {
         Equal,
         NotEqual,
@@ -18,6 +18,12 @@
         NotContains,
     }
 
+    public enum FilterGroupOperation
+    {
+        And,
+        Or,
+    }
+
     public enum EFSortOperation
     {
         OrderBy,
@@ -25,4 +31,15 @@
         OrderByDescending,
         ThenByDescending,
     }
+
+    public enum EFIncludeOperation
+    {
+        Include,
+        IncludeThen,
+    }
+    public enum EFWhereOperation
+    {
+        Where,
+    }
+
 }

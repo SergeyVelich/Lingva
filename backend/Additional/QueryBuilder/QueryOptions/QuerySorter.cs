@@ -1,7 +1,9 @@
 ﻿using QueryBuilder.Enums;
+using System.Diagnostics.CodeAnalysis;
 
 namespace QueryBuilder.QueryOptions
 {
+    [ExcludeFromCodeCoverage]
     public class QuerySorter
     {
         public string PropertyName { get; set; }

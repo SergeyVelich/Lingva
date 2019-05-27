@@ -1,5 +1,8 @@
-﻿namespace QueryBuilder.QueryOptions
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace QueryBuilder.QueryOptions
 {
+    [ExcludeFromCodeCoverage]
     public class QueryPagenator
     {
         public int Skip { get; set; }

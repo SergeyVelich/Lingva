@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
 
 namespace QueryBuilder.QueryOptions
 {
     public interface IQueryOptions
     {
-        QueryPagenator Pagenator { get; }
-
-        Expression<Func<T, bool>> GetFiltersExpression<T>();
-
-        IList<string> GetSortersCollection<T>();
-
-        IList<string> GetIncludersCollection();               
+        IList<QueryFilter> Filters { get; }
+        IList<QuerySorter> Sorters { get; }
+        IList<QuerySelector> Selectors { get; }
+        IList<QueryIncluder> Includers { get; }
+        QueryPagenator Pagenator { get; }         
     }
 }
