@@ -35,21 +35,21 @@ namespace QueryBuilder.Extensions
                 case SortOrder.Asc:
                     if (isFirst)
                     {
-                        methodName = "OrderBy";
+                        methodName = EFSortOperation.OrderBy.ToString();
                     }
                     else
                     {
-                        methodName = "ThenBy";
+                        methodName = EFSortOperation.ThenBy.ToString();
                     }
                     break;
                 case SortOrder.Desc:
                     if (isFirst)
                     {
-                        methodName = "OrderByDescending";
+                        methodName = EFSortOperation.OrderByDescending.ToString();
                     }
                     else
                     {
-                        methodName = "ThenByDescending";
+                        methodName = EFSortOperation.ThenByDescending.ToString();
                     }
                     break;
                 default:

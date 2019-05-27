@@ -17,4 +17,12 @@
         Contains,
         NotContains,
     }
+
+    public enum EFSortOperation
+    {
+        OrderBy,
+        ThenBy,
+        OrderByDescending,
+        ThenByDescending,
+    }
 }

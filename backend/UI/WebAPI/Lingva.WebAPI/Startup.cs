@@ -60,7 +60,7 @@ namespace Lingva.WebAPI
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
-            app.UseCors("CorsPolicy");
+            app.UseCors("AllowAll");
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

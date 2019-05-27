@@ -73,7 +73,7 @@ namespace Lingva.MVC
                 .AddRedirect("[h,H]ome[/]?$", "home/index");
             app.UseRewriter(options);
 
-            app.UseCors("CorsPolicy");
+            app.UseCors("AllowAll");
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc(config =>

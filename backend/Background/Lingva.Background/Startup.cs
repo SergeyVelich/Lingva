@@ -21,8 +21,8 @@ namespace Lingva.Background
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureEF(Configuration);
-            services.ConfigureEmailSenderEF<DictionaryContext>();
+            services.ConfigureEF(Configuration); //for getiing info about events and users
+            services.ConfigureEmailSenderEF<DictionaryContext>(); //for working with sender library
             services.ConfigureQuartzSheduler();
 
             services.AddScoped<IGroupManager, GroupManager>();
