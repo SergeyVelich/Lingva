@@ -16,7 +16,7 @@ namespace QueryBuilder.Extensions
             foreach (string sorter in sorters)
             {
                 var splitedSorter = sorter.Split(' ');
-                SortOrder sortOrder = Enum.Parse<SortOrder>(splitedSorter[1]);
+                SortOrder sortOrder = Enum.Parse<SortOrder>(splitedSorter[1], true);
                 string methodName = GetMethodName(sortOrder, isFirst);
 
                 orderedQuery = CallOrderedQueryable(orderedQuery, methodName, splitedSorter[0]);

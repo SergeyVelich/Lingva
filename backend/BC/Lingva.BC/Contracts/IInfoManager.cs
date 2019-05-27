@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.BC.Contracts
 {
-    public interface IInfoService
+    public interface IInfoManager
     {
         Task<IEnumerable<LanguageDto>> GetLanguagesListAsync();
     }

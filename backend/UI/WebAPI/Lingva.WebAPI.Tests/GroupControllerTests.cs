@@ -1,10 +1,11 @@
 using Lingva.Additional.Mapping.DataAdapter;
+using Lingva.ASP.Infrastructure;
+using Lingva.ASP.Infrastructure.Adapters;
+using Lingva.ASP.Infrastructure.Models;
 using Lingva.BC.Contracts;
 using Lingva.BC.Dto;
 using Lingva.WebAPI.Controllers;
-using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Models.Entities;
-using Lingva.WebAPI.Models.Request;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
@@ -20,7 +21,7 @@ namespace Lingva.WebAPI.Tests
     {
         private List<GroupDto> _groupDtoList;
         private GroupController _groupController;
-        private IGroupService _groupService;
+        private IGroupManager _groupService;
         private IDataAdapter _dataAdapter;
         private ILogger<GroupController> _logger;
         private QueryOptionsAdapter _queryOptionsAdapter;
@@ -29,7 +30,7 @@ namespace Lingva.WebAPI.Tests
         [SetUp]
         public void Setup()
         {
-            _groupService= Substitute.For<IGroupService>();
+            _groupService= Substitute.For<IGroupManager>();
             _dataAdapter = Substitute.For<IDataAdapter>();          
             _logger = Substitute.For<ILogger<GroupController>>();
             _queryOptionsAdapter = Substitute.For<QueryOptionsAdapter>();

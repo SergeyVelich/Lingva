@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Lingva.BC.Services
 {
-    public class GroupService : IGroupService
+    public class GroupManager : IGroupManager
     {
         private readonly IRepository _repository;
         private readonly IDataAdapter _dataAdapter;
            
-        public GroupService(IRepository repository, IDataAdapter dataAdapter)
+        public GroupManager(IRepository repository, IDataAdapter dataAdapter)
         {
             _repository = repository;
             _dataAdapter = dataAdapter;

@@ -8,17 +8,17 @@ namespace QueryBuilder.QueryOptions
 {
     public class QueryOptions : IQueryOptions
     {
-        private readonly ICollection<QueryFilter> _filters;
-        private readonly ICollection<QuerySorter> _sorters;
-        private readonly ICollection<QuerySelector> _selectors;
-        private readonly ICollection<QueryIncluder> _includers;
+        private readonly IList<QueryFilter> _filters;
+        private readonly IList<QuerySorter> _sorters;
+        private readonly IList<QuerySelector> _selectors;
+        private readonly IList<QueryIncluder> _includers;
 
         public QueryPagenator Pagenator { get; }
 
-        public QueryOptions(ICollection<QueryFilter> filters = null, 
-            ICollection<QuerySorter> sorters = null,
-            ICollection<QuerySelector> selectors = null,
-            ICollection<QueryIncluder> includers = null, 
+        public QueryOptions(IList<QueryFilter> filters = null,
+            IList<QuerySorter> sorters = null,
+            IList<QuerySelector> selectors = null,
+            IList<QueryIncluder> includers = null, 
             QueryPagenator pagenator = null)
         {
             _filters = filters;
@@ -53,9 +53,10 @@ namespace QueryBuilder.QueryOptions
                 var property = Expression.Property(parameter, filter.PropertyName);
                 var propertyInfo = typeof(T).GetProperty(filter.PropertyName);
                 var typeForValue = propertyInfo.PropertyType;
-                var constant = Expression.Constant(Convert.ChangeType(filter.PropertyValue, typeForValue));
 
                 Expression subExpression = null;
+
+                var constant = Expression.Constant(Convert.ChangeType(filter.PropertyValue, typeForValue));
 
                 switch (filter.Operation)
                 {
@@ -65,11 +66,17 @@ namespace QueryBuilder.QueryOptions
                     case FilterOperation.NotEqual:
                         subExpression = Expression.NotEqual(property, constant);
                         break;
-                    case FilterOperation.Less:
+                    case FilterOperation.LessThan:
                         subExpression = Expression.LessThan(property, constant);
                         break;
-                    case FilterOperation.More:
+                    case FilterOperation.LessThanOrEqual:
+                        subExpression = Expression.LessThanOrEqual(property, constant);
+                        break;
+                    case FilterOperation.GreaterThan:
                         subExpression = Expression.GreaterThan(property, constant);
+                        break;
+                    case FilterOperation.GreaterThanOrEqual:
+                        subExpression = Expression.GreaterThanOrEqual(property, constant);
                         break;
                     case FilterOperation.Contains:
                         MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
@@ -93,7 +100,7 @@ namespace QueryBuilder.QueryOptions
             return exp;
         }
 
-        public ICollection<string> GetSortersCollection<T>()
+        public IList<string> GetSortersCollection<T>()
         {
             if (_sorters == null)
             {
@@ -104,16 +111,17 @@ namespace QueryBuilder.QueryOptions
                 return null;
             }
 
-            ICollection<string> sorters = new List<string>();//??
-            foreach (var sorter in _sorters)
+            string[] sorters = new string[_sorters.Count];
+
+            for (int i = 0; i < _sorters.Count; i++)
             {
-                sorters.Add(sorter.PropertyName + " " + sorter.SortOrder.ToString());
+                sorters[i] = _sorters[i].PropertyName + " " + _sorters[i].SortOrder.ToString();
             }
 
             return sorters;
         }
 
-        public ICollection<Expression<Func<T, bool>>> GetIncludersCollection<T>()
+        public IList<string> GetIncludersCollection()
         {
             if (_includers == null)
             {
@@ -124,56 +132,11 @@ namespace QueryBuilder.QueryOptions
                 return null;
             }
 
-            ICollection<Expression<Func<T, bool>>> includers = new List<Expression<Func<T, bool>>>();//??
+            string[] includers = new string[_includers.Count];
 
-            foreach (var includer in _includers)
+            for(int i = 0; i < _includers.Count; i++)
             {
-                var parameter = Expression.Parameter(typeof(T), "x");
-                var property = Expression.Property(parameter, includer.PropertyName);
-                //var propertyInfo = typeof(T).GetProperty(filter.PropertyName);
-                //var typeForValue = propertyInfo.PropertyType;
-                //var constant = Expression.Constant(Convert.ChangeType(filter.PropertyValue, typeForValue));
-
-                Expression expression = Expression.PropertyOrField(parameter, includer.PropertyName);
-                Expression<Func<T, bool>> exp = Expression.Lambda<Func<T, bool>>(expression ?? throw new InvalidOperationException(), parameter);
-
-                //var body = includer.PropertyName.Split('.').Aggregate<string, Expression>(parameter, Expression.PropertyOrField);
-                //var exp = Expression.Lambda<Func<T, bool>>(body, parameter);
-                includers.Add(exp);
-                //    switch (filter.Operation)
-                //    {
-                //        case FilterOperation.Equal:
-                //            subExpression = Expression.Equal(property, constant);
-                //            break;
-                //        case FilterOperation.NotEqual:
-                //            subExpression = Expression.NotEqual(property, constant);
-                //            break;
-                //        case FilterOperation.Less:
-                //            subExpression = Expression.LessThan(property, constant);
-                //            break;
-                //        case FilterOperation.More:
-                //            subExpression = Expression.GreaterThan(property, constant);
-                //            break;
-                //        case FilterOperation.Contains:
-                //            MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
-                //            subExpression = Expression.Call(property, method, constant);
-                //            break;
-                //        case FilterOperation.NotContains:
-                //            method = typeof(string).GetMethod("NotContains", new[] { typeof(string) });
-                //            subExpression = Expression.Call(property, method, constant);
-                //            break;
-                //        default: throw new ArgumentOutOfRangeException();
-                //    }
-
-                //    expression = expression == null ? subExpression : Expression.AndAlso(expression, subExpression);
-                //}
-
-                //if (expression != null)
-                //{
-                //    exp = Expression.Lambda<Func<T, bool>>(expression ?? throw new InvalidOperationException(), parameter);
-                //}
-
-                //return exp;                
+                includers[i] = _includers[i].PropertyName;
             }
 
             return includers;

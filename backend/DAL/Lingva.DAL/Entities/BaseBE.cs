@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Lingva.DAL.Entities
 {
     [ExcludeFromCodeCoverage]
-    public class BaseBE
+    public partial class BaseBE
     {
         public int Id { get; set; }
         public DateTime? CreateDate { get; set; }

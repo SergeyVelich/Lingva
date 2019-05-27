@@ -10,7 +10,8 @@ namespace Lingva.BC.Mapper.Adapters
     {
         public GroupAdapter()
         {
-            CreateMap<Group, GroupDto>();
+            CreateMap<Group, GroupDto>()
+                .ForMember(dto => dto.LanguageName, opt => opt.MapFrom(g => g.Language.Name));
             CreateMap<GroupDto, Group>();
 
             CreateMap<Group, Group>();

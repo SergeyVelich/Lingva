@@ -1,12 +1,13 @@
 ﻿using Lingva.Additional.Mapping.DataAdapter;
+using Lingva.ASP.Infrastructure.Adapters;
+using Lingva.ASP.Infrastructure.Models;
 using Lingva.BC.Contracts;
 using Lingva.BC.Dto;
-using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Models.Entities;
-using Lingva.WebAPI.Models.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,12 +18,12 @@ namespace Lingva.WebAPI.Controllers
     [ApiController]
     public class GroupController : ControllerBase
     {
-        private readonly IGroupService _groupService;
+        private readonly IGroupManager _groupService;
         private readonly IDataAdapter _dataAdapter;
         private readonly ILogger<GroupController> _logger;
         private readonly QueryOptionsAdapter _queryOptionsAdapter;
 
-        public GroupController(IGroupService groupService, IDataAdapter dataAdapter, ILogger<GroupController> logger, QueryOptionsAdapter queryOptionsAdapter)
+        public GroupController(IGroupManager groupService, IDataAdapter dataAdapter, ILogger<GroupController> logger, QueryOptionsAdapter queryOptionsAdapter)
         {
             _groupService = groupService;
             _dataAdapter = dataAdapter;
@@ -35,6 +36,10 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] GroupsListOptionsModel groupsListOptionsModel)
         {
+            if(groupsListOptionsModel.DateFrom != null)
+                groupsListOptionsModel.DateFrom = groupsListOptionsModel.DateFrom.Value.ToUniversalTime();//temp solution? i need binder??
+            if (groupsListOptionsModel.DateTo != null)
+                groupsListOptionsModel.DateTo = groupsListOptionsModel.DateTo.Value.ToUniversalTime();//temp solution? i need binder??
             IEnumerable<GroupDto> groupsDto = await _groupService.GetListAsync(_queryOptionsAdapter.Map(groupsListOptionsModel));
 
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groupsDto));

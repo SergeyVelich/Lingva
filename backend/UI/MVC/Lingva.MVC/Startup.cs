@@ -1,15 +1,14 @@
-using Lingva.BC.Contracts;
-using Lingva.BC.Services;
+using Lingva.ASP;
+using Lingva.ASP.Extensions;
+using Lingva.ASP.Infrastructure.Binders;
 using Lingva.MVC.Extensions;
 using Lingva.MVC.Filters;
-using Lingva.MVC.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.MVC
@@ -27,21 +26,19 @@ namespace Lingva.MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
-            services.ConfigureEF(Configuration);
-            //services.ConfigureDapper(Configuration);
             services.ConfigureOptions(Configuration);
             services.ConfigureAuthentication();
             services.ConfigureAutoMapper();
+            services.ConfigureFilters();
 
-            services.AddScoped<IGroupService, GroupService>();
-            services.AddScoped<IInfoService, InfoService>();
-
-            services.AddScoped<QueryOptionsAdapter>();
+            services.ConfigureDbProvider(Configuration);
+            services.ConfigureManagers();
+            services.ConfigureDataAdapters();
 
             services.AddMvc(options =>
             {
-                //options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
-                //options.Filters.Add(typeof(GlobalExceptionFilter));
+                options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
+                options.Filters.Add(typeof(GlobalExceptionFilter));
                 options.CacheProfiles.Add("NoCashing",
                     new CacheProfile()
                     {
@@ -56,8 +53,6 @@ namespace Lingva.MVC
                     });
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddScoped<GlobalExceptionFilter>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -85,8 +80,10 @@ namespace Lingva.MVC
             {
                 config.MapRoute(name: "Default",
                     template: "{controller}/{action}",
-                    defaults: new {Controller = "Home", Action = "Index"});
+                    defaults: new { Controller = "Home", Action = "Index" });
             });
+
+            DbInitializer.Initialize(Configuration);
         }
     }
 }

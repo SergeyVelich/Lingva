@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Lingva.MVC.Infrastructure.Exceptions
+namespace Lingva.ASP.Infrastructure.Exceptions
 {
     [Serializable()]
     public class LingvaCustomException : Exception

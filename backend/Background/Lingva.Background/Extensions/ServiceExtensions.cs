@@ -28,13 +28,13 @@ namespace Lingva.Background
 
         public static void ConfigureEF(this IServiceCollection services, IConfiguration config)
         {
-            services.ConfigureSqlContext(config);
+            services.ConfigureEFContext(config);
             services.ConfigureEFRepositories();
         }
 
-        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
+        public static void ConfigureEFContext(this IServiceCollection services, IConfiguration config)
         {
-            string connectionStringValue = config.GetConnectionString("LingvaConnection");
+            string connectionStringValue = config.GetConnectionString("LingvaEFConnection");
 
             services.AddDbContext<DictionaryContext>(options =>
                 options.UseSqlServer(connectionStringValue));

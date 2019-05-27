@@ -26,9 +26,11 @@ namespace Lingva.MVC.Models.Entities
 
             set { date = value; }
         }
-       
-        [Display(Name = "Language")]
+
+        [Display(Name = "Language ID")]
         public int LanguageId { get; set; }
+        [Display(Name = "Language")]
+        public string LanguageName { get; set; }
         [Display(Name = "Description")]
         public string Description { get; set; }
         [Display(Name = "Picture")]

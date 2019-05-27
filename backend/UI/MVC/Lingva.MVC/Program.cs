@@ -16,7 +16,8 @@ namespace Lingva.MVC
             try
             {
                 logger.Debug("Starting web host");
-                CreateWebHostBuilder(args).Build().Run();
+                var host = CreateWebHostBuilder(args).Build();
+                host.Run();
             }
             catch (Exception exception)
             {                

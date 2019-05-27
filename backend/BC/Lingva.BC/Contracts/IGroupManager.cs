@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.BC.Contracts
 {
-    public interface IGroupService
+    public interface IGroupManager
     {
         Task<IEnumerable<GroupDto>> GetListAsync();
         Task<IEnumerable<GroupDto>> GetListAsync(IQueryOptions queryOptions);

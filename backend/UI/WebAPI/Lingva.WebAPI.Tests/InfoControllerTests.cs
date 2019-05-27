@@ -16,14 +16,14 @@ namespace Lingva.WebAPI.Tests
     {
         private List<LanguageDto> _languageDtoList;
         private InfoController _infoController;
-        private IInfoService _infoService;
+        private IInfoManager _infoService;
         private IDataAdapter _dataAdapter;
         private ILogger<InfoController> _logger;
 
         [SetUp]
         public void Setup()
         {
-            _infoService= Substitute.For<IInfoService>();
+            _infoService= Substitute.For<IInfoManager>();
             _dataAdapter = Substitute.For<IDataAdapter>();          
             _logger = Substitute.For<ILogger<InfoController>>();
 

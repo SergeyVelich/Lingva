@@ -10,8 +10,8 @@ namespace QueryBuilder.QueryOptions
 
         Expression<Func<T, bool>> GetFiltersExpression<T>();
 
-        ICollection<string> GetSortersCollection<T>();
+        IList<string> GetSortersCollection<T>();
 
-        ICollection<Expression<Func<T, bool>>> GetIncludersCollection<T>();               
+        IList<string> GetIncludersCollection();               
     }
 }

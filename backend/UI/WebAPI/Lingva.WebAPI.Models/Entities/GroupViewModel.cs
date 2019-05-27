@@ -13,8 +13,10 @@ namespace Lingva.WebAPI.Models.Entities
         [Display(Name = "Date")]
         [DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
-        [Display(Name = "Language")]
+        [Display(Name = "Language ID")]
         public int LanguageId { get; set; }
+        [Display(Name = "Language")]
+        public string LanguageName { get; set; }
         [Display(Name = "Description")]
         public string Description { get; set; }
         [Display(Name = "Picture")]

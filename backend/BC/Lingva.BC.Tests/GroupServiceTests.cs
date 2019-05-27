@@ -20,7 +20,7 @@ namespace Lingva.BC.UnitTest
     {
         private readonly List<Group> _groupList;
         private readonly List<GroupDto> _groupListDto;
-        private IGroupService _groupService;
+        private IGroupManager _groupService;
         private readonly Mock<IRepository> _repoMock;
         private readonly Mock<IDataAdapter> _dataAdapter;
 
@@ -82,7 +82,7 @@ namespace Lingva.BC.UnitTest
 
             _repoMock = new Mock<IRepository>();
             _dataAdapter = new Mock<IDataAdapter>();
-            _groupService = new GroupService(_repoMock.Object, _dataAdapter.Object);
+            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
         }
 
         [Fact]
@@ -90,7 +90,7 @@ namespace Lingva.BC.UnitTest
         {
             //arrange
             _repoMock.Setup(r => r.GetListAsync<Group>()).Returns(Task.FromResult<IEnumerable<Group>>(_groupList));
-            _groupService = new GroupService(_repoMock.Object, _dataAdapter.Object);
+            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
 
             //act
             var result = await _groupService.GetListAsync();
@@ -104,7 +104,7 @@ namespace Lingva.BC.UnitTest
         {
             //arrange
             _repoMock.Setup(r => r.GetListAsync<Group>()).Returns(Task.FromResult<IEnumerable<Group>>(_groupList));
-            _groupService = new GroupService(_repoMock.Object, _dataAdapter.Object);
+            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
             _dataAdapter.Setup(d => d.Map<IEnumerable<GroupDto>>(_groupList)).Returns(_groupListDto);
 
             //act
@@ -119,7 +119,7 @@ namespace Lingva.BC.UnitTest
         {
             //arrange
             _repoMock.Setup(r => r.GetListAsync<Group>()).Returns(Task.FromResult<IEnumerable<Group>>(_groupList));
-            _groupService = new GroupService(_repoMock.Object, _dataAdapter.Object);
+            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
             _dataAdapter.Setup(d => d.Map<IEnumerable<GroupDto>>(_groupList)).Returns(_groupListDto);
 
             Mock<IQueryOptions> queryOptions = new Mock<IQueryOptions>();
@@ -145,7 +145,7 @@ namespace Lingva.BC.UnitTest
 
             _dataAdapter.Setup(d => d.Map<GroupDto>(group)).Returns(groupDto);
             _repoMock.Setup(r => r.GetByIdAsync<Group>(validId)).Returns(Task.FromResult(group));
-            _groupService = new GroupService(_repoMock.Object, _dataAdapter.Object);
+            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
 
             //act
             var order = await _groupService.GetByIdAsync(validId);
@@ -161,7 +161,7 @@ namespace Lingva.BC.UnitTest
             int invalidId = -1;
 
             _repoMock.Setup(r => r.GetByIdAsync<Group>(invalidId)).Returns(Task.FromResult<Group>(null));
-            _groupService = new GroupService(_repoMock.Object, _dataAdapter.Object);
+            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
 
             //act
             var order = await _groupService.GetByIdAsync(invalidId);
@@ -178,7 +178,7 @@ namespace Lingva.BC.UnitTest
 
             _repoMock.Setup(r => r.CreateAsync<Group>(null));
             _dataAdapter.Setup(d => d.Map<Group>(null)).Returns(group);
-            _groupService = new GroupService(_repoMock.Object, _dataAdapter.Object);
+            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
 
             //act
             await _groupService.AddAsync(null);
@@ -196,7 +196,7 @@ namespace Lingva.BC.UnitTest
 
             _repoMock.Setup(r => r.GetByIdAsync<Group>(group.Id)).Returns(Task.FromResult(group));
             _repoMock.Setup(r => r.UpdateAsync(group)).Returns(Task.FromResult(group));
-            _groupService = new GroupService(_repoMock.Object, _dataAdapter.Object);
+            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
 
             //act
             await _groupService.UpdateAsync(groupDto);
@@ -213,7 +213,7 @@ namespace Lingva.BC.UnitTest
 
             _repoMock.Setup(r => r.DeleteAsync<Group>(group.Id));
             _dataAdapter.Setup(d => d.Map<Group>(null)).Returns(group);
-            _groupService = new GroupService(_repoMock.Object, _dataAdapter.Object);
+            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
 
             //act
             await _groupService.DeleteAsync(group.Id);

@@ -9,26 +9,15 @@ using System.Threading.Tasks;
 
 namespace Lingva.DAL.Dapper
 {
-    public class DapperSet<T> where T : class, new()
+    public class DapperSet<T> where T : BaseBE, new()
     {
         private readonly DapperContext _dbContext;
-        private string _tableName;
+        private string _collectionName;
 
-        public string TableName
-        {
-            get
-            {
-                if(_tableName == null)
-                {
-                    _tableName = GetTableNameByType();
-                }
-                return _tableName;
-            }
-        }
-
-        public DapperSet(DapperContext dbContext)
+        public DapperSet(DapperContext dbContext, string collectionName)
         {
             _dbContext = dbContext;
+            _collectionName = collectionName;
         }
 
         public async Task<IEnumerable<T>> SelectAllAsync()
@@ -62,7 +51,7 @@ namespace Lingva.DAL.Dapper
         {
             StringBuilder queryStringBuilder = new StringBuilder();
             queryStringBuilder.AppendLine("SELECT g.*");
-            queryStringBuilder.Append("FROM " + TableName + " AS g");
+            queryStringBuilder.Append("FROM " + _collectionName + " AS g");
 
             return queryStringBuilder.ToString();
         }
@@ -70,7 +59,7 @@ namespace Lingva.DAL.Dapper
         {
             StringBuilder queryStringBuilder = new StringBuilder();
             queryStringBuilder.AppendLine("SELECT g.*");
-            queryStringBuilder.AppendLine("FROM " + TableName + " AS g");
+            queryStringBuilder.AppendLine("FROM " + _collectionName + " AS g");
             queryStringBuilder.Append("WHERE g.Id = @Id");
 
             return queryStringBuilder.ToString(); ;
@@ -94,11 +83,11 @@ namespace Lingva.DAL.Dapper
             }
 
             StringBuilder queryStringBuilder = new StringBuilder();
-            queryStringBuilder.AppendLine("INSERT INTO " + TableName + "(" + fieldsStringBuilder.ToString() + ")");
+            queryStringBuilder.AppendLine("INSERT INTO " + _collectionName + "(" + fieldsStringBuilder.ToString() + ")");
             queryStringBuilder.AppendLine("VALUES(" + valuesStringBuilder.ToString() + ")");
             queryStringBuilder.AppendLine("SELECT g.*");
-            queryStringBuilder.AppendLine("FROM " + TableName + " AS g");
-            queryStringBuilder.Append("WHERE g.Id = (SELECT MAX(Id) FROM " + TableName + ")");
+            queryStringBuilder.AppendLine("FROM " + _collectionName + " AS g");
+            queryStringBuilder.Append("WHERE g.Id = (SELECT MAX(Id) FROM " + _collectionName + ")");
 
             return queryStringBuilder.ToString();
         }
@@ -118,7 +107,7 @@ namespace Lingva.DAL.Dapper
             }
 
             StringBuilder queryStringBuilder = new StringBuilder();
-            queryStringBuilder.AppendLine("UPDATE " + TableName);
+            queryStringBuilder.AppendLine("UPDATE " + _collectionName);
             queryStringBuilder.AppendLine("SET " + conditionsStringBuilder.ToString());
             queryStringBuilder.Append("WHERE Id = @Id");
 
@@ -128,7 +117,7 @@ namespace Lingva.DAL.Dapper
         {
             StringBuilder queryStringBuilder = new StringBuilder();
             queryStringBuilder.AppendLine("DELETE");
-            queryStringBuilder.AppendLine("FROM " + TableName);
+            queryStringBuilder.AppendLine("FROM " + _collectionName);
             queryStringBuilder.Append("WHERE Id = @Id");
 
             return queryStringBuilder.ToString();
@@ -156,12 +145,6 @@ namespace Lingva.DAL.Dapper
             }
 
             return propertiesList;
-        }
-
-        protected string GetTableNameByType()
-        {
-            Type type = typeof(T);
-            return type.Name + "s";
         }
     }
 }

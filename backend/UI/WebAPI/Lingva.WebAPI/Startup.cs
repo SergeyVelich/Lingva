@@ -1,14 +1,12 @@
-using Lingva.BC.Contracts;
-using Lingva.BC.Services;
-using Lingva.DAL.EF.Context;
+using Lingva.ASP;
+using Lingva.ASP.Extensions;
+using Lingva.ASP.Infrastructure.Binders;
 using Lingva.WebAPI.Extensions;
-using Lingva.WebAPI.Infrastructure;
 using Lingva.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
@@ -28,17 +26,14 @@ namespace Lingva.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
-            services.ConfigureEF(Configuration);
-            //services.ConfigureDapper(Configuration);
-            services.ConfigureOptions(Configuration);
+            services.ConfigureOptions(Configuration);                      
             services.ConfigureAuthentication();
             services.ConfigureAutoMapper();
             services.ConfigureSwagger();
-           
-            services.AddScoped<IGroupService, GroupService>();
-            services.AddScoped<IInfoService, InfoService>();
 
-            services.AddScoped<QueryOptionsAdapter>();
+            services.ConfigureDbProvider(Configuration);
+            services.ConfigureManagers();
+            services.ConfigureDataAdapters();
 
             services.AddMvc(options =>
             {
@@ -76,6 +71,8 @@ namespace Lingva.WebAPI
 
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
+
+            DbInitializer.Initialize(Configuration);
         }
     }
 }

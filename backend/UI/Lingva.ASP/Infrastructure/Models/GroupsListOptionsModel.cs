@@ -1,19 +1,18 @@
-﻿using Lingva.WebAPI.Models.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Lingva.WebAPI.Models.Request
+namespace Lingva.ASP.Infrastructure.Models
 {
     [ExcludeFromCodeCoverage]
     public class GroupsListOptionsModel
     {
         [Display(Name = "Title")]
         public virtual string Name { get; set; }
-        [Display(Name = "Date")]
-        [DataType(DataType.DateTime)]
-        public virtual DateTime Date { get; set; }
+        [Display(Name = "Date from")]   
+        public virtual DateTime? DateFrom { get; set; }
+        [Display(Name = "Date to")]
+        public virtual DateTime? DateTo { get; set; }
         [Display(Name = "Language")]
         public virtual int? LanguageId { get; set; }
         [Display(Name = "Description")]
@@ -25,15 +24,15 @@ namespace Lingva.WebAPI.Models.Request
         public virtual int PageRecords { get; set; }
         public virtual int TotalRecords { get; set; }
 
-        public virtual IEnumerable<GroupViewModel> Groups { get; set; }
-
         public GroupsListOptionsModel()
         {
             SortProperty = "Name";
             SortOrder = "Desc";
 
-            Name = "";
-            LanguageId = 0;
+            //Name = "";
+            //LanguageId = 0;
+            //DateFrom = DateTime.MinValue;
+            //DateTo = DateTime.MaxValue;
 
             Page = 1;
             PageRecords = 5;

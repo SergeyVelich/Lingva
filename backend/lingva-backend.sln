@@ -85,6 +85,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mapping", "Mapping", "{9B6A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAdapter", "Additional\Mapping\DataAdapter\DataAdapter.csproj", "{C8A8D2E1-2B65-4A60-B526-2D2637A435E7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.DAL.Mongo", "DAL\Lingva.DAL.Mongo\Lingva.DAL.Mongo.csproj", "{557585BC-481E-48EB-A4AD-18D85738E08E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -207,6 +209,10 @@ Global
 		{C8A8D2E1-2B65-4A60-B526-2D2637A435E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8A8D2E1-2B65-4A60-B526-2D2637A435E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8A8D2E1-2B65-4A60-B526-2D2637A435E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{557585BC-481E-48EB-A4AD-18D85738E08E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{557585BC-481E-48EB-A4AD-18D85738E08E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{557585BC-481E-48EB-A4AD-18D85738E08E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{557585BC-481E-48EB-A4AD-18D85738E08E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -247,6 +253,7 @@ Global
 		{8A3F77E5-1B91-4488-8EC3-A2D8B68B09CB} = {4A21E396-A732-423D-A187-5CE5C6D7BC27}
 		{9B6A1DCD-DFBE-4F82-8AA8-A8E80093729A} = {F672D062-C6F8-4730-9038-AB2EEC3E681E}
 		{C8A8D2E1-2B65-4A60-B526-2D2637A435E7} = {9B6A1DCD-DFBE-4F82-8AA8-A8E80093729A}
+		{557585BC-481E-48EB-A4AD-18D85738E08E} = {6434D792-2B23-4755-A35A-1E48F75E062E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {52773F80-9AFD-49EA-9A94-EBC8FBCA9951}

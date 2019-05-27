@@ -1,13 +1,12 @@
-﻿using Lingva.WebAPI.Models.Request;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Threading.Tasks;
 
-namespace Lingva.WebAPI.Infrastructure
+namespace Lingva.ASP.Infrastructure.Binders
 {
+
     public class OptionsModelBinder : IModelBinder
     {
-
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
             if (bindingContext == null)
@@ -27,24 +26,24 @@ namespace Lingva.WebAPI.Infrastructure
             //string page = pagePartValue.FirstValue;
             //string pageSize = pageSizePartValue.FirstValue;
 
-            GroupsListOptionsModel options = new GroupsListOptionsModel();
-            //options.Filters = GetFiltersFromQuery(filters);
-            //options.Sorters = GetSortersFromQuery(sorters);
-            //options.Pagenator = GetPagenatorFromQuery(page, pageSize);
+            //GroupsListOptionsModel model = (GroupsListOptionsModel)bindingContext.Model ?? new GroupsListOptionsModel();
+            //model.Filters = GetFiltersFromQuery(filters);
+            //model.Sorters = GetSortersFromQuery(sorters);
+            //model.Pagenator = GetPagenatorFromQuery(page, pageSize);
 
             // set binding result
-            bindingContext.Result = ModelBindingResult.Success(options);
+            //bindingContext.Result = ModelBindingResult.Success(model);
             return Task.CompletedTask;
         }
 
-        //private ICollection<FilterModel> GetFiltersFromQuery(string filtersString)
+        //private Dictionary<string, FilterModel> GetFiltersFromQuery(string filtersString)
         //{
-        //    List<FilterModel> result = new List<FilterModel>();
+        //    Dictionary<string, FilterModel> result = new Dictionary<string, FilterModel>();
 
         //    if (filtersString == null)
         //    {
         //        return result;
-        //    }           
+        //    }
 
         //    string[] filtersArr = filtersString.Split(';');
         //    foreach (string filter in filtersArr)
@@ -56,23 +55,23 @@ namespace Lingva.WebAPI.Infrastructure
         //            Operation = Enum.Parse<FilterOperation>(parts[1]),
         //            PropertyValue = parts[2]
         //        };
-        //        result.Add(filterModel);
+        //        result.Add(parts[0], filterModel);
         //    }
 
         //    return result;
         //}
 
-        //private ICollection<SorterModel> GetSortersFromQuery(string sortersString)
+        //private Dictionary<string, SorterModel> GetSortersFromQuery(string sortersString)
         //{
-        //    List<SorterModel> result = new List<SorterModel>();
+        //    Dictionary<string, SorterModel> result = new Dictionary<string, SorterModel>();
 
         //    if (sortersString == null)
         //    {
         //        return result;
         //    }
-           
+
         //    string[] sortersArr = sortersString.Split(';');
-        //    foreach(string sorter in sortersArr)
+        //    foreach (string sorter in sortersArr)
         //    {
         //        string[] parts = sorter.Split(',');
         //        SorterModel sorterModel = new SorterModel
@@ -81,7 +80,7 @@ namespace Lingva.WebAPI.Infrastructure
         //            SortOrder = Enum.Parse<SortOrder>(parts[1])
         //        };
         //        sorterModel.SorterString = sorterModel.PropertyName + " " + sorterModel.SortOrder.ToString();
-        //        result.Add(sorterModel);
+        //        result.Add(parts[0], sorterModel);
         //    }
 
         //    return result;
@@ -96,27 +95,16 @@ namespace Lingva.WebAPI.Infrastructure
 
         //    if (string.IsNullOrEmpty(pageSize) || !Int32.TryParse(pageSize, out int pageSizeNumber))
         //    {
-        //        pageSizeNumber = 5;
+        //        pageSizeNumber = 3;
         //    }
 
         //    PagenatorModel result = new PagenatorModel
         //    {
-        //        PageSize = pageSizeNumber,
+        //        PageRecords = pageSizeNumber,
         //        CurrentPage = pageNumber
         //    };
 
         //    return result;
         //}
-
-        //private void EnsurePropertyExists(string propertyName)//??
-        //{
-        //    //var propertyExist = ValidateModelType.HasProperty(propertyName);
-
-        //    //if (!propertyExist)
-        //    //{
-        //    //    throw new InvalidModelException($"Filter{propertyName} is not acceptable for model {typeof(TValidateModel).Name}");
-        //    //}
-        //}
-
     }
 }

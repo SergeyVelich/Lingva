@@ -17,8 +17,7 @@ namespace Lingva.DAL.EF.Context
         public DictionaryContext(DbContextOptions<DictionaryContext> options)
             : base(options)
         {
-            //Database.EnsureDeleted();
-            Database.EnsureCreated();
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
