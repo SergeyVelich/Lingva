@@ -3,6 +3,7 @@ using Lingva.MVC.Filters;
 using Lingva.MVC.Mapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 
@@ -11,8 +12,15 @@ namespace Lingva.MVC.Extensions
     [ExcludeFromCodeCoverage]
     public static class ServiceExtensions
     {
-        public static void ConfigureAuthentication(this IServiceCollection services)
+        public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration config)
         {
+            bool useIs = bool.Parse(config.GetSection("UseIS").Value);
+
+            if (useIs)
+            {
+                return;
+            }
+                
             //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();//не совсем понятно, для чего это
 
             services.AddAuthentication(options =>

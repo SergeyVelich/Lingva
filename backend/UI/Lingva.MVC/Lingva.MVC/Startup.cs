@@ -27,7 +27,7 @@ namespace Lingva.MVC
         {
             services.ConfigureCors();
             services.ConfigureOptions(Configuration);
-            services.ConfigureAuthentication();
+            services.ConfigureAuthentication(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureFilters();
 

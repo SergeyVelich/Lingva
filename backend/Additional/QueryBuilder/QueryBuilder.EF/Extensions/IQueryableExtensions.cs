@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QueryBuilder.Enums;
+using QueryBuilder.EF.Enums;
 using QueryBuilder.QueryOptions;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace QueryBuilder.Extensions
+namespace QueryBuilder.EF.Extensions
 {
     public static class IQueryableExtensions
     {
@@ -43,21 +44,21 @@ namespace QueryBuilder.Extensions
                 case SortOrder.Asc:
                     if (isFirst)
                     {
-                        methodName = EFSortOperation.OrderBy.ToString();
+                        methodName = SortOperation.OrderBy.ToString();
                     }
                     else
                     {
-                        methodName = EFSortOperation.ThenBy.ToString();
+                        methodName = SortOperation.ThenBy.ToString();
                     }
                     break;
                 case SortOrder.Desc:
                     if (isFirst)
                     {
-                        methodName = EFSortOperation.OrderByDescending.ToString();
+                        methodName = SortOperation.OrderByDescending.ToString();
                     }
                     else
                     {
-                        methodName = EFSortOperation.ThenByDescending.ToString();
+                        methodName = SortOperation.ThenByDescending.ToString();
                     }
                     break;
                 default:
@@ -67,7 +68,7 @@ namespace QueryBuilder.Extensions
 
             return methodName;
         }
-        private static IOrderedQueryable<T> CallOrderByQueryable<T>(IOrderedQueryable<T> query, string methodName, string propertyName, IComparer<object> comparer = null)
+        private static IOrderedQueryable<T> CallOrderByQueryable<T>(IOrderedQueryable<T> query, string methodName, string propertyName)
         {
             if (string.IsNullOrEmpty(methodName))
             {
@@ -77,26 +78,13 @@ namespace QueryBuilder.Extensions
             var param = Expression.Parameter(typeof(T), "x");
             var body = propertyName.Split('.').Aggregate<string, Expression>(param, Expression.PropertyOrField);
 
-            IOrderedQueryable<T> result = comparer != null
-                ? (IOrderedQueryable<T>)query.Provider.CreateQuery(
-                    Expression.Call(
-                        typeof(Queryable),
-                        methodName,
-                        new[] { typeof(T), body.Type },
-                        query.Expression,
-                        Expression.Lambda(body, param),
-                        Expression.Constant(comparer)
-                    )
-                )
-                : (IOrderedQueryable<T>)query.Provider.CreateQuery(
-                    Expression.Call(
-                        typeof(Queryable),
-                        methodName,
-                        new[] { typeof(T), body.Type },
-                        query.Expression,
-                        Expression.Lambda(body, param)
-                    )
-                );
+            IOrderedQueryable<T> result = (IOrderedQueryable<T>)query.Provider.CreateQuery(
+                Expression.Call(
+                    typeof(Queryable),
+                    methodName,
+                    new[] { typeof(T), body.Type },
+                    query.Expression,
+                    Expression.Lambda(body, param)));
 
             return result;
         }        
@@ -134,11 +122,11 @@ namespace QueryBuilder.Extensions
 
             if (isFirst)
             {
-                methodName = EFIncludeOperation.Include.ToString();
+                methodName = IncludeOperation.Include.ToString();
             }
             else
             {
-                methodName = EFIncludeOperation.IncludeThen.ToString();
+                methodName = IncludeOperation.IncludeThen.ToString();
             }
 
             return methodName;
@@ -189,16 +177,9 @@ namespace QueryBuilder.Extensions
                 return resultQuery;
             }
 
-            string methodName = GetWhereMethodName();
-            resultQuery = CallWhereQueryable(resultQuery, methodName, filters);
+            resultQuery = CallWhereQueryable(resultQuery, WhereOperation.Where.ToString(), filters);
 
             return resultQuery;
-        }
-        private static string GetWhereMethodName()
-        {
-            string methodName;
-            methodName = EFWhereOperation.Where.ToString();
-            return methodName;
         }
         private static IQueryable<T> CallWhereQueryable<T>(IQueryable<T> query, string methodName, IList<QueryFilter> filters)
         {
@@ -207,11 +188,7 @@ namespace QueryBuilder.Extensions
                 throw new ArgumentException("Empty method name");
             }
 
-            var param = Expression.Parameter(typeof(T), "x");
-
-            Expression expression = GetFilterGroupExpression<T>(filters, param);
-            
-            Expression<Func<T, bool>> lambda = Expression.Lambda<Func<T, bool>>(expression ?? throw new InvalidOperationException(), param);
+            Expression<Func<T, bool>> lambda = GetFilterExpression<T>(filters);
 
             IQueryable<T> result = (IQueryable<T>)query.Provider.CreateQuery(
                 Expression.Call(
@@ -222,6 +199,14 @@ namespace QueryBuilder.Extensions
                     lambda));
 
             return result;
+        }
+        private static Expression<Func<T,bool>> GetFilterExpression<T>(IList<QueryFilter> filters)
+        {
+            var param = Expression.Parameter(typeof(T), "x");
+            Expression expression = GetFilterGroupExpression<T>(filters, param);
+            Expression<Func<T, bool>> lambda = Expression.Lambda<Func<T, bool>>(expression ?? throw new InvalidOperationException(), param);
+
+            return lambda;
         }
         private static Expression GetFilterGroupExpression<T>(IList<QueryFilter> filters, ParameterExpression param, FilterGroupOperation operation = FilterGroupOperation.And)
         {

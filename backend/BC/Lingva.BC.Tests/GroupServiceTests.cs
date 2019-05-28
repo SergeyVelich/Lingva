@@ -123,9 +123,9 @@ namespace Lingva.BC.UnitTest
             _dataAdapter.Setup(d => d.Map<IEnumerable<GroupDto>>(_groupList)).Returns(_groupListDto);
 
             Mock<IQueryOptions> queryOptions = new Mock<IQueryOptions>();
-            queryOptions.Setup(q => q.GetFiltersExpression<Group>()).Returns<Group>(null);
-            queryOptions.Setup(q => q.GetSortersCollection<Group>()).Returns<Group>(null);
-            queryOptions.Setup(q => q.GetIncludersCollection<Group>()).Returns<Group>(null);
+            queryOptions.Setup(q => q.Filters).Returns<Group>(null);
+            queryOptions.Setup(q => q.Sorters).Returns<Group>(null);
+            queryOptions.Setup(q => q.Includers).Returns<Group>(null);
             queryOptions.Setup(q => q.Pagenator).Returns<Group>(null);
 
             //act

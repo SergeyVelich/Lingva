@@ -1,6 +1,7 @@
 ﻿using Lingva.DAL.Entities;
 using Lingva.DAL.Repositories;
 using MongoDB.Driver;
+using QueryBuilder.Mongo.Extensions;
 using QueryBuilder.QueryOptions;
 using System;
 using System.Collections.Generic;
@@ -108,10 +109,13 @@ namespace Lingva.DAL.Mongo.Repositories
 
         public async Task<IEnumerable<T>> GetListAsync<T>(IQueryOptions queryOptions) where T : BaseBE, new()
         {
-            var documents = await _dbContext.Set<T>().Find(_ => true).ToListAsync();
-            return documents;
+            var result = _dbContext.Set<T>()
+                .Find(queryOptions.Filters)
+                .SortBy(queryOptions.Sorters)
+                .Skip(queryOptions.Pagenator.Skip)
+                .Limit(queryOptions.Pagenator.Take);
 
-            throw new NotImplementedException();
+            return await result.ToListAsync();
         }
     }
 }

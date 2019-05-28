@@ -27,7 +27,7 @@ namespace Lingva.WebAPI
         {
             services.ConfigureCors();
             services.ConfigureOptions(Configuration);                      
-            services.ConfigureAuthentication();
+            services.ConfigureAuthentication(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureSwagger();
 

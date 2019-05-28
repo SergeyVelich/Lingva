@@ -3,7 +3,7 @@ using Lingva.DAL.Entities;
 using Lingva.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using QueryBuilder.Extensions;
+using QueryBuilder.EF.Extensions;
 using QueryBuilder.QueryOptions;
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,7 @@
 ﻿using Lingva.Additional.Mapping.DataAdapter;
 using Lingva.WebAPI.Mapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -14,8 +15,15 @@ namespace Lingva.WebAPI.Extensions
     [ExcludeFromCodeCoverage]
     public static class ServiceExtensions
     {
-        public static void ConfigureAuthentication(this IServiceCollection services)
+        public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration config)
         {
+            bool useIs = bool.Parse(config.GetSection("UseIS").Value);
+
+            if (useIs)
+            {
+                return;
+            }
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
