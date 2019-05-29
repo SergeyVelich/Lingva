@@ -34,12 +34,12 @@ namespace Lingva.MVC.TagHelpers
             tag.AddCssClass("pagination");
 
             // формируем три ссылки - на текущую, предыдущую и следующую
-            TagBuilder currentItem = CreateTag(PageModel.PageNumber, urlHelper);
+            TagBuilder currentItem = CreateTag(PageModel.PageIndex, urlHelper);
 
             // создаем ссылку на предыдущую страницу, если она есть
             if (PageModel.HasPreviousPage)
             {
-                TagBuilder prevItem = CreateTag(PageModel.PageNumber - 1, urlHelper);
+                TagBuilder prevItem = CreateTag(PageModel.PageIndex - 1, urlHelper);
                 tag.InnerHtml.AppendHtml(prevItem);
             }
 
@@ -47,26 +47,26 @@ namespace Lingva.MVC.TagHelpers
             // создаем ссылку на следующую страницу, если она есть
             if (PageModel.HasNextPage)
             {
-                TagBuilder nextItem = CreateTag(PageModel.PageNumber + 1, urlHelper);
+                TagBuilder nextItem = CreateTag(PageModel.PageIndex + 1, urlHelper);
                 tag.InnerHtml.AppendHtml(nextItem);
             }
             output.Content.AppendHtml(tag);
         }
 
-        TagBuilder CreateTag(int pageNumber, IUrlHelper urlHelper)
+        TagBuilder CreateTag(int pageIndex, IUrlHelper urlHelper)
         {
             TagBuilder item = new TagBuilder("li");
             TagBuilder link = new TagBuilder("a");
-            if (pageNumber == this.PageModel.PageNumber)
+            if (pageIndex == PageModel.PageIndex)
             {
                 item.AddCssClass("active");
             }
             else
             {
-                PageUrlValues["page"] = pageNumber;
+                PageUrlValues["page"] = pageIndex;
                 link.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
             }
-            link.InnerHtml.Append(pageNumber.ToString());
+            link.InnerHtml.Append(pageIndex.ToString());
             item.InnerHtml.AppendHtml(link);
             return item;
         }

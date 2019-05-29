@@ -45,6 +45,18 @@ namespace Lingva.WebAPI.Controllers
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groupsDto));
         }
 
+        [HttpGet("count")]
+        public async Task<IActionResult> Count([FromQuery] GroupsListOptionsModel groupsListOptionsModel)
+        {
+            if (groupsListOptionsModel.DateFrom != null)
+                groupsListOptionsModel.DateFrom = groupsListOptionsModel.DateFrom.Value.ToUniversalTime();//temp solution? i need binder??
+            if (groupsListOptionsModel.DateTo != null)
+                groupsListOptionsModel.DateTo = groupsListOptionsModel.DateTo.Value.ToUniversalTime();//temp solution? i need binder??
+            int pageTotal = await _groupService.CountAsync(_queryOptionsAdapter.Map(groupsListOptionsModel));
+
+            return Ok(pageTotal);
+        }
+
         // GET: api/group/get?id=1
         [HttpGet("get")]
         public async Task<IActionResult> Get([FromQuery] int id)

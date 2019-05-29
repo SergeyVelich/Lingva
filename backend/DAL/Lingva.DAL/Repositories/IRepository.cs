@@ -9,6 +9,7 @@ namespace Lingva.DAL.Repositories
     {
         Task<IEnumerable<T>> GetListAsync<T>() where T : BaseBE, new();
         Task<IEnumerable<T>> GetListAsync<T>(IQueryOptions queryOptions) where T : BaseBE, new();
+        Task<int> CountAsync<T>(IQueryOptions queryOptions) where T : BaseBE, new();
         Task<T> GetByIdAsync<T>(int id) where T : BaseBE, new();
 
         Task<T> CreateAsync<T>(T entity) where T : BaseBE, new();

@@ -6,12 +6,12 @@ namespace Lingva.MVC.Models.Group.Index
     [ExcludeFromCodeCoverage]
     public class PagenatorViewModel
     {
-        public int PageNumber { get; private set; }
+        public int PageIndex { get; private set; }
         public int TotalPages { get; private set; }
 
-        public PagenatorViewModel(int count, int pageNumber, int pageSize)
+        public PagenatorViewModel(int count, int pageIndex, int pageSize)
         {
-            PageNumber = pageNumber;
+            PageIndex = pageIndex;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
         }
 
@@ -19,7 +19,7 @@ namespace Lingva.MVC.Models.Group.Index
         {
             get
             {
-                return (PageNumber > 1);
+                return (PageIndex > 1);
             }
         }
 
@@ -27,7 +27,7 @@ namespace Lingva.MVC.Models.Group.Index
         {
             get
             {
-                return (PageNumber < TotalPages);
+                return (PageIndex < TotalPages);
             }
         }
     }

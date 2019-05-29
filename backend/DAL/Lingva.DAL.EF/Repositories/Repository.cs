@@ -141,5 +141,10 @@ namespace Lingva.DAL.EF.Repositories
 
             return await result.ToListAsync();
         }
+
+        public virtual async Task<int> CountAsync<T>(IQueryOptions queryOptions) where T : BaseBE, new()
+        {
+            return await _dbContext.Set<T>().Where(queryOptions.Filters).CountAsync();
+        }
     }
 }

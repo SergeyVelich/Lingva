@@ -17,12 +17,12 @@ namespace Lingva.WebAPI.Extensions
     {
         public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration config)
         {
-            bool useIs = bool.Parse(config.GetSection("UseIS").Value);
+            //bool useIs = bool.Parse(config.GetSection("UseIS").Value);
 
-            if (useIs)
-            {
-                return;
-            }
+            //if (useIs)
+            //{
+            //    return;
+            //}
 
             services.AddAuthentication(options =>
             {

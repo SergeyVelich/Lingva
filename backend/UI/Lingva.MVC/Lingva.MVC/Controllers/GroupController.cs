@@ -41,10 +41,11 @@ namespace Lingva.MVC.Controllers
         {
             IEnumerable<GroupViewModel> groups = await GetGroupsCollectionAsync(modelOptions);
             IList<LanguageViewModel> languages = await GetLanguagesCollectionAsync();
+            int pageTotal = await _groupService.CountAsync(_queryOptionsAdapter.Map(modelOptions));
 
             GroupsListPageViewModel viewModel = new GroupsListPageViewModel
             {
-                PagenatorViewModel = new PagenatorViewModel(modelOptions.TotalRecords, modelOptions.Page, modelOptions.PageRecords),
+                PagenatorViewModel = new PagenatorViewModel(pageTotal, modelOptions.PageIndex, modelOptions.PageSize),
                 SortViewModel = new SortViewModel(modelOptions.SortProperty, modelOptions.SortOrder),
                 FilterViewModel = new FilterViewModel(languages, modelOptions.Name, modelOptions.LanguageId, modelOptions.Description, modelOptions.DateFrom, modelOptions.DateTo),
                 Groups = groups,

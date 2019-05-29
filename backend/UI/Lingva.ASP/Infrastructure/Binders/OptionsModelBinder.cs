@@ -88,9 +88,9 @@ namespace Lingva.ASP.Infrastructure.Binders
 
         //private PagenatorModel GetPagenatorFromQuery(string page, string pageSize)
         //{
-        //    if (string.IsNullOrEmpty(page) || !Int32.TryParse(page, out int pageNumber))
+        //    if (string.IsNullOrEmpty(page) || !Int32.TryParse(page, out int pageIndex))
         //    {
-        //        pageNumber = 1;
+        //        pageIndex = 1;
         //    }
 
         //    if (string.IsNullOrEmpty(pageSize) || !Int32.TryParse(pageSize, out int pageSizeNumber))
@@ -100,8 +100,8 @@ namespace Lingva.ASP.Infrastructure.Binders
 
         //    PagenatorModel result = new PagenatorModel
         //    {
-        //        PageRecords = pageSizeNumber,
-        //        CurrentPage = pageNumber
+        //        PageSize = pageSizeNumber,
+        //        CurrentPage = pageIndex
         //    };
 
         //    return result;

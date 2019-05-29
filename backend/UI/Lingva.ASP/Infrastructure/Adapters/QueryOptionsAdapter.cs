@@ -40,8 +40,8 @@ namespace Lingva.ASP.Infrastructure.Adapters
             List<QueryIncluder> includers = new List<QueryIncluder>();
             includers.Add(new QueryIncluder("Language"));
 
-            int take = optionsModel.PageRecords;
-            int skip = optionsModel.PageRecords * (optionsModel.Page - 1);
+            int take = optionsModel.PageSize;
+            int skip = optionsModel.PageSize * (optionsModel.PageIndex - 1);
             QueryPagenator pagenator = new QueryPagenator(take, skip);
 
             IQueryOptions queryOptions = new QueryOptions(
