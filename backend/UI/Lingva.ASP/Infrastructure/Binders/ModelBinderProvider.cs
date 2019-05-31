@@ -19,6 +19,11 @@ namespace Lingva.ASP.Infrastructure.Binders
                 return new BinderTypeModelBinder(typeof(GroupsListOptionsModelBinder));
             }
 
+            if (context.Metadata.ModelType == typeof(DateTime) || context.Metadata.ModelType == typeof(DateTime?))
+            {
+                return new BinderTypeModelBinder(typeof(DateTimeModelBinder));
+            }
+
             return null;
         }
     }
