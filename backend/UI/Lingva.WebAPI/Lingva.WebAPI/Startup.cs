@@ -37,12 +37,12 @@ namespace Lingva.WebAPI
 
             services.AddMvc(options =>
             {
-                options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
+                options.ModelBinderProviders.Insert(0, new ModelBinderProvider());
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -72,7 +72,7 @@ namespace Lingva.WebAPI
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
 
-            DbInitializer.Initialize(Configuration);
+            await DbInitializer.Initialize(Configuration);
         }
     }
 }

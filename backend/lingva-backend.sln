@@ -89,9 +89,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.DAL.Mongo", "DAL\Lin
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "QueryBuilder", "QueryBuilder", "{D09C9493-E173-47F4-BAEB-A0700C53E055}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryBuilder.EF", "Additional\QueryBuilder\QueryBuilder.EF\QueryBuilder.EF.csproj", "{99C68897-FF5E-468F-94FC-46E32954D563}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryBuilder.EF", "Additional\QueryBuilder\QueryBuilder.EF\QueryBuilder.EF.csproj", "{99C68897-FF5E-468F-94FC-46E32954D563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryBuilder.Mongo", "Additional\QueryBuilder\QueryBuilder.Mongo\QueryBuilder.Mongo.csproj", "{4D66D61C-174F-4F59-8FA9-8A3DE83A1C90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueryBuilder.Mongo", "Additional\QueryBuilder\QueryBuilder.Mongo\QueryBuilder.Mongo.csproj", "{4D66D61C-174F-4F59-8FA9-8A3DE83A1C90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lingva.DAL.AzureCosmosDB", "DAL\Lingva.DAL.AzureCosmosDB\Lingva.DAL.AzureCosmosDB.csproj", "{B0339C1D-5371-475D-BFA3-8524F731621C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -227,6 +229,10 @@ Global
 		{4D66D61C-174F-4F59-8FA9-8A3DE83A1C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D66D61C-174F-4F59-8FA9-8A3DE83A1C90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D66D61C-174F-4F59-8FA9-8A3DE83A1C90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0339C1D-5371-475D-BFA3-8524F731621C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0339C1D-5371-475D-BFA3-8524F731621C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0339C1D-5371-475D-BFA3-8524F731621C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0339C1D-5371-475D-BFA3-8524F731621C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -271,6 +277,7 @@ Global
 		{D09C9493-E173-47F4-BAEB-A0700C53E055} = {F672D062-C6F8-4730-9038-AB2EEC3E681E}
 		{99C68897-FF5E-468F-94FC-46E32954D563} = {D09C9493-E173-47F4-BAEB-A0700C53E055}
 		{4D66D61C-174F-4F59-8FA9-8A3DE83A1C90} = {D09C9493-E173-47F4-BAEB-A0700C53E055}
+		{B0339C1D-5371-475D-BFA3-8524F731621C} = {6434D792-2B23-4755-A35A-1E48F75E062E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {52773F80-9AFD-49EA-9A94-EBC8FBCA9951}

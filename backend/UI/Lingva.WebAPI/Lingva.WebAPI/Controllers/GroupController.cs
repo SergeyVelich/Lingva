@@ -7,7 +7,6 @@ using Lingva.WebAPI.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -36,10 +35,10 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] GroupsListOptionsModel groupsListOptionsModel)
         {
-            if(groupsListOptionsModel.DateFrom != null)
-                groupsListOptionsModel.DateFrom = groupsListOptionsModel.DateFrom.Value.ToUniversalTime();//temp solution? i need binder??
-            if (groupsListOptionsModel.DateTo != null)
-                groupsListOptionsModel.DateTo = groupsListOptionsModel.DateTo.Value.ToUniversalTime();//temp solution? i need binder??
+            //if(groupsListOptionsModel.DateFrom != null)
+            //    groupsListOptionsModel.DateFrom = groupsListOptionsModel.DateFrom.ToUniversalTime();//temp solution? i need binder??
+            //if (groupsListOptionsModel.DateTo != null)
+            //    groupsListOptionsModel.DateTo = groupsListOptionsModel.DateTo.ToUniversalTime();//temp solution? i need binder??
             IEnumerable<GroupDto> groupsDto = await _groupService.GetListAsync(_queryOptionsAdapter.Map(groupsListOptionsModel));
 
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groupsDto));
@@ -48,10 +47,10 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet("count")]
         public async Task<IActionResult> Count([FromQuery] GroupsListOptionsModel groupsListOptionsModel)
         {
-            if (groupsListOptionsModel.DateFrom != null)
-                groupsListOptionsModel.DateFrom = groupsListOptionsModel.DateFrom.Value.ToUniversalTime();//temp solution? i need binder??
-            if (groupsListOptionsModel.DateTo != null)
-                groupsListOptionsModel.DateTo = groupsListOptionsModel.DateTo.Value.ToUniversalTime();//temp solution? i need binder??
+            //if (groupsListOptionsModel.DateFrom != null)
+            //    groupsListOptionsModel.DateFrom = groupsListOptionsModel.DateFrom.ToUniversalTime();//temp solution? i need binder??
+            //if (groupsListOptionsModel.DateTo != null)
+            //    groupsListOptionsModel.DateTo = groupsListOptionsModel.DateTo.ToUniversalTime();//temp solution? i need binder??
             int pageTotal = await _groupService.CountAsync(_queryOptionsAdapter.Map(groupsListOptionsModel));
 
             return Ok(pageTotal);

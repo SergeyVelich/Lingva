@@ -23,14 +23,17 @@ namespace Lingva.ASP.Infrastructure.Adapters
             {
                 filters.Add(new QueryFilterElement("Name", optionsModel.Name, FilterElementOperation.Contains));
             }                
-            if (optionsModel.LanguageId != null && optionsModel.LanguageId != 0)
+            if (optionsModel.LanguageId != 0)
             {
                 filters.Add(new QueryFilterElement("LanguageId", optionsModel.LanguageId, FilterElementOperation.Equal));
             }               
-            if (optionsModel.DateFrom != null || optionsModel.DateTo != null)
+            if (optionsModel.DateFrom != DateTime.MinValue)
             {
-                filters.Add(new QueryFilterElement("Date", optionsModel.DateFrom?.AbsoluteStart() ?? DateTime.MinValue, FilterElementOperation.GreaterThanOrEqual));
-                filters.Add(new QueryFilterElement("Date", optionsModel.DateTo?.AbsoluteEnd() ?? DateTime.MaxValue, FilterElementOperation.LessThanOrEqual));
+                filters.Add(new QueryFilterElement("Date", optionsModel.DateFrom, FilterElementOperation.GreaterThanOrEqual));
+            }
+            if(optionsModel.DateTo != DateTime.MaxValue)
+            {               
+                filters.Add(new QueryFilterElement("Date", optionsModel.DateTo, FilterElementOperation.LessThanOrEqual));
             }              
 
             List<QuerySorter> sorters = new List<QuerySorter>();

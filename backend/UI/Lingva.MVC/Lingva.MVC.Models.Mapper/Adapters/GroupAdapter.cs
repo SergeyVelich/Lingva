@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Lingva.BC.Dto;
 using Lingva.MVC.Models.Entities;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lingva.MVC.Mapper.Adapters
@@ -10,9 +11,11 @@ namespace Lingva.MVC.Mapper.Adapters
     {
         public GroupAdapter()
         {
-            CreateMap<GroupDto, GroupViewModel>();
+            CreateMap<GroupDto, GroupViewModel>()
+                .ForMember(dto => dto.Date, opt => opt.MapFrom(g => g.Date.ToLocalTime()));
 
-            CreateMap<GroupViewModel, GroupDto>();           
+            CreateMap<GroupViewModel, GroupDto>()
+                .ForMember(dto => dto.Date, opt => opt.MapFrom(g => g.Date.ToUniversalTime())); ;           
         }
     }
 }

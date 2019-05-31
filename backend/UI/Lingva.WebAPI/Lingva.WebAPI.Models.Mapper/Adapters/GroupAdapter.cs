@@ -10,9 +10,11 @@ namespace Lingva.WebAPI.Mapper.Adapters
     {
         public GroupAdapter()
         {
-            CreateMap<GroupDto, GroupViewModel>();
+            CreateMap<GroupDto, GroupViewModel>()
+                .ForMember(dto => dto.Date, opt => opt.MapFrom(g => g.Date.ToLocalTime()));
 
-            CreateMap<GroupViewModel, GroupDto>();
+            CreateMap<GroupViewModel, GroupDto>()
+                .ForMember(dto => dto.Date, opt => opt.MapFrom(g => g.Date.ToUniversalTime())); ;
         }
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 
 namespace Lingva.MVC
 {
@@ -37,7 +38,7 @@ namespace Lingva.MVC
 
             services.AddMvc(options =>
             {
-                options.ModelBinderProviders.Insert(0, new OptionsModelBinderProvider());
+                options.ModelBinderProviders.Insert(0, new ModelBinderProvider());
                 options.Filters.Add(typeof(GlobalExceptionFilter));
                 options.CacheProfiles.Add("NoCashing",
                     new CacheProfile()
@@ -55,7 +56,7 @@ namespace Lingva.MVC
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -83,7 +84,7 @@ namespace Lingva.MVC
                     defaults: new { Controller = "Home", Action = "Index" });
             });
 
-            DbInitializer.Initialize(Configuration);
+            await DbInitializer.Initialize(Configuration);
         }
     }
 }

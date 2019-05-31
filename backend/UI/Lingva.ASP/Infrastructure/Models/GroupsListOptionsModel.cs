@@ -10,11 +10,11 @@ namespace Lingva.ASP.Infrastructure.Models
         [Display(Name = "Title")]
         public virtual string Name { get; set; }
         [Display(Name = "Date from")]   
-        public virtual DateTime? DateFrom { get; set; }
+        public virtual DateTime DateFrom { get; set; }
         [Display(Name = "Date to")]
-        public virtual DateTime? DateTo { get; set; }
+        public virtual DateTime DateTo { get; set; }
         [Display(Name = "Language")]
-        public virtual int? LanguageId { get; set; }
+        public virtual int LanguageId { get; set; }
         [Display(Name = "Description")]
         public virtual string Description { get; set; }
         public virtual string SortProperty { get; set; }
@@ -22,14 +22,5 @@ namespace Lingva.ASP.Infrastructure.Models
 
         public virtual int PageIndex { get; set; }
         public virtual int PageSize { get; set; }
-
-        public GroupsListOptionsModel()
-        {
-            SortProperty = "Name";
-            SortOrder = "Desc";
-
-            PageIndex = 1;
-            PageSize = 5;
-        }
     }
 }

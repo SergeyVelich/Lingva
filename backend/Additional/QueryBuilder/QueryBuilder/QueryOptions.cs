@@ -6,11 +6,11 @@ namespace QueryBuilder.QueryOptions
     [ExcludeFromCodeCoverage]
     public class QueryOptions : IQueryOptions
     {
-        public IList<QueryFilter> Filters { get; }
-        public IList<QuerySorter> Sorters { get; }
-        public IList<QuerySelector> Selectors { get; }
-        public IList<QueryIncluder> Includers { get; }
-        public QueryPagenator Pagenator { get; }
+        public IList<QueryFilter> Filters { get; set; }
+        public IList<QuerySorter> Sorters { get; set; }
+        public IList<QuerySelector> Selectors { get; set; }
+        public IList<QueryIncluder> Includers { get; set; }
+        public QueryPagenator Pagenator { get; set; }
 
         public QueryOptions(IList<QueryFilter> filters = null,
             IList<QuerySorter> sorters = null,

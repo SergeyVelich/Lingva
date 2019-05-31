@@ -2,6 +2,7 @@
 using Lingva.BC;
 using Lingva.BC.Contracts;
 using Lingva.BC.Services;
+using Lingva.DAL.AzureCosmosDB;
 using Lingva.DAL.Dapper;
 using Lingva.DAL.EF.Context;
 using Lingva.DAL.EF.Repositories;
@@ -47,6 +48,9 @@ namespace Lingva.ASP.Extensions
                 case DbProviders.Mongo:
                     services.ConfigureMongo();
                     break;
+                case DbProviders.AzureCosmosDB:
+                    services.ConfigureAzureCosmosDB();
+                    break;
                 default:
                     services.ConfigureEF(config);
                     break;
@@ -69,6 +73,12 @@ namespace Lingva.ASP.Extensions
         {
             services.AddTransient<MongoContext>();
             services.ConfigureMongoRepositories();
+        }
+
+        public static void ConfigureAzureCosmosDB(this IServiceCollection services)
+        {
+            services.AddTransient<AzureCosmosDBContext>();
+            services.ConfigureAzureCosmosDBRepositories();
         }
 
         public static void ConfigureEFContext(this IServiceCollection services, IConfiguration config)
@@ -95,6 +105,11 @@ namespace Lingva.ASP.Extensions
         public static void ConfigureMongoRepositories(this IServiceCollection services)
         {
             services.AddScoped<IRepository, DAL.Mongo.Repositories.Repository>();
+        }
+
+        public static void ConfigureAzureCosmosDBRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IRepository, DAL.AzureCosmosDB.Repositories.Repository>();
         }
 
         public static void ConfigureManagers(this IServiceCollection services)
