@@ -16,14 +16,14 @@ namespace Lingva.WebAPI.Tests
     {
         private List<LanguageDto> _languageDtoList;
         private InfoController _infoController;
-        private IInfoManager _infoService;
+        private IInfoManager _infoManager;
         private IDataAdapter _dataAdapter;
         private ILogger<InfoController> _logger;
 
         [SetUp]
         public void Setup()
         {
-            _infoService= Substitute.For<IInfoManager>();
+            _infoManager = Substitute.For<IInfoManager>();
             _dataAdapter = Substitute.For<IDataAdapter>();          
             _logger = Substitute.For<ILogger<InfoController>>();
 
@@ -46,8 +46,8 @@ namespace Lingva.WebAPI.Tests
         public async Task Index_Get_NotNull()
         {
             //arrange
-            _infoService.GetLanguagesListAsync().Returns(_languageDtoList);
-            _infoController = new InfoController(_infoService, _dataAdapter, _logger);
+            _infoManager.GetLanguagesListAsync().Returns(_languageDtoList);
+            _infoController = new InfoController(_infoManager, _dataAdapter, _logger);
 
             //act
             var result = await _infoController.GetLanguagesList();

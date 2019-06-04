@@ -16,15 +16,15 @@ using Xunit;
 namespace Lingva.BC.UnitTest
 {
     [ExcludeFromCodeCoverage]
-    public class GroupServiceTests
+    public class GroupManagerTests
     {
         private readonly List<Group> _groupList;
         private readonly List<GroupDto> _groupListDto;
-        private IGroupManager _groupService;
+        private IGroupManager _groupManager;
         private readonly Mock<IRepository> _repoMock;
         private readonly Mock<IDataAdapter> _dataAdapter;
 
-        public GroupServiceTests()
+        public GroupManagerTests()
         {
             _groupList = new List<Group>
             {
@@ -82,7 +82,7 @@ namespace Lingva.BC.UnitTest
 
             _repoMock = new Mock<IRepository>();
             _dataAdapter = new Mock<IDataAdapter>();
-            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
+            _groupManager = new GroupManager(_repoMock.Object, _dataAdapter.Object);
         }
 
         [Fact]
@@ -90,10 +90,10 @@ namespace Lingva.BC.UnitTest
         {
             //arrange
             _repoMock.Setup(r => r.GetListAsync<Group>()).Returns(Task.FromResult<IEnumerable<Group>>(_groupList));
-            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
+            _groupManager = new GroupManager(_repoMock.Object, _dataAdapter.Object);
 
             //act
-            var result = await _groupService.GetListAsync();
+            var result = await _groupManager.GetListAsync();
 
             //assert
             Assert.NotNull(result);
@@ -104,11 +104,11 @@ namespace Lingva.BC.UnitTest
         {
             //arrange
             _repoMock.Setup(r => r.GetListAsync<Group>()).Returns(Task.FromResult<IEnumerable<Group>>(_groupList));
-            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
+            _groupManager = new GroupManager(_repoMock.Object, _dataAdapter.Object);
             _dataAdapter.Setup(d => d.Map<IEnumerable<GroupDto>>(_groupList)).Returns(_groupListDto);
 
             //act
-            var result = await _groupService.GetListAsync();
+            var result = await _groupManager.GetListAsync();
 
             //assert
             Assert.True(result.Count() == _groupList.Count());
@@ -119,7 +119,7 @@ namespace Lingva.BC.UnitTest
         {
             //arrange
             _repoMock.Setup(r => r.GetListAsync<Group>()).Returns(Task.FromResult<IEnumerable<Group>>(_groupList));
-            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
+            _groupManager = new GroupManager(_repoMock.Object, _dataAdapter.Object);
             _dataAdapter.Setup(d => d.Map<IEnumerable<GroupDto>>(_groupList)).Returns(_groupListDto);
 
             Mock<IQueryOptions> queryOptions = new Mock<IQueryOptions>();
@@ -129,7 +129,7 @@ namespace Lingva.BC.UnitTest
             queryOptions.Setup(q => q.Pagenator).Returns<Group>(null);
 
             //act
-            var result = await _groupService.GetListAsync(queryOptions.Object);
+            var result = await _groupManager.GetListAsync(queryOptions.Object);
 
             //assert
             Assert.NotNull(result);
@@ -145,10 +145,10 @@ namespace Lingva.BC.UnitTest
 
             _dataAdapter.Setup(d => d.Map<GroupDto>(group)).Returns(groupDto);
             _repoMock.Setup(r => r.GetByIdAsync<Group>(validId)).Returns(Task.FromResult(group));
-            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
+            _groupManager = new GroupManager(_repoMock.Object, _dataAdapter.Object);
 
             //act
-            var order = await _groupService.GetByIdAsync(validId);
+            var order = await _groupManager.GetByIdAsync(validId);
 
             //assert
             Assert.NotNull(order);
@@ -161,10 +161,10 @@ namespace Lingva.BC.UnitTest
             int invalidId = -1;
 
             _repoMock.Setup(r => r.GetByIdAsync<Group>(invalidId)).Returns(Task.FromResult<Group>(null));
-            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
+            _groupManager = new GroupManager(_repoMock.Object, _dataAdapter.Object);
 
             //act
-            var order = await _groupService.GetByIdAsync(invalidId);
+            var order = await _groupManager.GetByIdAsync(invalidId);
 
             //assert
             Assert.Null(order);
@@ -178,10 +178,10 @@ namespace Lingva.BC.UnitTest
 
             _repoMock.Setup(r => r.CreateAsync<Group>(null));
             _dataAdapter.Setup(d => d.Map<Group>(null)).Returns(group);
-            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
+            _groupManager = new GroupManager(_repoMock.Object, _dataAdapter.Object);
 
             //act
-            await _groupService.AddAsync(null);
+            await _groupManager.AddAsync(null);
 
             //assert
             _repoMock.Verify(mock => mock.CreateAsync(group), Times.Once());
@@ -196,10 +196,10 @@ namespace Lingva.BC.UnitTest
 
             _repoMock.Setup(r => r.GetByIdAsync<Group>(group.Id)).Returns(Task.FromResult(group));
             _repoMock.Setup(r => r.UpdateAsync(group)).Returns(Task.FromResult(group));
-            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
+            _groupManager = new GroupManager(_repoMock.Object, _dataAdapter.Object);
 
             //act
-            await _groupService.UpdateAsync(groupDto);
+            await _groupManager.UpdateAsync(groupDto);
 
             //assert
             _repoMock.Verify(mock => mock.UpdateAsync(group), Times.Once());
@@ -213,10 +213,10 @@ namespace Lingva.BC.UnitTest
 
             _repoMock.Setup(r => r.DeleteAsync<Group>(group.Id));
             _dataAdapter.Setup(d => d.Map<Group>(null)).Returns(group);
-            _groupService = new GroupManager(_repoMock.Object, _dataAdapter.Object);
+            _groupManager = new GroupManager(_repoMock.Object, _dataAdapter.Object);
 
             //act
-            await _groupService.DeleteAsync(group.Id);
+            await _groupManager.DeleteAsync(group.Id);
 
             //assert
             _repoMock.Verify(mock => mock.DeleteAsync<Group>(group.Id), Times.Once());

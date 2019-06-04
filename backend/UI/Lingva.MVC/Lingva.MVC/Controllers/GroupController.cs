@@ -19,17 +19,17 @@ namespace Lingva.MVC.Controllers
     [ResponseCache(CacheProfileName = "NoCashing")]
     public class GroupController : Controller
     {
-        private readonly IGroupManager _groupService;
-        private readonly IInfoManager _infoService;
+        private readonly IGroupManager _groupManager;
+        private readonly IInfoManager _infoManager;
         private readonly IDataAdapter _dataAdapter;
         private readonly ILogger<GroupController> _logger;
         private readonly QueryOptionsAdapter _queryOptionsAdapter;
         private readonly IMemoryCache _memoryCache;
 
-        public GroupController(IGroupManager groupService, IInfoManager infoService, IDataAdapter dataAdapter, ILogger<GroupController> logger, IMemoryCache memoryCache, QueryOptionsAdapter queryOptionsAdapter)
+        public GroupController(IGroupManager groupManager, IInfoManager infoManager, IDataAdapter dataAdapter, ILogger<GroupController> logger, IMemoryCache memoryCache, QueryOptionsAdapter queryOptionsAdapter)
         {
-            _groupService = groupService;
-            _infoService = infoService;
+            _groupManager = groupManager;
+            _infoManager = infoManager;
             _dataAdapter = dataAdapter;
             _logger = logger;                
             _memoryCache = memoryCache;
@@ -41,7 +41,7 @@ namespace Lingva.MVC.Controllers
         {
             IEnumerable<GroupViewModel> groups = await GetGroupsCollectionAsync(modelOptions);
             IList<LanguageViewModel> languages = await GetLanguagesCollectionAsync();
-            int pageTotal = await _groupService.CountAsync(_queryOptionsAdapter.Map(modelOptions));
+            int pageTotal = await _groupManager.CountAsync(_queryOptionsAdapter.Map(modelOptions));
 
             GroupsListPageViewModel viewModel = new GroupsListPageViewModel
             {
@@ -64,7 +64,7 @@ namespace Lingva.MVC.Controllers
                 return NotFound();
             }
 
-            GroupDto groupDto = await _groupService.GetByIdAsync((int)id);
+            GroupDto groupDto = await _groupManager.GetByIdAsync((int)id);
             GroupViewModel groupViewModel = _dataAdapter.Map<GroupViewModel>(groupDto);
             GroupPageViewModel viewModel = new GroupPageViewModel(groupViewModel);
 
@@ -91,7 +91,7 @@ namespace Lingva.MVC.Controllers
             }
 
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
-            await _groupService.AddAsync(groupDto);
+            await _groupManager.AddAsync(groupDto);
 
             return RedirectToAction("Index");
         }
@@ -105,7 +105,7 @@ namespace Lingva.MVC.Controllers
                 return NotFound();
             }
 
-            GroupDto groupDto = await _groupService.GetByIdAsync((int)id);
+            GroupDto groupDto = await _groupManager.GetByIdAsync((int)id);
             if (groupDto == null)
             {
                 return NotFound();
@@ -128,7 +128,7 @@ namespace Lingva.MVC.Controllers
             }
 
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
-            await _groupService.UpdateAsync(groupDto);
+            await _groupManager.UpdateAsync(groupDto);
 
             return RedirectToAction("Index");
         }
@@ -142,7 +142,7 @@ namespace Lingva.MVC.Controllers
                 return NotFound();
             }
 
-            GroupDto groupDto = await _groupService.GetByIdAsync((int)id);
+            GroupDto groupDto = await _groupManager.GetByIdAsync((int)id);
             if (groupDto == null)
             {
                 return NotFound();
@@ -163,14 +163,14 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _groupService.DeleteAsync(groupViewModel.Id);
+            await _groupManager.DeleteAsync(groupViewModel.Id);
 
             return RedirectToAction("Index");
         }
 
         private async Task<IList<LanguageViewModel>> GetLanguagesCollectionAsync()
         {
-            IEnumerable<LanguageDto> languagessDto = await _infoService.GetLanguagesListAsync();
+            IEnumerable<LanguageDto> languagessDto = await _infoManager.GetLanguagesListAsync();
             IList<LanguageViewModel> languages = _dataAdapter.Map<IList<LanguageViewModel>>(languagessDto);
 
             return languages;
@@ -178,7 +178,7 @@ namespace Lingva.MVC.Controllers
 
         private async Task<IEnumerable<GroupViewModel>> GetGroupsCollectionAsync(GroupsListOptionsModel modelOptions)
         {
-            IEnumerable<GroupDto> groupsDto = await _groupService.GetListAsync(_queryOptionsAdapter.Map(modelOptions));
+            IEnumerable<GroupDto> groupsDto = await _groupManager.GetListAsync(_queryOptionsAdapter.Map(modelOptions));
             IEnumerable<GroupViewModel> groups = _dataAdapter.Map<IEnumerable<GroupViewModel>>(groupsDto);
 
             return groups;

@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace AuthServer
 {
@@ -97,7 +98,7 @@ namespace AuthServer
             app.UseIdentityServer();
             app.UseMvcWithDefaultRoute();
 
-            DbInitializer.Initialize(userManager, roleManager);
+            DbInitializer.InitializeAsync(userManager, roleManager).Wait();
         }
     }
 }

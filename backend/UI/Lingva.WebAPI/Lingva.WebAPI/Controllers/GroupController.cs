@@ -17,14 +17,14 @@ namespace Lingva.WebAPI.Controllers
     [ApiController]
     public class GroupController : ControllerBase
     {
-        private readonly IGroupManager _groupService;
+        private readonly IGroupManager _groupManager;
         private readonly IDataAdapter _dataAdapter;
         private readonly ILogger<GroupController> _logger;
         private readonly QueryOptionsAdapter _queryOptionsAdapter;
 
-        public GroupController(IGroupManager groupService, IDataAdapter dataAdapter, ILogger<GroupController> logger, QueryOptionsAdapter queryOptionsAdapter)
+        public GroupController(IGroupManager groupManager, IDataAdapter dataAdapter, ILogger<GroupController> logger, QueryOptionsAdapter queryOptionsAdapter)
         {
-            _groupService = groupService;
+            _groupManager = groupManager;
             _dataAdapter = dataAdapter;
             _logger = logger;
             _queryOptionsAdapter = queryOptionsAdapter;
@@ -35,11 +35,7 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] GroupsListOptionsModel groupsListOptionsModel)
         {
-            //if(groupsListOptionsModel.DateFrom != null)
-            //    groupsListOptionsModel.DateFrom = groupsListOptionsModel.DateFrom.ToUniversalTime();//temp solution? i need binder??
-            //if (groupsListOptionsModel.DateTo != null)
-            //    groupsListOptionsModel.DateTo = groupsListOptionsModel.DateTo.ToUniversalTime();//temp solution? i need binder??
-            IEnumerable<GroupDto> groupsDto = await _groupService.GetListAsync(_queryOptionsAdapter.Map(groupsListOptionsModel));
+            IEnumerable<GroupDto> groupsDto = await _groupManager.GetListAsync(_queryOptionsAdapter.Map(groupsListOptionsModel));
 
             return Ok(_dataAdapter.Map<IEnumerable<GroupViewModel>>(groupsDto));
         }
@@ -47,11 +43,7 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet("count")]
         public async Task<IActionResult> Count([FromQuery] GroupsListOptionsModel groupsListOptionsModel)
         {
-            //if (groupsListOptionsModel.DateFrom != null)
-            //    groupsListOptionsModel.DateFrom = groupsListOptionsModel.DateFrom.ToUniversalTime();//temp solution? i need binder??
-            //if (groupsListOptionsModel.DateTo != null)
-            //    groupsListOptionsModel.DateTo = groupsListOptionsModel.DateTo.ToUniversalTime();//temp solution? i need binder??
-            int pageTotal = await _groupService.CountAsync(_queryOptionsAdapter.Map(groupsListOptionsModel));
+            int pageTotal = await _groupManager.CountAsync(_queryOptionsAdapter.Map(groupsListOptionsModel));
 
             return Ok(pageTotal);
         }
@@ -60,7 +52,7 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet("get")]
         public async Task<IActionResult> Get([FromQuery] int id)
         {
-            GroupDto groupDto = await _groupService.GetByIdAsync(id);
+            GroupDto groupDto = await _groupManager.GetByIdAsync(id);
 
             if (groupDto == null)
             {
@@ -96,7 +88,7 @@ namespace Lingva.WebAPI.Controllers
             }
 
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
-            await _groupService.AddAsync(groupDto);
+            await _groupManager.AddAsync(groupDto);
 
             return CreatedAtAction("Get", new { id = groupDto.Id }, _dataAdapter.Map<GroupViewModel>(groupDto));
         }
@@ -111,7 +103,7 @@ namespace Lingva.WebAPI.Controllers
             }
 
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
-            await _groupService.UpdateAsync(groupDto);
+            await _groupManager.UpdateAsync(groupDto);
 
             return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));
         }
@@ -128,7 +120,7 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _groupService.DeleteAsync(id);
+            await _groupManager.DeleteAsync(id);
 
             return Ok();
         }

@@ -5,23 +5,24 @@ using AuthServer.Identity.Entities;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace AuthServer
 {
     public static class DbInitializer
     {
-        public static void Initialize(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task InitializeAsync(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             AppIdentityDbContextFactory factory = new AppIdentityDbContextFactory();
             AppIdentityDbContext dbContext = factory.CreateDbContext(new string[0]);
-            dbContext.Database.Migrate();
+            await dbContext.Database.MigrateAsync();
 
             PersistedGrantDbContextFactory grantsFactory = new PersistedGrantDbContextFactory();
             PersistedGrantDbContext grantsContext = grantsFactory.CreateDbContext(new string[0]);
-            grantsContext.Database.Migrate();
+            await grantsContext.Database.MigrateAsync();
 
-            DataInitializer.AddDefaultRolesAsync(roleManager).Wait();
-            DataInitializer.AddDefaultUsersAsync(userManager).Wait();
+            await DataInitializer.AddDefaultRolesAsync(roleManager);
+            await DataInitializer.AddDefaultUsersAsync(userManager);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Lingva.ASP
 {
     public static class DbInitializer
     {
-        public static async Task Initialize(IConfiguration config)
+        public static async Task InitializeAsync(IConfiguration config)
         {
             DbProviders dbProvider = (DbProviders)Enum.Parse(typeof(DbProviders), config.GetSection("Selectors:DbProvider").Value, true);
 
@@ -30,7 +30,7 @@ namespace Lingva.ASP
                 default:
                     factory = new DictionaryContextFactory();
                     dbContext = factory.CreateDbContext(new string[0]);
-                    dbContext.Database.Migrate();
+                    await dbContext.Database.MigrateAsync();
                     break;
             }
         }

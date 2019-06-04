@@ -21,7 +21,7 @@ namespace Lingva.WebAPI.Tests
     {
         private List<GroupDto> _groupDtoList;
         private GroupController _groupController;
-        private IGroupManager _groupService;
+        private IGroupManager _groupManager;
         private IDataAdapter _dataAdapter;
         private ILogger<GroupController> _logger;
         private QueryOptionsAdapter _queryOptionsAdapter;
@@ -30,7 +30,7 @@ namespace Lingva.WebAPI.Tests
         [SetUp]
         public void Setup()
         {
-            _groupService= Substitute.For<IGroupManager>();
+            _groupManager = Substitute.For<IGroupManager>();
             _dataAdapter = Substitute.For<IDataAdapter>();          
             _logger = Substitute.For<ILogger<GroupController>>();
             _queryOptionsAdapter = Substitute.For<QueryOptionsAdapter>();
@@ -63,8 +63,8 @@ namespace Lingva.WebAPI.Tests
         public async Task Index_Get_NotNull()
         {
             //arrange
-            _groupService.GetListAsync().Returns(_groupDtoList);
-            _groupController = new GroupController(_groupService, _dataAdapter, _logger, _queryOptionsAdapter);
+            _groupManager.GetListAsync().Returns(_groupDtoList);
+            _groupController = new GroupController(_groupManager, _dataAdapter, _logger, _queryOptionsAdapter);
 
             //act
             var result = await _groupController.Index(_optionsModel);
@@ -82,8 +82,8 @@ namespace Lingva.WebAPI.Tests
             GroupDto groupDto = new GroupDto { Id = validId };
 
             _dataAdapter.Map<GroupDto>(groupViewModel).Returns(groupDto);
-            _groupService.GetByIdAsync(validId).Returns(groupDto);
-            _groupController = new GroupController(_groupService, _dataAdapter, _logger, _queryOptionsAdapter);
+            _groupManager.GetByIdAsync(validId).Returns(groupDto);
+            _groupController = new GroupController(_groupManager, _dataAdapter, _logger, _queryOptionsAdapter);
 
             //act
             var result = await _groupController.Get(1);
@@ -97,12 +97,12 @@ namespace Lingva.WebAPI.Tests
         {
             //arrange
             GroupViewModel groupViewModel = new GroupViewModel { Id = 1 };
-            GroupDto groupDto = new GroupDto { Id = 1 };           
+            GroupDto groupDto = new GroupDto { Id = 1 };
 
-            _groupService.AddAsync(Arg.Any<GroupDto>()).Returns(Task.FromResult(groupDto));
+            _groupManager.AddAsync(Arg.Any<GroupDto>()).Returns(Task.FromResult(groupDto));
             _dataAdapter.Map<GroupDto>(groupViewModel).Returns(groupDto);
             _dataAdapter.Map<GroupViewModel>(groupDto).Returns(groupViewModel);
-            _groupController = new GroupController(_groupService, _dataAdapter, _logger, _queryOptionsAdapter);
+            _groupController = new GroupController(_groupManager, _dataAdapter, _logger, _queryOptionsAdapter);
 
             //act
             var result = await _groupController.Create(groupViewModel);
@@ -118,10 +118,10 @@ namespace Lingva.WebAPI.Tests
             GroupViewModel groupViewModel = new GroupViewModel { Id = 1 };
             GroupDto groupDto = new GroupDto { Id = 1 };
 
-            _groupService.UpdateAsync(Arg.Any<GroupDto>()).Returns(groupDto);
+            _groupManager.UpdateAsync(Arg.Any<GroupDto>()).Returns(groupDto);
             _dataAdapter.Map<GroupDto>(groupViewModel).Returns(groupDto);
             _dataAdapter.Map<GroupViewModel>(groupDto).Returns(groupViewModel);
-            _groupController = new GroupController(_groupService, _dataAdapter, _logger, _queryOptionsAdapter);
+            _groupController = new GroupController(_groupManager, _dataAdapter, _logger, _queryOptionsAdapter);
 
             //act
             var result = await _groupController.Create(groupViewModel);
@@ -137,10 +137,10 @@ namespace Lingva.WebAPI.Tests
             GroupViewModel groupViewModel = new GroupViewModel { Id = 1 };
             GroupDto groupDto = new GroupDto { Id = 1 };
 
-            _groupService.DeleteAsync(Arg.Any<int>()).Returns(Task.FromResult(groupDto));
+            _groupManager.DeleteAsync(Arg.Any<int>()).Returns(Task.FromResult(groupDto));
             _dataAdapter.Map<GroupDto>(groupViewModel).Returns(groupDto);
             _dataAdapter.Map<GroupViewModel>(groupDto).Returns(groupViewModel);
-            _groupController = new GroupController(_groupService, _dataAdapter, _logger, _queryOptionsAdapter);
+            _groupController = new GroupController(_groupManager, _dataAdapter, _logger, _queryOptionsAdapter);
 
             //act
             var result = await _groupController.Delete(groupViewModel.Id);

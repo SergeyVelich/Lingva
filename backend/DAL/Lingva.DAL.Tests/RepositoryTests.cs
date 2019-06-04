@@ -141,7 +141,7 @@ namespace Lingva.DAL.EF.Tests
 
 
         //    //_repoMock.Setup(r => r.GetListAsync<Group>()).Returns(Task.FromResult<IEnumerable<Group>>(_groupList));
-        //    //_groupService = new GroupService(_repoMock.Object, _data.Object);
+        //    //_groupManager = new GroupService(_repoMock.Object, _data.Object);
         //    //_data.Setup(d => d.Map<IEnumerable<GroupDto>>(_groupList)).Returns(_groupListDto);
 
         //    var queryOptions = Substitute.For<IQueryOptions>();
@@ -216,7 +216,7 @@ namespace Lingva.DAL.EF.Tests
 
         //    //_repoMock.Setup(r => r.CreateAsync<Group>(null));
         //    //_data.Setup(d => d.Map<Group>(null)).Returns(group);
-        //    //_groupService = new GroupService(_repoMock.Object, _data.Object);
+        //    //_groupManager = new GroupService(_repoMock.Object, _data.Object);
 
         //    //act
         //    await _repository.CreateAsync<Group>(null);
@@ -235,7 +235,7 @@ namespace Lingva.DAL.EF.Tests
 
         //    //_repoMock.Setup(r => r.GetByIdAsync<Group>(group.Id)).Returns(Task.FromResult(group));
         //    //_repoMock.Setup(r => r.UpdateAsync(group)).Returns(Task.FromResult(group));
-        //    //_groupService = new GroupService(_repoMock.Object, _data.Object);
+        //    //_groupManager = new GroupService(_repoMock.Object, _data.Object);
 
         //    //act
         //    await _repository.UpdateAsync(group);
@@ -253,7 +253,7 @@ namespace Lingva.DAL.EF.Tests
 
         //    //_repoMock.Setup(r => r.DeleteAsync<Group>(null));
         //    //_data.Setup(d => d.Map<Group>(null)).Returns(group);
-        //    //_groupService = new GroupService(_repoMock.Object, _data.Object);
+        //    //_groupManager = new GroupService(_repoMock.Object, _data.Object);
 
         //    //act
         //    await _repository.DeleteAsync(group);

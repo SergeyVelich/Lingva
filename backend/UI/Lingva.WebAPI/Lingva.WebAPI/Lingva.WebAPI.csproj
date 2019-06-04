@@ -2,9 +2,10 @@
   
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <AspNetCoreHostingModelV2>InProcess</AspNetCoreHostingModelV2>
     <UserSecretsId>aa7142be-c864-42fa-8714-90824b0d1eb0</UserSecretsId>
-  </PropertyGroup>
+  
+</PropertyGroup>
 
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

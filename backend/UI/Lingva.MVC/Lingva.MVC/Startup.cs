@@ -56,7 +56,7 @@ namespace Lingva.MVC
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -84,7 +84,7 @@ namespace Lingva.MVC
                     defaults: new { Controller = "Home", Action = "Index" });
             });
 
-            await DbInitializer.Initialize(Configuration);
+            DbInitializer.InitializeAsync(Configuration).Wait();
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Lingva.WebAPI
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -72,7 +72,7 @@ namespace Lingva.WebAPI
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
 
-            await DbInitializer.Initialize(Configuration);
+            DbInitializer.InitializeAsync(Configuration).Wait();
         }
     }
 }
