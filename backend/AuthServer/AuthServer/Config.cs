@@ -55,7 +55,9 @@ namespace AuthServer
                 {                   
                     ClientId = "angular_client",
                     ClientName = "Angular SPA",
-                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+                    RequireClientSecret = false,
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
@@ -67,7 +69,7 @@ namespace AuthServer
                     PostLogoutRedirectUris = {"http://localhost:4200/"},
                     AllowedCorsOrigins = {"http://localhost:4200"},
                     AllowAccessTokensViaBrowser = true,
-                    AccessTokenLifetime = 3600,
+                    AccessTokenLifetime = 300,
                     IdentityTokenLifetime = 300,
                     RequireConsent = false
                 }
