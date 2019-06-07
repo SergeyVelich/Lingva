@@ -137,8 +137,8 @@ namespace Lingva.DAL.EF.Migrations
                 columns: new[] { "Id", "CreateDate", "ModifyDate", "Name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2019, 5, 20, 18, 46, 36, 573, DateTimeKind.Local).AddTicks(3341), new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(1930), "en" },
-                    { 2, new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(3265), new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(3273), "ru" }
+                    { 1, new DateTime(2019, 6, 6, 17, 28, 46, 841, DateTimeKind.Local).AddTicks(2218), new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(4620), "en" },
+                    { 2, new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(6435), new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(6444), "ru" }
                 });
 
             migrationBuilder.InsertData(
@@ -146,34 +146,34 @@ namespace Lingva.DAL.EF.Migrations
                 columns: new[] { "Id", "CreateDate", "Email", "ModifyDate", "Name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6456), "veloceraptor89@gmail.com", new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6460), "Serhii" },
-                    { 2, new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(7520), "tucker_serega@mail.ru", new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(7527), "Old" }
+                    { 1, new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9657), "veloceraptor89@gmail.com", new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9663), "Serhii" },
+                    { 2, new DateTime(2019, 6, 6, 17, 28, 46, 846, DateTimeKind.Local).AddTicks(779), "tucker_serega@mail.ru", new DateTime(2019, 6, 6, 17, 28, 46, 846, DateTimeKind.Local).AddTicks(788), "Old" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Groups",
                 columns: new[] { "Id", "CreateDate", "Date", "Description", "LanguageId", "ModifyDate", "Name", "Picture" },
-                values: new object[] { 1, new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(4849), new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(4859), "Good movie", 1, new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(4857), "Harry Potter", "1" });
+                values: new object[] { 1, new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(8063), new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(8073), "Good movie", 1, new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(8070), "Harry Potter", "1" });
 
             migrationBuilder.InsertData(
                 table: "Groups",
                 columns: new[] { "Id", "CreateDate", "Date", "Description", "LanguageId", "ModifyDate", "Name", "Picture" },
-                values: new object[] { 2, new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6163), new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6174), "Eq", 1, new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6171), "Librium", "2" });
+                values: new object[] { 2, new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9351), new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9362), "Eq", 1, new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9359), "Librium", "2" });
 
             migrationBuilder.InsertData(
                 table: "Groups",
                 columns: new[] { "Id", "CreateDate", "Date", "Description", "LanguageId", "ModifyDate", "Name", "Picture" },
-                values: new object[] { 3, new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6188), new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6193), "stuff", 2, new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6190), "2Guns", "3" });
+                values: new object[] { 3, new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9384), new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9389), "stuff", 2, new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9386), "2Guns", "3" });
 
             migrationBuilder.InsertData(
                 table: "GroupUser",
                 columns: new[] { "GroupId", "UserId", "CreateDate", "Id", "ModifyDate" },
-                values: new object[] { 1, 1, new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(7740), 1, new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(7744) });
+                values: new object[] { 1, 1, new DateTime(2019, 6, 6, 17, 28, 46, 846, DateTimeKind.Local).AddTicks(940), 1, new DateTime(2019, 6, 6, 17, 28, 46, 846, DateTimeKind.Local).AddTicks(943) });
 
             migrationBuilder.InsertData(
                 table: "GroupUser",
                 columns: new[] { "GroupId", "UserId", "CreateDate", "Id", "ModifyDate" },
-                values: new object[] { 1, 2, new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(8636), 2, new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(8643) });
+                values: new object[] { 1, 2, new DateTime(2019, 6, 6, 17, 28, 46, 846, DateTimeKind.Local).AddTicks(1825), 2, new DateTime(2019, 6, 6, 17, 28, 46, 846, DateTimeKind.Local).AddTicks(1832) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_LanguageId",

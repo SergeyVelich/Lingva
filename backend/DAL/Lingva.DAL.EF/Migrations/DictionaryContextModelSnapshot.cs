@@ -49,33 +49,33 @@ namespace Lingva.DAL.EF.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(4849),
-                            Date = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(4859),
+                            CreateDate = new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(8063),
+                            Date = new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(8073),
                             Description = "Good movie",
                             LanguageId = 1,
-                            ModifyDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(4857),
+                            ModifyDate = new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(8070),
                             Name = "Harry Potter",
                             Picture = "1"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6163),
-                            Date = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6174),
+                            CreateDate = new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9351),
+                            Date = new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9362),
                             Description = "Eq",
                             LanguageId = 1,
-                            ModifyDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6171),
+                            ModifyDate = new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9359),
                             Name = "Librium",
                             Picture = "2"
                         },
                         new
                         {
                             Id = 3,
-                            CreateDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6188),
-                            Date = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6193),
+                            CreateDate = new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9384),
+                            Date = new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9389),
                             Description = "stuff",
                             LanguageId = 2,
-                            ModifyDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6190),
+                            ModifyDate = new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9386),
                             Name = "2Guns",
                             Picture = "3"
                         });
@@ -104,17 +104,17 @@ namespace Lingva.DAL.EF.Migrations
                         {
                             GroupId = 1,
                             UserId = 1,
-                            CreateDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(7740),
+                            CreateDate = new DateTime(2019, 6, 6, 17, 28, 46, 846, DateTimeKind.Local).AddTicks(940),
                             Id = 1,
-                            ModifyDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(7744)
+                            ModifyDate = new DateTime(2019, 6, 6, 17, 28, 46, 846, DateTimeKind.Local).AddTicks(943)
                         },
                         new
                         {
                             GroupId = 1,
                             UserId = 2,
-                            CreateDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(8636),
+                            CreateDate = new DateTime(2019, 6, 6, 17, 28, 46, 846, DateTimeKind.Local).AddTicks(1825),
                             Id = 2,
-                            ModifyDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(8643)
+                            ModifyDate = new DateTime(2019, 6, 6, 17, 28, 46, 846, DateTimeKind.Local).AddTicks(1832)
                         });
                 });
 
@@ -138,15 +138,15 @@ namespace Lingva.DAL.EF.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2019, 5, 20, 18, 46, 36, 573, DateTimeKind.Local).AddTicks(3341),
-                            ModifyDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(1930),
+                            CreateDate = new DateTime(2019, 6, 6, 17, 28, 46, 841, DateTimeKind.Local).AddTicks(2218),
+                            ModifyDate = new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(4620),
                             Name = "en"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(3265),
-                            ModifyDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(3273),
+                            CreateDate = new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(6435),
+                            ModifyDate = new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(6444),
                             Name = "ru"
                         });
                 });
@@ -173,17 +173,17 @@ namespace Lingva.DAL.EF.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6456),
+                            CreateDate = new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9657),
                             Email = "veloceraptor89@gmail.com",
-                            ModifyDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(6460),
+                            ModifyDate = new DateTime(2019, 6, 6, 17, 28, 46, 845, DateTimeKind.Local).AddTicks(9663),
                             Name = "Serhii"
                         },
                         new
                         {
                             Id = 2,
-                            CreateDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(7520),
+                            CreateDate = new DateTime(2019, 6, 6, 17, 28, 46, 846, DateTimeKind.Local).AddTicks(779),
                             Email = "tucker_serega@mail.ru",
-                            ModifyDate = new DateTime(2019, 5, 20, 18, 46, 36, 577, DateTimeKind.Local).AddTicks(7527),
+                            ModifyDate = new DateTime(2019, 6, 6, 17, 28, 46, 846, DateTimeKind.Local).AddTicks(788),
                             Name = "Old"
                         });
                 });

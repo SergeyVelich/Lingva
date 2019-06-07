@@ -18,7 +18,7 @@ namespace Lingva.ASP
             {
                 case DbProviders.Dapper:
                     DictionaryContextFactory factory = new DictionaryContextFactory();
-                    DictionaryContext dbContext = factory.CreateDbContext(new string[0]);
+                    DictionaryContext dbContext = factory.CreateDbContext(config);
                     await dbContext.Database.MigrateAsync();
                     break;
                 case DbProviders.Mongo:
@@ -29,7 +29,7 @@ namespace Lingva.ASP
                     break;
                 default:
                     factory = new DictionaryContextFactory();
-                    dbContext = factory.CreateDbContext(new string[0]);
+                    dbContext = factory.CreateDbContext(config);
                     await dbContext.Database.MigrateAsync();
                     break;
             }

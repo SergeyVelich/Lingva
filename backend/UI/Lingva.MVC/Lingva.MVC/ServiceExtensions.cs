@@ -16,7 +16,7 @@ namespace Lingva.MVC.Extensions
         {
             bool useIs = bool.Parse(config.GetSection("UseIS").Value);
 
-            if (useIs)
+            if (!useIs)
             {
                 return;
             }

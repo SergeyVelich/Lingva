@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.MVC.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ResponseCache(CacheProfileName = "NoCashing")]
     public class GroupController : Controller
     {

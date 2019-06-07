@@ -40,6 +40,7 @@ namespace Lingva.MVC
             {
                 options.ModelBinderProviders.Insert(0, new ModelBinderProvider());
                 options.Filters.Add(typeof(GlobalExceptionFilter));
+                options.Filters.Add(typeof(GlobalLoggingFilter));
                 options.CacheProfiles.Add("NoCashing",
                     new CacheProfile()
                     {

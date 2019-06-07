@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 using NLog.Web;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -20,19 +21,20 @@ namespace Lingva.MVC
                 host.Run();
             }
             catch (Exception exception)
-            {                
+            {
                 logger.Error(exception, "Stopped program because of exception"); //NLog: catch setup errors
                 throw;
             }
             finally
-            {               
+            {
                 NLog.LogManager.Shutdown(); // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
-            }        
+            }
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls("http://localhost:6002")
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();

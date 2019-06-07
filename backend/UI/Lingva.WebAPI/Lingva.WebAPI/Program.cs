@@ -33,6 +33,7 @@ namespace Lingva.WebAPI
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls("http://localhost:6001")
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
