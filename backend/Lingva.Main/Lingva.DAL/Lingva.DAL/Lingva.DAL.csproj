@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QueryBuilder\QueryBuilder.csproj" />
+    <Reference Include="QueryBuilder">
+      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder\bin\Release\netcoreapp2.2\QueryBuilder.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

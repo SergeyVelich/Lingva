@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SenderService.Email.EF.DAL\SenderService.Email.EF.DAL.csproj" />
     <ProjectReference Include="..\SenderService.Email\SenderService.Email.csproj" />
   </ItemGroup>
