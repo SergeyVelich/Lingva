@@ -11,8 +11,8 @@ namespace Lingva.BC.Mapper.Adapters
         public GroupAdapter()
         {
             CreateMap<Group, GroupDto>()
-                .ForMember(dto => dto.LanguageId, opt => opt.MapFrom(g => g.Language.Id))
-                .ForMember(dto => dto.LanguageName, opt => opt.MapFrom(g => g.Language.Name));
+                .ForMember(dto => dto.LanguageId, opt => opt.MapFrom(g => g.Language == null ? 0 : g.Language.Id))
+                .ForMember(dto => dto.LanguageName, opt => opt.MapFrom(g => g.Language == null ? null : g.Language.Name));
             CreateMap<GroupDto, Group>();
                 //.ForMember(dto => dto.Language, opt => opt.MapFrom(g => new Language { Id = g.LanguageId, Name = g.LanguageName }));
 

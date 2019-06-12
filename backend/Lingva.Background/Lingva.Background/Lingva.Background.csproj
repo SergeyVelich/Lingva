@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />
     <PackageReference Include="Quartz" Version="3.0.7" />
   </ItemGroup>
 
@@ -32,8 +32,11 @@
     <Reference Include="SenderService.Email">
       <HintPath>..\..\Additional\SenderService\SenderService.Email\bin\Release\netcoreapp2.2\SenderService.Email.dll</HintPath>
     </Reference>
-    <Reference Include="SenderService.Email.EF">
-      <HintPath>..\..\Additional\SenderService\SenderService.Email.EF\bin\Release\netcoreapp2.2\SenderService.Email.EF.dll</HintPath>
+    <Reference Include="SenderService.SettingsProvider.Core">
+      <HintPath>..\..\Additional\SenderService\SenderService.SettingsProvider.Core\bin\Release\netcoreapp2.2\SenderService.SettingsProvider.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SenderService.SettingsProvider.EF">
+      <HintPath>..\..\Additional\SenderService\SenderService.SettingsProvider.EF\bin\Release\netcoreapp2.2\SenderService.SettingsProvider.EF.dll</HintPath>
     </Reference>
   </ItemGroup>
 

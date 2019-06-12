@@ -1,8 +1,9 @@
 ﻿using Lingva.BC.Contracts;
 using Lingva.BC.Dto;
 using Quartz;
-using SenderService.Email.EF.Contracts;
-using SenderService.Email.Entities;
+using SenderService.Email.Contracts;
+using SenderService.SettingsProvider.Core.Contracts;
+using SenderService.SettingsProvider.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,15 +12,20 @@ namespace Lingva.Background
 {
     public class EmailJob : IJob
     {
-        private readonly IEFEmailSender _emailSender;
+        private readonly IEmailSender _emailSender;
+        private readonly IEmailSettingsProvider _emailSettingsProvider;
+        private readonly IEmailTemplateProvider _emailTemplateProvider;
         private readonly IGroupManager _groupManager;
         private readonly IUserManager _userManager;
 
         private static bool IsBusy = false;
 
-        public EmailJob(IEFEmailSender emailSender, IGroupManager groupManager, IUserManager userManager)
+        public EmailJob(IEmailSender emailSender, IEmailSettingsProvider emailSettingsProvider, IEmailTemplateProvider emailTemplateProvider, 
+            IGroupManager groupManager, IUserManager userManager)
         {
             _emailSender = emailSender;
+            _emailSettingsProvider = emailSettingsProvider;
+            _emailTemplateProvider = emailTemplateProvider;
             _groupManager = groupManager;
             _userManager = userManager;
         }
@@ -35,9 +41,14 @@ namespace Lingva.Background
                 int id = 1;
                 string subject = "Remember!";
 
-                Template template = await _emailSender.GetTemplateAsync(id);
+                EmailTemplate template = await _emailTemplateProvider.GetTemplateAsync(id);
                 string body = template.Text;
-                await _emailSender.SetSendingOptionsAsync(id);
+                EmailSettings settings = await _emailSettingsProvider.GetSettingsAsync(id);
+                _emailSender.Host = settings.Host;
+                _emailSender.Port = settings.Port;
+                _emailSender.UseSsl = settings.UseSsl;
+                _emailSender.UserName = settings.UserName;
+                _emailSender.Password = settings.Password;
 
                 var groupsDto = await _groupManager.GetListAsync();
                 foreach (var groupDto in groupsDto)

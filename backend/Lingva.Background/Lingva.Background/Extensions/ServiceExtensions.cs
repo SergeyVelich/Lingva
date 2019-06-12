@@ -39,7 +39,7 @@ namespace Lingva.Background
             services.AddDbContext<DictionaryContext>(options =>
             {
                 options.UseSqlServer(connectionStringValue);
-                options.UseLazyLoadingProxies();
+                //options.UseLazyLoadingProxies();
             });
         }
 

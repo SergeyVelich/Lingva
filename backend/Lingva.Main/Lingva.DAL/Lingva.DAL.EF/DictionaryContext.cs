@@ -1,7 +1,6 @@
 ﻿using Lingva.DAL.EF.EntityConfigurations;
 using Lingva.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
-using SenderService.Email.EF.DAL.Extensions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
@@ -30,8 +29,6 @@ namespace Lingva.DAL.EF.Context
             modelBuilder.ApplyConfiguration(new LanguageConfiguration());
          
             Seed(modelBuilder);
-
-            modelBuilder.AddEmailSender();
 
             base.OnModelCreating(modelBuilder);
         }

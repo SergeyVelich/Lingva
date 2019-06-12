@@ -23,9 +23,6 @@
     <Reference Include="QueryBuilder.EF">
       <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder.EF\bin\Release\netcoreapp2.2\QueryBuilder.EF.dll</HintPath>
     </Reference>
-    <Reference Include="SenderService.Email.EF.DAL">
-      <HintPath>..\..\..\Additional\SenderService\SenderService.Email.EF.DAL\bin\Release\netcoreapp2.2\SenderService.Email.EF.DAL.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

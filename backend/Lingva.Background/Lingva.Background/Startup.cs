@@ -1,10 +1,10 @@
 ﻿using Lingva.BC.Contracts;
 using Lingva.BC.Services;
-using Lingva.DAL.EF.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SenderService.Email.EF.Extensions;
+using SenderService.Email.Extensions;
+using SenderService.SettingsProvider.EF.Extensions;
 
 namespace Lingva.Background
 {
@@ -21,8 +21,11 @@ namespace Lingva.Background
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            string connectionStringValue = Configuration.GetConnectionString("LingvaEFConnection");
+
             services.ConfigureEF(Configuration); //for getiing info about events and users
-            services.ConfigureEmailSenderEF<DictionaryContext>(); //for working with sender library
+            services.ConfigureEmailSender(); //for working with sender library
+            services.ConfigureEmailSenderEF(connectionStringValue); //for working with sender db
             services.ConfigureQuartzSheduler();
 
             services.AddScoped<IGroupManager, GroupManager>();
@@ -35,6 +38,8 @@ namespace Lingva.Background
         public void Configure(IApplicationBuilder app)
         {
             app.UseQuartz((quartz) => quartz.AddJob<EmailJob>("EmailJob", "Email", 60));
+
+            DbInitializer.InitializeAsync(Configuration).Wait();
         }
     }
 }
