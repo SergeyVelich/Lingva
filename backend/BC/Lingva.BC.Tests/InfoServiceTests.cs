@@ -14,15 +14,15 @@ using Xunit;
 namespace Lingva.BC.UnitTest
 {
     [ExcludeFromCodeCoverage]
-    public class InfoServiceTests
+    public class InfoManagerTests
     {
         private readonly List<Language> _languageList;
         private readonly List<LanguageDto> _languageListDto;
-        private IInfoManager _infoService;
+        private IInfoManager _infoManager;
         private readonly Mock<IRepository> _repoMock;
         private readonly Mock<IDataAdapter> _data;
 
-        public InfoServiceTests()
+        public InfoManagerTests()
         {
             _languageList = new List<Language>
             {
@@ -54,7 +54,7 @@ namespace Lingva.BC.UnitTest
 
             _repoMock = new Mock<IRepository>();
             _data = new Mock<IDataAdapter>();
-            _infoService = new InfoManager(_repoMock.Object, _data.Object);
+            _infoManager = new InfoManager(_repoMock.Object, _data.Object);
         }
 
         [Fact]
@@ -62,10 +62,10 @@ namespace Lingva.BC.UnitTest
         {
             //arrange
             _repoMock.Setup(r => r.GetListAsync<Language>()).Returns(Task.FromResult<IEnumerable<Language>>(_languageList));
-            _infoService = new InfoManager(_repoMock.Object, _data.Object);
+            _infoManager = new InfoManager(_repoMock.Object, _data.Object);
 
             //act
-            var result = await _infoService.GetLanguagesListAsync();
+            var result = await _infoManager.GetLanguagesListAsync();
 
             //assert
             Assert.NotNull(result);
@@ -76,11 +76,11 @@ namespace Lingva.BC.UnitTest
         {
             //arrange
             _repoMock.Setup(r => r.GetListAsync<Language>()).Returns(Task.FromResult<IEnumerable<Language>>(_languageList));
-            _infoService = new InfoManager(_repoMock.Object, _data.Object);
+            _infoManager = new InfoManager(_repoMock.Object, _data.Object);
             _data.Setup(d => d.Map<IEnumerable<LanguageDto>>(_languageList)).Returns(_languageListDto);
 
             //act
-            var result = await _infoService.GetLanguagesListAsync();
+            var result = await _infoManager.GetLanguagesListAsync();
 
             //assert
             Assert.True(result.Count() == _languageList.Count());

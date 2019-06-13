@@ -97,7 +97,7 @@ namespace AuthServer
             app.UseIdentityServer();
             app.UseMvcWithDefaultRoute();
 
-            DbInitializer.Initialize(userManager, roleManager);
+            DbInitializer.InitializeAsync(Configuration, userManager, roleManager).Wait();
         }
     }
 }

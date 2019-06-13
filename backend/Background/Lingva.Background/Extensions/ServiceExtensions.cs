@@ -37,7 +37,10 @@ namespace Lingva.Background
             string connectionStringValue = config.GetConnectionString("LingvaEFConnection");
 
             services.AddDbContext<DictionaryContext>(options =>
-                options.UseSqlServer(connectionStringValue));
+            {
+                options.UseSqlServer(connectionStringValue);
+                options.UseLazyLoadingProxies();
+            });
         }
 
         public static void ConfigureEFRepositories(this IServiceCollection services)

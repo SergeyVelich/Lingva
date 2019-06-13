@@ -9,6 +9,7 @@ namespace Lingva.BC.Contracts
     {
         Task<IEnumerable<GroupDto>> GetListAsync();
         Task<IEnumerable<GroupDto>> GetListAsync(IQueryOptions queryOptions);
+        Task<int> CountAsync(IQueryOptions queryOptions);
 
         Task<GroupDto> GetByIdAsync(int id);
 

@@ -1,6 +1,6 @@
 {
   "Serilog": {
-    "Using": [ "Serilog.Sinks.File" ],
+    "Using": [ "Serilog.Sinks.File", "Serilog.Sinks.Console" ],
     "MinimumLevel": "Information",
     "WriteTo": [
       {
@@ -8,6 +8,12 @@
         "Args": {
           "path": "c:\\temp\\Lingva.Auth\\slog.txt", // log file path
           "rollingInterval": "Day", // Rolling Interval
+          "outputTemplate": "{Timestamp:dd-MMM-yyyy HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
+        }
+      },
+      {
+        "Name": "Console",
+        "Args": {
           "outputTemplate": "{Timestamp:dd-MMM-yyyy HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
         }
       }

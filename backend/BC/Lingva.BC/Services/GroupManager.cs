@@ -34,6 +34,11 @@ namespace Lingva.BC.Services
             return _dataAdapter.Map<IEnumerable<GroupDto>>(groups);
         }
 
+        public async Task<int> CountAsync(IQueryOptions queryOptions)
+        {
+            return await _repository.CountAsync<Group>(queryOptions);
+        }
+
         public async Task<GroupDto> GetByIdAsync(int id)
         {
             Group group = await _repository.GetByIdAsync<Group>(id);

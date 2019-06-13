@@ -143,5 +143,10 @@ namespace Lingva.DAL.Dapper.Repositories
             //return await result.ToListAsync();
             return await _dbContext.Set<T>().SelectAllAsync();//??
         }
+
+        public Task<int> CountAsync<T>(IQueryOptions queryOptions) where T : BaseBE, new()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

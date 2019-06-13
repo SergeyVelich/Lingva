@@ -12,16 +12,16 @@ namespace Lingva.Background
     public class EmailJob : IJob
     {
         private readonly IEFEmailSender _emailSender;
-        private readonly IGroupManager _groupService;
-        private readonly IUserManager _userService;
+        private readonly IGroupManager _groupManager;
+        private readonly IUserManager _userManager;
 
         private static bool IsBusy = false;
 
-        public EmailJob(IEFEmailSender emailSender, IGroupManager groupService, IUserManager userService)
+        public EmailJob(IEFEmailSender emailSender, IGroupManager groupManager, IUserManager userManager)
         {
             _emailSender = emailSender;
-            _groupService = groupService;
-            _userService = userService;
+            _groupManager = groupManager;
+            _userManager = userManager;
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -39,14 +39,14 @@ namespace Lingva.Background
                 string body = template.Text;
                 await _emailSender.SetSendingOptionsAsync(id);
 
-                var groupsDto = await _groupService.GetListAsync();
+                var groupsDto = await _groupManager.GetListAsync();
                 foreach (var groupDto in groupsDto)
                 {
                     body = body.Replace("{{GroupName}}", groupDto.Name);
                     body = body.Replace("{{GroupDate}}", groupDto.Date.ToString());
 
                     List<string> recepients = new List<string>();
-                    var users = await _userService.GetListByGroupAsync(groupDto.Id);
+                    var users = await _userManager.GetListByGroupAsync(groupDto.Id);
                     foreach (UserDto recepient in users)
                     {
                         recepients.Add(recepient.Email);

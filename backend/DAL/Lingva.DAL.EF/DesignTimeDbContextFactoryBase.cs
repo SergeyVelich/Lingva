@@ -11,14 +11,14 @@ namespace Lingva.DAL.EF.Context
     {
         public abstract TContext CreateDbContext(string[] args);
 
-        public DbContextOptions<TContext> GetDbContextOptions()
+        protected virtual DbContextOptions<TContext> GetDbContextOptions()
         {
             var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            var basePath = Directory.GetCurrentDirectory(); //var basePath = AppContext.BaseDirectory;
+            var basePath = Directory.GetCurrentDirectory();
             return GetDbContextOptions(basePath, environmentName);
         }
 
-        private DbContextOptions<TContext> GetDbContextOptions(string basePath, string environmentName)
+        protected virtual DbContextOptions<TContext> GetDbContextOptions(string basePath, string environmentName)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(basePath)
@@ -28,6 +28,11 @@ namespace Lingva.DAL.EF.Context
 
             var config = builder.Build();
 
+            return GetDbContextOptions(config);
+        }
+
+        protected virtual DbContextOptions<TContext> GetDbContextOptions(IConfiguration config)
+        {
             string connectionStringValue = config.GetConnectionString("LingvaEFConnection");
 
             if (string.IsNullOrWhiteSpace(connectionStringValue))
@@ -38,7 +43,7 @@ namespace Lingva.DAL.EF.Context
             return GetDbContextOptions(connectionStringValue);
         }
 
-        private DbContextOptions<TContext> GetDbContextOptions(string connectionString)
+        protected virtual DbContextOptions<TContext> GetDbContextOptions(string connectionString)
         {
             if (string.IsNullOrEmpty(connectionString))
                 throw new ArgumentException(
