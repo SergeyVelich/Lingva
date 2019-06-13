@@ -5,6 +5,7 @@ using Lingva.MVC.Extensions;
 using Lingva.MVC.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
@@ -69,6 +70,11 @@ namespace Lingva.MVC
                 app.UseHsts();
             }
 
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             var options = new RewriteOptions()
                 .AddRedirect("(.*)/$", "$1")
                 .AddRedirect("[h,H]ome[/]?$", "home/index");
@@ -76,7 +82,8 @@ namespace Lingva.MVC
 
             app.UseCors("AllowAll");
             app.UseStaticFiles();
-            app.UseAuthentication();
+            app.UseAuthentication(); ;
+           
             app.UseMvc(config =>
             {
                 config.MapRoute(name: "Default",
