@@ -1,0 +1,16 @@
+{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.File" ],
+    "MinimumLevel": "Information",
+    "WriteTo": [
+      {
+        "Name": "File",
+        "Args": {
+          "path": "c:\\temp\\Lingva.Auth\\slog.txt", // log file path
+          "rollingInterval": "Day", // Rolling Interval
+          "outputTemplate": "{Timestamp:dd-MMM-yyyy HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
+        }
+      }
+    ]
+  }
+}

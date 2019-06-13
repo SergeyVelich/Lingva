@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Quartz" Version="3.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Additional\SenderService\SenderService.Email.EF\SenderService.Email.EF.csproj" />
+    <ProjectReference Include="..\..\Additional\SenderService\SenderService.Email\SenderService.Email.csproj" />
+    <ProjectReference Include="..\..\BC\Lingva.BC\Lingva.BC.csproj" />
+    <ProjectReference Include="..\..\DAL\Lingva.DAL.EF\Lingva.DAL.EF.csproj" />
+    <ProjectReference Include="..\Lingva.Background.Mapper\Lingva.Background.Mapper.csproj" />
+  </ItemGroup>
+
+</Project>

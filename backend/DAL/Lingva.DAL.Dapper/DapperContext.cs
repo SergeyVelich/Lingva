@@ -1,5 +1,4 @@
-﻿using Lingva.Common.Extensions;
-using Lingva.DAL.Entities;
+﻿using Lingva.DAL.Entities;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -18,11 +17,9 @@ namespace Lingva.DAL.Dapper
 
         public DapperContext(IConfiguration config)
         {
-            string configStringValue = config.GetConnectionString("LingvaConnection");
-            string configVariableName = configStringValue.GetVariableName();
-            string connectionString = Environment.GetEnvironmentVariable(configVariableName);
+            string connectionStringValue = config.GetConnectionString("LingvaDapperConnection");
 
-            var conn = new SqlConnection(connectionString);
+            var conn = new SqlConnection(connectionStringValue);
             conn.Open();
             _dbConnection = conn;
 
@@ -61,11 +58,18 @@ namespace Lingva.DAL.Dapper
             }
             else
             {
-                set = new DapperSet<T>(this);
+                string collectionName = GetTableName<T>();
+                set = new DapperSet<T>(this, collectionName);
                 sets.Add(type, set);
             }
 
             return set;
+        }
+
+        protected string GetTableName<T>()
+        {
+            Type type = typeof(T);
+            return type.Name + "s";
         }
     }
 }

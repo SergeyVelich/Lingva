@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
+using AuthServer.Models;
 
 namespace IdentityServer4.Quickstart.UI
 {

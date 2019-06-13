@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\QueryBuilder\QueryBuilder\QueryBuilder.csproj" />
+    <ProjectReference Include="..\..\Additional\QueryBuilder\QueryBuilder.csproj" />
   </ItemGroup>
 
 </Project>

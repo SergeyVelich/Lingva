@@ -8,21 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.0" />
     <PackageReference Include="NUnit" Version="3.11.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BC\Lingva.Common\Lingva.Common.csproj" />
     <ProjectReference Include="..\Lingva.DAL.EF\Lingva.DAL.EF.csproj" />
     <ProjectReference Include="..\Lingva.DAL\Lingva.DAL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.EntityFrameworkCore">
-      <HintPath>..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore\2.2.0\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
-    </Reference>
   </ItemGroup>
   
 </Project>

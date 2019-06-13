@@ -1,11 +1,10 @@
-﻿using System.Data;
-
-namespace Lingva.DAL
+﻿namespace Lingva.DAL
 {
     public interface ITransactionProvider
     {
-        IDbTransaction BeginTransaction();
-
+        void StartTransaction();
+        void CommitTransaction();
+        void AbortTransaction();
         void EndTransaction();
     }
 }

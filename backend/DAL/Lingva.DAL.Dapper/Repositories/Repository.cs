@@ -4,12 +4,11 @@ using QueryBuilder.QueryOptions;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Lingva.DAL.Dapper.Repositories
 {
-    public class Repository : IRepository, ITransactionProvider 
+    public class Repository : IRepository, IDisposable, ITransactionProvider 
     {
         protected readonly DapperContext _dbContext;
         protected IDbTransaction _dbTransaction;
@@ -35,6 +34,7 @@ namespace Lingva.DAL.Dapper.Repositories
         {
             entity.CreateDate = DateTime.Now;
             entity.ModifyDate = DateTime.Now;
+
             await _dbContext.Set<T>().AddAsync(entity, _dbTransaction);
 
             return entity;
@@ -43,41 +43,48 @@ namespace Lingva.DAL.Dapper.Repositories
         public virtual async Task<T> UpdateAsync<T>(T entity) where T : BaseBE, new()
         {
             entity.ModifyDate = DateTime.Now;
+
             await _dbContext.Set<T>().UpdateAsync(entity, _dbTransaction);
 
             return entity;
         }
 
-        public virtual async Task DeleteAsync<T>(T entity) where T : BaseBE, new()
+        public virtual async Task DeleteAsync<T>(int id) where T : BaseBE, new()
         {
-            await _dbContext.Set<T>().RemoveAsync(entity, _dbTransaction);
+            await _dbContext.Set<T>().RemoveAsync(id, _dbTransaction);
         }
 
-        public IDbTransaction BeginTransaction()
+        public void StartTransaction()
         {
             _dbTransaction = _dbContext.Connection.BeginTransaction();
-            return _dbTransaction;
+        }
+
+        public void CommitTransaction()
+        {
+            _dbTransaction.Commit();
+        }
+
+        public void AbortTransaction()
+        {
+            _dbTransaction.Rollback();
         }
 
         public void EndTransaction()
         {
             try
             {
-                if(_dbTransaction != null)
-                {
-                    _dbTransaction.Commit();
-                }               
+                CommitTransaction();          
             }
             catch
             {
-                _dbTransaction.Rollback();
+                AbortTransaction();
                 throw;
             }
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
@@ -85,7 +92,7 @@ namespace Lingva.DAL.Dapper.Repositories
                     _dbContext.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
 
         public void Dispose()

@@ -1,0 +1,145 @@
+﻿using QueryBuilder.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Reflection;
+
+namespace QueryBuilder.QueryOptions 
+{
+    public class QueryOptions : IQueryOptions
+    {
+        private readonly IList<QueryFilter> _filters;
+        private readonly IList<QuerySorter> _sorters;
+        private readonly IList<QuerySelector> _selectors;
+        private readonly IList<QueryIncluder> _includers;
+
+        public QueryPagenator Pagenator { get; }
+
+        public QueryOptions(IList<QueryFilter> filters = null,
+            IList<QuerySorter> sorters = null,
+            IList<QuerySelector> selectors = null,
+            IList<QueryIncluder> includers = null, 
+            QueryPagenator pagenator = null)
+        {
+            _filters = filters;
+            _sorters = sorters;
+            _selectors = selectors;
+            _includers = includers;
+            Pagenator = pagenator;
+        }
+        
+        public Expression<Func<T, bool>> GetFiltersExpression<T>()
+        {
+            if (_filters == null)
+            {
+                return null;
+            }
+            if (_filters.Count == 0)
+            {
+                return null;
+            }
+
+            Expression<Func<T, bool>> exp = null;
+            Expression expression = null;
+            var parameter = Expression.Parameter(typeof(T), "x");
+
+            foreach (var filter in _filters)
+            {
+                if (filter.PropertyValue == null)
+                {
+                    continue;
+                }
+
+                var property = Expression.Property(parameter, filter.PropertyName);
+                var propertyInfo = typeof(T).GetProperty(filter.PropertyName);
+                var typeForValue = propertyInfo.PropertyType;
+
+                Expression subExpression = null;
+
+                var constant = Expression.Constant(Convert.ChangeType(filter.PropertyValue, typeForValue));
+
+                switch (filter.Operation)
+                {
+                    case FilterOperation.Equal:
+                        subExpression = Expression.Equal(property, constant);
+                        break;
+                    case FilterOperation.NotEqual:
+                        subExpression = Expression.NotEqual(property, constant);
+                        break;
+                    case FilterOperation.LessThan:
+                        subExpression = Expression.LessThan(property, constant);
+                        break;
+                    case FilterOperation.LessThanOrEqual:
+                        subExpression = Expression.LessThanOrEqual(property, constant);
+                        break;
+                    case FilterOperation.GreaterThan:
+                        subExpression = Expression.GreaterThan(property, constant);
+                        break;
+                    case FilterOperation.GreaterThanOrEqual:
+                        subExpression = Expression.GreaterThanOrEqual(property, constant);
+                        break;
+                    case FilterOperation.Contains:
+                        MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+                        subExpression = Expression.Call(property, method, constant);
+                        break;
+                    case FilterOperation.NotContains:
+                        method = typeof(string).GetMethod("NotContains", new[] { typeof(string) });
+                        subExpression = Expression.Call(property, method, constant);
+                        break;
+                    default: throw new ArgumentOutOfRangeException();
+                }
+
+                expression = expression == null ? subExpression : Expression.AndAlso(expression, subExpression);
+            }
+
+            if (expression != null)
+            {
+                exp = Expression.Lambda<Func<T, bool>>(expression ?? throw new InvalidOperationException(), parameter);
+            }
+
+            return exp;
+        }
+
+        public IList<string> GetSortersCollection<T>()
+        {
+            if (_sorters == null)
+            {
+                return null;
+            }
+            if (_sorters.Count == 0)
+            {
+                return null;
+            }
+
+            string[] sorters = new string[_sorters.Count];
+
+            for (int i = 0; i < _sorters.Count; i++)
+            {
+                sorters[i] = _sorters[i].PropertyName + " " + _sorters[i].SortOrder.ToString();
+            }
+
+            return sorters;
+        }
+
+        public IList<string> GetIncludersCollection()
+        {
+            if (_includers == null)
+            {
+                return null;
+            }
+            if (_includers.Count == 0)
+            {
+                return null;
+            }
+
+            string[] includers = new string[_includers.Count];
+
+            for(int i = 0; i < _includers.Count; i++)
+            {
+                includers[i] = _includers[i].PropertyName;
+            }
+
+            return includers;
+        }
+    }
+}
