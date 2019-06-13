@@ -1,6 +1,7 @@
 ﻿using Lingva.BC.Contracts;
 using Lingva.BC.Services;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SenderService.Email.Extensions;
@@ -37,6 +38,11 @@ namespace Lingva.Background
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             app.UseQuartz((quartz) => quartz.AddJob<EmailJob>("EmailJob", "Email", 60));
 
             DbInitializer.InitializeAsync(Configuration).Wait();

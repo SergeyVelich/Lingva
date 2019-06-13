@@ -5,6 +5,7 @@ using Lingva.WebAPI.Extensions;
 using Lingva.WebAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
@@ -51,7 +52,12 @@ namespace Lingva.WebAPI
             else
             {
                 app.UseMiddleware<ExceptionHandlerMiddleware>();
-            }           
+            }
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             var options = new RewriteOptions()
                 .AddRedirect("(.*)/$", "$1")
