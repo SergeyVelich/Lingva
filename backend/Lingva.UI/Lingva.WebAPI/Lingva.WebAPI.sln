@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29001.49
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI", "Lingva.WebAPI\Lingva.WebAPI.csproj", "{7D6DC9DC-EEC6-4ADD-93E6-40EF1F510774}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Mapper", "Lingva.WebAPI.Mapper\Lingva.WebAPI.Mapper.csproj", "{CADCEE59-B984-40BF-B49B-6797E5F111DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Models", "Lingva.WebAPI.Models\Lingva.WebAPI.Models.csproj", "{F20D3A2A-BEE3-4C2F-A2DB-A3321729DB10}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Models.Mapper", "Lingva.WebAPI.Models.Mapper\Lingva.WebAPI.Models.Mapper.csproj", "{FB738974-9BA9-440C-AC65-57E6704B7391}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lingva.WebAPI.Tests", "Lingva.WebAPI.Tests\Lingva.WebAPI.Tests.csproj", "{229405B0-5071-4ABE-BB82-433B2D5196A2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7D6DC9DC-EEC6-4ADD-93E6-40EF1F510774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D6DC9DC-EEC6-4ADD-93E6-40EF1F510774}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D6DC9DC-EEC6-4ADD-93E6-40EF1F510774}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D6DC9DC-EEC6-4ADD-93E6-40EF1F510774}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CADCEE59-B984-40BF-B49B-6797E5F111DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CADCEE59-B984-40BF-B49B-6797E5F111DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CADCEE59-B984-40BF-B49B-6797E5F111DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CADCEE59-B984-40BF-B49B-6797E5F111DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F20D3A2A-BEE3-4C2F-A2DB-A3321729DB10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F20D3A2A-BEE3-4C2F-A2DB-A3321729DB10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F20D3A2A-BEE3-4C2F-A2DB-A3321729DB10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F20D3A2A-BEE3-4C2F-A2DB-A3321729DB10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB738974-9BA9-440C-AC65-57E6704B7391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB738974-9BA9-440C-AC65-57E6704B7391}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB738974-9BA9-440C-AC65-57E6704B7391}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB738974-9BA9-440C-AC65-57E6704B7391}.Release|Any CPU.Build.0 = Release|Any CPU
+		{229405B0-5071-4ABE-BB82-433B2D5196A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{229405B0-5071-4ABE-BB82-433B2D5196A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{229405B0-5071-4ABE-BB82-433B2D5196A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{229405B0-5071-4ABE-BB82-433B2D5196A2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D1D6A3D-E530-42AF-BF02-B1A8CFE50244}
+	EndGlobalSection
+EndGlobal

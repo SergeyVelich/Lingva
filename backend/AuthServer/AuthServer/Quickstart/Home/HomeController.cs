@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace IdentityServer4.Quickstart.UI
 {
-    [SecurityHeaders]
+    //[SecurityHeaders]
     [AllowAnonymous]
     public class HomeController : Controller
     {

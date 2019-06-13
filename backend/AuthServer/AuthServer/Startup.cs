@@ -25,7 +25,7 @@ namespace AuthServer
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-        }     
+        }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -43,7 +43,7 @@ namespace AuthServer
                 // this adds the operational data from DB (codes, tokens, consents)
                 .AddOperationalStore(options =>
                 {
-                    options.ConfigureDbContext = builder => builder.UseSqlServer(connectionStringValue, 
+                    options.ConfigureDbContext = builder => builder.UseSqlServer(connectionStringValue,
                         sql => sql.MigrationsAssembly(typeof(PersistedGrantDbContextFactory).GetTypeInfo().Assembly.GetName().Name));
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;
@@ -61,7 +61,7 @@ namespace AuthServer
                     builder => builder.AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader());
-                    //.AllowCredentials());
+                //.AllowCredentials());
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -97,7 +97,7 @@ namespace AuthServer
             app.UseIdentityServer();
             app.UseMvcWithDefaultRoute();
 
-            DbInitializer.Initialize(userManager, roleManager);
+            DbInitializer.InitializeAsync(Configuration, userManager, roleManager).Wait();
         }
     }
 }

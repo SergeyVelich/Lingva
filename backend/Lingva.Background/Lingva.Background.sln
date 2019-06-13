@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29001.49
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lingva.Background", "Lingva.Background\Lingva.Background.csproj", "{22F2ED87-F4B7-4747-B5F5-7B9180316FEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lingva.Background.Mapper", "Lingva.Background.Mapper\Lingva.Background.Mapper.csproj", "{698C6772-17CC-46F1-BA1D-CE3E26D1E974}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22F2ED87-F4B7-4747-B5F5-7B9180316FEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22F2ED87-F4B7-4747-B5F5-7B9180316FEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22F2ED87-F4B7-4747-B5F5-7B9180316FEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22F2ED87-F4B7-4747-B5F5-7B9180316FEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{698C6772-17CC-46F1-BA1D-CE3E26D1E974}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{698C6772-17CC-46F1-BA1D-CE3E26D1E974}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{698C6772-17CC-46F1-BA1D-CE3E26D1E974}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{698C6772-17CC-46F1-BA1D-CE3E26D1E974}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {297F1214-4D5F-4FF2-A500-0D9C533F7441}
+	EndGlobalSection
+EndGlobal

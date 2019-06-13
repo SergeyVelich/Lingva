@@ -5,14 +5,13 @@ using Serilog;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace AuthServer
 {
     [ExcludeFromCodeCoverage]
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
             IConfiguration configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
