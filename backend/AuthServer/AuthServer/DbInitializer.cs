@@ -16,7 +16,7 @@ namespace AuthServer
         {
             AppIdentityDbContextFactory factory = new AppIdentityDbContextFactory();
             AppIdentityDbContext dbContext = factory.CreateDbContext(config);
-            await dbContext.Database.MigrateAsync();
+            await dbContext.InitializeAsync();
 
             PersistedGrantDbContextFactory grantsFactory = new PersistedGrantDbContextFactory();
             PersistedGrantDbContext grantsContext = grantsFactory.CreateDbContext(config);

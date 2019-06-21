@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Lingva.DAL.Entities
 {
     [ExcludeFromCodeCoverage]
-    public partial class Language : BaseBE
+    public class Language : BaseBE
     {
         public string Name { get; set; }
         public virtual ICollection<Group> Groups { get; set; }

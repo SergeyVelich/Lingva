@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <Reference Include="QueryBuilder">
-      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder\bin\Release\netcoreapp2.2\QueryBuilder.dll</HintPath>
+      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder\bin\Debug\netcoreapp2.2\QueryBuilder.dll</HintPath>
     </Reference>
   </ItemGroup>
 

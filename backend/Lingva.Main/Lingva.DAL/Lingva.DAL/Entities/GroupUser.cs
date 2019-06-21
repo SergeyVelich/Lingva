@@ -3,7 +3,7 @@
 namespace Lingva.DAL.Entities
 {
     [ExcludeFromCodeCoverage]
-    public partial class GroupUser : BaseBE
+    public class GroupUser : BaseBE
     {
         public int GroupId { get; set; }
         public virtual Group Group { get; set; }

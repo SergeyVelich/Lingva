@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using SenderService.SettingsProvider.EF.Context;
 using System.Threading.Tasks;
 
@@ -11,7 +10,7 @@ namespace Lingva.Background
         {
             SenderDbContextFactory factory = new SenderDbContextFactory();
             SenderDbContext dbContext = factory.CreateDbContext(config);
-            await dbContext.Database.MigrateAsync();
+            await dbContext.InitializeAsync(); ;
         }
     }
 }

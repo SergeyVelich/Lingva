@@ -3,12 +3,12 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using QueryBuilder.Enums;
 using QueryBuilder.Mongo.Enums;
-using QueryBuilder.QueryOptions;
+using QueryBuilder.QueryOptions.Filter;
+using QueryBuilder.QueryOptions.Sorter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 
 namespace QueryBuilder.Mongo.Extensions
 {
@@ -127,7 +127,7 @@ namespace QueryBuilder.Mongo.Extensions
                 return resultCollection.Find(filterBson);
             }
 
-            return collection.Find(GetFilterExpression<T>(filters));
+            return collection.Find(Tools.GetFilterExpression<T>(filters));
 
             //var d = new MongoQueryProvider(collection as MongoCollection).CreateQuery(
             //    Expression.Call(
@@ -138,86 +138,6 @@ namespace QueryBuilder.Mongo.Extensions
             //        GetFilterExpression<T>(filters)));
 
             return null;
-        }
-        private static Expression<Func<T, bool>> GetFilterExpression<T>(IList<QueryFilter> filters)
-        {
-            var param = Expression.Parameter(typeof(T), "x");
-            Expression expression = GetFilterGroupExpression<T>(filters, param);
-            Expression<Func<T, bool>> lambda = Expression.Lambda<Func<T, bool>>(expression ?? throw new InvalidOperationException(), param);
-
-            return lambda;
-        }
-        private static Expression GetFilterGroupExpression<T>(IList<QueryFilter> filters, ParameterExpression param, FilterGroupOperation operation = FilterGroupOperation.And)
-        {
-            Expression expression = null;
-
-            foreach (QueryFilter filter in filters)
-            {
-                Expression subExpression = null;
-                if (filter is QueryFilterGroup filterGroup)
-                {
-                    subExpression = GetFilterGroupExpression<T>(filterGroup.FilterElements, param, operation);
-                }
-                else
-                {
-                    subExpression = GetFilterElementExpression<T>((QueryFilterElement)filter, param);
-                }
-
-                switch (operation)
-                {
-                    case FilterGroupOperation.And:
-                        expression = expression == null ? subExpression : Expression.AndAlso(expression, subExpression);
-                        break;
-                    case FilterGroupOperation.Or:
-                        expression = expression == null ? subExpression : Expression.OrElse(expression, subExpression);
-                        break;
-                    default: throw new ArgumentOutOfRangeException();
-                }
-            }
-
-            return expression;
-        }
-        private static Expression GetFilterElementExpression<T>(QueryFilterElement filter, ParameterExpression param)
-        {
-            Expression expression;
-
-            var property = Expression.Property(param, filter.PropertyName);
-            var propertyInfo = typeof(T).GetProperty(filter.PropertyName);
-            var typeForValue = propertyInfo.PropertyType;
-            var constant = Expression.Constant(Convert.ChangeType(filter.PropertyValue, typeForValue));
-
-            switch (filter.Operation)
-            {
-                case FilterElementOperation.Equal:
-                    expression = Expression.Equal(property, constant);
-                    break;
-                case FilterElementOperation.NotEqual:
-                    expression = Expression.NotEqual(property, constant);
-                    break;
-                case FilterElementOperation.LessThan:
-                    expression = Expression.LessThan(property, constant);
-                    break;
-                case FilterElementOperation.LessThanOrEqual:
-                    expression = Expression.LessThanOrEqual(property, constant);
-                    break;
-                case FilterElementOperation.GreaterThan:
-                    expression = Expression.GreaterThan(property, constant);
-                    break;
-                case FilterElementOperation.GreaterThanOrEqual:
-                    expression = Expression.GreaterThanOrEqual(property, constant);
-                    break;
-                case FilterElementOperation.Contains:
-                    MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
-                    expression = Expression.Call(property, method, constant);
-                    break;
-                case FilterElementOperation.NotContains:
-                    method = typeof(string).GetMethod("NotContains", new[] { typeof(string) });
-                    expression = Expression.Call(property, method, constant);
-                    break;
-                default: throw new ArgumentOutOfRangeException();
-            }
-
-            return expression;
         }
     }
 }

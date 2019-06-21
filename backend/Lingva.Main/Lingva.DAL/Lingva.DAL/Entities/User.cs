@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Lingva.DAL.Entities
 {
     [ExcludeFromCodeCoverage]
-    public partial class User : BaseBE
+    public class User : BaseBE
     {
         public string Name { get; set; }
         public string Email { get; set; }

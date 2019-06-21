@@ -3,6 +3,7 @@ using SenderService.SettingsProvider.Core.Entities;
 using SenderService.SettingsProvider.EF.EntityConfigurations;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 
 namespace SenderService.SettingsProvider.EF.Context
 {
@@ -37,6 +38,11 @@ namespace SenderService.SettingsProvider.EF.Context
 
             modelBuilder.Entity<EmailSettings>().HasData(
                 new { Id = 1, CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Host = "smtp.gmail.com", Port = 587, UseSsl = false, UserName = "worksoftserve@gmail.com", Password = "worksoftserve_90" });
+        }
+
+        public async Task InitializeAsync()
+        {
+            await Database.MigrateAsync();
         }
     }
 }

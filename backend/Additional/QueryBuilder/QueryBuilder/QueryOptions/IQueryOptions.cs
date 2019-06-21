@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using QueryBuilder.QueryOptions.Filter;
+using QueryBuilder.QueryOptions.Includer;
+using QueryBuilder.QueryOptions.Pagenator;
+using QueryBuilder.QueryOptions.Selector;
+using QueryBuilder.QueryOptions.Sorter;
+using System.Collections.Generic;
 
 namespace QueryBuilder.QueryOptions
 {

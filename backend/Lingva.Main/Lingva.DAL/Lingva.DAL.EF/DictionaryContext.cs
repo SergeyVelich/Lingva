@@ -3,6 +3,7 @@ using Lingva.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 
 namespace Lingva.DAL.EF.Context
 {
@@ -51,6 +52,11 @@ namespace Lingva.DAL.EF.Context
             modelBuilder.Entity<GroupUser>().HasData(
                 new { Id = 1, CreateDate = DateTime.Now, ModifyDate = DateTime.Now, GroupId = 1, UserId = 1 },
                 new { Id = 2, CreateDate = DateTime.Now, ModifyDate = DateTime.Now, GroupId = 1, UserId = 2 });
+        }
+
+        public async Task InitializeAsync()
+        {
+            await Database.MigrateAsync();
         }
     }
 }

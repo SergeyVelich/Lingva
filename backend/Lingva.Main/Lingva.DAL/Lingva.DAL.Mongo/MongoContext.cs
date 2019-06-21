@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lingva.DAL.Mongo
@@ -12,6 +13,10 @@ namespace Lingva.DAL.Mongo
         private readonly IClientSessionHandle _session;
 
         public IClientSessionHandle Session { get => _session; }
+
+        public IMongoCollection<Group> Groups { get => Set<Group>(); }
+        public IMongoCollection<Language> Languages { get => Set<Language>(); }
+        public IMongoCollection<User> Users { get => Set<User>(); }
 
         public MongoContext(IConfiguration config)
         {
@@ -32,8 +37,19 @@ namespace Lingva.DAL.Mongo
 
         protected string GetTableName<T>()
         {
-            Type type = typeof(T);
-            return type.Name + "s";
+            string tableName = null;
+            var property = typeof(MongoContext).GetProperties().Where(t => t.PropertyType == typeof(IMongoCollection<T>)).FirstOrDefault();
+
+            if (property != null)
+            {
+                tableName = property.Name;
+            }
+            else
+            {
+                tableName = typeof(T).Name + "s";
+            }
+
+            return tableName;
         }
 
         public async Task InitializeAsync()

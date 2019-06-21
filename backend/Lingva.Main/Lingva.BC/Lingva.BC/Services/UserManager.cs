@@ -10,18 +10,18 @@ namespace Lingva.BC.Services
 {
     public class UserManager : IUserManager
     {
-        private readonly IUserRepository _repository;
+        private readonly IUserRepository _userRepository;
         private readonly IDataAdapter _dataAdapter;
            
-        public UserManager(IUserRepository repository, IDataAdapter dataAdapter)
+        public UserManager(IUserRepository userRepository, IDataAdapter dataAdapter)
         {
-            _repository = repository;
+            _userRepository = userRepository;
             _dataAdapter = dataAdapter;
         }
 
         public async Task<IEnumerable<UserDto>> GetListByGroupAsync(int id)
         {
-            IEnumerable<User> users = await _repository.GetListByGroupAsync(id);
+            IEnumerable<User> users = await _userRepository.GetListByGroupAsync(id);
 
             return _dataAdapter.Map<IEnumerable<UserDto>>(users);
         }      

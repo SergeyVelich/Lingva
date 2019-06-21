@@ -11,6 +11,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.9" />
+    <PackageReference Include="MongoDB.Driver" Version="2.8.1" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.3" />
   </ItemGroup>
 
@@ -21,16 +22,16 @@
 
   <ItemGroup>
     <Reference Include="DataAdapter">
-      <HintPath>..\..\..\Additional\Mapping\DataAdapter\DataAdapter\bin\Release\netcoreapp2.2\DataAdapter.dll</HintPath>
+      <HintPath>..\..\..\Additional\Mapping\DataAdapter\DataAdapter\bin\Debug\netcoreapp2.2\DataAdapter.dll</HintPath>
     </Reference>
     <Reference Include="Lingva.ASP">
-      <HintPath>..\..\Lingva.ASP\Lingva.ASP\bin\Release\netcoreapp2.2\Lingva.ASP.dll</HintPath>
+      <HintPath>..\..\Lingva.ASP\Lingva.ASP\bin\Debug\netcoreapp2.2\Lingva.ASP.dll</HintPath>
     </Reference>
     <Reference Include="Lingva.BC">
-      <HintPath>..\..\..\Lingva.Main\Lingva.BC\Lingva.BC\bin\Release\netcoreapp2.2\Lingva.BC.dll</HintPath>
+      <HintPath>..\..\..\Lingva.Main\Lingva.BC\Lingva.BC\bin\Debug\netcoreapp2.2\Lingva.BC.dll</HintPath>
     </Reference>
     <Reference Include="QueryBuilder">
-      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder\bin\Release\netcoreapp2.2\QueryBuilder.dll</HintPath>
+      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder\bin\Debug\netcoreapp2.2\QueryBuilder.dll</HintPath>
     </Reference>
   </ItemGroup>
 

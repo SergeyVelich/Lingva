@@ -10,29 +10,29 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Lingva.BC">
-      <HintPath>..\..\..\Lingva.Main\Lingva.BC\Lingva.BC\bin\Release\netcoreapp2.2\Lingva.BC.dll</HintPath>
+    <Reference Include="Common">
+      <HintPath>..\..\..\Additional\Common\Common\bin\Debug\netcoreapp2.2\Common.dll</HintPath>
     </Reference>
-    <Reference Include="Lingva.Common">
-      <HintPath>..\..\..\Lingva.Main\Lingva.Common\Lingva.Common\bin\Release\netcoreapp2.2\Lingva.Common.dll</HintPath>
+    <Reference Include="Lingva.BC">
+      <HintPath>..\..\..\Lingva.Main\Lingva.BC\Lingva.BC\bin\Debug\netcoreapp2.2\Lingva.BC.dll</HintPath>
     </Reference>
     <Reference Include="Lingva.DAL">
-      <HintPath>..\..\..\Lingva.Main\Lingva.DAL\Lingva.DAL\bin\Release\netcoreapp2.2\Lingva.DAL.dll</HintPath>
+      <HintPath>..\..\..\Lingva.Main\Lingva.DAL\Lingva.DAL\bin\Debug\netcoreapp2.2\Lingva.DAL.dll</HintPath>
     </Reference>
-    <Reference Include="Lingva.DAL.AzureCosmosDB">
-      <HintPath>..\..\..\Lingva.Main\Lingva.DAL\Lingva.DAL.AzureCosmosDB\bin\Release\netcoreapp2.2\Lingva.DAL.AzureCosmosDB.dll</HintPath>
+    <Reference Include="Lingva.DAL.CosmosSqlApi">
+      <HintPath>..\..\..\Lingva.Main\Lingva.DAL\Lingva.DAL.CosmosSqlApi\bin\Debug\netcoreapp2.2\Lingva.DAL.CosmosSqlApi.dll</HintPath>
     </Reference>
     <Reference Include="Lingva.DAL.Dapper">
-      <HintPath>..\..\..\Lingva.Main\Lingva.DAL\Lingva.DAL.Dapper\bin\Release\netcoreapp2.2\Lingva.DAL.Dapper.dll</HintPath>
+      <HintPath>..\..\..\Lingva.Main\Lingva.DAL\Lingva.DAL.Dapper\bin\Debug\netcoreapp2.2\Lingva.DAL.Dapper.dll</HintPath>
     </Reference>
     <Reference Include="Lingva.DAL.EF">
-      <HintPath>..\..\..\Lingva.Main\Lingva.DAL\Lingva.DAL.EF\bin\Release\netcoreapp2.2\Lingva.DAL.EF.dll</HintPath>
+      <HintPath>..\..\..\Lingva.Main\Lingva.DAL\Lingva.DAL.EF\bin\Debug\netcoreapp2.2\Lingva.DAL.EF.dll</HintPath>
     </Reference>
     <Reference Include="Lingva.DAL.Mongo">
-      <HintPath>..\..\..\Lingva.Main\Lingva.DAL\Lingva.DAL.Mongo\bin\Release\netcoreapp2.2\Lingva.DAL.Mongo.dll</HintPath>
+      <HintPath>..\..\..\Lingva.Main\Lingva.DAL\Lingva.DAL.Mongo\bin\Debug\netcoreapp2.2\Lingva.DAL.Mongo.dll</HintPath>
     </Reference>
     <Reference Include="QueryBuilder">
-      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder\bin\Release\netcoreapp2.2\QueryBuilder.dll</HintPath>
+      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder\bin\Debug\netcoreapp2.2\QueryBuilder.dll</HintPath>
     </Reference>
   </ItemGroup>
 

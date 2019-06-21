@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace QueryBuilder.QueryOptions
+namespace QueryBuilder.QueryOptions.Includer
 {
     [ExcludeFromCodeCoverage]
     public class QueryIncluder
