@@ -48,7 +48,7 @@ namespace Lingva.ASP.Extensions
                 case DbProviders.Mongo:
                     services.ConfigureMongo();
                     break;
-                case DbProviders.CosmosSqlApiContext:
+                case DbProviders.CosmosSqlApi:
                     services.ConfigureAzureCosmosDB();
                     break;
                 default:

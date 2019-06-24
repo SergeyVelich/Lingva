@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Lingva.DAL.CosmosSqlApi
@@ -73,17 +72,13 @@ namespace Lingva.DAL.CosmosSqlApi
         protected string GetTableName<T>() where T : BaseBE, new()
         {
             string tableName = null;
-            var properties = typeof(CosmosSqlApiContext).GetProperties();
-            foreach (var property in properties)
-            {
-                if (property.PropertyType == typeof(CosmosSqlApiSet<T>))
-                {
-                    tableName = property.Name;
-                    break;
-                }
-            }
+            var property = typeof(CosmosSqlApiContext).GetProperties().Where(t => t.PropertyType == typeof(CosmosSqlApiSet<T>)).FirstOrDefault();
 
-            if (tableName == null)
+            if (property != null)
+            {
+                tableName = property.Name;
+            }
+            else
             {
                 tableName = typeof(T).Name + "s";
             }
@@ -95,20 +90,24 @@ namespace Lingva.DAL.CosmosSqlApi
         {
             await Client.CreateDatabaseIfNotExistsAsync(new Database { Id = "Lingva" });
 
-            //var assembliesToScan = new List<Assembly>(new[] { Assembly.Load("Lingva.DAL") });
-            //var allTypes = assembliesToScan.SelectMany(a => a.ExportedTypes).ToArray();
-            //var profiles = allTypes
-            //    .Where(t => typeof(BaseBE).GetTypeInfo().IsAssignableFrom(t.GetTypeInfo()))
-            //    .Where(t => !t.GetTypeInfo().IsAbstract);
-
-            var properties = typeof(CosmosSqlApiContext).GetProperties()
-                .Where(t => t.PropertyType == typeof(CosmosSqlApiSet));
+            var properties = typeof(CosmosSqlApiContext).GetProperties().Where(t => t.PropertyType.IsSubclassOf(typeof(CosmosSqlApiSet)));
             foreach (var property in properties)
             {
                 await Client.CreateDocumentCollectionIfNotExistsAsync(UriFactory.CreateDatabaseUri("Lingva"), new DocumentCollection { Id = property.Name });
             }
 
-            //get all entities
+            Uri uri = UriFactory.CreateDocumentCollectionUri("lingva", "Languages");
+            await Client.CreateDocumentAsync(uri, new { Id = 1, Name = "en", CreateDate = DateTime.Now, ModifyDate = DateTime.Now });
+            await Client.CreateDocumentAsync(uri, new { Id = 2, Name = "ru", CreateDate = DateTime.Now, ModifyDate = DateTime.Now });
+
+            uri = UriFactory.CreateDocumentCollectionUri("lingva", "Groups");
+            await Client.CreateDocumentAsync(uri, new { Id = 1, Name = "Harry Potter", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 1, Description = "Good movie", Picture = "1" });
+            await Client.CreateDocumentAsync(uri, new { Id = 2, Name = "Librium", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 1, Description = "Eq", Picture = "2" });
+            await Client.CreateDocumentAsync(uri, new { Id = 3, Name = "2Guns", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 2, Description = "stuff", Picture = "3" });
+
+            uri = UriFactory.CreateDocumentCollectionUri("lingva", "Users");
+            await Client.CreateDocumentAsync(uri, new { Id = 1, Name = "Serhii", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Email = "veloceraptor89@gmail.com" });
+            await Client.CreateDocumentAsync(uri, new { Id = 2, Name = "Old", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Email = "tucker_serega@mail.ru" });
 
             //var collection = UriFactory.CreateDocumentCollectionUri("Lingva", "Groups");
 

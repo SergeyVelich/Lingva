@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Lingva.DAL.Dapper
 {
@@ -13,6 +14,10 @@ namespace Lingva.DAL.Dapper
         protected bool disposed = false;
 
         public IDbConnection Connection { get; }
+
+        public DapperSet<Group> Groups { get => Set<Group>(); }
+        public DapperSet<Language> Languages { get => Set<Language>(); }
+        public DapperSet<User> Users { get => Set<User>(); }
 
         public DapperContext(IConfiguration config)
         {
@@ -65,10 +70,21 @@ namespace Lingva.DAL.Dapper
             return set;
         }
 
-        protected string GetTableName<T>()
+        protected string GetTableName<T>() where T : BaseBE, new()
         {
-            Type type = typeof(T);
-            return type.Name + "s";
+            string tableName = null;
+            var property = typeof(DapperContext).GetProperties().Where(t => t.PropertyType == typeof(DapperSet<T>)).FirstOrDefault();
+
+            if (property != null)
+            {
+                tableName = property.Name;
+            }
+            else
+            {
+                tableName = typeof(T).Name + "s";
+            }
+
+            return tableName;
         }
     }
 }
