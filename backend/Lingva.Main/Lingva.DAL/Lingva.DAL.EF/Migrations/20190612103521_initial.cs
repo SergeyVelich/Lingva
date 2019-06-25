@@ -50,7 +50,7 @@ namespace Lingva.DAL.EF.Migrations
                     Name = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    Picture = table.Column<string>(nullable: true),
+                    ImagePath = table.Column<string>(nullable: true),
                     LanguageId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -111,17 +111,17 @@ namespace Lingva.DAL.EF.Migrations
 
             migrationBuilder.InsertData(
                 table: "Groups",
-                columns: new[] { "Id", "CreateDate", "Date", "Description", "LanguageId", "ModifyDate", "Name", "Picture" },
+                columns: new[] { "Id", "CreateDate", "Date", "Description", "LanguageId", "ModifyDate", "Name", "ImagePath" },
                 values: new object[] { 1, new DateTime(2019, 6, 12, 13, 35, 20, 977, DateTimeKind.Local).AddTicks(6867), new DateTime(2019, 6, 12, 13, 35, 20, 977, DateTimeKind.Local).AddTicks(6878), "Good movie", 1, new DateTime(2019, 6, 12, 13, 35, 20, 977, DateTimeKind.Local).AddTicks(6874), "Harry Potter", "1" });
 
             migrationBuilder.InsertData(
                 table: "Groups",
-                columns: new[] { "Id", "CreateDate", "Date", "Description", "LanguageId", "ModifyDate", "Name", "Picture" },
+                columns: new[] { "Id", "CreateDate", "Date", "Description", "LanguageId", "ModifyDate", "Name", "ImagePath" },
                 values: new object[] { 2, new DateTime(2019, 6, 12, 13, 35, 20, 977, DateTimeKind.Local).AddTicks(8180), new DateTime(2019, 6, 12, 13, 35, 20, 977, DateTimeKind.Local).AddTicks(8192), "Eq", 1, new DateTime(2019, 6, 12, 13, 35, 20, 977, DateTimeKind.Local).AddTicks(8189), "Librium", "2" });
 
             migrationBuilder.InsertData(
                 table: "Groups",
-                columns: new[] { "Id", "CreateDate", "Date", "Description", "LanguageId", "ModifyDate", "Name", "Picture" },
+                columns: new[] { "Id", "CreateDate", "Date", "Description", "LanguageId", "ModifyDate", "Name", "ImagePath" },
                 values: new object[] { 3, new DateTime(2019, 6, 12, 13, 35, 20, 977, DateTimeKind.Local).AddTicks(8206), new DateTime(2019, 6, 12, 13, 35, 20, 977, DateTimeKind.Local).AddTicks(8210), "stuff", 2, new DateTime(2019, 6, 12, 13, 35, 20, 977, DateTimeKind.Local).AddTicks(8208), "2Guns", "3" });
 
             migrationBuilder.InsertData(

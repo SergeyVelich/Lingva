@@ -101,31 +101,13 @@ namespace Lingva.DAL.CosmosSqlApi
             await Client.CreateDocumentAsync(uri, new { Id = 2, Name = "ru", CreateDate = DateTime.Now, ModifyDate = DateTime.Now });
 
             uri = UriFactory.CreateDocumentCollectionUri("lingva", "Groups");
-            await Client.CreateDocumentAsync(uri, new { Id = 1, Name = "Harry Potter", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 1, Description = "Good movie", Picture = "1" });
-            await Client.CreateDocumentAsync(uri, new { Id = 2, Name = "Librium", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 1, Description = "Eq", Picture = "2" });
-            await Client.CreateDocumentAsync(uri, new { Id = 3, Name = "2Guns", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 2, Description = "stuff", Picture = "3" });
+            await Client.CreateDocumentAsync(uri, new { Id = 1, Name = "Harry Potter", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 1, Description = "Good movie", ImagePath = "1" });
+            await Client.CreateDocumentAsync(uri, new { Id = 2, Name = "Librium", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 1, Description = "Eq", ImagePath = "2" });
+            await Client.CreateDocumentAsync(uri, new { Id = 3, Name = "2Guns", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 2, Description = "stuff", ImagePath = "3" });
 
             uri = UriFactory.CreateDocumentCollectionUri("lingva", "Users");
             await Client.CreateDocumentAsync(uri, new { Id = 1, Name = "Serhii", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Email = "veloceraptor89@gmail.com" });
             await Client.CreateDocumentAsync(uri, new { Id = 2, Name = "Old", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Email = "tucker_serega@mail.ru" });
-
-            //var collection = UriFactory.CreateDocumentCollectionUri("Lingva", "Groups");
-
-            //await collection.AddAsync(new { id = todo.Id, todo.CreatedTime, todo.IsCompleted, todo.TaskDescription });
-
-            //Language languageEn = new Language() { Id = 1, Name = "en", CreateDate = DateTime.Now, ModifyDate = DateTime.Now };
-            //Language languageRu = new Language() { Id = 2, Name = "ru", CreateDate = DateTime.Now, ModifyDate = DateTime.Now };
-            //Language[] languages = { languageEn, languageRu }; 
-
-            //Set<Language>().InsertManyAsync(languages);
-
-            //Group group1 = new Group { Id = 1, Name = "Harry Potter", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 1, Description = "Good movie", Picture = "1" };
-            //Group group2 = new Group { Id = 2, Name = "Librium", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 1, Description = "Eq", Picture = "2" };
-            ////Group group3 = new Group { Id = 3, Name = "2Guns", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 2, Description = "stuff", Picture = "3" };
-            //Group group3 = new Group { Id = 3, Name = "2Guns", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, Language = new Language() { Id = 2, Name = "ru" }, Description = "stuff", Picture = "3" };
-            //Group[] groups = { group1, group2, group3 };
-
-            //Set<Group>().InsertManyAsync(groups);
         }
     }
 }

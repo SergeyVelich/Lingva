@@ -10,7 +10,7 @@ namespace Lingva.DAL.Entities
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public string Description { get; set; }
-        public string Picture { get; set; }
+        public string ImagePath { get; set; }
 
         public int LanguageId { get; set; }
 

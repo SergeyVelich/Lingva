@@ -5,6 +5,7 @@ using Lingva.BC.Contracts;
 using Lingva.BC.Dto;
 using Lingva.WebAPI.Controllers;
 using Lingva.WebAPI.Models.Entities;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
@@ -25,11 +26,15 @@ namespace Lingva.WebAPI.Tests
         private ILogger<GroupController> _logger;
         private QueryOptionsAdapter _queryOptionsAdapter;
         private GroupsListOptionsModel _optionsModel;
+        private IFileStorageManager _fileStorageManager;
+        private IHostingEnvironment _appEnvironment;
 
         [SetUp]
         public void Setup()
         {
+            _appEnvironment = Substitute.For<IHostingEnvironment>();
             _groupManager = Substitute.For<IGroupManager>();
+            _fileStorageManager = Substitute.For<IFileStorageManager>();
             _dataAdapter = Substitute.For<IDataAdapter>();          
             _logger = Substitute.For<ILogger<GroupController>>();
             _queryOptionsAdapter = Substitute.For<QueryOptionsAdapter>();
@@ -43,7 +48,7 @@ namespace Lingva.WebAPI.Tests
                     Name = "Harry Potter",
                     Date = DateTime.Now,
                     Description = "Description",
-                    Picture = "Picture",
+                    ImagePath = "Picture",
                     LanguageId = 1
                 },
                 new GroupDto
@@ -52,7 +57,7 @@ namespace Lingva.WebAPI.Tests
                     Name = "Librium",
                     Date = DateTime.Now,
                     Description = "Description",
-                    Picture = "Picture",
+                    ImagePath = "Picture",
                     LanguageId = 2
                 }
             };
@@ -63,7 +68,7 @@ namespace Lingva.WebAPI.Tests
         {
             //arrange
             _groupManager.GetListAsync().Returns(_groupDtoList);
-            _groupController = new GroupController(_groupManager, _dataAdapter, _logger, _queryOptionsAdapter);
+            _groupController = new GroupController(_appEnvironment, _groupManager, _fileStorageManager, _dataAdapter, _queryOptionsAdapter, _logger);
 
             //act
             var result = await _groupController.Index(_optionsModel);
@@ -82,7 +87,7 @@ namespace Lingva.WebAPI.Tests
 
             _dataAdapter.Map<GroupDto>(groupViewModel).Returns(groupDto);
             _groupManager.GetByIdAsync(validId).Returns(groupDto);
-            _groupController = new GroupController(_groupManager, _dataAdapter, _logger, _queryOptionsAdapter);
+            _groupController = new GroupController(_appEnvironment, _groupManager, _fileStorageManager, _dataAdapter, _queryOptionsAdapter, _logger);
 
             //act
             var result = await _groupController.Get(1);
@@ -101,7 +106,7 @@ namespace Lingva.WebAPI.Tests
             _groupManager.AddAsync(Arg.Any<GroupDto>()).Returns(Task.FromResult(groupDto));
             _dataAdapter.Map<GroupDto>(groupViewModel).Returns(groupDto);
             _dataAdapter.Map<GroupViewModel>(groupDto).Returns(groupViewModel);
-            _groupController = new GroupController(_groupManager, _dataAdapter, _logger, _queryOptionsAdapter);
+            _groupController = new GroupController(_appEnvironment, _groupManager, _fileStorageManager, _dataAdapter, _queryOptionsAdapter, _logger);
 
             //act
             var result = await _groupController.Create(groupViewModel);
@@ -120,7 +125,7 @@ namespace Lingva.WebAPI.Tests
             _groupManager.UpdateAsync(Arg.Any<GroupDto>()).Returns(groupDto);
             _dataAdapter.Map<GroupDto>(groupViewModel).Returns(groupDto);
             _dataAdapter.Map<GroupViewModel>(groupDto).Returns(groupViewModel);
-            _groupController = new GroupController(_groupManager, _dataAdapter, _logger, _queryOptionsAdapter);
+            _groupController = new GroupController(_appEnvironment, _groupManager, _fileStorageManager, _dataAdapter, _queryOptionsAdapter, _logger);
 
             //act
             var result = await _groupController.Create(groupViewModel);
@@ -139,7 +144,7 @@ namespace Lingva.WebAPI.Tests
             _groupManager.DeleteAsync(Arg.Any<int>()).Returns(Task.FromResult(groupDto));
             _dataAdapter.Map<GroupDto>(groupViewModel).Returns(groupDto);
             _dataAdapter.Map<GroupViewModel>(groupDto).Returns(groupViewModel);
-            _groupController = new GroupController(_groupManager, _dataAdapter, _logger, _queryOptionsAdapter);
+            _groupController = new GroupController(_appEnvironment, _groupManager, _fileStorageManager, _dataAdapter, _queryOptionsAdapter, _logger);
 
             //act
             var result = await _groupController.Delete(groupViewModel.Id);

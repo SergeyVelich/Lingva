@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <Reference Include="Lingva.BC">
-      <HintPath>..\..\..\Lingva.Main\Lingva.BC\Lingva.BC\bin\Release\netcoreapp2.2\Lingva.BC.dll</HintPath>
+      <HintPath>..\..\..\Lingva.Main\Lingva.BC\Lingva.BC\bin\Debug\netcoreapp2.2\Lingva.BC.dll</HintPath>
     </Reference>
   </ItemGroup>
 

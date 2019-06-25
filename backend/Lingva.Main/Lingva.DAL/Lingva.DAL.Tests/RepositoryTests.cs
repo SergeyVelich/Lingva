@@ -33,7 +33,7 @@ namespace Lingva.DAL.EF.Tests
                     Name = "Harry Potter",
                     Date = DateTime.Now,
                     Description = "Description",
-                    Picture = "Picture",
+                    ImagePath = "/Files/Empty.jpg",
                     LanguageId = 1,
                 },
                 new Group
@@ -41,7 +41,7 @@ namespace Lingva.DAL.EF.Tests
                     Name = "Harry Potter",
                     Date = DateTime.Now,
                     Description = "Description",
-                    Picture = "Picture",
+                    ImagePath = "/Files/Empty.jpg",
                     LanguageId = 1,
                 }
             };

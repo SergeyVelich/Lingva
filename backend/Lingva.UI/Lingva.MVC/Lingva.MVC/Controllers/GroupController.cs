@@ -7,10 +7,12 @@ using Lingva.MVC.Models.Entities;
 using Lingva.MVC.Models.Group;
 using Lingva.MVC.Models.Group.Index;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Lingva.MVC.Controllers
@@ -19,21 +21,25 @@ namespace Lingva.MVC.Controllers
     [ResponseCache(CacheProfileName = "NoCashing")]
     public class GroupController : Controller
     {
+        private readonly IHostingEnvironment _appEnvironment;
         private readonly IGroupManager _groupManager;
         private readonly IInfoManager _infoManager;
-        private readonly IDataAdapter _dataAdapter;
-        private readonly ILogger<GroupController> _logger;
+        private readonly IFileStorageManager _fileStorageManager;
+        private readonly IDataAdapter _dataAdapter;       
         private readonly QueryOptionsAdapter _queryOptionsAdapter;
+        private readonly ILogger<GroupController> _logger;    
         private readonly IMemoryCache _memoryCache;
 
-        public GroupController(IGroupManager groupManager, IInfoManager infoManager, IDataAdapter dataAdapter, ILogger<GroupController> logger, IMemoryCache memoryCache, QueryOptionsAdapter queryOptionsAdapter)
+        public GroupController(IHostingEnvironment appEnvironment, IGroupManager groupManager, IInfoManager infoManager, IFileStorageManager fileStorageManager, IDataAdapter dataAdapter, QueryOptionsAdapter queryOptionsAdapter, ILogger<GroupController> logger, IMemoryCache memoryCache)
         {
+            _appEnvironment = appEnvironment;
             _groupManager = groupManager;
             _infoManager = infoManager;
+            _fileStorageManager = fileStorageManager;
             _dataAdapter = dataAdapter;
-            _logger = logger;                
-            _memoryCache = memoryCache;
             _queryOptionsAdapter = queryOptionsAdapter;
+            _logger = logger;                
+            _memoryCache = memoryCache;            
         }
 
         // GET: group    
@@ -90,6 +96,11 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
+            // сохраняем файл в папку Files в каталоге wwwroot
+            string path = "/files/" + groupViewModel.ImageFile.FileName;
+            await _fileStorageManager.SaveFileAsync(groupViewModel.ImageFile, _appEnvironment.WebRootPath + path, FileMode.Create);
+            groupViewModel.ImagePath = path;
+
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
             await _groupManager.AddAsync(groupDto);
 
@@ -126,6 +137,11 @@ namespace Lingva.MVC.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            // сохраняем файл в папку Files в каталоге wwwroot
+            string path = "/files/" + groupViewModel.ImageFile.FileName;            
+            await _fileStorageManager.SaveFileAsync(groupViewModel.ImageFile, _appEnvironment.WebRootPath + path, FileMode.Create);
+            groupViewModel.ImagePath = path;
 
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
             await _groupManager.UpdateAsync(groupDto);

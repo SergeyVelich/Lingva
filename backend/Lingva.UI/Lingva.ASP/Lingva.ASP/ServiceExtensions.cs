@@ -120,6 +120,7 @@ namespace Lingva.ASP.Extensions
         {
             services.AddScoped<IGroupManager, GroupManager>();
             services.AddScoped<IInfoManager, InfoManager>();
+            services.AddScoped<IFileStorageManager, FileStorageManager>();        
         }
 
         public static void ConfigureDataAdapters(this IServiceCollection services)

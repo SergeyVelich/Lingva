@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
@@ -35,7 +36,9 @@ namespace Lingva.MVC.Models.Entities
         public string LanguageName { get; set; }
         [Display(Name = "Description")]
         public string Description { get; set; }
-        [Display(Name = "Picture")]
-        public string Picture { get; set; }
+        [Display(Name = "Image")]
+        public string ImagePath { get; set; }
+        [Display(Name = "Image")]
+        public IFormFile ImageFile { get; set; }
     }
 }

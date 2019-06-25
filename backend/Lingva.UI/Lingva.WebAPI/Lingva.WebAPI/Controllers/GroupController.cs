@@ -5,9 +5,11 @@ using Lingva.BC.Contracts;
 using Lingva.BC.Dto;
 using Lingva.WebAPI.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
@@ -17,17 +19,21 @@ namespace Lingva.WebAPI.Controllers
     [ApiController]
     public class GroupController : ControllerBase
     {
+        private readonly IHostingEnvironment _appEnvironment;
         private readonly IGroupManager _groupManager;
+        private readonly IFileStorageManager _fileStorageManager;
         private readonly IDataAdapter _dataAdapter;
-        private readonly ILogger<GroupController> _logger;
         private readonly QueryOptionsAdapter _queryOptionsAdapter;
+        private readonly ILogger<GroupController> _logger;        
 
-        public GroupController(IGroupManager groupManager, IDataAdapter dataAdapter, ILogger<GroupController> logger, QueryOptionsAdapter queryOptionsAdapter)
+        public GroupController(IHostingEnvironment appEnvironment, IGroupManager groupManager, IFileStorageManager fileStorageManager, IDataAdapter dataAdapter, QueryOptionsAdapter queryOptionsAdapter, ILogger<GroupController> logger)
         {
+            _appEnvironment = appEnvironment;
             _groupManager = groupManager;
+            _fileStorageManager = fileStorageManager;
             _dataAdapter = dataAdapter;
-            _logger = logger;
             _queryOptionsAdapter = queryOptionsAdapter;
+            _logger = logger;
         }
 
         // GET: api/group
@@ -87,6 +93,11 @@ namespace Lingva.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
+            // сохраняем файл в папку Files в каталоге wwwroot
+            //string path = "/files/" + groupViewModel.ImageFile.FileName;
+            //await _fileStorageManager.SaveFileAsync(groupViewModel.ImageFile, _appEnvironment.WebRootPath + path, FileMode.Create);
+            //groupViewModel.ImagePath = path;
+
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
             await _groupManager.AddAsync(groupDto);
 
@@ -101,6 +112,11 @@ namespace Lingva.WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            // сохраняем файл в папку Files в каталоге wwwroot
+            //string path = "/files/" + groupViewModel.ImageFile.FileName;
+            //await _fileStorageManager.SaveFileAsync(groupViewModel.ImageFile, _appEnvironment.WebRootPath + path, FileMode.Create);
+            //groupViewModel.ImagePath = path;
 
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
             await _groupManager.UpdateAsync(groupDto);
