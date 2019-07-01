@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Quartz" Version="3.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lingva.Background.Mapper\Lingva.Background.Mapper.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DataAdapter">
+      <HintPath>..\..\Additional\Mapping\DataAdapter\DataAdapter\bin\Debug\netcoreapp2.2\DataAdapter.dll</HintPath>
+    </Reference>
+    <Reference Include="Lingva.BC">
+      <HintPath>..\..\Lingva.Main\Lingva.BC\Lingva.BC\bin\Debug\netcoreapp2.2\Lingva.BC.dll</HintPath>
+    </Reference>
+    <Reference Include="Lingva.DAL">
+      <HintPath>..\..\Lingva.Main\Lingva.DAL\Lingva.DAL\bin\Debug\netcoreapp2.2\Lingva.DAL.dll</HintPath>
+    </Reference>
+    <Reference Include="Lingva.DAL.EF">
+      <HintPath>..\..\Lingva.Main\Lingva.DAL\Lingva.DAL.EF\bin\Debug\netcoreapp2.2\Lingva.DAL.EF.dll</HintPath>
+    </Reference>
+    <Reference Include="SenderService.Email">
+      <HintPath>..\..\Additional\SenderService\SenderService.Email\bin\Debug\netcoreapp2.2\SenderService.Email.dll</HintPath>
+    </Reference>
+    <Reference Include="SenderService.SettingsProvider.Core">
+      <HintPath>..\..\Additional\SenderService\SenderService.SettingsProvider.Core\bin\Debug\netcoreapp2.2\SenderService.SettingsProvider.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SenderService.SettingsProvider.EF">
+      <HintPath>..\..\Additional\SenderService\SenderService.SettingsProvider.EF\bin\Debug\netcoreapp2.2\SenderService.SettingsProvider.EF.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -10,7 +10,7 @@ namespace AuthServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("fiver_auth_api", "Lingva.WebAPI")
+                new ApiResource("resourceapi", "Lingva.WebAPI")
             };
         }
 
@@ -19,6 +19,7 @@ namespace AuthServer
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
+                new IdentityResources.Email(),
                 new IdentityResources.Profile(),
             };
         }
@@ -31,24 +32,47 @@ namespace AuthServer
                 // To use both Identity and Access Tokens
                 new Client
                 {
-                    ClientId = "fiver_auth_client",
-                    ClientName = "Lingva.MVC",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    ClientId = "mvc_client",
+                    ClientName = "Lingva.MVC",                    
 
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
-                    AllowOfflineAccess = true,
-                    RequireConsent = false,
+                    ClientSecrets = { new Secret("secret".Sha256()) },
 
                     RedirectUris = { "http://localhost:6002/signin-oidc" },
                     PostLogoutRedirectUris = { "http://localhost:6002/signout-callback-oidc" },
-
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "fiver_auth_api"
+                        IdentityServerConstants.StandardScopes.Email,
+                        "resourceapi"
                     },
+
+                    AllowOfflineAccess = true,
+                    RequireConsent = false,
                 },
+                new Client
+                {                   
+                    ClientId = "angular_client",
+                    ClientName = "Angular SPA",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+                    RequireClientSecret = false,
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        "resourceapi"
+                    },
+                    RedirectUris = {"http://localhost:4200/auth-callback"},
+                    PostLogoutRedirectUris = {"http://localhost:4200/"},
+                    AllowedCorsOrigins = {"http://localhost:4200"},
+                    AllowAccessTokensViaBrowser = true,
+                    AccessTokenLifetime = 300,
+                    IdentityTokenLifetime = 300,
+                    RequireConsent = false
+                }
             };
         }
     }

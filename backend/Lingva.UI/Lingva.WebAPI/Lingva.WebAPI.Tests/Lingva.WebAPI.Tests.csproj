@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.0" />
+    <PackageReference Include="NSubstitute" Version="4.1.0" />
+    <PackageReference Include="nunit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lingva.WebAPI.Models\Lingva.WebAPI.Models.csproj" />
+    <ProjectReference Include="..\Lingva.WebAPI\Lingva.WebAPI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DataAdapter">
+      <HintPath>..\..\..\Additional\Mapping\DataAdapter\DataAdapter\bin\Debug\netcoreapp2.2\DataAdapter.dll</HintPath>
+    </Reference>
+    <Reference Include="Lingva.ASP">
+      <HintPath>..\..\Lingva.ASP\Lingva.ASP\bin\Debug\netcoreapp2.2\Lingva.ASP.dll</HintPath>
+    </Reference>
+    <Reference Include="Lingva.BC">
+      <HintPath>..\..\..\Lingva.Main\Lingva.BC\Lingva.BC\bin\Debug\netcoreapp2.2\Lingva.BC.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

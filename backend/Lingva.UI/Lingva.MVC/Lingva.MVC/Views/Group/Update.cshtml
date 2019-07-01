@@ -1,0 +1,57 @@
+﻿@model Lingva.MVC.Models.Group.GroupPageViewModel
+
+@{
+    ViewData["Title"] = "Edit group";
+}
+<h2>Edit group</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Update" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <dl class="dl-horizontal">
+                <dd>
+                    @Html.TextBoxFor(model => model.GroupViewModel.Id, htmlAttributes: new { @class = "form-control", style = "display: none;" })
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.GroupViewModel.Name)
+                </dt>
+                <dd>
+                    @Html.TextBoxFor(model => model.GroupViewModel.Name, htmlAttributes: new { @class = "form-control" })
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.GroupViewModel.Date)
+                </dt>
+                <dd>
+                    @Html.TextBoxFor(model => model.GroupViewModel.Date, "{0:yyyy-MM-dd}", htmlAttributes: new { @class = "form-control", @type = "date" })
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.GroupViewModel.LanguageName)
+                </dt>
+                <dd>
+                    @Html.DropDownListFor(model => model.GroupViewModel.LanguageId, Model.Languages as SelectList, htmlAttributes: new { @class = "form-control" })
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.GroupViewModel.Description)
+                </dt>
+                <dd>
+                    @Html.TextBoxFor(model => model.GroupViewModel.Description, htmlAttributes: new { @class = "form-control" })
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.GroupViewModel.ImageFile)
+                </dt>
+                <dd>
+                    @Html.TextBoxFor(model => model.GroupViewModel.ImageFile, htmlAttributes: new { @class = "form-control", @type = "file" })
+                </dd>
+            </dl>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

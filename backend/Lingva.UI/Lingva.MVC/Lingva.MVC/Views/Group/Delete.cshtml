@@ -1,0 +1,60 @@
+﻿@model Lingva.MVC.Models.Group.GroupPageViewModel
+
+@{
+    ViewData["Title"] = "Remove group";
+}
+<h2>Remove group</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Delete">
+            <div class="row">
+                <div class="col-md-4">
+                    <dl class="dl-horizontal">
+                        <dd>
+                            @Html.Hidden("id", Model.GroupViewModel.Id);
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.GroupViewModel.Name)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.GroupViewModel.Name)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.GroupViewModel.Date)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.GroupViewModel.Date, "{0:yyyy-MM-dd}")
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.GroupViewModel.LanguageName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.GroupViewModel.LanguageName)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.GroupViewModel.Description)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.GroupViewModel.Description)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.GroupViewModel.ImageFile)
+                        </dt>
+                        <dd>
+                            <img src="@Url.Action( "getImage", "Group", new { id = Model.GroupViewModel.Id } )" alt="Image" />
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Delete" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
