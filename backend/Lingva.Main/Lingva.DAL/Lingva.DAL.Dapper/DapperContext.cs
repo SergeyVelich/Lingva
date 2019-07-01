@@ -9,11 +9,10 @@ namespace Lingva.DAL.Dapper
 {
     public class DapperContext : IDisposable
     {
-        private readonly IDbConnection _dbConnection;
         private Dictionary<Type, object> sets;
         protected bool disposed = false;
 
-        public IDbConnection Connection { get => _dbConnection; }
+        public IDbConnection Connection { get; }
 
         public DapperContext(IConfiguration config)
         {
@@ -21,21 +20,21 @@ namespace Lingva.DAL.Dapper
 
             var conn = new SqlConnection(connectionStringValue);
             conn.Open();
-            _dbConnection = conn;
+            Connection = conn;
 
             sets = new Dictionary<Type, object>();
         }
         
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
-                    _dbConnection.Dispose();
+                    Connection.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
 
         public void Dispose()

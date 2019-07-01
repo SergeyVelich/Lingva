@@ -1,7 +1,6 @@
-﻿using Lingva.DAL.AzureCosmosDB;
+﻿using Lingva.DAL.CosmosSqlApi;
 using Lingva.DAL.EF.Context;
 using Lingva.DAL.Mongo;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
@@ -19,18 +18,18 @@ namespace Lingva.ASP
                 case DbProviders.Dapper:
                     DictionaryContextFactory factory = new DictionaryContextFactory();
                     DictionaryContext dbContext = factory.CreateDbContext(config);
-                    await dbContext.Database.MigrateAsync();
+                    await dbContext.InitializeAsync();
                     break;
                 case DbProviders.Mongo:
                     await new MongoContext(config).InitializeAsync();
                     break;
-                case DbProviders.AzureCosmosDB:
-                    await new AzureCosmosDBContext(config).InitializeAsync();
+                case DbProviders.CosmosSqlApiContext:
+                    await new CosmosSqlApiContext(config).InitializeAsync();
                     break;
                 default:
                     factory = new DictionaryContextFactory();
                     dbContext = factory.CreateDbContext(config);
-                    await dbContext.Database.MigrateAsync();
+                    await dbContext.InitializeAsync();
                     break;
             }
         }

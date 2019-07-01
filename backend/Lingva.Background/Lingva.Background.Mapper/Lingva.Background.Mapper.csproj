@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <Reference Include="Lingva.BC.Mapper">
-      <HintPath>..\..\Lingva.Main\Lingva.BC\Lingva.BC.Mapper\bin\Release\netcoreapp2.2\Lingva.BC.Mapper.dll</HintPath>
+      <HintPath>..\..\Lingva.Main\Lingva.BC\Lingva.BC.Mapper\bin\Debug\netcoreapp2.2\Lingva.BC.Mapper.dll</HintPath>
     </Reference>
   </ItemGroup>
 

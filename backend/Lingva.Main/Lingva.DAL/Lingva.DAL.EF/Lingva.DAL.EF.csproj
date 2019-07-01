@@ -18,10 +18,10 @@
 
   <ItemGroup>
     <Reference Include="QueryBuilder">
-      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder\bin\Release\netcoreapp2.2\QueryBuilder.dll</HintPath>
+      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder\bin\Debug\netcoreapp2.2\QueryBuilder.dll</HintPath>
     </Reference>
     <Reference Include="QueryBuilder.EF">
-      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder.EF\bin\Release\netcoreapp2.2\QueryBuilder.EF.dll</HintPath>
+      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder.EF\bin\Debug\netcoreapp2.2\QueryBuilder.EF.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -19,7 +19,7 @@ namespace Lingva.BC.UnitTest
         private readonly List<Language> _languageList;
         private readonly List<LanguageDto> _languageListDto;
         private IInfoManager _infoManager;
-        private readonly Mock<IRepository> _repoMock;
+        private readonly Mock<IGroupRepository> _repoMock;
         private readonly Mock<IDataAdapter> _data;
 
         public InfoManagerTests()
@@ -52,7 +52,7 @@ namespace Lingva.BC.UnitTest
                 }
             };
 
-            _repoMock = new Mock<IRepository>();
+            _repoMock = new Mock<IGroupRepository>();
             _data = new Mock<IDataAdapter>();
             _infoManager = new InfoManager(_repoMock.Object, _data.Object);
         }

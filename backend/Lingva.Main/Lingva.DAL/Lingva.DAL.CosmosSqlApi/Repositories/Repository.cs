@@ -5,76 +5,64 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Lingva.DAL.AzureCosmosDB.Repositories
+namespace Lingva.DAL.CosmosSqlApi.Repositories
 {
     public class Repository : IRepository, IDisposable, ITransactionProvider
     {
-        protected readonly AzureCosmosDBContext _dbContext;
+        protected readonly CosmosSqlApiContext _dbContext;
 
         protected bool disposed = false;
 
-        public Repository(AzureCosmosDBContext dbContext)
+        public Repository(CosmosSqlApiContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         public virtual async Task<IEnumerable<T>> GetListAsync<T>() where T : BaseBE, new()
         {
-            //var documents = await _dbContext.Set<T>().Find(_ => true).ToListAsync();
-            //return documents;
-
-            return null;
+            return await _dbContext.Set<T>().SelectAllAsync();
         }
 
         public virtual async Task<T> GetByIdAsync<T>(int id) where T : BaseBE, new()
         {
-            //return await _dbContext.Set<T>().Find(note => note.Id == id).FirstOrDefaultAsync();
-            return null;
+           return await _dbContext.Set<T>().FindAsync(id);
         }
 
         public virtual async Task<T> CreateAsync<T>(T entity) where T : BaseBE, new()
         {
-            //entity.CreateDate = DateTime.Now;
-            //entity.ModifyDate = DateTime.Now;
+            entity.CreateDate = DateTime.Now;
+            entity.ModifyDate = DateTime.Now;
 
-            //await _dbContext.Set<T>().InsertOneAsync(entity);
+            await _dbContext.Set<T>().AddAsync(entity);
 
             return entity;
         }
 
         public virtual async Task<T> UpdateAsync<T>(T entity) where T : BaseBE, new()
         {
-            //var filter = Builders<T>.Filter.Eq("_id", entity.Id);
-            //await _dbContext.Set<T>().ReplaceOneAsync(filter, entity);
+            await _dbContext.Set<T>().UpdateAsync(entity);
 
             return entity;
         }
 
         public virtual async Task DeleteAsync<T>(int id) where T : BaseBE, new()
         {
-            //var filter = Builders<T>.Filter.Eq("_id", id);
-            //await _dbContext.Set<T>().DeleteOneAsync(filter);
+            await _dbContext.Set<T>().RemoveAsync(id);
         }
 
         public void StartTransaction()
         {
-            //_dbContext.Session.StartTransaction();
+
         }
 
         public void CommitTransaction()
         {
-            //if (_dbContext.Session.IsInTransaction)
-            //{
-            //    _dbContext.Session.CommitTransaction();
-            //}
+
         }
 
         public void AbortTransaction()
         {
-            //if (_dbContext.Session.IsInTransaction)
-            //{
-            //    _dbContext.Session.AbortTransaction();
-            //}           
+        
         }
 
         public void EndTransaction()

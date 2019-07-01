@@ -22,10 +22,10 @@
 
   <ItemGroup>
     <Reference Include="DataAdapter">
-      <HintPath>..\..\..\Additional\Mapping\DataAdapter\DataAdapter\bin\Release\netcoreapp2.2\DataAdapter.dll</HintPath>
+      <HintPath>..\..\..\Additional\Mapping\DataAdapter\DataAdapter\bin\Debug\netcoreapp2.2\DataAdapter.dll</HintPath>
     </Reference>
     <Reference Include="QueryBuilder">
-      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder\bin\Release\netcoreapp2.2\QueryBuilder.dll</HintPath>
+      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder\bin\Debug\netcoreapp2.2\QueryBuilder.dll</HintPath>
     </Reference>
   </ItemGroup>
 

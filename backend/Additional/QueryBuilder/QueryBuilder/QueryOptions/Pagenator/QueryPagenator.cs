@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace QueryBuilder.QueryOptions
+namespace QueryBuilder.QueryOptions.Pagenator
 {
     [ExcludeFromCodeCoverage]
     public class QueryPagenator

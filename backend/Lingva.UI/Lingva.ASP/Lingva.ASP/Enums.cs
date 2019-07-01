@@ -5,7 +5,7 @@
         EF,
         Dapper,
         Mongo,
-        AzureCosmosDB,
+        CosmosSqlApiContext,
     }
 
     public enum TranslaterServices

@@ -1,6 +1,10 @@
 ﻿using Lingva.ASP.Infrastructure.Models;
 using QueryBuilder.Enums;
 using QueryBuilder.QueryOptions;
+using QueryBuilder.QueryOptions.Filter;
+using QueryBuilder.QueryOptions.Includer;
+using QueryBuilder.QueryOptions.Pagenator;
+using QueryBuilder.QueryOptions.Sorter;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -20,11 +24,11 @@ namespace Lingva.ASP.Infrastructure.Adapters
             List<QueryFilter> filters = new List<QueryFilter>();
             if (optionsModel.Name != null)
             {
-                filters.Add(new QueryFilterElement("Name", optionsModel.Name, FilterElementOperation.Contains));
+                filters.Add(new QueryFilterElement("Name", optionsModel.Name, FilterElementOperation.Contains, new QueryFilterAdditionalOptions() { IgnoreCase = true }));
             }                
             if (optionsModel.LanguageId != 0)
             {
-                filters.Add(new QueryFilterElement("LanguageId", optionsModel.LanguageId, FilterElementOperation.Equal));
+                filters.Add(new QueryFilterElement("Language.Id", optionsModel.LanguageId, FilterElementOperation.Equal));
             }               
             if (optionsModel.DateFrom != DateTime.MinValue)
             {

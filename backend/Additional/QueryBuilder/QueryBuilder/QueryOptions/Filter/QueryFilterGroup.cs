@@ -1,7 +1,7 @@
 ﻿using QueryBuilder.Enums;
 using System.Diagnostics.CodeAnalysis;
 
-namespace QueryBuilder.QueryOptions
+namespace QueryBuilder.QueryOptions.Filter
 {
     [ExcludeFromCodeCoverage]
     public class QueryFilterGroup : QueryFilter

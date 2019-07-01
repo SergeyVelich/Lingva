@@ -18,25 +18,25 @@
 
   <ItemGroup>
     <Reference Include="DataAdapter">
-      <HintPath>..\..\Additional\Mapping\DataAdapter\DataAdapter\bin\Release\netcoreapp2.2\DataAdapter.dll</HintPath>
+      <HintPath>..\..\Additional\Mapping\DataAdapter\DataAdapter\bin\Debug\netcoreapp2.2\DataAdapter.dll</HintPath>
     </Reference>
     <Reference Include="Lingva.BC">
-      <HintPath>..\..\Lingva.Main\Lingva.BC\Lingva.BC\bin\Release\netcoreapp2.2\Lingva.BC.dll</HintPath>
+      <HintPath>..\..\Lingva.Main\Lingva.BC\Lingva.BC\bin\Debug\netcoreapp2.2\Lingva.BC.dll</HintPath>
     </Reference>
     <Reference Include="Lingva.DAL">
-      <HintPath>..\..\Lingva.Main\Lingva.DAL\Lingva.DAL\bin\Release\netcoreapp2.2\Lingva.DAL.dll</HintPath>
+      <HintPath>..\..\Lingva.Main\Lingva.DAL\Lingva.DAL\bin\Debug\netcoreapp2.2\Lingva.DAL.dll</HintPath>
     </Reference>
     <Reference Include="Lingva.DAL.EF">
-      <HintPath>..\..\Lingva.Main\Lingva.DAL\Lingva.DAL.EF\bin\Release\netcoreapp2.2\Lingva.DAL.EF.dll</HintPath>
+      <HintPath>..\..\Lingva.Main\Lingva.DAL\Lingva.DAL.EF\bin\Debug\netcoreapp2.2\Lingva.DAL.EF.dll</HintPath>
     </Reference>
     <Reference Include="SenderService.Email">
-      <HintPath>..\..\Additional\SenderService\SenderService.Email\bin\Release\netcoreapp2.2\SenderService.Email.dll</HintPath>
+      <HintPath>..\..\Additional\SenderService\SenderService.Email\bin\Debug\netcoreapp2.2\SenderService.Email.dll</HintPath>
     </Reference>
     <Reference Include="SenderService.SettingsProvider.Core">
-      <HintPath>..\..\Additional\SenderService\SenderService.SettingsProvider.Core\bin\Release\netcoreapp2.2\SenderService.SettingsProvider.Core.dll</HintPath>
+      <HintPath>..\..\Additional\SenderService\SenderService.SettingsProvider.Core\bin\Debug\netcoreapp2.2\SenderService.SettingsProvider.Core.dll</HintPath>
     </Reference>
     <Reference Include="SenderService.SettingsProvider.EF">
-      <HintPath>..\..\Additional\SenderService\SenderService.SettingsProvider.EF\bin\Release\netcoreapp2.2\SenderService.SettingsProvider.EF.dll</HintPath>
+      <HintPath>..\..\Additional\SenderService\SenderService.SettingsProvider.EF\bin\Debug\netcoreapp2.2\SenderService.SettingsProvider.EF.dll</HintPath>
     </Reference>
   </ItemGroup>
 

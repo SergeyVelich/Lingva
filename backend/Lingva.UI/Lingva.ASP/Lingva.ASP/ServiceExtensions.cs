@@ -2,7 +2,7 @@
 using Lingva.BC;
 using Lingva.BC.Contracts;
 using Lingva.BC.Services;
-using Lingva.DAL.AzureCosmosDB;
+using Lingva.DAL.CosmosSqlApi;
 using Lingva.DAL.Dapper;
 using Lingva.DAL.EF.Context;
 using Lingva.DAL.EF.Repositories;
@@ -48,7 +48,7 @@ namespace Lingva.ASP.Extensions
                 case DbProviders.Mongo:
                     services.ConfigureMongo();
                     break;
-                case DbProviders.AzureCosmosDB:
+                case DbProviders.CosmosSqlApiContext:
                     services.ConfigureAzureCosmosDB();
                     break;
                 default:
@@ -77,7 +77,7 @@ namespace Lingva.ASP.Extensions
 
         public static void ConfigureAzureCosmosDB(this IServiceCollection services)
         {
-            services.AddTransient<AzureCosmosDBContext>();
+            services.AddTransient<CosmosSqlApiContext>();
             services.ConfigureAzureCosmosDBRepositories();
         }
 
@@ -95,21 +95,25 @@ namespace Lingva.ASP.Extensions
         public static void ConfigureEFRepositories(this IServiceCollection services)
         {
             services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IGroupRepository, GroupRepository>();
         }
 
         public static void ConfigureDapperRepositories(this IServiceCollection services)
         {
             services.AddScoped<IRepository, DAL.Dapper.Repositories.Repository>();
+            services.AddScoped<IGroupRepository, DAL.Dapper.Repositories.GroupRepository>();
         }
 
         public static void ConfigureMongoRepositories(this IServiceCollection services)
         {
             services.AddScoped<IRepository, DAL.Mongo.Repositories.Repository>();
+            services.AddScoped<IGroupRepository, DAL.Mongo.Repositories.GroupRepository>();
         }
 
         public static void ConfigureAzureCosmosDBRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IRepository, DAL.AzureCosmosDB.Repositories.Repository>();
+            services.AddScoped<IRepository, DAL.CosmosSqlApi.Repositories.Repository>();
+            services.AddScoped<IGroupRepository, DAL.CosmosSqlApi.Repositories.GroupRepository>();
         }
 
         public static void ConfigureManagers(this IServiceCollection services)

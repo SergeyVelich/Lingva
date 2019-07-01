@@ -21,7 +21,7 @@ namespace Lingva.BC.UnitTest
         private readonly List<Group> _groupList;
         private readonly List<GroupDto> _groupListDto;
         private IGroupManager _groupManager;
-        private readonly Mock<IRepository> _repoMock;
+        private readonly Mock<IGroupRepository> _repoMock;
         private readonly Mock<IDataAdapter> _dataAdapter;
 
         public GroupManagerTests()
@@ -80,7 +80,7 @@ namespace Lingva.BC.UnitTest
                 }
             };           
 
-            _repoMock = new Mock<IRepository>();
+            _repoMock = new Mock<IGroupRepository>();
             _dataAdapter = new Mock<IDataAdapter>();
             _groupManager = new GroupManager(_repoMock.Object, _dataAdapter.Object);
         }
