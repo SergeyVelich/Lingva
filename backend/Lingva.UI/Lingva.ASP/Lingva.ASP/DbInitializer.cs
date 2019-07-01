@@ -23,7 +23,7 @@ namespace Lingva.ASP
                 case DbProviders.Mongo:
                     await new MongoContext(config).InitializeAsync();
                     break;
-                case DbProviders.CosmosSqlApiContext:
+                case DbProviders.CosmosSqlApi:
                     await new CosmosSqlApiContext(config).InitializeAsync();
                     break;
                 default:

@@ -47,7 +47,7 @@ namespace Lingva.ASP.Infrastructure.Adapters
             includers.Add(new QueryIncluder("Language"));
 
             int take = optionsModel.PageSize;
-            int skip = optionsModel.PageSize * (optionsModel.PageIndex - 1);
+            int skip = optionsModel.PageSize * (Math.Max(optionsModel.PageIndex, 1) - 1);
             QueryPagenator pagenator = new QueryPagenator(take, skip);
 
             IQueryOptions queryOptions = new QueryOptions(

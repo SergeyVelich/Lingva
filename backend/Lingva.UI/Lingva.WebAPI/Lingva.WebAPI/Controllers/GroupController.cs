@@ -7,7 +7,10 @@ using Lingva.WebAPI.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
@@ -18,16 +21,18 @@ namespace Lingva.WebAPI.Controllers
     public class GroupController : ControllerBase
     {
         private readonly IGroupManager _groupManager;
+        private readonly IFileStorageManager _fileStorageManager;
         private readonly IDataAdapter _dataAdapter;
-        private readonly ILogger<GroupController> _logger;
         private readonly QueryOptionsAdapter _queryOptionsAdapter;
+        private readonly ILogger<GroupController> _logger;        
 
-        public GroupController(IGroupManager groupManager, IDataAdapter dataAdapter, ILogger<GroupController> logger, QueryOptionsAdapter queryOptionsAdapter)
+        public GroupController(IGroupManager groupManager, IFileStorageManager fileStorageManager, IDataAdapter dataAdapter, QueryOptionsAdapter queryOptionsAdapter, ILogger<GroupController> logger)
         {
             _groupManager = groupManager;
+            _fileStorageManager = fileStorageManager;
             _dataAdapter = dataAdapter;
-            _logger = logger;
             _queryOptionsAdapter = queryOptionsAdapter;
+            _logger = logger;
         }
 
         // GET: api/group
@@ -80,30 +85,38 @@ namespace Lingva.WebAPI.Controllers
         ///
         /// </remarks>
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] GroupViewModel groupViewModel)
+        public async Task<IActionResult> Create()
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            GroupViewModel groupViewModel = GetGroupViewModelFromRequest();
+
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
             await _groupManager.AddAsync(groupDto);
+
+            await SaveFileFromRequestAsync(groupDto.Id);
 
             return CreatedAtAction("Get", new { id = groupDto.Id }, _dataAdapter.Map<GroupViewModel>(groupDto));
         }
 
         // PUT: api/group/update
         [HttpPut("update")]
-        public async Task<IActionResult> Update([FromBody] GroupViewModel groupViewModel)
-        {
+        public async Task<IActionResult> Update()
+        {           
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            GroupViewModel groupViewModel = GetGroupViewModelFromRequest();
+
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
             await _groupManager.UpdateAsync(groupDto);
+
+            await SaveFileFromRequestAsync(groupDto.Id);         
 
             return Ok(_dataAdapter.Map<GroupViewModel>(groupDto));
         }
@@ -123,6 +136,46 @@ namespace Lingva.WebAPI.Controllers
             await _groupManager.DeleteAsync(id);
 
             return Ok();
+        }
+
+        // GET: api/group/getImage?fileId=1
+        [AllowAnonymous]
+        [HttpGet("getImage")]
+        public async Task<IActionResult> GetImage([FromQuery] int id)
+        {
+            string folderName = Path.Combine("Resources", "Images");
+            string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+            DirectoryInfo directory = new DirectoryInfo(directoryPath);
+            FileInfo[] files = directory.GetFiles(id.ToString() + ".*");
+            string path = files.Select(file => file.FullName).FirstOrDefault();
+            FileStream image = System.IO.File.OpenRead(path);
+            
+            return File(image, "image/jpeg");
+        }
+
+        private GroupViewModel GetGroupViewModelFromRequest()
+        {
+            GroupViewModel groupViewModel = null;
+            var stringItems = Request.Form["group"];
+            foreach (var stringItem in stringItems)
+            {
+                groupViewModel = JsonConvert.DeserializeObject<GroupViewModel>(stringItem);
+            }
+
+            return groupViewModel;
+        }
+        private async Task<string> SaveFileFromRequestAsync(int id)
+        {
+            string path = null;
+            if (Request.Form.Files.Count > 0)
+            {
+                var file = Request.Form.Files[0];
+                string folderName = Path.Combine("Resources", "Images");
+                path = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), folderName), id.ToString());
+                await _fileStorageManager.SaveFileAsync(file, path, FileMode.Create);
+            }
+
+            return path;
         }
     }
 }

@@ -34,10 +34,10 @@
                 @Html.DisplayFor(model => model.GroupViewModel.Description)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.GroupViewModel.Picture)
+                @Html.DisplayNameFor(model => model.GroupViewModel.ImageFile)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.GroupViewModel.Picture)
+                <img src="@Url.Action( "getImage", "Group", new { id = Model.GroupViewModel.Id } )" alt="Image" />
             </dd>
         </dl>
     </div>

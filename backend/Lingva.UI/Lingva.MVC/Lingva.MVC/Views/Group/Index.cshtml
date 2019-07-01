@@ -32,6 +32,7 @@
 
 <table class="table">
     <tr>
+        <th> Image </th>
         <th>
             <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Property" property="@("Name")">
                 Name
@@ -47,25 +48,15 @@
                 Language
             </sort-header>
         </th>
-        <th>
-            <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Property" property="@("Description")">
-                Description
-            </sort-header>
-        </th>
-        <th>
-            <sort-header action="Index" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Property" property="@("Picture")">
-                Picture
-            </sort-header>
-        </th>
     </tr>
     @foreach (GroupViewModel groupViewModel in Model.Groups)
     {
         <tr>
+            <td><img src="@Url.Action( "getImage", "Group", new { id = groupViewModel.Id } )" alt="Image" /></td>
             <td>@groupViewModel.Name</td>
             <td>@groupViewModel.Date</td>
             <td>@groupViewModel.LanguageName</td>
             <td>@groupViewModel.Description</td>
-            <td>@groupViewModel.Picture</td>
             <td>@Html.ActionLink("Get", "Get", "Group", new { id = groupViewModel.Id })</td>
             <td>@Html.ActionLink("Update", "Update", new { id = groupViewModel.Id })</td>
             <td>@Html.ActionLink("Delete", "Delete", new { id = groupViewModel.Id })</td>

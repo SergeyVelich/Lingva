@@ -7,10 +7,13 @@ using Lingva.MVC.Models.Entities;
 using Lingva.MVC.Models.Group;
 using Lingva.MVC.Models.Group.Index;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lingva.MVC.Controllers
@@ -19,21 +22,25 @@ namespace Lingva.MVC.Controllers
     [ResponseCache(CacheProfileName = "NoCashing")]
     public class GroupController : Controller
     {
+        private readonly IHostingEnvironment _appEnvironment;
         private readonly IGroupManager _groupManager;
         private readonly IInfoManager _infoManager;
-        private readonly IDataAdapter _dataAdapter;
-        private readonly ILogger<GroupController> _logger;
+        private readonly IFileStorageManager _fileStorageManager;
+        private readonly IDataAdapter _dataAdapter;       
         private readonly QueryOptionsAdapter _queryOptionsAdapter;
+        private readonly ILogger<GroupController> _logger;    
         private readonly IMemoryCache _memoryCache;
 
-        public GroupController(IGroupManager groupManager, IInfoManager infoManager, IDataAdapter dataAdapter, ILogger<GroupController> logger, IMemoryCache memoryCache, QueryOptionsAdapter queryOptionsAdapter)
+        public GroupController(IHostingEnvironment appEnvironment, IGroupManager groupManager, IInfoManager infoManager, IFileStorageManager fileStorageManager, IDataAdapter dataAdapter, QueryOptionsAdapter queryOptionsAdapter, ILogger<GroupController> logger, IMemoryCache memoryCache)
         {
+            _appEnvironment = appEnvironment;
             _groupManager = groupManager;
             _infoManager = infoManager;
+            _fileStorageManager = fileStorageManager;
             _dataAdapter = dataAdapter;
-            _logger = logger;                
-            _memoryCache = memoryCache;
             _queryOptionsAdapter = queryOptionsAdapter;
+            _logger = logger;                
+            _memoryCache = memoryCache;            
         }
 
         // GET: group    
@@ -93,6 +100,12 @@ namespace Lingva.MVC.Controllers
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
             await _groupManager.AddAsync(groupDto);
 
+            if (groupViewModel.ImageFile != null)
+            {
+                string path = "/files/" + groupDto.Id;
+                await _fileStorageManager.SaveFileAsync(groupViewModel.ImageFile, _appEnvironment.WebRootPath + path, FileMode.Create);
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -130,6 +143,12 @@ namespace Lingva.MVC.Controllers
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
             await _groupManager.UpdateAsync(groupDto);
 
+            if (groupViewModel.ImageFile != null)
+            {
+                string path = "/files/" + groupDto.Id;
+                await _fileStorageManager.SaveFileAsync(groupViewModel.ImageFile, _appEnvironment.WebRootPath + path, FileMode.Create);
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -156,14 +175,14 @@ namespace Lingva.MVC.Controllers
 
         // POST: group/delete
         [HttpPost]
-        public async Task<IActionResult> Delete(GroupViewModel groupViewModel)
+        public async Task<IActionResult> Delete(int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _groupManager.DeleteAsync(groupViewModel.Id);
+            await _groupManager.DeleteAsync(id);
 
             return RedirectToAction("Index");
         }
@@ -182,6 +201,17 @@ namespace Lingva.MVC.Controllers
             IEnumerable<GroupViewModel> groups = _dataAdapter.Map<IEnumerable<GroupViewModel>>(groupsDto);
 
             return groups;
+        }
+
+        public async Task<IActionResult> GetImage([FromQuery] int id)
+        {
+            string directoryPath = Path.Combine(_appEnvironment.WebRootPath, "files");
+            DirectoryInfo directory = new DirectoryInfo(directoryPath);
+            FileInfo[] files = directory.GetFiles(id.ToString() + ".*");
+            string path = files.Select(file => file.FullName).FirstOrDefault();
+            FileStream image = System.IO.File.OpenRead(path);
+
+            return File(image, "image/jpeg");
         }
     }
 }

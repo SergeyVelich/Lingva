@@ -48,7 +48,7 @@ namespace Lingva.ASP.Extensions
                 case DbProviders.Mongo:
                     services.ConfigureMongo();
                     break;
-                case DbProviders.CosmosSqlApiContext:
+                case DbProviders.CosmosSqlApi:
                     services.ConfigureAzureCosmosDB();
                     break;
                 default:
@@ -120,6 +120,7 @@ namespace Lingva.ASP.Extensions
         {
             services.AddScoped<IGroupManager, GroupManager>();
             services.AddScoped<IInfoManager, InfoManager>();
+            services.AddScoped<IFileStorageManager, FileStorageManager>();        
         }
 
         public static void ConfigureDataAdapters(this IServiceCollection services)

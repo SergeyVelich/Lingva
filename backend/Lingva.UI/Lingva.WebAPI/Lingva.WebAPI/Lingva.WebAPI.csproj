@@ -33,16 +33,16 @@
 
   <ItemGroup>
     <Reference Include="DataAdapter">
-      <HintPath>..\..\..\Additional\Mapping\DataAdapter\DataAdapter\bin\Release\netcoreapp2.2\DataAdapter.dll</HintPath>
+      <HintPath>..\..\..\Additional\Mapping\DataAdapter\DataAdapter\bin\Debug\netcoreapp2.2\DataAdapter.dll</HintPath>
     </Reference>
     <Reference Include="Lingva.ASP">
-      <HintPath>..\..\Lingva.ASP\Lingva.ASP\bin\Release\netcoreapp2.2\Lingva.ASP.dll</HintPath>
+      <HintPath>..\..\Lingva.ASP\Lingva.ASP\bin\Debug\netcoreapp2.2\Lingva.ASP.dll</HintPath>
     </Reference>
     <Reference Include="Lingva.BC">
-      <HintPath>..\..\..\Lingva.Main\Lingva.BC\Lingva.BC\bin\Release\netcoreapp2.2\Lingva.BC.dll</HintPath>
+      <HintPath>..\..\..\Lingva.Main\Lingva.BC\Lingva.BC\bin\Debug\netcoreapp2.2\Lingva.BC.dll</HintPath>
     </Reference>
     <Reference Include="QueryBuilder">
-      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder\bin\Release\netcoreapp2.2\QueryBuilder.dll</HintPath>
+      <HintPath>..\..\..\Additional\QueryBuilder\QueryBuilder\bin\Debug\netcoreapp2.2\QueryBuilder.dll</HintPath>
     </Reference>
   </ItemGroup>
 
@@ -50,6 +50,10 @@
     <Content Update="nlog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Images\" />
   </ItemGroup>
 
 </Project>

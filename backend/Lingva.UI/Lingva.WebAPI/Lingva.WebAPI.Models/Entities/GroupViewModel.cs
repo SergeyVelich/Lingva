@@ -21,7 +21,5 @@ namespace Lingva.WebAPI.Models.Entities
         public string LanguageName { get; set; }
         [Display(Name = "Description")]
         public string Description { get; set; }
-        [Display(Name = "Picture")]
-        public string Picture { get; set; }
     }
 }
