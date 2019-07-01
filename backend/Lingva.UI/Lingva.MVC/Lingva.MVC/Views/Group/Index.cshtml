@@ -52,7 +52,7 @@
     @foreach (GroupViewModel groupViewModel in Model.Groups)
     {
         <tr>
-            <td><img src="@Url.Content(groupViewModel.ImagePath)" alt="Image" /></td>
+            <td><img src="@Url.Action( "getImage", "Group", new { id = groupViewModel.Id } )" alt="Image" /></td>
             <td>@groupViewModel.Name</td>
             <td>@groupViewModel.Date</td>
             <td>@groupViewModel.LanguageName</td>

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lingva.MVC.Controllers
@@ -96,13 +97,14 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            // сохраняем файл в папку Files в каталоге wwwroot
-            string path = "/files/" + groupViewModel.ImageFile.FileName;
-            await _fileStorageManager.SaveFileAsync(groupViewModel.ImageFile, _appEnvironment.WebRootPath + path, FileMode.Create);
-            groupViewModel.ImagePath = path;
-
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
             await _groupManager.AddAsync(groupDto);
+
+            if (groupViewModel.ImageFile != null)
+            {
+                string path = "/files/" + groupDto.Id;
+                await _fileStorageManager.SaveFileAsync(groupViewModel.ImageFile, _appEnvironment.WebRootPath + path, FileMode.Create);
+            }
 
             return RedirectToAction("Index");
         }
@@ -138,13 +140,14 @@ namespace Lingva.MVC.Controllers
                 return BadRequest(ModelState);
             }
 
-            // сохраняем файл в папку Files в каталоге wwwroot
-            string path = "/files/" + groupViewModel.ImageFile.FileName;            
-            await _fileStorageManager.SaveFileAsync(groupViewModel.ImageFile, _appEnvironment.WebRootPath + path, FileMode.Create);
-            groupViewModel.ImagePath = path;
-
             GroupDto groupDto = _dataAdapter.Map<GroupDto>(groupViewModel);
             await _groupManager.UpdateAsync(groupDto);
+
+            if (groupViewModel.ImageFile != null)
+            {
+                string path = "/files/" + groupDto.Id;
+                await _fileStorageManager.SaveFileAsync(groupViewModel.ImageFile, _appEnvironment.WebRootPath + path, FileMode.Create);
+            }
 
             return RedirectToAction("Index");
         }
@@ -172,14 +175,14 @@ namespace Lingva.MVC.Controllers
 
         // POST: group/delete
         [HttpPost]
-        public async Task<IActionResult> Delete(GroupViewModel groupViewModel)
+        public async Task<IActionResult> Delete(int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _groupManager.DeleteAsync(groupViewModel.Id);
+            await _groupManager.DeleteAsync(id);
 
             return RedirectToAction("Index");
         }
@@ -198,6 +201,17 @@ namespace Lingva.MVC.Controllers
             IEnumerable<GroupViewModel> groups = _dataAdapter.Map<IEnumerable<GroupViewModel>>(groupsDto);
 
             return groups;
+        }
+
+        public async Task<IActionResult> GetImage([FromQuery] int id)
+        {
+            string directoryPath = Path.Combine(_appEnvironment.WebRootPath, "files");
+            DirectoryInfo directory = new DirectoryInfo(directoryPath);
+            FileInfo[] files = directory.GetFiles(id.ToString() + ".*");
+            string path = files.Select(file => file.FullName).FirstOrDefault();
+            FileStream image = System.IO.File.OpenRead(path);
+
+            return File(image, "image/jpeg");
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Lingva.MVC.TagHelpers
             }
             else
             {
-                PageUrlValues["page"] = pageIndex;
+                PageUrlValues["pageIndex"] = pageIndex;
                 link.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
             }
             link.InnerHtml.Append(pageIndex.ToString());

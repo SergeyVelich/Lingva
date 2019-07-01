@@ -34,7 +34,6 @@ namespace Lingva.BC.UnitTest
                     Name = "Harry Potter",
                     Date = DateTime.Now,
                     Description = "Description",
-                    ImagePath = "/Files/Empty.jpg",
                     LanguageId = 1,
                     Language = new Language
                     {
@@ -48,7 +47,6 @@ namespace Lingva.BC.UnitTest
                     Name = "Librium",
                     Date = DateTime.Now,
                     Description = "Description",
-                    ImagePath = "/Files/Empty.jpg",
                     LanguageId = 2,
                     Language = new Language
                     {
@@ -66,7 +64,6 @@ namespace Lingva.BC.UnitTest
                     Name = "Harry Potter",
                     Date = DateTime.Now,
                     Description = "Description",
-                    ImagePath = "/Files/Empty.jpg",
                     LanguageId = 1,
                 },
                 new GroupDto
@@ -75,7 +72,6 @@ namespace Lingva.BC.UnitTest
                     Name = "Librium",
                     Date = DateTime.Now,
                     Description = "Description",
-                    ImagePath = "/Files/Empty.jpg",
                     LanguageId = 2
                 }
             };           

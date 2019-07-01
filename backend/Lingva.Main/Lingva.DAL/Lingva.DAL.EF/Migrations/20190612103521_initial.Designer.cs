@@ -39,8 +39,6 @@ namespace Lingva.DAL.EF.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("ImagePath");
-
                     b.HasKey("Id");
 
                     b.HasIndex("LanguageId");
@@ -57,7 +55,6 @@ namespace Lingva.DAL.EF.Migrations
                             LanguageId = 1,
                             ModifyDate = new DateTime(2019, 6, 12, 13, 35, 20, 977, DateTimeKind.Local).AddTicks(6874),
                             Name = "Harry Potter",
-                            ImagePath = "1"
                         },
                         new
                         {
@@ -68,7 +65,6 @@ namespace Lingva.DAL.EF.Migrations
                             LanguageId = 1,
                             ModifyDate = new DateTime(2019, 6, 12, 13, 35, 20, 977, DateTimeKind.Local).AddTicks(8189),
                             Name = "Librium",
-                            ImagePath = "2"
                         },
                         new
                         {
@@ -79,7 +75,6 @@ namespace Lingva.DAL.EF.Migrations
                             LanguageId = 2,
                             ModifyDate = new DateTime(2019, 6, 12, 13, 35, 20, 977, DateTimeKind.Local).AddTicks(8208),
                             Name = "2Guns",
-                            ImagePath = "3"
                         });
                 });
 

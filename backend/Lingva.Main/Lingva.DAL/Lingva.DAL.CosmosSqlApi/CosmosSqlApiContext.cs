@@ -101,9 +101,9 @@ namespace Lingva.DAL.CosmosSqlApi
             await Client.CreateDocumentAsync(uri, new { Id = 2, Name = "ru", CreateDate = DateTime.Now, ModifyDate = DateTime.Now });
 
             uri = UriFactory.CreateDocumentCollectionUri("lingva", "Groups");
-            await Client.CreateDocumentAsync(uri, new { Id = 1, Name = "Harry Potter", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 1, Description = "Good movie", ImagePath = "1" });
-            await Client.CreateDocumentAsync(uri, new { Id = 2, Name = "Librium", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 1, Description = "Eq", ImagePath = "2" });
-            await Client.CreateDocumentAsync(uri, new { Id = 3, Name = "2Guns", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 2, Description = "stuff", ImagePath = "3" });
+            await Client.CreateDocumentAsync(uri, new { Id = 1, Name = "Harry Potter", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 1, Description = "Good movie"});
+            await Client.CreateDocumentAsync(uri, new { Id = 2, Name = "Librium", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 1, Description = "Eq"});
+            await Client.CreateDocumentAsync(uri, new { Id = 3, Name = "2Guns", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 2, Description = "stuff"});
 
             uri = UriFactory.CreateDocumentCollectionUri("lingva", "Users");
             await Client.CreateDocumentAsync(uri, new { Id = 1, Name = "Serhii", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Email = "veloceraptor89@gmail.com" });
